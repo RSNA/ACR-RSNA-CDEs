@@ -1,0 +1,222 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <element name="data_element">
+            <a:documentation>Each data element has a unique identifier of the format "RDE[0-9]+"
+                (e.g., "RDE54") and a textual name.</a:documentation>
+            <attribute name="id">
+                <text/>
+            </attribute>
+            <attribute name="name">
+                <text/>
+            </attribute>
+
+            <interleave>
+                <element name="definition">
+                    <text/>
+                    <a:documentation>Each CDE must have a definition.</a:documentation>
+                </element>
+                <optional>
+                    <element name="authors">
+                        <a:documentation
+                            xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Each data
+                            element can have 0 or more individual and/or organizational
+                            authors</a:documentation>
+                        <zeroOrMore>
+                            <ref name="person"/>
+                        </zeroOrMore>
+
+                        <zeroOrMore>
+                            <ref name="org"/>
+                        </zeroOrMore>
+
+                    </element>
+                </optional>
+                <optional>
+                    <element name="history">
+                        <zeroOrMore>
+                            <element name="event">
+                                <attribute name="date">
+                                    <data type="date"/>
+                                </attribute>
+                                <attribute name="status">
+                                    <choice>
+                                        <value>proposed</value>
+                                        <value>approved</value>
+                                        <value>published</value>
+                                        <value>deprecated</value>
+                                    </choice>
+                                </attribute>
+                            </element>
+                        </zeroOrMore>
+                    </element>
+                </optional>
+                <optional>
+                    <ref name="index_codes"/>
+                </optional>
+
+                <optional>
+                    <element name="instructions">
+                        <text/>
+                    </element>
+                </optional>
+                <element name="version">
+                    <attribute name="number">
+                        <text/>
+                    </attribute>
+                    <attribute name="date">
+                        <data type="date"/>
+                    </attribute>
+                </element>
+                <optional>
+                    <element name="images">
+                        <zeroOrMore>
+                            <ref name="image"/>
+                        </zeroOrMore>
+                    </element>
+                </optional>
+            </interleave>
+        </element>
+    </start>
+
+    <define name="person">
+        <element name="person">
+            <element name="name">
+                <text/>
+            </element>
+
+            <interleave>
+
+                <optional>
+                    <element name="orcid_id">
+                        <text/>
+                    </element>
+                </optional>
+                <zeroOrMore>
+                    <element name="twitter_handle">
+                        <text/>
+                    </element>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <element name="url">
+                        <text/>
+                    </element>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <element name="role">
+                        <choice>
+                            <value>author</value>
+                            <value>editor</value>
+                            <value>translator</value>
+                            <value>reviewer</value>
+                            <value>contributor</value>
+                        </choice>
+                    </element>
+                </zeroOrMore>
+            </interleave>
+        </element>
+    </define>
+
+    <define name="org">
+        <element name="organization">
+            <interleave>
+                <element name="name">
+                    <text/>
+                </element>
+                <optional>
+                    <element name="abbreviation">
+                        <text/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="url">
+                        <data type="anyURI"/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="comment">
+                        <text/>
+                    </element>
+                </optional>
+                <zeroOrMore>
+                    <element name="role">
+                        <choice>
+                            <value>contributor</value>
+                            <value>sponsor</value>
+                            <value>translator</value>
+                            <value>reviewer</value>
+                            <value>author</value>
+                        </choice>
+                    </element>
+                </zeroOrMore>
+            </interleave>
+        </element>
+    </define>
+
+    <define name="index_codes">
+        <element name="index_codes">
+            <zeroOrMore>
+                <element name="index_code">
+                    <attribute name="scheme">
+                        <text/>
+                    </attribute>
+                    <attribute name="code">
+                        <text/>
+                    </attribute>
+                    <optional>
+                        <attribute name="display_name">
+                            <text/>
+                        </attribute>
+                    </optional>
+                    <optional>
+                        <attribute name="url">
+                            <data type="anyURI"/>
+                        </attribute>
+                    </optional>
+                </element>
+            </zeroOrMore>
+        </element>
+    </define>
+
+    <define name="image">
+        <element name="image">
+            <interleave>
+                <attribute name="url">
+                    <data type="anyURI"/>
+                </attribute>
+
+                <optional>
+                    <attribute name="height">
+                        <data type="positiveInteger"/>
+                    </attribute>
+                </optional>
+                <optional>
+                    <attribute name="width">
+                        <data type="positiveInteger"/>
+                    </attribute>
+                </optional>
+                <optional>
+                    <element name="caption">
+                        <text/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="rights">
+                        <text/>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="source">
+                        <text/>
+                    </element>
+                </optional>
+                <optional><ref name="authors"></ref>
+                </optional>
+            </interleave>
+
+            <!-- authors -->
+
+        </element>
+    </define>
+</grammar>
