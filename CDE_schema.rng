@@ -18,20 +18,7 @@
                     <a:documentation>Each CDE must have a definition.</a:documentation>
                 </element>
                 <optional>
-                    <element name="authors">
-                        <a:documentation
-                            xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Each data
-                            element can have 0 or more individual and/or organizational
-                            authors</a:documentation>
-                        <zeroOrMore>
-                            <ref name="person"/>
-                        </zeroOrMore>
-
-                        <zeroOrMore>
-                            <ref name="org"/>
-                        </zeroOrMore>
-
-                    </element>
+                    <ref name="authors"></ref>
                 </optional>
                 <optional>
                     <element name="history">
@@ -79,6 +66,21 @@
             </interleave>
         </element>
     </start>
+
+    <define name="authors">
+        <a:documentation
+            xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Each data
+            element can have 0 or more individual and/or organizational
+            authors</a:documentation>
+        <zeroOrMore>
+            <ref name="person"/>
+        </zeroOrMore>
+
+        <zeroOrMore>
+            <ref name="org"/>
+        </zeroOrMore>
+
+    </define>
 
     <define name="person">
         <element name="person">
@@ -214,8 +216,6 @@
                 <optional><ref name="authors"></ref>
                 </optional>
             </interleave>
-
-            <!-- authors -->
 
         </element>
     </define>
