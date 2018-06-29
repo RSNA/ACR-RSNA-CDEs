@@ -1,6 +1,7 @@
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
 start =
-  element element_set {
+  element data_element_set {
     
     ## Each set has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.
     attribute id { text },
@@ -9,12 +10,12 @@ start =
      & attribute url { xsd:anyURI }
      & authors+
      & history+),
-    element elements { \element+ }+
+    element elements { data_element+ }+
   }
 
 ## Each data element or set can have 0 or more individual and/or organizational authors
 authors = person*, org*
-\element =
+data_element =
   
   ## Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.
   element element {

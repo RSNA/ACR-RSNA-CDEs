@@ -1,6 +1,6 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
     <start>
-        <element name="element_set">
+        <element name="data_element_set">
             <attribute name="id">
                 <a:documentation>Each set has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</a:documentation>
                 <text/>
@@ -25,7 +25,7 @@
             <oneOrMore>
                 <element name="elements">
                     <oneOrMore>
-                        <ref name="element"></ref>
+                        <ref name="data_element"></ref>
                     </oneOrMore>
                 </element>
             </oneOrMore>
@@ -40,7 +40,7 @@
             <ref name="org"/>
         </zeroOrMore>
     </define>
-    <define name="element">
+    <define name="data_element">
         <element name="element">
             <a:documentation>Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</a:documentation>
             <attribute name="id">
