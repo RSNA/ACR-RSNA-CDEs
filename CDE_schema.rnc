@@ -1,7 +1,6 @@
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
-
 start =
-  element set {
+  element element_set {
     
     ## Each set has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.
     attribute id { text },

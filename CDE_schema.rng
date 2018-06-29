@@ -1,6 +1,6 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
     <start>
-        <element name="set">
+        <element name="element_set">
             <attribute name="id">
                 <a:documentation>Each set has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</a:documentation>
                 <text/>
