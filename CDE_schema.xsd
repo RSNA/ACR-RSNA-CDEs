@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-  <xs:element name="data_element">
+  <xs:element name="set">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:choice>
+            <xs:element ref="person"/>
+            <xs:element ref="organization"/>
+          </xs:choice>
+          <xs:group ref="history"/>
+        </xs:choice>
+        <xs:element maxOccurs="unbounded" ref="elements"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required">
+        <xs:annotation>
+          <xs:documentation>Each set has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="description" use="required"/>
+      <xs:attribute name="url" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="elements">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="element"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="authors">
     <xs:annotation>
-      <xs:documentation>Each data element has a unique identifier of the format "RDE[0-9]+"
-                (e.g., "RDE54") and a textual name.</xs:documentation>
+      <xs:documentation>Each data element or set can have 0 or more individual and/or organizational authors</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="person"/>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="organization"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="element">
+    <xs:annotation>
+      <xs:documentation>Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -12,7 +49,7 @@
           <xs:element ref="person"/>
           <xs:element ref="organization"/>
         </xs:choice>
-        <xs:element ref="history"/>
+        <xs:group ref="history"/>
         <xs:element ref="index_codes"/>
         <xs:element ref="instructions"/>
         <xs:element ref="version"/>
@@ -23,28 +60,6 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="definition" type="xs:string"/>
-  <xs:element name="history">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="event"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="event">
-    <xs:complexType>
-      <xs:attribute name="date" use="required" type="xs:date"/>
-      <xs:attribute name="status" use="required">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="proposed"/>
-            <xs:enumeration value="approved"/>
-            <xs:enumeration value="published"/>
-            <xs:enumeration value="deprecated"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="instructions" type="xs:string"/>
   <xs:element name="version">
     <xs:complexType>
@@ -59,17 +74,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:group name="authors">
-    <xs:annotation>
-      <xs:documentation>Each data
-            element can have 0 or more individual and/or organizational
-            authors</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" ref="person"/>
-      <xs:element minOccurs="0" maxOccurs="unbounded" ref="organization"/>
-    </xs:sequence>
-  </xs:group>
   <xs:element name="person">
     <xs:complexType>
       <xs:sequence>
@@ -153,4 +157,24 @@
   <xs:element name="caption" type="xs:string"/>
   <xs:element name="rights" type="xs:string"/>
   <xs:element name="source" type="xs:string"/>
+  <xs:group name="history">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="event"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="event">
+    <xs:complexType>
+      <xs:attribute name="date" use="required" type="xs:date"/>
+      <xs:attribute name="status" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="proposed"/>
+            <xs:enumeration value="approved"/>
+            <xs:enumeration value="published"/>
+            <xs:enumeration value="deprecated"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

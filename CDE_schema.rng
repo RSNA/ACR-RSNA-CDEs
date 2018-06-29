@@ -1,17 +1,54 @@
-<grammar xmlns="http://relaxng.org/ns/structure/1.0"
-    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
     <start>
-        <element name="data_element">
-            <a:documentation>Each data element has a unique identifier of the format "RDE[0-9]+"
-                (e.g., "RDE54") and a textual name.</a:documentation>
+        <element name="set">
+            <attribute name="id">
+                <a:documentation>Each set has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</a:documentation>
+                <text/>
+            </attribute>
+            <attribute name="name">
+                <text/>
+            </attribute>
+            <interleave>
+                <attribute name="description">
+                    <text/>
+                </attribute>
+                <attribute name="url">
+                    <data type="anyURI"/>
+                </attribute>
+                <oneOrMore>
+                    <ref name="authors"></ref>
+                </oneOrMore>
+                <oneOrMore>
+                    <ref name="history"></ref>
+                </oneOrMore>
+            </interleave>
+            <oneOrMore>
+                <element name="elements">
+                    <oneOrMore>
+                        <ref name="element"></ref>
+                    </oneOrMore>
+                </element>
+            </oneOrMore>
+        </element>
+    </start>
+    <define name="authors">
+        <a:documentation>Each data element or set can have 0 or more individual and/or organizational authors</a:documentation>
+        <zeroOrMore>
+            <ref name="person"/>
+        </zeroOrMore>
+        <zeroOrMore>
+            <ref name="org"/>
+        </zeroOrMore>
+    </define>
+    <define name="element">
+        <element name="element">
+            <a:documentation>Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</a:documentation>
             <attribute name="id">
                 <text/>
             </attribute>
             <attribute name="name">
                 <text/>
             </attribute>
-
             <interleave>
                 <element name="definition">
                     <text/>
@@ -21,28 +58,11 @@
                     <ref name="authors"></ref>
                 </optional>
                 <optional>
-                    <element name="history">
-                        <zeroOrMore>
-                            <element name="event">
-                                <attribute name="date">
-                                    <data type="date"/>
-                                </attribute>
-                                <attribute name="status">
-                                    <choice>
-                                        <value>proposed</value>
-                                        <value>approved</value>
-                                        <value>published</value>
-                                        <value>deprecated</value>
-                                    </choice>
-                                </attribute>
-                            </element>
-                        </zeroOrMore>
-                    </element>
+                    <ref name="history"></ref>
                 </optional>
                 <optional>
                     <ref name="index_codes"/>
                 </optional>
-
                 <optional>
                     <element name="instructions">
                         <text/>
@@ -65,31 +85,13 @@
                 </optional>
             </interleave>
         </element>
-    </start>
-
-    <define name="authors">
-        <a:documentation
-            xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Each data
-            element can have 0 or more individual and/or organizational
-            authors</a:documentation>
-        <zeroOrMore>
-            <ref name="person"/>
-        </zeroOrMore>
-
-        <zeroOrMore>
-            <ref name="org"/>
-        </zeroOrMore>
-
     </define>
-
     <define name="person">
         <element name="person">
             <element name="name">
                 <text/>
             </element>
-
             <interleave>
-
                 <optional>
                     <element name="orcid_id">
                         <text/>
@@ -119,7 +121,6 @@
             </interleave>
         </element>
     </define>
-
     <define name="org">
         <element name="organization">
             <interleave>
@@ -155,7 +156,6 @@
             </interleave>
         </element>
     </define>
-
     <define name="index_codes">
         <element name="index_codes">
             <zeroOrMore>
@@ -180,14 +180,12 @@
             </zeroOrMore>
         </element>
     </define>
-
     <define name="image">
         <element name="image">
             <interleave>
                 <attribute name="url">
                     <data type="anyURI"/>
                 </attribute>
-
                 <optional>
                     <attribute name="height">
                         <data type="positiveInteger"/>
@@ -216,7 +214,23 @@
                 <optional><ref name="authors"></ref>
                 </optional>
             </interleave>
-
         </element>
+    </define>
+    <define name="history">
+        <zeroOrMore>
+            <element name="event">
+                <attribute name="date">
+                    <data type="date"/>
+                </attribute>
+                <attribute name="status">
+                    <choice>
+                        <value>proposed</value>
+                        <value>approved</value>
+                        <value>published</value>
+                        <value>deprecated</value>
+                    </choice>
+                </attribute>
+            </element>
+        </zeroOrMore>
     </define>
 </grammar>
