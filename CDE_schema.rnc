@@ -1,0 +1,82 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+start =
+  element data_element_set {
+    
+    ## Each set has a unique identifier of the format "RDES[0-9]+" (e.g., "RDES42") and a textual name.
+    attribute id { text },
+    attribute name { text },
+    (attribute description { text }
+     & attribute url { xsd:anyURI }
+     & authors+
+     & history+),
+    element elements { data_element+ }+
+  }
+
+## Each data element or set can have 0 or more individual and/or organizational authors
+authors = person*, org*
+data_element =
+  
+  ## Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.
+  element element {
+    attribute id { text },
+    attribute name { text },
+    (element definition {
+       text >> a:documentation [ "Each CDE must have a definition." ]
+     }
+     & authors?
+     & history?
+     & index_codes?
+     & element instructions { text }?
+     & element version {
+         attribute number { text },
+         attribute date { xsd:date }
+       }
+     & element images { image* }?)
+  }
+person =
+  element person {
+    element name { text },
+    (element orcid_id { text }?
+     & element twitter_handle { text }*
+     & element url { text }*
+     & element role {
+         "author" | "editor" | "translator" | "reviewer" | "contributor"
+       }*)
+  }
+org =
+  element organization {
+    element name { text }
+    & element abbreviation { text }?
+    & element url { xsd:anyURI }?
+    & element comment { text }?
+    & element role {
+        "contributor" | "sponsor" | "translator" | "reviewer" | "author"
+      }*
+  }
+index_codes =
+  element index_codes {
+    element index_code {
+      attribute scheme { text },
+      attribute code { text },
+      attribute display_name { text }?,
+      attribute url { xsd:anyURI }?
+    }*
+  }
+image =
+  element image {
+    attribute url { xsd:anyURI }
+    & attribute height { xsd:positiveInteger }?
+    & attribute width { xsd:positiveInteger }?
+    & element caption { text }?
+    & element rights { text }?
+    & element source { text }?
+    & authors?
+  }
+history =
+  element event {
+    attribute date { xsd:date },
+    attribute status {
+      "proposed" | "approved" | "published" | "deprecated"
+    }
+  }*
