@@ -3,7 +3,7 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 start =
   element data_element_set {
     
-    ## Each set has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.
+    ## Each set has a unique identifier of the format "RDES[0-9]+" (e.g., "RDES42") and a textual name.
     attribute id { text },
     attribute name { text },
     (attribute description { text }

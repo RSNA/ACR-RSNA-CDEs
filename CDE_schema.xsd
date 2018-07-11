@@ -14,7 +14,7 @@
       </xs:sequence>
       <xs:attribute name="id" use="required">
         <xs:annotation>
-          <xs:documentation>Each set has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</xs:documentation>
+          <xs:documentation>Each set has a unique identifier of the format "RDES[0-9]+" (e.g., "RDES42") and a textual name.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
       <xs:attribute name="name" use="required"/>
