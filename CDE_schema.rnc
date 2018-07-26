@@ -4,13 +4,14 @@ start =
   element data_element_set {
     
     ## Each set has a unique identifier of the format "RDES[0-9]+" (e.g., "RDES42") and a textual name.
-    attribute id { text },
-    attribute name { text },
-    (attribute description { text }
-     & attribute url { xsd:anyURI }
+    attribute id { xsd:string { pattern='RDES\d+' } },
+    attribute shortName { xsd:Name }?,
+    element name { text },
+    (attribute url { xsd:anyURI }
+     & element description { text }
      & authors+
      & history+),
-    element elements { data_element+ }+
+    element elements { data_element+ }
   }
 
 ## Each data element or set can have 0 or more individual and/or organizational authors
@@ -19,20 +20,48 @@ data_element =
   
   ## Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.
   element element {
-    attribute id { text },
-    attribute name { text },
-    (element definition {
+    attribute id { xsd:string { pattern='RDE\d+' } },
+    attribute shortName { xsd:Name },
+    element name { text },
+    element definition {
        text >> a:documentation [ "Each CDE must have a definition." ]
-     }
-     & authors?
-     & history?
-     & index_codes?
-     & element instructions { text }?
-     & element version {
-         attribute number { text },
-         attribute date { xsd:date }
-       }
-     & element images { image* }?)
+    },
+    authors?,
+    element version {
+        attribute versionNumber { xsd:positiveInteger },
+        status_attrs,
+        empty
+    },
+    history?,
+    index_codes?,
+    element question { text },
+    (element instructions { text }?
+     & element images { image+ }?),
+    (
+        element integer_values {
+            attribute min { xsd:integer }?,
+            attribute max { xsd:integer >> a:documentation ["Must be greater than the min attribute"] }?,
+            attribute step { xsd:integer >> a:documentation ["Default is 1"] }?,
+            attribute unit { xsd:Name }?
+        } 
+        | element float_values {
+            attribute min { xsd:float },
+            attribute max { xsd:float >> a:documentation ["Must be greater than the min attribute"] },
+            attribute step { xsd:integer },
+            attribute unit { xsd:Name },
+            empty
+        } 
+        | element boolean_values { empty }
+        | element value_set {
+            element value {
+                attribute value { xsd:Name },
+                element name { text },
+                element definition { text }?,
+                element images { image+ }?,
+                index_codes?
+            }+
+        }
+    )
   }
 person =
   element person {
@@ -57,11 +86,11 @@ org =
 index_codes =
   element index_codes {
     element index_code {
-      attribute scheme { text },
-      attribute code { text },
-      attribute display_name { text }?,
-      attribute url { xsd:anyURI }?
-    }*
+      attribute system { xsd:Name },
+      attribute code { xsd:normalizedString },
+      attribute href { xsd:anyURI }?,
+      text >> a:documentation [ "Index code element contains text for display." ]
+    }+
   }
 image =
   element image {
@@ -73,10 +102,12 @@ image =
     & element source { text }?
     & authors?
   }
-history =
-  element event {
+status_attrs = 
     attribute date { xsd:date },
     attribute status {
       "proposed" | "approved" | "published" | "deprecated"
     }
+history =
+  element event {
+    status_attrs
   }*
