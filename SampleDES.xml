@@ -9,7 +9,9 @@
             <definition>The greatest linear dimension of the adrenal nodule.</definition>
             <version date="2015-07-05" status="proposed" versionNumber="1"/>
             <index_codes>
-                <index_code system="SNOMEDCT" code="246120007" href="http://radelement.org/api/v1/codes/SNOMEDCT/246120007">nodule size</index_code>
+                <index_code system="SNOMEDCT" code="246120007" href="http://radelement.org/api/v1/codes/SNOMEDCT/246120007">
+                    <display>nodule size</display>
+                </index_code>
             </index_codes>
             <question>Enter the greatest diameter of the adrenal nodule</question>
             <integer_values min="0" max="999" step="1" unit="mm"/>
@@ -23,7 +25,9 @@
                 <value value="R">
                     <name>Right</name>
                     <index_codes>
-                        <index_code system="RADLEX" code="RID5825" href="http://radelement.org/api/v1/codes/RADLEX/RID5825">Right</index_code>
+                        <index_code system="RADLEX" code="RID5825" href="http://radelement.org/api/v1/codes/RADLEX/RID5825">
+                            <display>Right</display>
+                        </index_code>
                         <index_code system="SNOMEDCT" code="24028007" href="http://radelement.org/api/v1/codes/SNOMEDCT/24028007">Right</index_code>
                     </index_codes>
                 </value>

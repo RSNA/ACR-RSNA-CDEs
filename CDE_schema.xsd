@@ -3,25 +3,33 @@
   <xs:element name="data_element_set">
     <xs:complexType>
       <xs:sequence>
+        <xs:element ref="name"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="description"/>
           <xs:choice>
             <xs:element ref="person"/>
             <xs:element ref="organization"/>
           </xs:choice>
           <xs:group ref="history"/>
         </xs:choice>
-        <xs:element maxOccurs="unbounded" ref="elements"/>
+        <xs:element ref="elements"/>
       </xs:sequence>
       <xs:attribute name="id" use="required">
         <xs:annotation>
           <xs:documentation>Each set has a unique identifier of the format "RDES[0-9]+" (e.g., "RDES42") and a textual name.</xs:documentation>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="RDES\d+"/>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="name" use="required"/>
-      <xs:attribute name="description" use="required"/>
+      <xs:attribute name="shortName" type="xs:Name"/>
       <xs:attribute name="url" use="required" type="xs:anyURI"/>
     </xs:complexType>
   </xs:element>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="description" type="xs:string"/>
   <xs:element name="elements">
     <xs:complexType>
       <xs:sequence>
@@ -43,35 +51,86 @@
       <xs:documentation>Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</xs:documentation>
     </xs:annotation>
     <xs:complexType>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:sequence>
+        <xs:element ref="name"/>
         <xs:element ref="definition"/>
-        <xs:choice>
-          <xs:element ref="person"/>
-          <xs:element ref="organization"/>
-        </xs:choice>
-        <xs:group ref="history"/>
-        <xs:element ref="index_codes"/>
-        <xs:element ref="instructions"/>
+        <xs:group minOccurs="0" ref="authors"/>
         <xs:element ref="version"/>
-        <xs:element ref="images"/>
-      </xs:choice>
-      <xs:attribute name="id" use="required"/>
-      <xs:attribute name="name" use="required"/>
+        <xs:group minOccurs="0" ref="history"/>
+        <xs:element minOccurs="0" ref="index_codes"/>
+        <xs:element ref="question"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="instructions"/>
+          <xs:element ref="images"/>
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="integer_values"/>
+          <xs:element ref="float_values"/>
+          <xs:element ref="boolean_values"/>
+          <xs:element ref="value_set"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="id" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="RDE\d+"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="shortName" use="required" type="xs:Name"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="definition" type="xs:string"/>
-  <xs:element name="instructions" type="xs:string"/>
   <xs:element name="version">
     <xs:complexType>
-      <xs:attribute name="number" use="required"/>
-      <xs:attribute name="date" use="required" type="xs:date"/>
+      <xs:attribute name="versionNumber" use="required" type="xs:positiveInteger"/>
+      <xs:attributeGroup ref="status_attrs"/>
     </xs:complexType>
   </xs:element>
+  <xs:element name="question" type="xs:string"/>
+  <xs:element name="instructions" type="xs:string"/>
   <xs:element name="images">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="image"/>
+        <xs:element maxOccurs="unbounded" ref="image"/>
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="integer_values">
+    <xs:complexType>
+      <xs:attribute name="min" type="xs:integer"/>
+      <xs:attribute name="max" type="xs:integer"/>
+      <xs:attribute name="step" type="xs:integer"/>
+      <xs:attribute name="unit" type="xs:Name"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="float_values">
+    <xs:complexType>
+      <xs:attribute name="min" use="required" type="xs:float"/>
+      <xs:attribute name="max" use="required" type="xs:float"/>
+      <xs:attribute name="step" use="required" type="xs:integer"/>
+      <xs:attribute name="unit" use="required" type="xs:Name"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="boolean_values">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="value_set">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="value"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="value">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element minOccurs="0" ref="definition"/>
+        <xs:element minOccurs="0" ref="images"/>
+        <xs:element minOccurs="0" ref="index_codes"/>
+      </xs:sequence>
+      <xs:attribute name="value" use="required" type="xs:Name"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="person">
@@ -97,7 +156,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="name" type="xs:string"/>
   <xs:element name="orcid_id" type="xs:string"/>
   <xs:element name="twitter_handle" type="xs:string"/>
   <xs:element name="organization">
@@ -126,16 +184,16 @@
   <xs:element name="index_codes">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="index_code"/>
+        <xs:element maxOccurs="unbounded" ref="index_code"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="index_code">
     <xs:complexType>
-      <xs:attribute name="scheme" use="required"/>
-      <xs:attribute name="code" use="required"/>
-      <xs:attribute name="display_name"/>
-      <xs:attribute name="url" type="xs:anyURI"/>
+      <xs:attribute name="system" use="required" type="xs:Name"/>
+      <xs:attribute name="code" use="required" type="xs:normalizedString"/>
+      <xs:attribute name="href" type="xs:anyURI"/>
+      <xs:attribute name="display"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="image">
@@ -157,6 +215,19 @@
   <xs:element name="caption" type="xs:string"/>
   <xs:element name="rights" type="xs:string"/>
   <xs:element name="source" type="xs:string"/>
+  <xs:attributeGroup name="status_attrs">
+    <xs:attribute name="date" use="required" type="xs:date"/>
+    <xs:attribute name="status" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="proposed"/>
+          <xs:enumeration value="approved"/>
+          <xs:enumeration value="published"/>
+          <xs:enumeration value="deprecated"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
   <xs:group name="history">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" ref="event"/>
@@ -164,17 +235,7 @@
   </xs:group>
   <xs:element name="event">
     <xs:complexType>
-      <xs:attribute name="date" use="required" type="xs:date"/>
-      <xs:attribute name="status" use="required">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="proposed"/>
-            <xs:enumeration value="approved"/>
-            <xs:enumeration value="published"/>
-            <xs:enumeration value="deprecated"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attributeGroup ref="status_attrs"/>
     </xs:complexType>
   </xs:element>
 </xs:schema>

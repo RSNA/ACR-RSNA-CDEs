@@ -89,7 +89,7 @@ index_codes =
       attribute system { xsd:Name },
       attribute code { xsd:normalizedString },
       attribute href { xsd:anyURI }?,
-      text >> a:documentation [ "Index code element contains text for display." ]
+      attribute display { text }?
     }+
   }
 image =
