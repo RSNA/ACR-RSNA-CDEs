@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="CDE_schema.rnc" type="application/relax-ng-compact-syntax"?>
+<data_element_set id="RDES3" shortName="adrenalNodule" url="http://radelement.org/api/v1/projects/3">
+    <name>CAR/DS Adrenal Nodule</name>
+    <description>ACR Assist project for describing adrenal nodules.</description>
+    <elements>
+        <element id="RDE41" shortName="noduleSize">
+            <name>Nodule size</name>
+            <definition>The greatest linear dimension of the adrenal nodule.</definition>
+            <version date="2015-07-05" status="proposed" versionNumber="1"/>
+            <index_codes>
+                <index_code system="SNOMEDCT" code="246120007" href="http://radelement.org/api/v1/codes/SNOMEDCT/246120007" display="nodule size"/>                
+            </index_codes>
+            <question>Enter the greatest diameter of the adrenal nodule</question>
+            <integer_values min="0" max="999" step="1" unit="mm"/>
+        </element>
+        <element id="RDE42" shortName="side">
+            <name>Side</name>
+            <definition>The side of the body (right or left)</definition>
+            <version versionNumber="1" date="2015-07-05" status="proposed"/>
+            <question>Side</question>
+            <value_set>
+                <value value="R">
+                    <name>Right</name>
+                    <index_codes>
+                        <index_code system="RADLEX" code="RID5825" href="http://radelement.org/api/v1/codes/RADLEX/RID5825" display="Right"/>
+                        <index_code system="SNOMEDCT" code="24028007" href="http://radelement.org/api/v1/codes/SNOMEDCT/24028007" display="Right"/>
+                    </index_codes>
+                </value>
+                <value value="L">
+                    <name>Left</name>
+                    <index_codes>
+                        <index_code system="RADLEX" code="RID5824" href="http://radelement.org/api/v1/codes/RADLEX/RID5824" display="Left"/>
+                        <index_code system="SNOMEDCT" code="7771000" href="http://radelement.org/api/v1/codes/SNOMEDCT/7771000" display="Left"/>
+                    </index_codes>
+                </value>
+            </value_set>
+        </element>
+    </elements>
+</data_element_set>
