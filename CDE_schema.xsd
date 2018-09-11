@@ -24,7 +24,6 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
-      <xs:attribute name="shortName" type="xs:Name"/>
       <xs:attribute name="url" use="required" type="xs:anyURI"/>
     </xs:complexType>
   </xs:element>

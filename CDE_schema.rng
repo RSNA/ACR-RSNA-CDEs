@@ -8,11 +8,6 @@
           <param name="pattern">RDES\d+</param>
         </data>
       </attribute>
-      <optional>
-        <attribute name="shortName">
-          <data type="Name"/>
-        </attribute>
-      </optional>
       <element name="name">
         <text/>
       </element>

@@ -5,7 +5,6 @@ start =
     
     ## Each set has a unique identifier of the format "RDES[0-9]+" (e.g., "RDES42") and a textual name.
     attribute id { xsd:string { pattern='RDES\d+' } },
-    attribute shortName { xsd:Name }?,
     element name { text },
     (attribute url { xsd:anyURI }
      & element description { text }
