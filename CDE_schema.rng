@@ -241,7 +241,7 @@
       <oneOrMore>
         <element name="index_code">
           <attribute name="system">
-            <data type="Name"/>
+            <data type="anyURI"/>
           </attribute>
           <attribute name="code">
             <data type="normalizedString"/>

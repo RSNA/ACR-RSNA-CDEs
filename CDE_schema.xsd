@@ -189,7 +189,7 @@
   </xs:element>
   <xs:element name="index_code">
     <xs:complexType>
-      <xs:attribute name="system" use="required" type="xs:Name"/>
+      <xs:attribute name="system" use="required" type="xs:anyURI"/>
       <xs:attribute name="code" use="required" type="xs:normalizedString"/>
       <xs:attribute name="href" type="xs:anyURI"/>
       <xs:attribute name="display"/>

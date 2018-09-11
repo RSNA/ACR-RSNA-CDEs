@@ -85,7 +85,7 @@ org =
 index_codes =
   element index_codes {
     element index_code {
-      attribute system { xsd:Name },
+      attribute system { xsd:anyURI },
       attribute code { xsd:normalizedString },
       attribute href { xsd:anyURI }?,
       attribute display { text }?
