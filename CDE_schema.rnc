@@ -84,7 +84,7 @@ org =
 index_codes =
   element index_codes {
     element index_code {
-      element system { text },
+      element system { "RADLEX" | "SNOMEDCT" | "LOINC" },
       element code { xsd:normalizedString },
       element href { xsd:anyURI }?,
       element display { text }?
