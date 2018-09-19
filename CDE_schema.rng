@@ -2,19 +2,19 @@
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
     <element name="data_element_set">
-      <attribute name="id">
+      <element name="id">
         <a:documentation>Each set has a unique identifier of the format "RDES[0-9]+" (e.g., "RDES42") and a textual name.</a:documentation>
         <data type="string">
           <param name="pattern">RDES\d+</param>
         </data>
-      </attribute>
+      </element>
       <element name="name">
         <text/>
       </element>
       <interleave>
-        <attribute name="url">
+        <element name="url">
           <data type="anyURI"/>
-        </attribute>
+        </element>
         <element name="description">
           <text/>
         </element>
@@ -44,14 +44,11 @@
   <define name="data_element">
     <element name="element">
       <a:documentation>Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</a:documentation>
-      <attribute name="id">
+      <element name="id">
         <data type="string">
           <param name="pattern">RDE\d+</param>
         </data>
-      </attribute>
-      <attribute name="shortName">
-        <data type="Name"/>
-      </attribute>
+      </element>
       <element name="name">
         <text/>
       </element>
@@ -63,9 +60,9 @@
         <ref name="authors"/>
       </optional>
       <element name="version">
-        <attribute name="versionNumber">
+        <element name="versionNumber">
           <data type="positiveInteger"/>
-        </attribute>
+        </element>
         <ref name="status_attrs"/>
         <empty/>
       </element>
@@ -95,42 +92,42 @@
       <choice>
         <element name="integer_values">
           <optional>
-            <attribute name="min">
+            <element name="min">
               <data type="integer"/>
-            </attribute>
+            </element>
           </optional>
           <optional>
-            <attribute name="max">
+            <element name="max">
               <data type="integer"/>
               <a:documentation>Must be greater than the min attribute</a:documentation>
-            </attribute>
+            </element>
           </optional>
           <optional>
-            <attribute name="step">
+            <element name="step">
               <data type="integer"/>
               <a:documentation>Default is 1</a:documentation>
-            </attribute>
+            </element>
           </optional>
           <optional>
-            <attribute name="unit">
+            <element name="unit">
               <data type="Name"/>
-            </attribute>
+            </element>
           </optional>
         </element>
         <element name="float_values">
-          <attribute name="min">
+          <element name="min">
             <data type="float"/>
-          </attribute>
-          <attribute name="max">
+          </element>
+          <element name="max">
             <data type="float"/>
             <a:documentation>Must be greater than the min attribute</a:documentation>
-          </attribute>
-          <attribute name="step">
+          </element>
+          <element name="step">
             <data type="integer"/>
-          </attribute>
-          <attribute name="unit">
+          </element>
+          <element name="unit">
             <data type="Name"/>
-          </attribute>
+          </element>
           <empty/>
         </element>
         <element name="boolean_values">
@@ -139,9 +136,9 @@
         <element name="value_set">
           <oneOrMore>
             <element name="value">
-              <attribute name="value">
+              <element name="value">
                 <data type="Name"/>
-              </attribute>
+              </element>
               <element name="name">
                 <text/>
               </element>
@@ -240,19 +237,25 @@
     <element name="index_codes">
       <oneOrMore>
         <element name="index_code">
-          <attribute name="system">
-            <data type="anyURI"/>
-          </attribute>
-          <attribute name="code">
+          <element name="system">
+            <choice>
+              <value>RADLEX</value>
+              <value>SNOMEDCT</value>
+              <value>LOINC</value>
+            </choice>
+          </element>
+          <element name="code">
             <data type="normalizedString"/>
-          </attribute>
+          </element>
           <optional>
-            <attribute name="href">
+            <element name="href">
               <data type="anyURI"/>
-            </attribute>
+            </element>
           </optional>
           <optional>
-            <attribute name="display"/>
+            <element name="display">
+              <text/>
+            </element>
           </optional>
         </element>
       </oneOrMore>
@@ -261,18 +264,18 @@
   <define name="image">
     <element name="image">
       <interleave>
-        <attribute name="url">
+        <element name="url">
           <data type="anyURI"/>
-        </attribute>
+        </element>
         <optional>
-          <attribute name="height">
+          <element name="height">
             <data type="positiveInteger"/>
-          </attribute>
+          </element>
         </optional>
         <optional>
-          <attribute name="width">
+          <element name="width">
             <data type="positiveInteger"/>
-          </attribute>
+          </element>
         </optional>
         <optional>
           <element name="caption">
@@ -296,17 +299,17 @@
     </element>
   </define>
   <define name="status_attrs">
-    <attribute name="date">
+    <element name="date">
       <data type="date"/>
-    </attribute>
-    <attribute name="status">
+    </element>
+    <element name="status">
       <choice>
         <value>proposed</value>
         <value>approved</value>
         <value>published</value>
         <value>deprecated</value>
       </choice>
-    </attribute>
+    </element>
   </define>
   <define name="history">
     <zeroOrMore>
