@@ -73,7 +73,7 @@ data_element =
 age_range =
     element age_range {
         element upper_bound { xsd:float }?,
-        element lower_bound { xsd:float }?  >> a.documentation ["The range of applicable ages for the common data element, specified in fractional years (e.g. 4 months = 0.33 years)"]
+        element lower_bound { xsd:float }?  >> a.documentation ["The range of applicable ages for the data element or set, specified in fractional years (e.g. 4 months = 0.33 years)"]
     }
 
 authors = person*, org*
