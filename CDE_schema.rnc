@@ -8,7 +8,7 @@ start =
     element name { text },
     (element url { xsd:anyURI }
      & element description { text }
-     & index_codes
+     & index_codes?
      & authors+
      & history+),
     element elements { data_element+ }
