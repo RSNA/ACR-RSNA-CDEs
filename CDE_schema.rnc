@@ -14,8 +14,7 @@ start =
     element elements { data_element+ }
   }
 
-## Each data element or set can have 0 or more individual and/or organizational authors
-authors = person*, org*
+
 data_element =
 
   ## Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.
@@ -62,6 +61,12 @@ data_element =
         }
     )
   }
+
+## Section Definitions
+
+## Each data element or set can have 0 or more individual and/or organizational authors
+authors = person*, org*
+
 person =
   element person {
     element name { text },
