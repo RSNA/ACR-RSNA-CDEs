@@ -62,7 +62,7 @@ data_element =
     )
   }
 
-## Section Definitions
+## Named Pattern Definitions
 
 ## Each data element or set can have 0 or more individual and/or organizational authors
 authors = person*, org*
