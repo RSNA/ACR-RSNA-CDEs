@@ -9,6 +9,7 @@ start =
     (element url { xsd:anyURI }
      & element description { text }
      & index_codes?
+     & modality*
      & authors+
      & history+),
     element elements { data_element+ }
@@ -32,6 +33,7 @@ data_element =
     },
     history?,
     index_codes?,
+    modality*,
     element question { text },
     (element instructions { text }?
      & element images { image+ }?),
@@ -106,6 +108,14 @@ image =
     & element source { text }?
     & authors?
   }
+
+modality =
+    element modality {
+        element system { "DICOM" },
+        element code { "CR" | "CT" | "DX" | "IVUS" | "MG" | "MR" | "NM" | "PT" | "RF" | "RG" | "US" | "XA" },
+        element href { "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1" }
+    }
+
 status_attrs = 
     element date { xsd:date },
     element status {

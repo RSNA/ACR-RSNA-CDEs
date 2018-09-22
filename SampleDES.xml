@@ -4,6 +4,11 @@
   <id>RDES3</id>
   <name>CAR/DS Adrenal Nodule</name>
   <description>ACR Assist project for describing adrenal nodules.</description>
+  <modality>
+    <system>DICOM</system>
+    <code>CT</code>
+    <href>http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1</href>
+  </modality>
   <url>http://radelement.org/api/v1/projects/3</url>
     <elements>
         <element>
