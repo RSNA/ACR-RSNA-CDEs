@@ -10,11 +10,12 @@ start =
      & element description { text }
      & index_codes?
      & modality*
+     & biological_sex?
+     & age_range?
      & authors+
      & history+),
     element elements { data_element+ }
   }
-
 
 data_element =
 
@@ -34,6 +35,8 @@ data_element =
     history?,
     index_codes?,
     modality*,
+    biological_sex?,
+    age_range?,
     element question { text },
     (element instructions { text }?
      & element images { image+ }?),
@@ -67,7 +70,16 @@ data_element =
 ## Named Pattern Definitions
 
 ## Each data element or set can have 0 or more individual and/or organizational authors
+age_range =
+    element age_range {
+        element upper_bound { xsd:float }?,
+        element lower_bound { xsd:float }?  >> a.documentation ["The range of applicable ages for the common data element, specified in fractional years (e.g. 4 months = 0.33 years)"]
+    }
+
 authors = person*, org*
+
+biological_sex =
+    element biological_sex { "M" | "F" }
 
 person =
   element person {
