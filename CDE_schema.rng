@@ -18,6 +18,18 @@
         <element name="description">
           <text/>
         </element>
+        <optional>
+          <ref name="index_codes"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="modality"/>
+        </zeroOrMore>
+        <optional>
+          <ref name="biological_sex"/>
+        </optional>
+        <optional>
+          <ref name="age_range"/>
+        </optional>
         <oneOrMore>
           <ref name="authors"/>
         </oneOrMore>
@@ -32,15 +44,6 @@
       </element>
     </element>
   </start>
-  <define name="authors">
-    <a:documentation>Each data element or set can have 0 or more individual and/or organizational authors</a:documentation>
-    <zeroOrMore>
-      <ref name="person"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="org"/>
-    </zeroOrMore>
-  </define>
   <define name="data_element">
     <element name="element">
       <a:documentation>Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</a:documentation>
@@ -71,6 +74,15 @@
       </optional>
       <optional>
         <ref name="index_codes"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="modality"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="biological_sex"/>
+      </optional>
+      <optional>
+        <ref name="age_range"/>
       </optional>
       <element name="question">
         <text/>
@@ -160,6 +172,39 @@
             </element>
           </oneOrMore>
         </element>
+      </choice>
+    </element>
+  </define>
+  <define name="age_range">
+    <a:documentation>Named Pattern Definitions</a:documentation>
+    <a:documentation>Each data element or set can have 0 or more individual and/or organizational authors</a:documentation>
+    <element name="age_range">
+      <optional>
+        <element name="upper_bound">
+          <data type="float"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="lower_bound">
+          <data type="float"/>
+        </element>
+      </optional>
+      <a.documentation xmlns="">The range of applicable ages for the data element or set, specified in fractional years (e.g. 4 months = 0.33 years)</a.documentation>
+    </element>
+  </define>
+  <define name="authors">
+    <zeroOrMore>
+      <ref name="person"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="org"/>
+    </zeroOrMore>
+  </define>
+  <define name="biological_sex">
+    <element name="biological_sex">
+      <choice>
+        <value>M</value>
+        <value>F</value>
       </choice>
     </element>
   </define>
@@ -296,6 +341,32 @@
           <ref name="authors"/>
         </optional>
       </interleave>
+    </element>
+  </define>
+  <define name="modality">
+    <element name="modality">
+      <element name="system">
+        <value>DICOM</value>
+      </element>
+      <element name="code">
+        <choice>
+          <value>CR</value>
+          <value>CT</value>
+          <value>DX</value>
+          <value>IVUS</value>
+          <value>MG</value>
+          <value>MR</value>
+          <value>NM</value>
+          <value>PT</value>
+          <value>RF</value>
+          <value>RG</value>
+          <value>US</value>
+          <value>XA</value>
+        </choice>
+      </element>
+      <element name="href">
+        <value>http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1</value>
+      </element>
     </element>
   </define>
   <define name="status_attrs">
