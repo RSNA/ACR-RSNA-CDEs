@@ -17,6 +17,10 @@
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element name="url" type="xs:anyURI"/>
           <xs:element ref="description"/>
+          <xs:element ref="index_codes"/>
+          <xs:element ref="modality"/>
+          <xs:element ref="biological_sex"/>
+          <xs:element ref="age_range"/>
           <xs:choice>
             <xs:element ref="person"/>
             <xs:element ref="organization"/>
@@ -36,15 +40,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:group name="authors">
-    <xs:annotation>
-      <xs:documentation>Each data element or set can have 0 or more individual and/or organizational authors</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" ref="person"/>
-      <xs:element minOccurs="0" maxOccurs="unbounded" ref="organization"/>
-    </xs:sequence>
-  </xs:group>
   <xs:element name="element">
     <xs:annotation>
       <xs:documentation>Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.</xs:documentation>
@@ -64,6 +59,9 @@
         <xs:element ref="version"/>
         <xs:group minOccurs="0" ref="history"/>
         <xs:element minOccurs="0" ref="index_codes"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="modality"/>
+        <xs:element minOccurs="0" ref="biological_sex"/>
+        <xs:element minOccurs="0" ref="age_range"/>
         <xs:element ref="question"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="instructions"/>
@@ -139,6 +137,30 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="age_range">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="upper_bound"/>
+        <xs:element minOccurs="0" ref="lower_bound"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="upper_bound" type="xs:float"/>
+  <xs:element name="lower_bound" type="xs:float"/>
+  <xs:group name="authors">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="person"/>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="organization"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="biological_sex">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="M"/>
+        <xs:enumeration value="F"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
   <xs:element name="person">
     <xs:complexType>
       <xs:sequence>
@@ -197,24 +219,21 @@
   <xs:element name="index_code">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="system"/>
-        <xs:element ref="code"/>
-        <xs:element minOccurs="0" ref="href"/>
+        <xs:element name="system">
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="RADLEX"/>
+              <xs:enumeration value="SNOMEDCT"/>
+              <xs:enumeration value="LOINC"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="code" type="xs:normalizedString"/>
+        <xs:element minOccurs="0" name="href" type="xs:anyURI"/>
         <xs:element minOccurs="0" ref="display"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="system">
-    <xs:simpleType>
-      <xs:restriction base="xs:token">
-        <xs:enumeration value="RADLEX"/>
-        <xs:enumeration value="SNOMEDCT"/>
-        <xs:enumeration value="LOINC"/>
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:element>
-  <xs:element name="code" type="xs:normalizedString"/>
-  <xs:element name="href" type="xs:anyURI"/>
   <xs:element name="display" type="xs:string"/>
   <xs:element name="image">
     <xs:complexType>
@@ -237,6 +256,44 @@
   <xs:element name="caption" type="xs:string"/>
   <xs:element name="rights" type="xs:string"/>
   <xs:element name="source" type="xs:string"/>
+  <xs:element name="modality">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="system">
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="DICOM"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="code">
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="CR"/>
+              <xs:enumeration value="CT"/>
+              <xs:enumeration value="DX"/>
+              <xs:enumeration value="IVUS"/>
+              <xs:enumeration value="MG"/>
+              <xs:enumeration value="MR"/>
+              <xs:enumeration value="NM"/>
+              <xs:enumeration value="PT"/>
+              <xs:enumeration value="RF"/>
+              <xs:enumeration value="RG"/>
+              <xs:enumeration value="US"/>
+              <xs:enumeration value="XA"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="href">
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:group name="status_attrs">
     <xs:sequence>
       <xs:element ref="date"/>
