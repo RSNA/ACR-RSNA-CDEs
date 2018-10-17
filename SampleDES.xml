@@ -16,7 +16,7 @@
           <name>Nodule size</name>
           <definition>The greatest linear dimension of the adrenal nodule.</definition>
           <version>
-            <versionNumber>1</versionNumber>
+            <version_number>1</version_number>
             <date>2015-07-05</date>
             <status>proposed</status>
           </version>
@@ -41,14 +41,14 @@
             <name>Side</name>
             <definition>The side of the body (right or left)</definition>
             <version>
-              <versionNumber>1</versionNumber>
+              <version_number>1</version_number>
               <date>2015-07-05</date>
               <status>proposed</status>
             </version>
             <question>Side</question>
             <value_set>
-              <minCardinality>1</minCardinality>
-              <maxCardinality>1</maxCardinality>
+              <min_cardinality>1</min_cardinality>
+              <max_cardinality>1</max_cardinality>
                 <value>
                   <value>R</value>
                   <name>Right</name>

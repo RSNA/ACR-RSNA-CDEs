@@ -28,7 +28,7 @@ data_element =
     },
     authors?,
     element version {
-        element versionNumber { xsd:positiveInteger },
+        element version_number { xsd:positiveInteger },
         status_attrs,
         empty
     },
@@ -48,16 +48,16 @@ data_element =
             element unit { xsd:Name }?
         }
         | element float_values {
-            element min { xsd:float },
-            element max { xsd:float >> a:documentation ["Must be greater than the min attribute"] },
+            element min { xsd:float }?,
+            element max { xsd:float >> a:documentation ["Must be greater than the min attribute"] }?,
             element step { xsd:integer },
             element unit { xsd:Name },
             empty
         }
         | element boolean_values { empty }
         | element value_set {
-            element minCardinality { xsd:integer >> a:documentation ["defines the minimum number of values to select from the value set"] },
-            element maxCardinality { xsd:integer >> a:documentation ["defines the maximum number of values to select from the value set"] },
+            element min_cardinality { xsd:positiveInteger >> a:documentation ["defines the minimum number of values to select from the value set"] }?,
+            element max_cardinality { xsd:positiveInteger >> a:documentation ["defines the maximum number of values to select from the value set"] }?,
             element value {
                 element value { xsd:Name },
                 element name { text },
