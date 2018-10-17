@@ -11,12 +11,13 @@
       <element name="name">
         <text/>
       </element>
+      <element name="description">
+        <text/>
+        <a:documentation>plain text, or an XHTML div are both acceptable</a:documentation>
+      </element>
       <interleave>
         <element name="url">
           <data type="anyURI"/>
-        </element>
-        <element name="description">
-          <text/>
         </element>
         <optional>
           <ref name="index_codes"/>
@@ -63,7 +64,7 @@
         <ref name="authors"/>
       </optional>
       <element name="version">
-        <element name="versionNumber">
+        <element name="version_number">
           <data type="positiveInteger"/>
         </element>
         <ref name="status_attrs"/>
@@ -127,13 +128,17 @@
           </optional>
         </element>
         <element name="float_values">
-          <element name="min">
-            <data type="float"/>
-          </element>
-          <element name="max">
-            <data type="float"/>
-            <a:documentation>Must be greater than the min attribute</a:documentation>
-          </element>
+          <optional>
+            <element name="min">
+              <data type="float"/>
+            </element>
+          </optional>
+          <optional>
+            <element name="max">
+              <data type="float"/>
+              <a:documentation>Must be greater than the min attribute</a:documentation>
+            </element>
+          </optional>
           <element name="step">
             <data type="integer"/>
           </element>
@@ -146,6 +151,18 @@
           <empty/>
         </element>
         <element name="value_set">
+          <optional>
+            <element name="min_cardinality">
+              <data type="positiveInteger"/>
+              <a:documentation>defines the minimum number of values to select from the value set</a:documentation>
+            </element>
+          </optional>
+          <optional>
+            <element name="max_cardinality">
+              <data type="positiveInteger"/>
+              <a:documentation>defines the maximum number of values to select from the value set</a:documentation>
+            </element>
+          </optional>
           <oneOrMore>
             <element name="value">
               <element name="value">
