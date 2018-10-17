@@ -14,9 +14,9 @@
           </xs:simpleType>
         </xs:element>
         <xs:element ref="name"/>
+        <xs:element ref="description"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element name="url" type="xs:anyURI"/>
-          <xs:element ref="description"/>
           <xs:element ref="index_codes"/>
           <xs:element ref="modality"/>
           <xs:element ref="biological_sex"/>
@@ -80,12 +80,12 @@
   <xs:element name="version">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="versionNumber"/>
+        <xs:element ref="version_number"/>
         <xs:group ref="status_attrs"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="versionNumber" type="xs:positiveInteger"/>
+  <xs:element name="version_number" type="xs:positiveInteger"/>
   <xs:element name="question" type="xs:string"/>
   <xs:element name="instructions" type="xs:string"/>
   <xs:element name="images">
@@ -110,8 +110,8 @@
   <xs:element name="float_values">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="min" type="xs:float"/>
-        <xs:element name="max" type="xs:float"/>
+        <xs:element minOccurs="0" name="min" type="xs:float"/>
+        <xs:element minOccurs="0" name="max" type="xs:float"/>
         <xs:element ref="step"/>
         <xs:element ref="unit"/>
       </xs:sequence>
@@ -123,6 +123,8 @@
   <xs:element name="value_set">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" ref="min_cardinality"/>
+        <xs:element minOccurs="0" ref="max_cardinality"/>
         <xs:element maxOccurs="unbounded" name="value">
           <xs:complexType>
             <xs:sequence>
@@ -137,6 +139,8 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="min_cardinality" type="xs:positiveInteger"/>
+  <xs:element name="max_cardinality" type="xs:positiveInteger"/>
   <xs:element name="age_range">
     <xs:complexType>
       <xs:sequence>
