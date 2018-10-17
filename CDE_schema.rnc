@@ -6,8 +6,8 @@ start =
     ## Each set has a unique identifier of the format "RDES[0-9]+" (e.g., "RDES42") and a textual name.
     element id { xsd:string { pattern='RDES\d+' } },
     element name { text },
+    element description { text >> a:documentation ["plain text, or an XHTML div are both acceptable"]},
     (element url { xsd:anyURI }
-     & element description { text }
      & index_codes?
      & modality*
      & biological_sex?
