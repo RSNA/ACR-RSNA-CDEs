@@ -2,7 +2,7 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 
 start =
   element data_element_set {
-    
+
     ## Each set has a unique identifier of the format "RDES[0-9]+" (e.g., "RDES42") and a textual name.
     element id { xsd:string { pattern='RDES\d+' } },
     element name { text },
@@ -46,16 +46,18 @@ data_element =
             element max { xsd:integer >> a:documentation ["Must be greater than the min attribute"] }?,
             element step { xsd:integer >> a:documentation ["Default is 1"] }?,
             element unit { xsd:Name }?
-        } 
+        }
         | element float_values {
             element min { xsd:float },
             element max { xsd:float >> a:documentation ["Must be greater than the min attribute"] },
             element step { xsd:integer },
             element unit { xsd:Name },
             empty
-        } 
+        }
         | element boolean_values { empty }
         | element value_set {
+            element minCardinality { xsd:integer >> a:documentation ["defines the minimum number of values to select from the value set"] },
+            element maxCardinality { xsd:integer >> a:documentation ["defines the maximum number of values to select from the value set"] },
             element value {
                 element value { xsd:Name },
                 element name { text },
@@ -128,7 +130,7 @@ modality =
         element href { "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1" }
     }
 
-status_attrs = 
+status_attrs =
     element date { xsd:date },
     element status {
       "proposed" | "approved" | "published" | "deprecated"

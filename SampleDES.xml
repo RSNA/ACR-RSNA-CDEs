@@ -47,6 +47,8 @@
             </version>
             <question>Side</question>
             <value_set>
+              <minCardinality>1</minCardinality>
+              <maxCardinality>1</maxCardinality>
                 <value>
                   <value>R</value>
                   <name>Right</name>
