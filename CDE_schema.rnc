@@ -6,7 +6,7 @@ start =
     ## Each set has a unique identifier of the format "RDES[0-9]+" (e.g., "RDES42") and a textual name.
     element id { xsd:string { pattern='RDES\d+' } },
     element name { text },
-    element description { text >> a:documentation ["plain text, or an XHTML div are both acceptable"]},
+    element description { text >> a:documentation ["plain text, or XHTML div are acceptable"]},
     (element url { xsd:anyURI }
      & index_codes?
      & modality*
@@ -26,20 +26,17 @@ data_element =
     element definition {
        text >> a:documentation [ "Each CDE must have a definition." ]
     },
-    authors?,
     element version {
         element version_number { xsd:positiveInteger },
         status_attrs,
         empty
     },
-    history?,
     index_codes?,
     modality*,
     biological_sex?,
     age_range?,
-    element question { text },
-    (element instructions { text }?
-     & element images { image+ }?),
+    authors+,
+    history+,
     (
         element integer_values {
             element min { xsd:integer }?,
