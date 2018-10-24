@@ -1,0 +1,97 @@
+{
+  "data_element_set": {
+    "id": "RDES3",
+    "name": "CAR/DS Adrenal Nodule",
+    "description": "ACR Assist project for describing adrenal nodules.",
+    "modality": {
+      "system": "DICOM",
+      "code": "CT",
+      "href": "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1"
+    },
+    "url": "http://radelement.org/api/v1/projects/3",
+    "elements": {
+      "element": [
+        {
+          "id": "RDE41",
+          "name": "Nodule size",
+          "definition": "The greatest linear dimension of the adrenal nodule.",
+          "version": {
+            "version_number": "1",
+            "date": "2015-07-05",
+            "status": "proposed"
+          },
+          "index_codes": {
+            "index_code": {
+              "system": "SNOMEDCT",
+              "code": "246120007",
+              "href": "http://snomed.info/sct",
+              "display": "nodule size"
+            }
+          },
+          "integer_values": {
+            "min": "0",
+            "max": "999",
+            "step": "1",
+            "unit": "mm"
+          }
+        },
+        {
+          "id": "RDE42",
+          "name": "Side",
+          "definition": "The side of the body (right or left)",
+          "version": {
+            "version_number": "1",
+            "date": "2015-07-05",
+            "status": "proposed"
+          },
+          "value_set": {
+            "min_cardinality": "1",
+            "max_cardinality": "1",
+            "value": [
+              {
+                "value": "R",
+                "name": "Right",
+                "index_codes": {
+                  "index_code": [
+                    {
+                      "system": "RADLEX",
+                      "code": "RID5828",
+                      "href": "http://radlex.org/",
+                      "display": "Right"
+                    },
+                    {
+                      "system": "SNOMEDCT",
+                      "code": "24028007",
+                      "href": "http://snomed.info/sct",
+                      "display": "Right"
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "L",
+                "name": "Left",
+                "index_codes": {
+                  "index_code": [
+                    {
+                      "system": "RADLEX",
+                      "code": "RID5824",
+                      "href": "http://radlex.org/",
+                      "display": "Left"
+                    },
+                    {
+                      "system": "SNOMEDCT",
+                      "code": "7771000",
+                      "href": "http://snomed.info/sct",
+                      "display": "Left"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
