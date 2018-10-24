@@ -51,7 +51,7 @@ data_element =
         }
         | element boolean_values { xsd:boolean }
         | element value_set {
-            element min_cardinality { xsd:positiveInteger >> a:documentation ["defines the minimum number of values to select from the value set"] }?,
+            element min_cardinality { xsd:nonNegativeInteger >> a:documentation ["defines the minimum number of values to select from the value set"] }?,
             element max_cardinality { xsd:positiveInteger >> a:documentation ["defines the maximum number of values to select from the value set"] }?,
             element value {
                 element value { xsd:Name },

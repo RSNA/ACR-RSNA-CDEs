@@ -138,7 +138,7 @@
         <element name="value_set">
           <optional>
             <element name="min_cardinality">
-              <data type="positiveInteger"/>
+              <data type="nonNegativeInteger"/>
               <a:documentation>defines the minimum number of values to select from the value set</a:documentation>
             </element>
           </optional>

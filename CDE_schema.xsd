@@ -123,7 +123,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="min_cardinality" type="xs:positiveInteger"/>
+  <xs:element name="min_cardinality" type="xs:nonNegativeInteger"/>
   <xs:element name="max_cardinality" type="xs:positiveInteger"/>
   <xs:element name="images">
     <xs:complexType>
