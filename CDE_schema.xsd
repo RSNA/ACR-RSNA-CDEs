@@ -55,18 +55,13 @@
         </xs:element>
         <xs:element ref="name"/>
         <xs:element ref="definition"/>
-        <xs:group minOccurs="0" ref="authors"/>
         <xs:element ref="version"/>
-        <xs:group minOccurs="0" ref="history"/>
         <xs:element minOccurs="0" ref="index_codes"/>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="modality"/>
         <xs:element minOccurs="0" ref="biological_sex"/>
         <xs:element minOccurs="0" ref="age_range"/>
-        <xs:element ref="question"/>
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element ref="instructions"/>
-          <xs:element ref="images"/>
-        </xs:choice>
+        <xs:group maxOccurs="unbounded" ref="authors"/>
+        <xs:group maxOccurs="unbounded" ref="history"/>
         <xs:choice>
           <xs:element ref="integer_values"/>
           <xs:element ref="float_values"/>
@@ -86,15 +81,6 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="version_number" type="xs:positiveInteger"/>
-  <xs:element name="question" type="xs:string"/>
-  <xs:element name="instructions" type="xs:string"/>
-  <xs:element name="images">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="image"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="integer_values">
     <xs:complexType>
       <xs:sequence>
@@ -112,14 +98,12 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="min" type="xs:float"/>
         <xs:element minOccurs="0" name="max" type="xs:float"/>
-        <xs:element ref="step"/>
-        <xs:element ref="unit"/>
+        <xs:element minOccurs="0" ref="step"/>
+        <xs:element minOccurs="0" ref="unit"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="boolean_values">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="boolean_values" type="xs:boolean"/>
   <xs:element name="value_set">
     <xs:complexType>
       <xs:sequence>
@@ -141,6 +125,13 @@
   </xs:element>
   <xs:element name="min_cardinality" type="xs:positiveInteger"/>
   <xs:element name="max_cardinality" type="xs:positiveInteger"/>
+  <xs:element name="images">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="image"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="age_range">
     <xs:complexType>
       <xs:sequence>

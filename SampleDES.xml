@@ -28,7 +28,6 @@
               <display>nodule size</display>
             </index_code>
            </index_codes>
-            <question>Enter the greatest diameter of the adrenal nodule</question>
             <integer_values>
               <min>0</min>
               <max>999</max>
@@ -45,7 +44,6 @@
               <date>2015-07-05</date>
               <status>proposed</status>
             </version>
-            <question>Side</question>
             <value_set>
               <min_cardinality>1</min_cardinality>
               <max_cardinality>1</max_cardinality>

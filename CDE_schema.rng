@@ -13,7 +13,7 @@
       </element>
       <element name="description">
         <text/>
-        <a:documentation>plain text, or an XHTML div are both acceptable</a:documentation>
+        <a:documentation>plain text, or XHTML div are acceptable</a:documentation>
       </element>
       <interleave>
         <element name="url">
@@ -60,19 +60,12 @@
         <text/>
         <a:documentation>Each CDE must have a definition.</a:documentation>
       </element>
-      <optional>
-        <ref name="authors"/>
-      </optional>
       <element name="version">
         <element name="version_number">
           <data type="positiveInteger"/>
         </element>
         <ref name="status_attrs"/>
-        <empty/>
       </element>
-      <optional>
-        <ref name="history"/>
-      </optional>
       <optional>
         <ref name="index_codes"/>
       </optional>
@@ -85,23 +78,12 @@
       <optional>
         <ref name="age_range"/>
       </optional>
-      <element name="question">
-        <text/>
-      </element>
-      <interleave>
-        <optional>
-          <element name="instructions">
-            <text/>
-          </element>
-        </optional>
-        <optional>
-          <element name="images">
-            <oneOrMore>
-              <ref name="image"/>
-            </oneOrMore>
-          </element>
-        </optional>
-      </interleave>
+      <oneOrMore>
+        <ref name="authors"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="history"/>
+      </oneOrMore>
       <choice>
         <element name="integer_values">
           <optional>
@@ -139,16 +121,19 @@
               <a:documentation>Must be greater than the min attribute</a:documentation>
             </element>
           </optional>
-          <element name="step">
-            <data type="integer"/>
-          </element>
-          <element name="unit">
-            <data type="Name"/>
-          </element>
-          <empty/>
+          <optional>
+            <element name="step">
+              <data type="integer"/>
+            </element>
+          </optional>
+          <optional>
+            <element name="unit">
+              <data type="Name"/>
+            </element>
+          </optional>
         </element>
         <element name="boolean_values">
-          <empty/>
+          <data type="boolean"/>
         </element>
         <element name="value_set">
           <optional>
