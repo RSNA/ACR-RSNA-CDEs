@@ -128,8 +128,9 @@ modality =
 status_attrs =
     element date { xsd:date },
     element status {
-      "proposed" | "approved" | "published" | "deprecated"
+      "proposed" | "published" | "retired"
     }
+
 history =
   element event {
     status_attrs
