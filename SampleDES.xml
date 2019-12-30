@@ -4,6 +4,11 @@
   <id>RDES3</id>
   <name>CAR/DS Adrenal Nodule</name>
   <description>ACR Assist project for describing adrenal nodules.</description>
+  <version>
+    <name>1</name>
+    <date>2015-07-05</date>
+    <status>proposed</status>
+  </version>
   <modality>
     <system>DICOM</system>
     <code>CT</code>
@@ -16,7 +21,7 @@
           <name>Nodule size</name>
           <definition>The greatest linear dimension of the adrenal nodule.</definition>
           <version>
-            <version_number>1</version_number>
+            <name>1</name>
             <date>2015-07-05</date>
             <status>proposed</status>
           </version>
@@ -40,7 +45,7 @@
             <name>Side</name>
             <definition>The side of the body (right or left)</definition>
             <version>
-              <version_number>1</version_number>
+              <name>1</name>
               <date>2015-07-05</date>
               <status>proposed</status>
             </version>

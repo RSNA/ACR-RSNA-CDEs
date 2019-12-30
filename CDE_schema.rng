@@ -15,6 +15,7 @@
         <text/>
         <a:documentation>plain text, or XHTML div are acceptable</a:documentation>
       </element>
+      <ref name="version"/>
       <interleave>
         <element name="url">
           <data type="anyURI"/>
@@ -60,12 +61,7 @@
         <text/>
         <a:documentation>Each CDE must have a definition.</a:documentation>
       </element>
-      <element name="version">
-        <element name="version_number">
-          <data type="positiveInteger"/>
-        </element>
-        <ref name="status_attrs"/>
-      </element>
+      <ref name="version"/>
       <optional>
         <ref name="index_codes"/>
       </optional>
@@ -378,9 +374,8 @@
     <element name="status">
       <choice>
         <value>proposed</value>
-        <value>approved</value>
         <value>published</value>
-        <value>deprecated</value>
+        <value>retired</value>
       </choice>
     </element>
   </define>
@@ -390,5 +385,13 @@
         <ref name="status_attrs"/>
       </element>
     </zeroOrMore>
+  </define>
+  <define name="version">
+    <element name="version">
+      <element name="name">
+        <text/>
+      </element>
+      <ref name="status_attrs"/>
+    </element>
   </define>
 </grammar>

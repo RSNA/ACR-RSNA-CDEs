@@ -7,6 +7,7 @@ start =
     element id { xsd:string { pattern='RDES\d+' } },
     element name { text },
     element description { text >> a:documentation ["plain text, or XHTML div are acceptable"]},
+    version,
     (element url { xsd:anyURI }
      & index_codes?
      & modality*
@@ -26,10 +27,7 @@ data_element =
     element definition {
        text >> a:documentation [ "Each CDE must have a definition." ]
     },
-    element version {
-        element version_number { xsd:positiveInteger },
-        status_attrs
-    },
+    version,
     index_codes?,
     modality*,
     biological_sex?,
@@ -135,3 +133,9 @@ history =
   element event {
     status_attrs
   }*
+
+version =
+    element version {
+        element name {text},
+        status_attrs
+    }

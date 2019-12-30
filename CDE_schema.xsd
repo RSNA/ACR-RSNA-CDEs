@@ -15,6 +15,7 @@
         </xs:element>
         <xs:element ref="name"/>
         <xs:element ref="description"/>
+        <xs:element ref="version"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element name="url" type="xs:anyURI"/>
           <xs:element ref="index_codes"/>
@@ -72,15 +73,6 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="definition" type="xs:string"/>
-  <xs:element name="version">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="version_number"/>
-        <xs:group ref="status_attrs"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="version_number" type="xs:positiveInteger"/>
   <xs:element name="integer_values">
     <xs:complexType>
       <xs:sequence>
@@ -300,9 +292,8 @@
     <xs:simpleType>
       <xs:restriction base="xs:token">
         <xs:enumeration value="proposed"/>
-        <xs:enumeration value="approved"/>
         <xs:enumeration value="published"/>
-        <xs:enumeration value="deprecated"/>
+        <xs:enumeration value="retired"/>
       </xs:restriction>
     </xs:simpleType>
   </xs:element>
@@ -314,6 +305,14 @@
   <xs:element name="event">
     <xs:complexType>
       <xs:group ref="status_attrs"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="version">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:group ref="status_attrs"/>
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
 </xs:schema>
