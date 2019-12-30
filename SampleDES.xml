@@ -14,6 +14,18 @@
     <code>CT</code>
     <href>http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1</href>
   </modality>
+  <specialty>
+    <name>Abdominal Radiology</name>
+    <abbreviation>AB</abbreviation>
+  </specialty>
+  <specialty>
+    <name>Genitourinary Radiology</name>
+    <abbreviation>GU</abbreviation>
+  </specialty>
+  <specialty>
+    <name>Computed Tomorgraphy</name>
+    <abbreviation>CT</abbreviation>
+  </specialty>
   <url>http://radelement.org/api/v1/projects/3</url>
     <elements>
         <element>
@@ -33,7 +45,19 @@
               <display>nodule size</display>
             </index_code>
            </index_codes>
-            <integer_values>
+           <specialty>
+             <name>Abdominal Radiology</name>
+             <abbreviation>AB</abbreviation>
+           </specialty>
+           <specialty>
+             <name>Genitourinary Radiology</name>
+             <abbreviation>GU</abbreviation>
+           </specialty>
+           <specialty>
+             <name>Computed Tomorgraphy</name>
+             <abbreviation>CT</abbreviation>
+           </specialty>
+           <integer_values>
               <min>0</min>
               <max>999</max>
               <step>1</step>
@@ -49,7 +73,19 @@
               <date>2015-07-05</date>
               <status>proposed</status>
             </version>
-            <value_set>
+          <specialty>
+            <name>Abdominal Radiology</name>
+            <abbreviation>AB</abbreviation>
+          </specialty>
+          <specialty>
+            <name>Genitourinary Radiology</name>
+            <abbreviation>GU</abbreviation>
+          </specialty>
+          <specialty>
+            <name>Computed Tomorgraphy</name>
+            <abbreviation>CT</abbreviation>
+          </specialty>
+          <value_set>
               <min_cardinality>1</min_cardinality>
               <max_cardinality>1</max_cardinality>
                 <value>

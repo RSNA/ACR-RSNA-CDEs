@@ -13,6 +13,20 @@
       "code": "CT",
       "href": "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1"
     },
+    "specialty": [
+      {
+        "name": "Abdominal Radiology",
+        "abbreviation": "AB"
+      },
+      {
+        "name": "Genitourinary Radiology",
+        "abbreviation": "GU"
+      },
+      {
+        "name": "Computed Tomorgraphy",
+        "abbreviation": "CT"
+      }
+    ],
     "url": "http://radelement.org/api/v1/projects/3",
     "elements": {
       "element": [
@@ -33,6 +47,20 @@
               "display": "nodule size"
             }
           },
+          "specialty": [
+            {
+              "name": "Abdominal Radiology",
+              "abbreviation": "AB"
+            },
+            {
+              "name": "Genitourinary Radiology",
+              "abbreviation": "GU"
+            },
+            {
+              "name": "Computed Tomorgraphy",
+              "abbreviation": "CT"
+            }
+          ],
           "integer_values": {
             "min": "0",
             "max": "999",
@@ -49,6 +77,20 @@
             "date": "2015-07-05",
             "status": "proposed"
           },
+          "specialty": [
+            {
+              "name": "Abdominal Radiology",
+              "abbreviation": "AB"
+            },
+            {
+              "name": "Genitourinary Radiology",
+              "abbreviation": "GU"
+            },
+            {
+              "name": "Computed Tomorgraphy",
+              "abbreviation": "CT"
+            }
+          ],
           "value_set": {
             "min_cardinality": "1",
             "max_cardinality": "1",

@@ -38,6 +38,9 @@
         <oneOrMore>
           <ref name="history"/>
         </oneOrMore>
+        <oneOrMore>
+          <ref name="specialty"/>
+        </oneOrMore>
       </interleave>
       <element name="elements">
         <oneOrMore>
@@ -79,6 +82,9 @@
       </oneOrMore>
       <oneOrMore>
         <ref name="history"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="specialty"/>
       </oneOrMore>
       <choice>
         <element name="integer_values">
@@ -377,6 +383,40 @@
         <value>published</value>
         <value>retired</value>
       </choice>
+    </element>
+  </define>
+  <define name="specialty">
+    <element name="specialty">
+      <element name="name">
+        <text/>
+      </element>
+      <element name="abbreviation">
+        <choice>
+          <value>AB</value>
+          <value>BR</value>
+          <value>CA</value>
+          <value>CH</value>
+          <value>CT</value>
+          <value>ER</value>
+          <value>GI</value>
+          <value>GU</value>
+          <value>HN</value>
+          <value>IR</value>
+          <value>MI</value>
+          <value>MK</value>
+          <value>MR</value>
+          <value>NM</value>
+          <value>NR</value>
+          <value>OB</value>
+          <value>OI</value>
+          <value>OT</value>
+          <value>PD</value>
+          <value>QI</value>
+          <value>RS</value>
+          <value>US</value>
+          <value>VI</value>
+        </choice>
+      </element>
     </element>
   </define>
   <define name="history">

@@ -27,6 +27,7 @@
             <xs:element ref="organization"/>
           </xs:choice>
           <xs:group ref="history"/>
+          <xs:element ref="specialty"/>
         </xs:choice>
         <xs:element ref="elements"/>
       </xs:sequence>
@@ -63,6 +64,7 @@
         <xs:element minOccurs="0" ref="age_range"/>
         <xs:group maxOccurs="unbounded" ref="authors"/>
         <xs:group maxOccurs="unbounded" ref="history"/>
+        <xs:element maxOccurs="unbounded" ref="specialty"/>
         <xs:choice>
           <xs:element ref="integer_values"/>
           <xs:element ref="float_values"/>
@@ -177,7 +179,7 @@
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="name"/>
-        <xs:element ref="abbreviation"/>
+        <xs:element name="abbreviation" type="xs:string"/>
         <xs:element name="url" type="xs:anyURI"/>
         <xs:element ref="comment"/>
         <xs:element name="role">
@@ -194,7 +196,6 @@
       </xs:choice>
     </xs:complexType>
   </xs:element>
-  <xs:element name="abbreviation" type="xs:string"/>
   <xs:element name="comment" type="xs:string"/>
   <xs:element name="index_codes">
     <xs:complexType>
@@ -296,6 +297,42 @@
         <xs:enumeration value="retired"/>
       </xs:restriction>
     </xs:simpleType>
+  </xs:element>
+  <xs:element name="specialty">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element name="abbreviation">
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="AB"/>
+              <xs:enumeration value="BR"/>
+              <xs:enumeration value="CA"/>
+              <xs:enumeration value="CH"/>
+              <xs:enumeration value="CT"/>
+              <xs:enumeration value="ER"/>
+              <xs:enumeration value="GI"/>
+              <xs:enumeration value="GU"/>
+              <xs:enumeration value="HN"/>
+              <xs:enumeration value="IR"/>
+              <xs:enumeration value="MI"/>
+              <xs:enumeration value="MK"/>
+              <xs:enumeration value="MR"/>
+              <xs:enumeration value="NM"/>
+              <xs:enumeration value="NR"/>
+              <xs:enumeration value="OB"/>
+              <xs:enumeration value="OI"/>
+              <xs:enumeration value="OT"/>
+              <xs:enumeration value="PD"/>
+              <xs:enumeration value="QI"/>
+              <xs:enumeration value="RS"/>
+              <xs:enumeration value="US"/>
+              <xs:enumeration value="VI"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
   </xs:element>
   <xs:group name="history">
     <xs:sequence>

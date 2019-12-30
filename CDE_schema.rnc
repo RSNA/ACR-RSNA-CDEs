@@ -14,7 +14,8 @@ start =
      & biological_sex?
      & age_range?
      & authors+
-     & history+),
+     & history+
+     & specialty+),
     element elements { data_element+ }
   }
 
@@ -34,6 +35,7 @@ data_element =
     age_range?,
     authors+,
     history+,
+    specialty+,
     (
         element integer_values {
             element min { xsd:integer }?,
@@ -127,6 +129,12 @@ status_attrs =
     element date { xsd:date },
     element status {
       "proposed" | "published" | "retired"
+    }
+
+specialty =
+    element specialty {
+        element name { text },
+        element abbreviation { "AB" | "BR" | "CA" | "CH" | "CT" | "ER" | "GI" | "GU" | "HN" | "IR" | "MI" | "MK" | "MR" | "NM" | "NR" | "OB" | "OI" | "OT" | "PD" | "QI" | "RS" | "US" | "VI" }
     }
 
 history =
