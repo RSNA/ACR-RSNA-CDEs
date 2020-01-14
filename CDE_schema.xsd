@@ -22,10 +22,7 @@
           <xs:element ref="modality"/>
           <xs:element ref="biological_sex"/>
           <xs:element ref="age_range"/>
-          <xs:choice>
-            <xs:element ref="person"/>
-            <xs:element ref="organization"/>
-          </xs:choice>
+          <xs:element ref="authors"/>
           <xs:group ref="history"/>
           <xs:element ref="specialty"/>
         </xs:choice>
@@ -62,7 +59,7 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="modality"/>
         <xs:element minOccurs="0" ref="biological_sex"/>
         <xs:element minOccurs="0" ref="age_range"/>
-        <xs:group maxOccurs="unbounded" ref="authors"/>
+        <xs:element minOccurs="0" ref="authors"/>
         <xs:group maxOccurs="unbounded" ref="history"/>
         <xs:element maxOccurs="unbounded" ref="specialty"/>
         <xs:choice>
@@ -136,12 +133,14 @@
   </xs:element>
   <xs:element name="upper_bound" type="xs:float"/>
   <xs:element name="lower_bound" type="xs:float"/>
-  <xs:group name="authors">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" ref="person"/>
-      <xs:element minOccurs="0" maxOccurs="unbounded" ref="organization"/>
-    </xs:sequence>
-  </xs:group>
+  <xs:element name="authors">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="person"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="organization"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="biological_sex">
     <xs:simpleType>
       <xs:restriction base="xs:token">
@@ -232,10 +231,7 @@
         <xs:element ref="caption"/>
         <xs:element ref="rights"/>
         <xs:element ref="source"/>
-        <xs:choice>
-          <xs:element ref="person"/>
-          <xs:element ref="organization"/>
-        </xs:choice>
+        <xs:element ref="authors"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>

@@ -13,7 +13,7 @@ start =
      & modality*
      & biological_sex?
      & age_range?
-     & authors+
+     & authors?
      & history+
      & specialty+),
     element elements { data_element+ }
@@ -33,7 +33,7 @@ data_element =
     modality*,
     biological_sex?,
     age_range?,
-    authors+,
+    authors?,
     history+,
     specialty+,
     (
@@ -73,7 +73,10 @@ age_range =
         element lower_bound { xsd:float }?  >> a.documentation ["The range of applicable ages for the data element or set, specified in fractional years (e.g. 4 months = 0.33 years)"]
     }
 
-authors = person*, org*
+authors =
+    element authors {
+        person*, org*
+        }
 
 biological_sex =
     element biological_sex { "M" | "F" }

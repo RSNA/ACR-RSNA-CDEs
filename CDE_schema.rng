@@ -32,9 +32,9 @@
         <optional>
           <ref name="age_range"/>
         </optional>
-        <oneOrMore>
+        <optional>
           <ref name="authors"/>
-        </oneOrMore>
+        </optional>
         <oneOrMore>
           <ref name="history"/>
         </oneOrMore>
@@ -77,9 +77,9 @@
       <optional>
         <ref name="age_range"/>
       </optional>
-      <oneOrMore>
+      <optional>
         <ref name="authors"/>
-      </oneOrMore>
+      </optional>
       <oneOrMore>
         <ref name="history"/>
       </oneOrMore>
@@ -197,12 +197,14 @@
     </element>
   </define>
   <define name="authors">
-    <zeroOrMore>
-      <ref name="person"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="org"/>
-    </zeroOrMore>
+    <element name="authors">
+      <zeroOrMore>
+        <ref name="person"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="org"/>
+      </zeroOrMore>
+    </element>
   </define>
   <define name="biological_sex">
     <element name="biological_sex">

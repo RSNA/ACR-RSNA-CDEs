@@ -14,6 +14,19 @@
     <code>CT</code>
     <href>http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1</href>
   </modality>
+  <authors>
+    <person>
+      <name>Tarik Alkasab</name>
+    </person>
+    <person>
+      <name>Marc Kohli</name>
+      <orcid_id>0000-0003-3720-0156</orcid_id>
+    </person>
+    <organization>
+      <name>American College of Radiology</name>
+      <abbreviation>ACR</abbreviation>
+    </organization>
+  </authors>
   <specialty>
     <name>Abdominal Radiology</name>
     <abbreviation>AB</abbreviation>
