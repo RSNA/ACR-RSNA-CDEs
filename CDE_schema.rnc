@@ -8,14 +8,15 @@ start =
     element name { text },
     element description { text >> a:documentation ["plain text, or XHTML div are acceptable"]},
     version,
-    (element url { xsd:anyURI }
-     & index_codes?
-     & modality*
-     & biological_sex?
-     & age_range?
-     & authors?
-     & history+
-     & specialty+),
+    references?,
+    index_codes?,
+    element images { image+ }?,
+    modality*,
+    biological_sex?,
+    age_range?,
+    authors?,
+    history+,
+    specialty+,
     element elements { data_element+ }
   }
 
@@ -29,7 +30,9 @@ data_element =
        text >> a:documentation [ "Each CDE must have a definition." ]
     },
     version,
+    references?,
     index_codes?,
+    element images { image+ }?,
     modality*,
     biological_sex?,
     age_range?,
@@ -66,13 +69,13 @@ data_element =
 
 ## Named Pattern Definitions
 
-## Each data element or set can have 0 or more individual and/or organizational authors
 age_range =
     element age_range {
         element upper_bound { xsd:float }?,
         element lower_bound { xsd:float }?  >> a.documentation ["The range of applicable ages for the data element or set, specified in fractional years (e.g. 4 months = 0.33 years)"]
     }
 
+## Each data element or set can have 0 or more individual and/or organizational authors
 authors =
     element authors {
         person*, org*
@@ -110,6 +113,7 @@ index_codes =
       element display { text }?
     }+
   }
+
 image =
   element image {
     element url { xsd:anyURI }
@@ -117,8 +121,8 @@ image =
     & element width { xsd:positiveInteger }?
     & element caption { text }?
     & element rights { text }?
-    & element source { text }?
     & authors?
+    & references?
   }
 
 modality =
@@ -126,6 +130,16 @@ modality =
         element system { "DICOM" },
         element code { "CR" | "CT" | "DX" | "IVUS" | "MG" | "MR" | "NM" | "PT" | "RF" | "RG" | "US" | "XA" },
         element href { "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1" }
+    }
+
+references =
+    element references {
+        element reference {
+            element citation { text } >> a.documentation ["Required - Provide a bibliographic citation, including all the author names (no et Al)"],
+            element doi_uri { xsd:anyURI }?,
+            element pubmed_id { xsd:integer }?,
+            element href { xsd:anyURI }?
+        }+
     }
 
 status_attrs =
