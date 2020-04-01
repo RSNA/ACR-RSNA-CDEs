@@ -60,6 +60,7 @@ data_element =
                 element value { xsd:Name },
                 element name { text },
                 element definition { text }?,
+                references?,
                 element images { image+ }?,
                 index_codes?
             }+
