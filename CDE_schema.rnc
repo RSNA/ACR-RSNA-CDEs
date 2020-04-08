@@ -110,7 +110,7 @@ index_codes =
     element index_code {
       element system { "RADLEX" | "SNOMEDCT" | "LOINC" },
       element code { xsd:normalizedString },
-      element href { xsd:anyURI }?,
+      element url { xsd:anyURI }?,
       element display { text }?
     }+
   }
@@ -130,7 +130,7 @@ modality =
     element modality {
         element system { "DICOM" },
         element code { "CR" | "CT" | "DX" | "IVUS" | "MG" | "MR" | "NM" | "PT" | "RF" | "RG" | "US" | "XA" },
-        element href { "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1" }
+        element url { "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1" }
     }
 
 references =
@@ -139,7 +139,7 @@ references =
             element citation { text } >> a.documentation ["Required - Provide a bibliographic citation, including all the author names (no et Al)"],
             element doi_uri { xsd:anyURI }?,
             element pubmed_id { xsd:integer }?,
-            element href { xsd:anyURI }?
+            element url { xsd:anyURI }?
         }+
     }
 
