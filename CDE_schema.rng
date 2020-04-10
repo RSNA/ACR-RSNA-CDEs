@@ -16,32 +16,37 @@
         <a:documentation>plain text, or XHTML div are acceptable</a:documentation>
       </element>
       <ref name="version"/>
-      <interleave>
-        <element name="url">
-          <data type="anyURI"/>
+      <optional>
+        <ref name="references"/>
+      </optional>
+      <optional>
+        <ref name="index_codes"/>
+      </optional>
+      <optional>
+        <element name="images">
+          <oneOrMore>
+            <ref name="image"/>
+          </oneOrMore>
         </element>
-        <optional>
-          <ref name="index_codes"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="modality"/>
-        </zeroOrMore>
-        <optional>
-          <ref name="biological_sex"/>
-        </optional>
-        <optional>
-          <ref name="age_range"/>
-        </optional>
-        <optional>
-          <ref name="authors"/>
-        </optional>
-        <oneOrMore>
-          <ref name="history"/>
-        </oneOrMore>
-        <oneOrMore>
-          <ref name="specialty"/>
-        </oneOrMore>
-      </interleave>
+      </optional>
+      <zeroOrMore>
+        <ref name="modality"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="biological_sex"/>
+      </optional>
+      <optional>
+        <ref name="age_range"/>
+      </optional>
+      <optional>
+        <ref name="authors"/>
+      </optional>
+      <oneOrMore>
+        <ref name="history"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="specialty"/>
+      </oneOrMore>
       <element name="elements">
         <oneOrMore>
           <ref name="data_element"/>
@@ -66,7 +71,17 @@
       </element>
       <ref name="version"/>
       <optional>
+        <ref name="references"/>
+      </optional>
+      <optional>
         <ref name="index_codes"/>
+      </optional>
+      <optional>
+        <element name="images">
+          <oneOrMore>
+            <ref name="image"/>
+          </oneOrMore>
+        </element>
       </optional>
       <zeroOrMore>
         <ref name="modality"/>
@@ -164,6 +179,9 @@
                 </element>
               </optional>
               <optional>
+                <ref name="references"/>
+              </optional>
+              <optional>
                 <element name="images">
                   <oneOrMore>
                     <ref name="image"/>
@@ -181,7 +199,6 @@
   </define>
   <define name="age_range">
     <a:documentation>Named Pattern Definitions</a:documentation>
-    <a:documentation>Each data element or set can have 0 or more individual and/or organizational authors</a:documentation>
     <element name="age_range">
       <optional>
         <element name="upper_bound">
@@ -197,6 +214,7 @@
     </element>
   </define>
   <define name="authors">
+    <a:documentation>Each data element or set can have 0 or more individual and/or organizational authors</a:documentation>
     <element name="authors">
       <zeroOrMore>
         <ref name="person"/>
@@ -299,7 +317,7 @@
             <data type="normalizedString"/>
           </element>
           <optional>
-            <element name="href">
+            <element name="url">
               <data type="anyURI"/>
             </element>
           </optional>
@@ -339,12 +357,10 @@
           </element>
         </optional>
         <optional>
-          <element name="source">
-            <text/>
-          </element>
+          <ref name="authors"/>
         </optional>
         <optional>
-          <ref name="authors"/>
+          <ref name="references"/>
         </optional>
       </interleave>
     </element>
@@ -370,9 +386,36 @@
           <value>XA</value>
         </choice>
       </element>
-      <element name="href">
+      <element name="url">
         <value>http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1</value>
       </element>
+    </element>
+  </define>
+  <define name="references">
+    <element name="references">
+      <oneOrMore>
+        <element name="reference">
+          <element name="citation">
+            <text/>
+          </element>
+          <a.documentation xmlns="">Required - Provide a bibliographic citation, including all the author names (no et Al)</a.documentation>
+          <optional>
+            <element name="doi_uri">
+              <data type="anyURI"/>
+            </element>
+          </optional>
+          <optional>
+            <element name="pubmed_id">
+              <data type="integer"/>
+            </element>
+          </optional>
+          <optional>
+            <element name="url">
+              <data type="anyURI"/>
+            </element>
+          </optional>
+        </element>
+      </oneOrMore>
     </element>
   </define>
   <define name="status_attrs">

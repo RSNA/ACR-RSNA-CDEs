@@ -25,7 +25,7 @@
     "modality": {
       "system": "DICOM",
       "code": "CT",
-      "href": "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1"
+      "url": "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1"
     },
     "authors": {
       "person": [
@@ -71,7 +71,7 @@
             "index_code": {
               "system": "SNOMEDCT",
               "code": "246120007",
-              "href": "http://snomed.info/sct",
+              "url": "http://snomed.info/sct",
               "display": "nodule size"
             }
           },
@@ -131,13 +131,13 @@
                     {
                       "system": "RADLEX",
                       "code": "RID5828",
-                      "href": "http://radlex.org/",
+                      "url": "http://radlex.org/",
                       "display": "Right"
                     },
                     {
                       "system": "SNOMEDCT",
                       "code": "24028007",
-                      "href": "http://snomed.info/sct",
+                      "url": "http://snomed.info/sct",
                       "display": "Right"
                     }
                   ]
@@ -151,13 +151,13 @@
                     {
                       "system": "RADLEX",
                       "code": "RID5824",
-                      "href": "http://radlex.org/",
+                      "url": "http://radlex.org/",
                       "display": "Left"
                     },
                     {
                       "system": "SNOMEDCT",
                       "code": "7771000",
-                      "href": "http://snomed.info/sct",
+                      "url": "http://snomed.info/sct",
                       "display": "Left"
                     }
                   ]
