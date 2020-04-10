@@ -27,7 +27,7 @@
   <modality>
     <system>DICOM</system>
     <code>CT</code>
-    <href>http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1</href>
+    <url>http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1</url>
   </modality>
   <authors>
     <person>
@@ -68,7 +68,7 @@
         <index_code>
           <system>SNOMEDCT</system>
           <code>246120007</code>
-          <href>http://snomed.info/sct</href>
+          <url>http://snomed.info/sct</url>
           <display>nodule size</display>
         </index_code>
       </index_codes>
@@ -122,13 +122,13 @@
             <index_code>
               <system>RADLEX</system>
               <code>RID5828</code>
-              <href>http://radlex.org/</href>
+              <url>http://radlex.org/</url>
               <display>Right</display>
             </index_code>
             <index_code>
               <system>SNOMEDCT</system>
               <code>24028007</code>
-              <href>http://snomed.info/sct</href>
+              <url>http://snomed.info/sct</url>
               <display>Right</display>
             </index_code>
           </index_codes>
@@ -140,13 +140,13 @@
             <index_code>
               <system>RADLEX</system>
               <code>RID5824</code>
-              <href>http://radlex.org/</href>
+              <url>http://radlex.org/</url>
               <display>Left</display>
             </index_code>
             <index_code>
               <system>SNOMEDCT</system>
               <code>7771000</code>
-              <href>http://snomed.info/sct</href>
+              <url>http://snomed.info/sct</url>
               <display>Left</display>
             </index_code>
           </index_codes>
