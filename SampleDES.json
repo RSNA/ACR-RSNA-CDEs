@@ -8,10 +8,24 @@
       "date": "2015-07-05",
       "status": "proposed"
     },
+    "references": {
+      "reference": [
+        {
+          "citation": "Sangwaiya MJ, Boland GW, Cronin CG et-al. Incidental adrenal lesions: accuracy of\n        characterization with contrast-enhanced washout multidetector CT-10-minute delayed imaging\n        protocol revisited in a large patient cohort. Radiology. 2010;256 (2): 504-10.",
+          "doi_uri": "http://dx.doi.org/10.1148/radiol.10091386",
+          "pubmed_id": "20656838"
+        },
+        {
+          "citation": "Blake MA, Cronin CG, Boland GW. Adrenal imaging. AJR Am J Roentgenol. 2010;194 (6):\n        1450-60.",
+          "doi_uri": "http://dx.doi.org/10.2214/AJR.10.4547",
+          "pubmed_id": "20489083"
+        }
+      ]
+    },
     "modality": {
       "system": "DICOM",
       "code": "CT",
-      "href": "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1"
+      "url": "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1"
     },
     "authors": {
       "person": [
@@ -42,7 +56,6 @@
         "abbreviation": "CT"
       }
     ],
-    "url": "http://radelement.org/api/v1/projects/3",
     "elements": {
       "element": [
         {
@@ -58,7 +71,7 @@
             "index_code": {
               "system": "SNOMEDCT",
               "code": "246120007",
-              "href": "http://snomed.info/sct",
+              "url": "http://snomed.info/sct",
               "display": "nodule size"
             }
           },
@@ -118,13 +131,13 @@
                     {
                       "system": "RADLEX",
                       "code": "RID5828",
-                      "href": "http://radlex.org/",
+                      "url": "http://radlex.org/",
                       "display": "Right"
                     },
                     {
                       "system": "SNOMEDCT",
                       "code": "24028007",
-                      "href": "http://snomed.info/sct",
+                      "url": "http://snomed.info/sct",
                       "display": "Right"
                     }
                   ]
@@ -138,13 +151,13 @@
                     {
                       "system": "RADLEX",
                       "code": "RID5824",
-                      "href": "http://radlex.org/",
+                      "url": "http://radlex.org/",
                       "display": "Left"
                     },
                     {
                       "system": "SNOMEDCT",
                       "code": "7771000",
-                      "href": "http://snomed.info/sct",
+                      "url": "http://snomed.info/sct",
                       "display": "Left"
                     }
                   ]

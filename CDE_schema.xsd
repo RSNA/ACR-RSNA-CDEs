@@ -16,22 +16,28 @@
         <xs:element ref="name"/>
         <xs:element ref="description"/>
         <xs:element ref="version"/>
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="url" type="xs:anyURI"/>
-          <xs:element ref="index_codes"/>
-          <xs:element ref="modality"/>
-          <xs:element ref="biological_sex"/>
-          <xs:element ref="age_range"/>
-          <xs:element ref="authors"/>
-          <xs:group ref="history"/>
-          <xs:element ref="specialty"/>
-        </xs:choice>
+        <xs:element minOccurs="0" ref="references"/>
+        <xs:element minOccurs="0" ref="index_codes"/>
+        <xs:element minOccurs="0" ref="images"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="modality"/>
+        <xs:element minOccurs="0" ref="biological_sex"/>
+        <xs:element minOccurs="0" ref="age_range"/>
+        <xs:element minOccurs="0" ref="authors"/>
+        <xs:group maxOccurs="unbounded" ref="history"/>
+        <xs:element maxOccurs="unbounded" ref="specialty"/>
         <xs:element ref="elements"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="name" type="xs:string"/>
   <xs:element name="description" type="xs:string"/>
+  <xs:element name="images">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="image"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="elements">
     <xs:complexType>
       <xs:sequence>
@@ -55,7 +61,9 @@
         <xs:element ref="name"/>
         <xs:element ref="definition"/>
         <xs:element ref="version"/>
+        <xs:element minOccurs="0" ref="references"/>
         <xs:element minOccurs="0" ref="index_codes"/>
+        <xs:element minOccurs="0" ref="images"/>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="modality"/>
         <xs:element minOccurs="0" ref="biological_sex"/>
         <xs:element minOccurs="0" ref="age_range"/>
@@ -106,6 +114,7 @@
               <xs:element name="value" type="xs:Name"/>
               <xs:element ref="name"/>
               <xs:element minOccurs="0" ref="definition"/>
+              <xs:element minOccurs="0" ref="references"/>
               <xs:element minOccurs="0" ref="images"/>
               <xs:element minOccurs="0" ref="index_codes"/>
             </xs:sequence>
@@ -116,13 +125,6 @@
   </xs:element>
   <xs:element name="min_cardinality" type="xs:nonNegativeInteger"/>
   <xs:element name="max_cardinality" type="xs:positiveInteger"/>
-  <xs:element name="images">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="image"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="age_range">
     <xs:complexType>
       <xs:sequence>
@@ -216,7 +218,7 @@
           </xs:simpleType>
         </xs:element>
         <xs:element name="code" type="xs:normalizedString"/>
-        <xs:element minOccurs="0" name="href" type="xs:anyURI"/>
+        <xs:element minOccurs="0" name="url" type="xs:anyURI"/>
         <xs:element minOccurs="0" ref="display"/>
       </xs:sequence>
     </xs:complexType>
@@ -230,8 +232,8 @@
         <xs:element ref="width"/>
         <xs:element ref="caption"/>
         <xs:element ref="rights"/>
-        <xs:element ref="source"/>
         <xs:element ref="authors"/>
+        <xs:element ref="references"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -239,7 +241,6 @@
   <xs:element name="width" type="xs:positiveInteger"/>
   <xs:element name="caption" type="xs:string"/>
   <xs:element name="rights" type="xs:string"/>
-  <xs:element name="source" type="xs:string"/>
   <xs:element name="modality">
     <xs:complexType>
       <xs:sequence>
@@ -268,7 +269,7 @@
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
-        <xs:element name="href">
+        <xs:element name="url">
           <xs:simpleType>
             <xs:restriction base="xs:token">
               <xs:enumeration value="http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1"/>
@@ -278,6 +279,26 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="references">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="reference"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="reference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="citation"/>
+        <xs:element minOccurs="0" ref="doi_uri"/>
+        <xs:element minOccurs="0" ref="pubmed_id"/>
+        <xs:element minOccurs="0" name="url" type="xs:anyURI"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="citation" type="xs:string"/>
+  <xs:element name="doi_uri" type="xs:anyURI"/>
+  <xs:element name="pubmed_id" type="xs:integer"/>
   <xs:group name="status_attrs">
     <xs:sequence>
       <xs:element ref="date"/>
