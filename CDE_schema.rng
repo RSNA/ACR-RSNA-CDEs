@@ -458,7 +458,7 @@
           </element>
           <a.documentation xmlns="">Required - Provide a bibliographic citation, including all the author names (no et Al)</a.documentation>
           <optional>
-            <element name="doi_uri">
+            <element name="doi_url">
               <data type="anyURI"/>
             </element>
           </optional>

@@ -425,14 +425,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="citation"/>
-        <xs:element minOccurs="0" ref="doi_uri"/>
+        <xs:element minOccurs="0" ref="doi_url"/>
         <xs:element minOccurs="0" ref="pubmed_id"/>
         <xs:element minOccurs="0" name="url" type="xs:anyURI"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="citation" type="xs:string"/>
-  <xs:element name="doi_uri" type="xs:anyURI"/>
+  <xs:element name="doi_url" type="xs:anyURI"/>
   <xs:element name="pubmed_id" type="xs:integer"/>
   <xs:group name="status_attrs">
     <xs:sequence>

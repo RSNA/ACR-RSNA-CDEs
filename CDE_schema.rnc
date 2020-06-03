@@ -156,7 +156,7 @@ references =
     element references {
         element reference {
             element citation { text } >> a.documentation ["Required - Provide a bibliographic citation, including all the author names (no et Al)"],
-            element doi_uri { xsd:anyURI }?,
+            element doi_url { xsd:anyURI }?,
             element pubmed_id { xsd:integer }?,
             element url { xsd:anyURI }?
         }+
