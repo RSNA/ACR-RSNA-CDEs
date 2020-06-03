@@ -23,9 +23,10 @@
       ]
     },
     "modality": {
-      "system": "DICOM",
+      "system": "RadLex",
       "code": "CT",
-      "url": "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1"
+      "name": "Computed Tomography",
+      "url": "http://radlex.org/RID/RID10321"
     },
     "authors": {
       "person": [
@@ -50,10 +51,6 @@
       {
         "name": "Genitourinary Radiology",
         "abbreviation": "GU"
-      },
-      {
-        "name": "Computed Tomorgraphy",
-        "abbreviation": "CT"
       }
     ],
     "elements": {
@@ -83,10 +80,6 @@
             {
               "name": "Genitourinary Radiology",
               "abbreviation": "GU"
-            },
-            {
-              "name": "Computed Tomorgraphy",
-              "abbreviation": "CT"
             }
           ],
           "integer_values": {
@@ -105,20 +98,6 @@
             "date": "2015-07-05",
             "status": "proposed"
           },
-          "specialty": [
-            {
-              "name": "Abdominal Radiology",
-              "abbreviation": "AB"
-            },
-            {
-              "name": "Genitourinary Radiology",
-              "abbreviation": "GU"
-            },
-            {
-              "name": "Computed Tomorgraphy",
-              "abbreviation": "CT"
-            }
-          ],
           "value_set": {
             "min_cardinality": "1",
             "max_cardinality": "1",

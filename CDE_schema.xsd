@@ -13,7 +13,7 @@
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
-        <xs:element ref="name"/>
+        <xs:element name="name" type="xs:string"/>
         <xs:element ref="description"/>
         <xs:element ref="version"/>
         <xs:element minOccurs="0" ref="references"/>
@@ -29,7 +29,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="name" type="xs:string"/>
   <xs:element name="description" type="xs:string"/>
   <xs:element name="images">
     <xs:complexType>
@@ -58,7 +57,7 @@
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
-        <xs:element ref="name"/>
+        <xs:element name="name" type="xs:string"/>
         <xs:element ref="definition"/>
         <xs:element ref="version"/>
         <xs:element minOccurs="0" ref="references"/>
@@ -69,7 +68,7 @@
         <xs:element minOccurs="0" ref="age_range"/>
         <xs:element minOccurs="0" ref="authors"/>
         <xs:group maxOccurs="unbounded" ref="history"/>
-        <xs:element maxOccurs="unbounded" ref="specialty"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="specialty"/>
         <xs:choice>
           <xs:element ref="integer_values"/>
           <xs:element ref="float_values"/>
@@ -112,7 +111,7 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element name="value" type="xs:Name"/>
-              <xs:element ref="name"/>
+              <xs:element name="name" type="xs:string"/>
               <xs:element minOccurs="0" ref="definition"/>
               <xs:element minOccurs="0" ref="references"/>
               <xs:element minOccurs="0" ref="images"/>
@@ -154,7 +153,7 @@
   <xs:element name="person">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="name"/>
+        <xs:element name="name" type="xs:string"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="orcid_id"/>
           <xs:element ref="twitter_handle"/>
@@ -179,7 +178,7 @@
   <xs:element name="organization">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="name"/>
+        <xs:element name="name" type="xs:string"/>
         <xs:element name="abbreviation" type="xs:string"/>
         <xs:element name="url" type="xs:anyURI"/>
         <xs:element ref="comment"/>
@@ -247,35 +246,171 @@
         <xs:element name="system">
           <xs:simpleType>
             <xs:restriction base="xs:token">
-              <xs:enumeration value="DICOM"/>
+              <xs:enumeration value="RadLex"/>
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
-        <xs:element name="code">
-          <xs:simpleType>
-            <xs:restriction base="xs:token">
-              <xs:enumeration value="CR"/>
-              <xs:enumeration value="CT"/>
-              <xs:enumeration value="DX"/>
-              <xs:enumeration value="IVUS"/>
-              <xs:enumeration value="MG"/>
-              <xs:enumeration value="MR"/>
-              <xs:enumeration value="NM"/>
-              <xs:enumeration value="PT"/>
-              <xs:enumeration value="RF"/>
-              <xs:enumeration value="RG"/>
-              <xs:enumeration value="US"/>
-              <xs:enumeration value="XA"/>
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element name="url">
-          <xs:simpleType>
-            <xs:restriction base="xs:token">
-              <xs:enumeration value="http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1"/>
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
+        <xs:sequence minOccurs="0">
+          <xs:element name="code">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="CT"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="name">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="Computed Tomography"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="url">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="http://radlex.org/RID/RID10321"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:element name="code">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="FL"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="name">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="Fluoroscopy"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="url">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="http://radlex.org/RID/RID10361"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:element name="code">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="MR"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="name">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="Magnetic Resonance Imaging"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="url">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="http://radlex.org/RID/RID10312"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:element name="code">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="NM"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="name">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="Nuclear Medicine"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="url">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="http://radlex.org/RID/RID10330"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:element name="code">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="PET"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="name">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="Positron Emission Tomography"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="url">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="http://radlex.org/RID/RID10337"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:element name="code">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="US"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="name">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="Ultrasound"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="url">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="http://radlex.org/RID/RID10326"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:element name="code">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="XR"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="name">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="Projection Radiography"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="url">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="http://radlex.org/RID/RID10345"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -318,7 +453,7 @@
   <xs:element name="specialty">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="name"/>
+        <xs:element name="name" type="xs:string"/>
         <xs:element name="abbreviation">
           <xs:simpleType>
             <xs:restriction base="xs:token">
@@ -360,7 +495,7 @@
   <xs:element name="version">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="name"/>
+        <xs:element name="name" type="xs:string"/>
         <xs:group ref="status_attrs"/>
       </xs:sequence>
     </xs:complexType>

@@ -38,7 +38,7 @@ data_element =
     age_range?,
     authors?,
     history+,
-    specialty+,
+    specialty*,
     (
         element integer_values {
             element min { xsd:integer }?,
@@ -128,10 +128,29 @@ image =
 
 modality =
     element modality {
-        element system { "DICOM" },
-        element code { "CR" | "CT" | "DX" | "IVUS" | "MG" | "MR" | "NM" | "PT" | "RF" | "RG" | "US" | "XA" },
-        element url { "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1" }
-    }
+        element system { "RadLex" },
+        ( element code {"CT"},
+           element name { "Computed Tomography"},
+           element url { "http://radlex.org/RID/RID10321" } ) ?,
+        ( element code { "FL" },
+          element name { "Fluoroscopy" },
+          element url { "http://radlex.org/RID/RID10361" } ) ?,
+        ( element code { "MR" },
+          element name { "Magnetic Resonance Imaging" },
+          element url { "http://radlex.org/RID/RID10312" } ) ?,
+        ( element code { "NM" },
+          element name { "Nuclear Medicine" },
+          element url { "http://radlex.org/RID/RID10330" } ) ?,
+        ( element code { "PET" },
+          element name { "Positron Emission Tomography" },
+          element url { "http://radlex.org/RID/RID10337" } ) ?,
+        ( element code { "US" },
+          element name { "Ultrasound" },
+          element url { "http://radlex.org/RID/RID10326" } ) ?,
+        ( element code { "XR" },
+          element name { "Projection Radiography" },
+          element url { "http://radlex.org/RID/RID10345" } ) ?
+     }
 
 references =
     element references {

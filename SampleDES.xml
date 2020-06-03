@@ -25,9 +25,10 @@
     </reference>
   </references>
   <modality>
-    <system>DICOM</system>
+    <system>RadLex</system>
     <code>CT</code>
-    <url>http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1</url>
+    <name>Computed Tomography</name>
+    <url>http://radlex.org/RID/RID10321</url>
   </modality>
   <authors>
     <person>
@@ -49,10 +50,6 @@
   <specialty>
     <name>Genitourinary Radiology</name>
     <abbreviation>GU</abbreviation>
-  </specialty>
-  <specialty>
-    <name>Computed Tomorgraphy</name>
-    <abbreviation>CT</abbreviation>
   </specialty>
   <elements>
     <element>
@@ -80,10 +77,6 @@
         <name>Genitourinary Radiology</name>
         <abbreviation>GU</abbreviation>
       </specialty>
-      <specialty>
-        <name>Computed Tomorgraphy</name>
-        <abbreviation>CT</abbreviation>
-      </specialty>
       <integer_values>
         <min>0</min>
         <max>999</max>
@@ -100,18 +93,6 @@
         <date>2015-07-05</date>
         <status>proposed</status>
       </version>
-      <specialty>
-        <name>Abdominal Radiology</name>
-        <abbreviation>AB</abbreviation>
-      </specialty>
-      <specialty>
-        <name>Genitourinary Radiology</name>
-        <abbreviation>GU</abbreviation>
-      </specialty>
-      <specialty>
-        <name>Computed Tomorgraphy</name>
-        <abbreviation>CT</abbreviation>
-      </specialty>
       <value_set>
         <min_cardinality>1</min_cardinality>
         <max_cardinality>1</max_cardinality>
