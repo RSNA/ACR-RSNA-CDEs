@@ -137,7 +137,7 @@ status_attrs =
 specialty =
     element specialty {
         element name { text },
-        element abbreviation { "AB" | "BR" | "CA" | "CH" | "CT" | "ER" | "GI" | "GU" | "HN" | "IR" | "MI" | "MK" | "MR" | "NM" | "NR" | "OB" | "OI" | "OT" | "PD" | "QI" | "RS" | "US" | "VI" }
+        element abbreviation { "AB" | "BR" | "CA" | "CH" | "ER" | "GI" | "GU" | "HN" | "IR" | "MI" | "MK" | "NR" | "OB" | "OI" | "OT" | "PD" | "QI" | "RS" | "VI" }
     }
 
 history =

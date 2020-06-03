@@ -398,7 +398,6 @@
           <value>BR</value>
           <value>CA</value>
           <value>CH</value>
-          <value>CT</value>
           <value>ER</value>
           <value>GI</value>
           <value>GU</value>
@@ -406,8 +405,6 @@
           <value>IR</value>
           <value>MI</value>
           <value>MK</value>
-          <value>MR</value>
-          <value>NM</value>
           <value>NR</value>
           <value>OB</value>
           <value>OI</value>
@@ -415,7 +412,6 @@
           <value>PD</value>
           <value>QI</value>
           <value>RS</value>
-          <value>US</value>
           <value>VI</value>
         </choice>
       </element>

@@ -305,7 +305,6 @@
               <xs:enumeration value="BR"/>
               <xs:enumeration value="CA"/>
               <xs:enumeration value="CH"/>
-              <xs:enumeration value="CT"/>
               <xs:enumeration value="ER"/>
               <xs:enumeration value="GI"/>
               <xs:enumeration value="GU"/>
@@ -313,8 +312,6 @@
               <xs:enumeration value="IR"/>
               <xs:enumeration value="MI"/>
               <xs:enumeration value="MK"/>
-              <xs:enumeration value="MR"/>
-              <xs:enumeration value="NM"/>
               <xs:enumeration value="NR"/>
               <xs:enumeration value="OB"/>
               <xs:enumeration value="OI"/>
@@ -322,7 +319,6 @@
               <xs:enumeration value="PD"/>
               <xs:enumeration value="QI"/>
               <xs:enumeration value="RS"/>
-              <xs:enumeration value="US"/>
               <xs:enumeration value="VI"/>
             </xs:restriction>
           </xs:simpleType>
