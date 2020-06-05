@@ -25,6 +25,7 @@ data_element =
   ## Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.
   element element {
     element id { xsd:string { pattern='RDE\d+' } },
+    element parent_set { xsd:string { pattern='RDES\d+' } },
     element name { text },
     element definition {
        text >> a:documentation [ "Each CDE must have a definition." ]
@@ -38,7 +39,7 @@ data_element =
     age_range?,
     authors?,
     history+,
-    specialty+,
+    specialty*,
     (
         element integer_values {
             element min { xsd:integer }?,
@@ -128,16 +129,35 @@ image =
 
 modality =
     element modality {
-        element system { "DICOM" },
-        element code { "CR" | "CT" | "DX" | "IVUS" | "MG" | "MR" | "NM" | "PT" | "RF" | "RG" | "US" | "XA" },
-        element url { "http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1" }
-    }
+        element system { "RadLex" },
+        ( element code {"CT"},
+           element name { "Computed Tomography"},
+           element url { "http://radlex.org/RID/RID10321" } ) ?,
+        ( element code { "FL" },
+          element name { "Fluoroscopy" },
+          element url { "http://radlex.org/RID/RID10361" } ) ?,
+        ( element code { "MR" },
+          element name { "Magnetic Resonance Imaging" },
+          element url { "http://radlex.org/RID/RID10312" } ) ?,
+        ( element code { "NM" },
+          element name { "Nuclear Medicine" },
+          element url { "http://radlex.org/RID/RID10330" } ) ?,
+        ( element code { "PET" },
+          element name { "Positron Emission Tomography" },
+          element url { "http://radlex.org/RID/RID10337" } ) ?,
+        ( element code { "US" },
+          element name { "Ultrasound" },
+          element url { "http://radlex.org/RID/RID10326" } ) ?,
+        ( element code { "XR" },
+          element name { "Projection Radiography" },
+          element url { "http://radlex.org/RID/RID10345" } ) ?
+     }
 
 references =
     element references {
         element reference {
             element citation { text } >> a.documentation ["Required - Provide a bibliographic citation, including all the author names (no et Al)"],
-            element doi_uri { xsd:anyURI }?,
+            element doi_url { xsd:anyURI }?,
             element pubmed_id { xsd:integer }?,
             element url { xsd:anyURI }?
         }+
@@ -152,7 +172,7 @@ status_attrs =
 specialty =
     element specialty {
         element name { text },
-        element abbreviation { "AB" | "BR" | "CA" | "CH" | "CT" | "ER" | "GI" | "GU" | "HN" | "IR" | "MI" | "MK" | "MR" | "NM" | "NR" | "OB" | "OI" | "OT" | "PD" | "QI" | "RS" | "US" | "VI" }
+        element abbreviation { "AB" | "BR" | "CA" | "CH" | "ER" | "GI" | "GU" | "HN" | "IR" | "MI" | "MK" | "NR" | "OB" | "OI" | "OT" | "PD" | "QI" | "RS" | "VI" }
     }
 
 history =

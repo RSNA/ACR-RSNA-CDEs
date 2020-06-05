@@ -62,6 +62,11 @@
           <param name="pattern">RDE\d+</param>
         </data>
       </element>
+      <element name="parent_set">
+        <data type="string">
+          <param name="pattern">RDES\d+</param>
+        </data>
+      </element>
       <element name="name">
         <text/>
       </element>
@@ -98,9 +103,9 @@
       <oneOrMore>
         <ref name="history"/>
       </oneOrMore>
-      <oneOrMore>
+      <zeroOrMore>
         <ref name="specialty"/>
-      </oneOrMore>
+      </zeroOrMore>
       <choice>
         <element name="integer_values">
           <optional>
@@ -368,27 +373,85 @@
   <define name="modality">
     <element name="modality">
       <element name="system">
-        <value>DICOM</value>
+        <value>RadLex</value>
       </element>
-      <element name="code">
-        <choice>
-          <value>CR</value>
+      <optional>
+        <element name="code">
           <value>CT</value>
-          <value>DX</value>
-          <value>IVUS</value>
-          <value>MG</value>
+        </element>
+        <element name="name">
+          <value>Computed Tomography</value>
+        </element>
+        <element name="url">
+          <value>http://radlex.org/RID/RID10321</value>
+        </element>
+      </optional>
+      <optional>
+        <element name="code">
+          <value>FL</value>
+        </element>
+        <element name="name">
+          <value>Fluoroscopy</value>
+        </element>
+        <element name="url">
+          <value>http://radlex.org/RID/RID10361</value>
+        </element>
+      </optional>
+      <optional>
+        <element name="code">
           <value>MR</value>
+        </element>
+        <element name="name">
+          <value>Magnetic Resonance Imaging</value>
+        </element>
+        <element name="url">
+          <value>http://radlex.org/RID/RID10312</value>
+        </element>
+      </optional>
+      <optional>
+        <element name="code">
           <value>NM</value>
-          <value>PT</value>
-          <value>RF</value>
-          <value>RG</value>
+        </element>
+        <element name="name">
+          <value>Nuclear Medicine</value>
+        </element>
+        <element name="url">
+          <value>http://radlex.org/RID/RID10330</value>
+        </element>
+      </optional>
+      <optional>
+        <element name="code">
+          <value>PET</value>
+        </element>
+        <element name="name">
+          <value>Positron Emission Tomography</value>
+        </element>
+        <element name="url">
+          <value>http://radlex.org/RID/RID10337</value>
+        </element>
+      </optional>
+      <optional>
+        <element name="code">
           <value>US</value>
-          <value>XA</value>
-        </choice>
-      </element>
-      <element name="url">
-        <value>http://dicom.nema.org/medical/dicom/current/output/html/part03.html#sect_C.7.3.1.1.1</value>
-      </element>
+        </element>
+        <element name="name">
+          <value>Ultrasound</value>
+        </element>
+        <element name="url">
+          <value>http://radlex.org/RID/RID10326</value>
+        </element>
+      </optional>
+      <optional>
+        <element name="code">
+          <value>XR</value>
+        </element>
+        <element name="name">
+          <value>Projection Radiography</value>
+        </element>
+        <element name="url">
+          <value>http://radlex.org/RID/RID10345</value>
+        </element>
+      </optional>
     </element>
   </define>
   <define name="references">
@@ -400,7 +463,7 @@
           </element>
           <a.documentation xmlns="">Required - Provide a bibliographic citation, including all the author names (no et Al)</a.documentation>
           <optional>
-            <element name="doi_uri">
+            <element name="doi_url">
               <data type="anyURI"/>
             </element>
           </optional>
@@ -441,7 +504,6 @@
           <value>BR</value>
           <value>CA</value>
           <value>CH</value>
-          <value>CT</value>
           <value>ER</value>
           <value>GI</value>
           <value>GU</value>
@@ -449,8 +511,6 @@
           <value>IR</value>
           <value>MI</value>
           <value>MK</value>
-          <value>MR</value>
-          <value>NM</value>
           <value>NR</value>
           <value>OB</value>
           <value>OI</value>
@@ -458,7 +518,6 @@
           <value>PD</value>
           <value>QI</value>
           <value>RS</value>
-          <value>US</value>
           <value>VI</value>
         </choice>
       </element>
