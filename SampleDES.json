@@ -12,12 +12,12 @@
       "reference": [
         {
           "citation": "Sangwaiya MJ, Boland GW, Cronin CG et-al. Incidental adrenal lesions: accuracy of\n        characterization with contrast-enhanced washout multidetector CT-10-minute delayed imaging\n        protocol revisited in a large patient cohort. Radiology. 2010;256 (2): 504-10.",
-          "doi_uri": "http://dx.doi.org/10.1148/radiol.10091386",
+          "doi_url": "http://dx.doi.org/10.1148/radiol.10091386",
           "pubmed_id": "20656838"
         },
         {
           "citation": "Blake MA, Cronin CG, Boland GW. Adrenal imaging. AJR Am J Roentgenol. 2010;194 (6):\n        1450-60.",
-          "doi_uri": "http://dx.doi.org/10.2214/AJR.10.4547",
+          "doi_url": "http://dx.doi.org/10.2214/AJR.10.4547",
           "pubmed_id": "20489083"
         }
       ]
@@ -57,6 +57,7 @@
       "element": [
         {
           "id": "RDE41",
+          "parent_set": "RDES3",
           "name": "Nodule size",
           "definition": "The greatest linear dimension of the adrenal nodule.",
           "version": {
@@ -91,6 +92,7 @@
         },
         {
           "id": "RDE42",
+          "parent_set": "RDES3",
           "name": "Side",
           "definition": "The side of the body (right or left)",
           "version": {

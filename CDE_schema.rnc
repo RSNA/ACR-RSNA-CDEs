@@ -25,6 +25,7 @@ data_element =
   ## Each data element has a unique identifier of the format "RDE[0-9]+" (e.g., "RDE54") and a textual name.
   element element {
     element id { xsd:string { pattern='RDE\d+' } },
+    element parent_set { xsd:string { pattern='RDES\d+' } },
     element name { text },
     element definition {
        text >> a:documentation [ "Each CDE must have a definition." ]

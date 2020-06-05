@@ -57,6 +57,7 @@
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
+        <xs:element ref="parent_set"/>
         <xs:element name="name" type="xs:string"/>
         <xs:element ref="definition"/>
         <xs:element ref="version"/>
@@ -77,6 +78,13 @@
         </xs:choice>
       </xs:sequence>
     </xs:complexType>
+  </xs:element>
+  <xs:element name="parent_set">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:pattern value="RDES\d+"/>
+      </xs:restriction>
+    </xs:simpleType>
   </xs:element>
   <xs:element name="definition" type="xs:string"/>
   <xs:element name="integer_values">
