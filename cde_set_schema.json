@@ -1,0 +1,581 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/DataElementSet",
+    "$id": "https://raw.githubusercontent.com/RSNA/ACR-RSNA-CDEs/master/cde_set_schema.json",
+    "definitions": {
+        "DataElementSet": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^\\$": {
+                    "description": "Any property starting with $ is reserved for notations and extensions",
+                    "tsType": "any"
+                }
+            },
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "pattern": "^(RDES\\d+|CDESTGS-[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "plain text, or XHTML div are acceptable"
+                },
+                "version": {
+                    "$ref": "#/definitions/Version"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "index_codes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/IndexCode"
+                    }
+                },
+                "body_parts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BodyPart"
+                    }
+                },
+                "authors": {
+                    "$ref": "#/definitions/Authors"
+                },
+                "history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Event"
+                    }
+                },
+                "specialty": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Specialty"
+                    }
+                },
+                "elements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Element"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Reference"
+                    }
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "description",
+                "version",
+                "elements",
+                "history",
+                "index_codes",
+                "specialty"
+            ],
+            "title": "DataElementSet"
+        },
+        "Element": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Each data element has a unique identifier of the format \"RDE[0-9]+\" (e.g., \"RDE54\") and a textual name.",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "pattern": "^(RDE\\d+|CDESTG-[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "definition": {
+                    "description": "Each CDE must have a definition.",
+                    "type": "string"
+                },
+                "question": {
+                    "description": "How a user might be prompted to provide a value",
+                    "type": "string"
+                },
+                "version": {
+                    "$ref": "#/definitions/Version"
+                },
+                "index_codes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/IndexCode"
+                    }
+                },
+                "authors": {
+                    "type": "array",
+                    "$ref": "#/definitions/Person",
+                    "minItems": 0,
+                    "default": []
+                },
+                "history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Event"
+                    }
+                },
+                "specialty": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Specialty"
+                    }
+                },
+                "integer_values": {
+                    "$ref": "#/definitions/IntegerValues"
+                },
+                "value_set": {
+                    "$ref": "#/definitions/ValueSet"
+                },
+                "float_values": {
+                    "$ref": "#/definitions/FloatValues"
+                },
+                "boolean_values": {
+                    "$ref": "#/definitions/BooleanValues"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "version"
+            ],
+            "oneOf": [
+                {
+                    "required": [
+                        "integer_values"
+                    ]
+                },
+                {
+                    "required": [
+                        "value_set"
+                    ]
+                },
+                {
+                    "required": [
+                        "float_values"
+                    ]
+                },
+                {
+                    "required": [
+                        "boolean_values"
+                    ]
+                }
+            ],
+            "title": "Element"
+        },
+        "Event": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "status": {
+                    "$ref": "#/definitions/Status"
+                }
+            }
+        },
+        "Image": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                },
+                "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                },
+                "caption": {
+                    "type": "string"
+                },
+                "rights": {
+                    "type": "string"
+                },
+                "authors": {
+                    "$ref": "#/definitions/Authors"
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Reference"
+                    }
+                }
+            },
+            "required": [
+                "url"
+            ],
+            "title": "Image"
+        },
+        "BiologicalSex": {
+            "type": "string",
+            "enum": [
+                "M",
+                "F"
+            ]
+        },
+        "Authors": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "person": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Person"
+                    }
+                },
+                "organization": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Organization"
+                    }
+                }
+            },
+            "title": "Authors"
+        },
+        "Person": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "orcid_id": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "twitter_handle": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "format": "uri"
+                },
+                "role": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "enum": [
+                        "author",
+                        "editor",
+                        "translator",
+                        "reviewer",
+                        "contributor",
+                        null
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "Person"
+        },
+        "BodyPart": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "index_codes": {
+                    "$ref": "#/definitions/IndexCode"
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+        "IndexCode": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "system": {
+                    "type": "string",
+                    "enum": [
+                        "RADLEX",
+                        "SNOMEDCT",
+                        "LOINC"
+                    ]
+                },
+                "code": {
+                    "type": "string"
+                },
+                "href": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "display": {
+                    "type": "string"
+                }
+            }
+        },
+        "IntegerValues": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "min": {
+                    "description": "Value must be greater than or equal to minimum.",
+                    "type": "integer"
+                },
+                "max": {
+                    "description": "Value must be less than or equal to the maximum.",
+                    "type": "integer"
+                },
+                "step": {
+                    "default": 1,
+                    "type": "integer"
+                },
+                "unit": {
+                    "type": "string"
+                }
+            },
+            "title": "IntegerValues"
+        },
+        "FloatValues": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "min": {
+                    "description": "Value must be greater than or equal to minimum.",
+                    "type": "number"
+                },
+                "max": {
+                    "description": "Value must be less than or equal to the maximum.",
+                    "type": "number"
+                },
+                "step": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string"
+                }
+            },
+            "title": "Float Values"
+        },
+        "BooleanValues": {
+            "type": "boolean",
+            "const": true
+        },
+        "Organization": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "abbreviation": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string",
+                    "enum": [
+                        "author",
+                        "sponsor",
+                        "translator",
+                        "reviewer",
+                        "contributor"
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "Organization"
+        },
+        "ValueSet": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "min_cardinality": {
+                    "description": "defines the minimum number of values to select from the value set",
+                    "type": "integer"
+                },
+                "max_cardinality": {
+                    "description": "defines the maximum number of values to select from the value set",
+                    "type": "integer"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Value"
+                    },
+                    "minItems": 1
+                }
+            },
+            "required": [
+                "values"
+            ],
+            "title": "ValueSet"
+        },
+        "Value": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "value": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "definition": {
+                    "type": "string"
+                },
+                "index_codes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/IndexCode"
+                    }
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Image"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "value"
+            ],
+            "title": "Value"
+        },
+        "Specialty": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "abbreviation": {
+                    "type": "string",
+                    "enum": [
+                        "BR",
+                        "BQ",
+                        "CA",
+                        "CH",
+                        "ER",
+                        "GI",
+                        "GU",
+                        "HN",
+                        "IR",
+                        "MI",
+                        "MK",
+                        "NR",
+                        "OB",
+                        "OI",
+                        "OT",
+                        "PD",
+                        "QI",
+                        "RS",
+                        "VA",
+                        "CT",
+                        "MR",
+                        "NM",
+                        "US",
+                        "AI",
+                        "ED",
+                        "HP",
+                        "IN",
+                        "LM",
+                        "PH",
+                        "PR",
+                        "RO",
+                        "SQ"
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "abbreviation"
+            ],
+            "title": "Specialty"
+        },
+        "Version": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "status": {
+                    "$ref": "#/definitions/Status"
+                }
+            },
+            "required": [
+                "date",
+                "name",
+                "status"
+            ],
+            "title": "Version"
+        },
+        "Status": {
+            "type": "string",
+            "enum": [
+                "Proposed",
+                "Published",
+                "Retired"
+            ]
+        },
+        "Reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "citation": {
+                    "description": "Required - Provide a bibliographic citation, including all the author names (no et Al)",
+                    "type": "string"
+                },
+                "doi_url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "pubmed_id": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [
+                "citation"
+            ],
+            "title": "Reference"
+        }
+    }
+}
