@@ -44,7 +44,11 @@
                     }
                 },
                 "authors": {
-                    "$ref": "#/definitions/Authors"
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/Authors"
+                    }
                 },
                 "history": {
                     "type": "array",
@@ -104,15 +108,11 @@
                     }
                 },
                 "authors": {
-                    "oneOf": [
-                        {
-                            "$ref": "#/definitions/Authors"
-                        },
-                        {
-                            "type": "array",
-                            "const": []
-                        }
-                    ]
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/Authors"
+                    }
                 },
                 "history": {
                     "type": "array",
