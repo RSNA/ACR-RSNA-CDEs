@@ -1,9 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/DataElementSet",
     "$id": "https://openraddata.org/schemas/cde_set_schema.json",
     "definitions": {
-        "DataElementSet": {
+        "element_set": {
             "type": "object",
             "additionalProperties": false,
             "patternProperties": {
@@ -25,7 +24,7 @@
                     "description": "plain text, or XHTML div are acceptable"
                 },
                 "version": {
-                    "$ref": "#/definitions/Version"
+                    "$ref": "#/definitions/version"
                 },
                 "url": {
                     "type": "string",
@@ -34,51 +33,50 @@
                 "index_codes": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/IndexCode"
+                        "$ref": "#/definitions/index_code"
                     }
                 },
                 "body_parts": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/BodyPart"
+                        "$ref": "#/definitions/body_part"
                     }
                 },
                 "authors": {
                     "type": "array",
                     "minItems": 1,
                     "items": {
-                        "$ref": "#/definitions/Authors"
+                        "$ref": "#/definitions/author"
                     }
                 },
                 "history": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Event"
+                        "$ref": "#/definitions/event"
                     }
                 },
                 "specialty": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Specialty"
+                        "$ref": "#/definitions/specialty"
                     }
                 },
                 "elements": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Element"
+                        "$ref": "#/definitions/element"
                     }
                 },
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Reference"
+                        "$ref": "#/definitions/reference"
                     }
                 }
             },
-            "required": ["id", "name", "description", "version", "elements", "history", "index_codes", "specialty"],
-            "title": "DataElementSet"
+            "required": ["id", "name", "description", "version", "elements", "history", "index_codes", "specialty"]
         },
-        "Element": {
+        "element": {
             "type": "object",
             "additionalProperties": false,
             "description": "Each data element has a unique identifier of the format \"RDE[0-9]+\" (e.g., \"RDE54\") and a textual name.",
@@ -99,50 +97,50 @@
                     "type": "string"
                 },
                 "version": {
-                    "$ref": "#/definitions/Version"
+                    "$ref": "#/definitions/version"
                 },
                 "index_codes": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/IndexCode"
+                        "$ref": "#/definitions/index_code"
                     }
                 },
                 "authors": {
                     "type": "array",
                     "minItems": 1,
                     "items": {
-                        "$ref": "#/definitions/Authors"
+                        "$ref": "#/definitions/authors"
                     }
                 },
                 "history": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Event"
+                        "$ref": "#/definitions/event"
                     }
                 },
                 "specialty": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Specialty"
+                        "$ref": "#/definitions/specialty"
                     }
                 },
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Reference"
+                        "$ref": "#/definitions/reference"
                     }
                 },
                 "integer_values": {
-                    "$ref": "#/definitions/IntegerValues"
+                    "$ref": "#/definitions/integer_values"
                 },
                 "value_set": {
-                    "$ref": "#/definitions/ValueSet"
+                    "$ref": "#/definitions/value_set"
                 },
                 "float_values": {
-                    "$ref": "#/definitions/FloatValues"
+                    "$ref": "#/definitions/float_values"
                 },
                 "boolean_values": {
-                    "$ref": "#/definitions/BooleanValues"
+                    "$ref": "#/definitions/boolean_values"
                 }
             },
             "required": ["id", "name", "version"],
@@ -159,10 +157,9 @@
                 {
                     "required": ["boolean_values"]
                 }
-            ],
-            "title": "Element"
+            ]
         },
-        "Event": {
+        "event": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -171,11 +168,11 @@
                     "format": "date"
                 },
                 "status": {
-                    "$ref": "#/definitions/Status"
+                    "$ref": "#/definitions/status"
                 }
             }
         },
-        "Image": {
+        "image": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -198,42 +195,40 @@
                     "type": "string"
                 },
                 "authors": {
-                    "$ref": "#/definitions/Authors"
+                    "$ref": "#/definitions/authors"
                 },
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Reference"
+                        "$ref": "#/definitions/reference"
                     }
                 }
             },
-            "required": ["url"],
-            "title": "Image"
+            "required": ["url"]
         },
-        "BiologicalSex": {
+        "biological_sex": {
             "type": "string",
             "enum": ["M", "F"]
         },
-        "Authors": {
+        "authors": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
                 "person": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Person"
+                        "$ref": "#/definitions/person"
                     }
                 },
                 "organization": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Organization"
+                        "$ref": "#/definitions/organization"
                     }
                 }
-            },
-            "title": "Authors"
+            }
         },
-        "Person": {
+        "person": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -255,10 +250,9 @@
                     "enum": ["author", "editor", "translator", "reviewer", "contributor", null]
                 }
             },
-            "required": ["name"],
-            "title": "Person"
+            "required": ["name"]
         },
-        "BodyPart": {
+        "body_part": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -266,12 +260,12 @@
                     "type": "string"
                 },
                 "index_codes": {
-                    "$ref": "#/definitions/IndexCode"
+                    "$ref": "#/definitions/index_code"
                 }
             },
             "required": ["name"]
         },
-        "IndexCode": {
+        "index_code": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -291,7 +285,7 @@
                 }
             }
         },
-        "IntegerValues": {
+        "integer_value": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -310,10 +304,9 @@
                 "unit": {
                     "type": "string"
                 }
-            },
-            "title": "IntegerValues"
+            }
         },
-        "FloatValues": {
+        "float_value": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -331,14 +324,13 @@
                 "unit": {
                     "type": "string"
                 }
-            },
-            "title": "Float Values"
+            }
         },
-        "BooleanValues": {
+        "boolean_value": {
             "type": "string",
             "const": "boolean"
         },
-        "Organization": {
+        "organization": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -360,10 +352,9 @@
                     "enum": ["author", "sponsor", "translator", "reviewer", "contributor"]
                 }
             },
-            "required": ["name"],
-            "title": "Organization"
+            "required": ["name"]
         },
-        "ValueSet": {
+        "value_set": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -378,15 +369,14 @@
                 "values": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Value"
+                        "$ref": "#/definitions/value"
                     },
                     "minItems": 1
                 }
             },
-            "required": ["values"],
-            "title": "ValueSet"
+            "required": ["values"]
         },
-        "Value": {
+        "value": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -402,20 +392,19 @@
                 "index_codes": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/IndexCode"
+                        "$ref": "#/definitions/index_code"
                     }
                 },
                 "images": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Image"
+                        "$ref": "#/definitions/image"
                     }
                 }
             },
-            "required": ["name", "value"],
-            "title": "Value"
+            "required": ["name", "value"]
         },
-        "Specialty": {
+        "specialty": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -427,10 +416,8 @@
                     "enum": ["BR", "BQ", "CA", "CH", "ER", "GI", "GU", "HN", "IR", "MI", "MK", "NR", "OB", "OI", "OT", "PD", "QI", "RS", "VA", "CT", "MR", "NM", "US", "AI", "ED", "HP", "IN", "LM", "PH", "PR", "RO", "SQ"]
                 }
             },
-            "required": ["name", "abbreviation"],
-            "title": "Specialty"
-        },
-        "Version": {
+            "required": ["name", "abbreviation"]        },
+        "version": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -442,17 +429,17 @@
                     "format": "date"
                 },
                 "status": {
-                    "$ref": "#/definitions/Status"
+                    "$ref": "#/definitions/status"
                 }
             },
             "required": ["date", "name", "status"],
             "title": "Version"
         },
-        "Status": {
+        "status": {
             "type": "string",
             "enum": ["Proposed", "Published", "Retired"]
         },
-        "Reference": {
+        "reference": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -473,8 +460,7 @@
                     "format": "uri"
                 }
             },
-            "required": ["citation"],
-            "title": "Reference"
+            "required": ["citation"]
         }
     }
 }
