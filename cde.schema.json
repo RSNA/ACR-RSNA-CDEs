@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://openraddata.org/schemas/cde_set_schema.json",
+    "$ref": "#/definitions/element_set",    
     "definitions": {
         "element_set": {
             "type": "object",
@@ -374,7 +374,7 @@
                     "minItems": 1
                 }
             },
-            "required": ["values"]
+            "required": ["values", "min_cardinality"]
         },
         "value": {
             "type": "object",
