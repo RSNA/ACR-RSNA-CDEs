@@ -1,0 +1,151 @@
+{
+  "id": "RDES3",
+  "name": "CAR/DS Adrenal Nodule",
+  "description": "ACR Assist project for describing adrenal nodules.",
+  "version": {
+    "name": "1",
+    "date": "2015-07-05",
+    "status": "proposed"
+  },
+  "references": {
+    "reference": [
+      {
+        "citation": "Sangwaiya MJ, Boland GW, Cronin CG et-al. Incidental adrenal lesions: accuracy of\n        characterization with contrast-enhanced washout multidetector CT-10-minute delayed imaging\n        protocol revisited in a large patient cohort. Radiology. 2010;256 (2): 504-10.",
+        "doi_url": "http://dx.doi.org/10.1148/radiol.10091386",
+        "pubmed_id": "20656838"
+      },
+      {
+        "citation": "Blake MA, Cronin CG, Boland GW. Adrenal imaging. AJR Am J Roentgenol. 2010;194 (6):\n        1450-60.",
+        "doi_url": "http://dx.doi.org/10.2214/AJR.10.4547",
+        "pubmed_id": "20489083"
+      }
+    ]
+  },
+  "modality": {
+    "system": "RadLex",
+    "code": "CT",
+    "name": "Computed Tomography",
+    "url": "http://radlex.org/RID/RID10321"
+  },
+  "authors": {
+    "person": [
+      {
+        "name": "Tarik Alkasab"
+      },
+      {
+        "name": "Marc Kohli",
+        "orcid_id": "0000-0003-3720-0156"
+      }
+    ],
+    "organization": {
+      "name": "American College of Radiology",
+      "abbreviation": "ACR"
+    }
+  },
+  "specialty": [
+    {
+      "name": "Abdominal Radiology",
+      "abbreviation": "AB"
+    },
+    {
+      "name": "Genitourinary Radiology",
+      "abbreviation": "GU"
+    }
+  ],
+  "elements": {
+    "element": [
+      {
+        "id": "RDE41",
+        "parent_set": "RDES3",
+        "name": "Nodule size",
+        "definition": "The greatest linear dimension of the adrenal nodule.",
+        "version": {
+          "name": "1",
+          "date": "2015-07-05",
+          "status": "proposed"
+        },
+        "index_codes": {
+          "index_code": {
+            "system": "SNOMEDCT",
+            "code": "246120007",
+            "url": "http://snomed.info/sct",
+            "display": "nodule size"
+          }
+        },
+        "specialty": [
+          {
+            "name": "Abdominal Radiology",
+            "abbreviation": "AB"
+          },
+          {
+            "name": "Genitourinary Radiology",
+            "abbreviation": "GU"
+          }
+        ],
+        "integer_values": {
+          "min": "0",
+          "max": "999",
+          "step": "1",
+          "unit": "mm"
+        }
+      },
+      {
+        "id": "RDE42",
+        "parent_set": "RDES3",
+        "name": "Side",
+        "definition": "The side of the body (right or left)",
+        "version": {
+          "name": "1",
+          "date": "2015-07-05",
+          "status": "proposed"
+        },
+        "value_set": {
+          "min_cardinality": "1",
+          "max_cardinality": "1",
+          "value": [
+            {
+              "value": "R",
+              "name": "Right",
+              "index_codes": {
+                "index_code": [
+                  {
+                    "system": "RADLEX",
+                    "code": "RID5828",
+                    "url": "http://radlex.org/",
+                    "display": "Right"
+                  },
+                  {
+                    "system": "SNOMEDCT",
+                    "code": "24028007",
+                    "url": "http://snomed.info/sct",
+                    "display": "Right"
+                  }
+                ]
+              }
+            },
+            {
+              "value": "L",
+              "name": "Left",
+              "index_codes": {
+                "index_code": [
+                  {
+                    "system": "RADLEX",
+                    "code": "RID5824",
+                    "url": "http://radlex.org/",
+                    "display": "Left"
+                  },
+                  {
+                    "system": "SNOMEDCT",
+                    "code": "7771000",
+                    "url": "http://snomed.info/sct",
+                    "display": "Left"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
