@@ -1,6 +1,5 @@
 {
-  "$schema": "cde.schema.json",
-  "element_set": {
+  "data_element_set": {
     "id": "RDES3",
     "name": "CAR/DS Adrenal Nodule",
     "description": "ACR Assist project for describing adrenal nodules.",
