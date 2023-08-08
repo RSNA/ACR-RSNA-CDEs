@@ -7,20 +7,18 @@
     "date": "2015-07-05",
     "status": "proposed"
   },
-  "references": {
-    "reference": [
-      {
-        "citation": "Sangwaiya MJ, Boland GW, Cronin CG et-al. Incidental adrenal lesions: accuracy of\n        characterization with contrast-enhanced washout multidetector CT-10-minute delayed imaging\n        protocol revisited in a large patient cohort. Radiology. 2010;256 (2): 504-10.",
-        "doi_url": "http://dx.doi.org/10.1148/radiol.10091386",
-        "pubmed_id": "20656838"
-      },
-      {
-        "citation": "Blake MA, Cronin CG, Boland GW. Adrenal imaging. AJR Am J Roentgenol. 2010;194 (6):\n        1450-60.",
-        "doi_url": "http://dx.doi.org/10.2214/AJR.10.4547",
-        "pubmed_id": "20489083"
-      }
-    ]
-  },
+  "references": [
+    {
+      "citation": "Sangwaiya MJ, Boland GW, Cronin CG et-al. Incidental adrenal lesions: accuracy of characterization with contrast-enhanced washout multidetector CT-10-minute delayed imaging protocol revisited in a large patient cohort. Radiology. 2010;256 (2): 504-10.",
+      "doi_url": "http://dx.doi.org/10.1148/radiol.10091386",
+      "pubmed_id": "20656838"
+    },
+    {
+      "citation": "Blake MA, Cronin CG, Boland GW. Adrenal imaging. AJR Am J Roentgenol. 2010;194 (6):1450-60.",
+      "doi_url": "http://dx.doi.org/10.2214/AJR.10.4547",
+      "pubmed_id": "20489083"
+    }
+  ],
   "modality": {
     "system": "RadLex",
     "code": "CT",
@@ -52,8 +50,7 @@
       "abbreviation": "GU"
     }
   ],
-  "elements": {
-    "element": [
+  "elements": [
       {
         "id": "RDE41",
         "parent_set": "RDES3",
@@ -64,14 +61,14 @@
           "date": "2015-07-05",
           "status": "proposed"
         },
-        "index_codes": {
-          "index_code": {
+        "index_codes": [
+          {
             "system": "SNOMEDCT",
             "code": "246120007",
             "url": "http://snomed.info/sct",
             "display": "nodule size"
           }
-        },
+        ],
         "specialty": [
           {
             "name": "Abdominal Radiology",
@@ -102,32 +99,29 @@
         "value_set": {
           "min_cardinality": "1",
           "max_cardinality": "1",
-          "value": [
+          "values": [
             {
               "value": "R",
               "name": "Right",
-              "index_codes": {
-                "index_code": [
-                  {
-                    "system": "RADLEX",
-                    "code": "RID5828",
-                    "url": "http://radlex.org/",
-                    "display": "Right"
-                  },
-                  {
-                    "system": "SNOMEDCT",
-                    "code": "24028007",
-                    "url": "http://snomed.info/sct",
-                    "display": "Right"
-                  }
-                ]
-              }
+              "index_codes": [
+                {
+                  "system": "RADLEX",
+                  "code": "RID5828",
+                  "url": "http://radlex.org/",
+                  "display": "Right"
+                },
+                {
+                  "system": "SNOMEDCT",
+                  "code": "24028007",
+                  "url": "http://snomed.info/sct",
+                  "display": "Right"
+                }
+              ]
             },
             {
               "value": "L",
               "name": "Left",
-              "index_codes": {
-                "index_code": [
+              "index_codes": [
                   {
                     "system": "RADLEX",
                     "code": "RID5824",
@@ -142,10 +136,8 @@
                   }
                 ]
               }
-            }
           ]
         }
       }
     ]
   }
-}
