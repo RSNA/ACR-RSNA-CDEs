@@ -26,6 +26,9 @@
                 "version": {
                     "$ref": "#/definitions/version"
                 },
+                "status": {
+                    "$ref": "#/definitions/status"
+                },
                 "url": {
                     "type": "string",
                     "format": "uri"
@@ -74,7 +77,7 @@
                     }
                 }
             },
-            "required": ["id", "name", "description", "version", "elements", "history", "index_codes", "specialty"]
+            "required": ["id", "name", "description", "version", "status", "elements", "history", "index_codes", "specialty"]
         },
         "element": {
             "type": "object",
@@ -99,6 +102,9 @@
                 "version": {
                     "$ref": "#/definitions/version"
                 },
+                "status": {
+                    "$ref": "#/definitions/status"
+                },                
                 "index_codes": {
                     "type": "array",
                     "items": {
@@ -143,7 +149,7 @@
                     "$ref": "#/definitions/boolean_value"
                 }
             },
-            "required": ["id", "name", "version"],
+            "required": ["id", "name", "version", "status"],
             "oneOf": [
                 {
                     "required": ["integer_values"]
@@ -421,23 +427,27 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "name": {
-                    "type": "string"
+                "number": {
+                    "type": "integer",
+                    "minimum": 1
                 },
                 "date": {
                     "type": "string",
                     "format": "date"
-                },
-                "status": {
-                    "$ref": "#/definitions/status"
                 }
             },
-            "required": ["date", "name", "status"],
+            "required": ["date", "number"],
             "title": "Version"
         },
         "status": {
+            "type": "object",
+            "properties": {
+                "status": {
             "type": "string",
             "enum": ["Proposed", "Published", "Retired"]
+                }
+            },
+            "required": ["date", "name"]
         },
         "reference": {
             "type": "object",
