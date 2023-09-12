@@ -55,11 +55,7 @@
                 },
                 "contributors": {
                     "type": "object",
-                    "minItems": 1,
-                    "maxItems": 1,
-                    "items": {
-                        "$ref": "#/definitions/contributors"
-                    }
+                    "$ref": "#/definitions/contributors"
                 },
                 "history": {
                     "type": "array",
