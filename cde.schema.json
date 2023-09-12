@@ -308,7 +308,7 @@
             "properties": {
                 "system": {
                     "type": "string",
-                    "enum": ["RADLEX", "SNOMEDCT", "LOINC"]
+                    "enum": ["RADLEX", "SNOMEDCT", "LOINC", "ACRCOMMON"]
                 },
                 "code": {
                     "type": "string"
