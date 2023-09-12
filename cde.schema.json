@@ -259,7 +259,7 @@
                     }
                 }
             },
-            "required": ["people", "orgainzations"]
+            "required": ["people", "organizations"]
         },
         "person": {
             "type": "object",
