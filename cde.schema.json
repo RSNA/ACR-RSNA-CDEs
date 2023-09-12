@@ -45,11 +45,12 @@
                         "$ref": "#/definitions/body_part"
                     }
                 },
-                "authors": {
-                    "type": "array",
+                "contributors": {
+                    "type": "object",
                     "minItems": 1,
+                    "maxItems": 1,
                     "items": {
-                        "$ref": "#/definitions/author"
+                        "$ref": "#/definitions/contributors"
                     }
                 },
                 "history": {
@@ -111,11 +112,11 @@
                         "$ref": "#/definitions/index_code"
                     }
                 },
-                "authors": {
-                    "type": "array",
+                "contributors": {
+                    "type": "object",
                     "minItems": 1,
                     "items": {
-                        "$ref": "#/definitions/author"
+                        "$ref": "#/definitions/contributors"
                     }
                 },
                 "history": {
@@ -200,8 +201,9 @@
                 "rights": {
                     "type": "string"
                 },
-                "authors": {
-                    "$ref": "#/definitions/author"
+                "contributors": {
+                    "type": "object",
+                    "$ref": "#/definitions/contributors"
                 },
                 "references": {
                     "type": "array",
@@ -216,23 +218,24 @@
             "type": "string",
             "enum": ["M", "F"]
         },
-        "author": {
+        "contributors": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "person": {
+                "people": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/person"
                     }
                 },
-                "organization": {
+                "organizations": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/organization"
                     }
                 }
-            }
+            },
+            "required": ["people", "orgainzations"]
         },
         "person": {
             "type": "object",
