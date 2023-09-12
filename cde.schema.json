@@ -15,9 +15,9 @@
                 "id": {
                     "anyOf": [
                         {
-                    "type": "string",
-                    "pattern": "^RDES\\d+"
-                },
+                            "type": "string",
+                            "pattern": "^RDES\\d+"
+                        },
                         {
                             "type": "string",
                             "pattern": "TO_BE_DETERMINED"
@@ -96,9 +96,9 @@
                 "id": {
                     "anyOf": [
                         {
-                    "type": "string",
-                    "pattern": "^RDE\\d+"
-                },
+                            "type": "string",
+                            "pattern": "^RDE\\d+"
+                        },
                         {
                             "type": "string",
                             "pattern": "TO_BE_DETERMINED"
@@ -475,8 +475,8 @@
             "type": "object",
             "properties": {
                 "status": {
-            "type": "string",
-            "enum": ["Proposed", "Published", "Retired"]
+                    "type": "string",
+                    "enum": ["Proposed", "Published", "Retired"]
                 }
             },
             "required": ["date", "name"]
