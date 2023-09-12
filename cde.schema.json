@@ -272,6 +272,7 @@
                 "name": {
                     "type": "string"
                 },
+                },
                 "orcid_id": {
                     "type": ["string", "null"]
                 },
