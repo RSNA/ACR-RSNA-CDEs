@@ -13,8 +13,16 @@
             },
             "properties": {
                 "id": {
+                    "anyOf": [
+                        {
                     "type": "string",
                     "pattern": "^RDES\\d+"
+                },
+                        {
+                            "type": "string",
+                            "pattern": "TO_BE_DETERMINED"
+                        }
+                    ]
                 },
                 "name": {
                     "type": "string"
@@ -86,8 +94,28 @@
             "description": "Each data element has a unique identifier of the format \"RDE[0-9]+\" (e.g., \"RDE54\") and a textual name.",
             "properties": {
                 "id": {
+                    "anyOf": [
+                        {
                     "type": "string",
                     "pattern": "^RDE\\d+"
+                },
+                        {
+                            "type": "string",
+                            "pattern": "TO_BE_DETERMINED"
+                        }
+                    ]
+                },
+                "parent_set": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "pattern": "^RDES\\d+"
+                        },
+                        {
+                            "type": "string",
+                            "pattern": "TO_BE_DETERMINED"
+                        }
+                    ]
                 },
                 "name": {
                     "type": "string"
