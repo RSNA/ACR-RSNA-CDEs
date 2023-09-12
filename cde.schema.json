@@ -273,18 +273,18 @@
                     "type": "string"
                 },
                 "orcid_id": {
-                    "type": ["string", "null"]
+                    "type": "string"
                 },
                 "twitter_handle": {
-                    "type": ["string", "null"]
+                    "type": "string"
                 },
                 "url": {
-                    "type": ["string", "null"],
+                    "type": "string",
                     "format": "uri"
                 },
                 "role": {
-                    "type": ["string", "null"],
-                    "enum": ["author", "editor", "translator", "reviewer", "contributor", null]
+                    "type": "string",
+                    "enum": ["author", "editor", "translator", "reviewer", "contributor"]
                 }
             },
             "required": ["name"]
