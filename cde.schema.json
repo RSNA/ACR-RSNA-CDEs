@@ -181,16 +181,16 @@
             "required": ["id", "name", "version", "status"],
             "oneOf": [
                 {
-                    "required": ["integer_values"]
+                    "required": ["integer_value"]
                 },
                 {
                     "required": ["value_set"]
                 },
                 {
-                    "required": ["float_values"]
+                    "required": ["float_value"]
                 },
                 {
-                    "required": ["boolean_values"]
+                    "required": ["boolean_value"]
                 }
             ]
         },
@@ -313,7 +313,7 @@
                 "code": {
                     "type": "string"
                 },
-                "href": {
+                "url": {
                     "type": "string",
                     "format": "uri"
                 },
