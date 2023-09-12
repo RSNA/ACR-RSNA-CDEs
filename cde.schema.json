@@ -419,10 +419,11 @@
                 },
                 "abbreviation": {
                     "type": "string",
-                    "enum": ["BR", "BQ", "CA", "CH", "ER", "GI", "GU", "HN", "IR", "MI", "MK", "NR", "OB", "OI", "OT", "PD", "QI", "RS", "VA", "CT", "MR", "NM", "US", "AI", "ED", "HP", "IN", "LM", "PH", "PR", "RO", "SQ"]
+                    "enum": ["AB", "BR", "CA", "CH", "ER", "GI", "GU", "HN", "IR", "MI", "MK", "NR", "OB", "OI", "OT", "PD", "QI", "RS", "VA"]
                 }
             },
-            "required": ["name", "abbreviation"]        },
+            "required": ["name", "abbreviation"]        
+        },
         "version": {
             "type": "object",
             "additionalProperties": false,
