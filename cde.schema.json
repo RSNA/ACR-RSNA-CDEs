@@ -272,6 +272,13 @@
                 "name": {
                     "type": "string"
                 },
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                },
+                "affiliation": {
+                    "type": "string",
+                    "description": "optional, acceptable values include both institutional and organization"
                 },
                 "orcid_id": {
                     "type": ["string", "null"]
