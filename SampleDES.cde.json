@@ -3,9 +3,12 @@
   "name": "CAR/DS Adrenal Nodule",
   "description": "ACR Assist project for describing adrenal nodules.",
   "version": {
-    "name": "1",
-    "date": "2015-07-05",
-    "status": "proposed"
+    "number": 1,
+    "date": "2016-01-03"
+  },
+  "status": {
+    "date": "2016-01-03",
+    "name": "proposed"
   },
   "references": [
     {
@@ -19,26 +22,25 @@
       "pubmed_id": "20489083"
     }
   ],
-  "modality": {
-    "system": "RadLex",
-    "code": "CT",
-    "name": "Computed Tomography",
-    "url": "http://radlex.org/RID/RID10321"
-  },
-  "authors": {
-    "person": [
+  "history": [],
+  "contributors": {
+    "organizations": [
       {
-        "name": "Tarik Alkasab"
+        "name": "American College of Radiology",
+        "abbreviation": "ACR"
+      }
+    ],
+    "people": [
+      {
+        "name": "Tarik Alkasab",
+        "role": "author"
       },
       {
         "name": "Marc Kohli",
-        "orcid_id": "0000-0003-3720-0156"
+        "orcid_id": "0000-0003-3720-0156",
+        "role": "editor"
       }
-    ],
-    "organization": {
-      "name": "American College of Radiology",
-      "abbreviation": "ACR"
-    }
+    ]
   },
   "specialty": [
     {
@@ -50,94 +52,360 @@
       "abbreviation": "GU"
     }
   ],
+  "index_codes": [],
   "elements": [
-      {
-        "id": "RDE41",
-        "parent_set": "RDES3",
-        "name": "Nodule size",
-        "definition": "The greatest linear dimension of the adrenal nodule.",
-        "version": {
-          "name": "1",
-          "date": "2015-07-05",
-          "status": "proposed"
+    {
+      "id": "RDE41",
+      "parent_set": "RDES3",
+      "name": "Nodule size",
+      "definition": "The greatest linear dimension of the adrenal nodule.",
+      "version": {
+        "number": 1,
+        "date": "2016-01-03"
+      },
+      "status": {
+        "name": "Proposed",
+        "date": "2016-01-03"
+      },
+      "index_codes": [
+        {
+          "system": "SNOMEDCT",
+          "code": "246120007",
+          "url": "http://snomed.info/sct",
+          "display": "nodule size"
+        }
+      ],
+      "specialty": [
+        {
+          "name": "Abdominal Radiology",
+          "abbreviation": "AB"
         },
-        "index_codes": [
+        {
+          "name": "Genitourinary Radiology",
+          "abbreviation": "GU"
+        }
+      ],
+      "integer_value": {
+        "min": 0,
+        "max": 999,
+        "step": 1,
+        "unit": "mm"
+      }
+    },
+    {
+      "id": "RDE42",
+      "parent_set": "RDES3",
+      "name": "Side",
+      "definition": "The side of the body (right or left)",
+      "version": {
+        "number": 1,
+        "date": "2016-01-03"
+      },
+      "status": {
+        "date": "2016-01-03",
+        "name": "proposed"
+      },
+      "value_set": {
+        "min_cardinality": 1,
+        "max_cardinality": 1,
+        "values": [
           {
-            "system": "SNOMEDCT",
-            "code": "246120007",
-            "url": "http://snomed.info/sct",
-            "display": "nodule size"
-          }
-        ],
-        "specialty": [
-          {
-            "name": "Abdominal Radiology",
-            "abbreviation": "AB"
+            "value": "R",
+            "name": "Right",
+            "index_codes": [
+              {
+                "system": "RADLEX",
+                "code": "RID5828",
+                "url": "http://radlex.org/",
+                "display": "Right"
+              },
+              {
+                "system": "SNOMEDCT",
+                "code": "24028007",
+                "url": "http://snomed.info/sct",
+                "display": "Right"
+              }
+            ]
           },
           {
-            "name": "Genitourinary Radiology",
-            "abbreviation": "GU"
-          }
-        ],
-        "integer_values": {
-          "min": "0",
-          "max": "999",
-          "step": "1",
-          "unit": "mm"
-        }
-      },
-      {
-        "id": "RDE42",
-        "parent_set": "RDES3",
-        "name": "Side",
-        "definition": "The side of the body (right or left)",
-        "version": {
-          "name": "1",
-          "date": "2015-07-05",
-          "status": "proposed"
-        },
-        "value_set": {
-          "min_cardinality": "1",
-          "max_cardinality": "1",
-          "values": [
-            {
-              "value": "R",
-              "name": "Right",
-              "index_codes": [
-                {
-                  "system": "RADLEX",
-                  "code": "RID5828",
-                  "url": "http://radlex.org/",
-                  "display": "Right"
-                },
-                {
-                  "system": "SNOMEDCT",
-                  "code": "24028007",
-                  "url": "http://snomed.info/sct",
-                  "display": "Right"
-                }
-              ]
-            },
-            {
-              "value": "L",
-              "name": "Left",
-              "index_codes": [
-                  {
-                    "system": "RADLEX",
-                    "code": "RID5824",
-                    "url": "http://radlex.org/",
-                    "display": "Left"
-                  },
-                  {
-                    "system": "SNOMEDCT",
-                    "code": "7771000",
-                    "url": "http://snomed.info/sct",
-                    "display": "Left"
-                  }
-                ]
+            "value": "L",
+            "name": "Left",
+            "index_codes": [
+              {
+                "system": "RADLEX",
+                "code": "RID5824",
+                "url": "http://radlex.org/",
+                "display": "Left"
+              },
+              {
+                "system": "SNOMEDCT",
+                "code": "7771000",
+                "url": "http://snomed.info/sct",
+                "display": "Left"
               }
-          ]
-        }
+            ]
+          }
+        ]
       }
-    ]
-  }
+    },
+    {
+      "id": "RDE43",
+      "parent_set": "RDES3",
+      "name": "Unenhanced attenuation",
+      "definition": "Mean attenuation in Hounsfield units (HU) of the region of interest on CT images obtained without IV contrast.",
+      "question": "Enter the attenuation of the region of interest on the unenhnaced CT.",
+      "version": {
+        "number": 1,
+        "date": "2016-01-03"
+      },
+      "status": {
+        "name": "Published",
+        "date": "2016-01-03"
+      },
+      "index_codes": [
+        {
+          "system": "RADLEX",
+          "code": "RID28662",
+          "display": "Attenuation",
+          "url": "http://www.radlex.org/RID/RID28662"
+        },
+        {
+          "system": "RADLEX",
+          "code": "RID11086",
+          "display": "Unenhanced phase",
+          "url": "http://www.radlex.org/RID/RID11086"
+        }
+      ],
+      "contributors": {
+        "people": [],
+        "organizations": []
+      },
+      "history": [],
+      "specialty": [],
+      "references": [],
+      "integer_value": {
+        "min": -1024,
+        "max": 1024,
+        "step": 1,
+        "unit": "HU"
+      }
+    },
+    {
+      "id": "RDE44",
+      "parent_set": "RDES3",
+      "name": "Enhanced attenuation",
+      "definition": "Mean attenuation in Hounsfield units (HU) of the region of interest on CT images obtained immediately after IV contrast administration.",
+      "question": "",
+      "version": {
+        "number": 1,
+        "date": "2016-01-03"
+      },
+      "status": {
+        "name": "Published",
+        "date": "2016-01-03"
+      },
+      "index_codes": [],
+      "contributors": {
+        "people": [],
+        "organizations": []
+      },
+      "history": [],
+      "specialty": [],
+      "references": [],
+      "integer_value": {
+        "min": -1024,
+        "max": 1024,
+        "step": 1,
+        "unit": "HU"
+      }
+    },
+    {
+      "id": "RDE45",
+      "parent_set": "RDES3",
+      "name": "Delayed attenuation",
+      "definition": "Mean attenuation in Hounsfield units (HU) of the region of interest on CT images otained at least 3 min after IV contrast administration.",
+      "question": "Enter the attenuation of the region of interest on delayed CT images.",
+      "version": {
+        "number": 1,
+        "date": "2016-01-03"
+      },
+      "status": {
+        "name": "Published",
+        "date": "2016-01-03"
+      },
+      "index_codes": [
+        {
+          "system": "RADLEX",
+          "code": "RID28662",
+          "display": "Attenuation",
+          "url": "http://www.radlex.org/RID/RID28662"
+        },
+        {
+          "system": "RADLEX",
+          "code": "RID11081",
+          "display": "delayed phase",
+          "url": "http://www.radlex.org/RID/RID11081"
+        }
+      ],
+      "contributors": {
+        "people": [],
+        "organizations": []
+      },
+      "history": [],
+      "specialty": [],
+      "references": [],
+      "integer_value": {
+        "min": -1024,
+        "max": 1024,
+        "step": 1,
+        "unit": "HU"
+      }
+    },
+    {
+      "id": "RDE49",
+      "parent_set": "RDES3",
+      "name": "Uniformly cystic",
+      "definition": "Indicates if the adrenal nodule is uniformly cystic. ",
+      "question": "Is the adrenal nodule uniformly cystic?",
+      "version": {
+        "number": 1,
+        "date": "2016-01-03"
+      },
+      "status": {
+        "name": "Proposed",
+        "date": "2016-01-03"
+      },
+      "index_codes": [],
+      "contributors": {
+        "people": [],
+        "organizations": []
+      },
+      "history": [],
+      "specialty": [],
+      "references": [],
+      "boolean_value": "boolean"
+    },
+    {
+      "id": "RDE42",
+      "parent_set": "RDES3",
+      "name": "Side",
+      "definition": "The side of the body (right or left).",
+      "question": "",
+      "version": {
+        "number": 1,
+        "date": "2016-01-03"
+      },
+      "status": {
+        "name": "Proposed",
+        "date": "2016-01-03"
+      },
+      "index_codes": [
+        {
+          "system": "RADLEX",
+          "code": "RID5824",
+          "display": "Left",
+          "url": "http://www.radlex.org/RID/RID5824"
+        },
+        {
+          "system": "RADLEX",
+          "code": "RID5825",
+          "display": "Right",
+          "url": "http://www.radlex.org/RID/RID5825"
+        },
+        {
+          "system": "SNOMEDCT",
+          "code": "7771000",
+          "display": "Left",
+          "url": "http://purl.bioontology.org/ontology/SNOMEDCT/7771000"
+        },
+        {
+          "system": "SNOMEDCT",
+          "code": "24028007",
+          "display": "Right",
+          "url": "http://purl.bioontology.org/ontology/SNOMEDCT/24028007"
+        },
+        {
+          "system": "SNOMEDCT",
+          "code": "272741003",
+          "display": "Laterality",
+          "url": "http://purl.bioontology.org/ontology/SNOMEDCT/272741003"
+        },
+        {
+          "system": "RADLEX",
+          "code": "RID5821",
+          "display": "laterality",
+          "url": "http://www.radlex.org/RID/RID5821"
+        }
+      ],
+      "contributors": {
+        "people": [],
+        "organizations": []
+      },
+      "history": [],
+      "specialty": [],
+      "references": [],
+      "value_set": {
+        "min_cardinality": 1,
+        "max_cardinality": 1,
+        "values": [
+          {
+            "value": "R",
+            "name": "Right"
+          },
+          {
+            "value": "L",
+            "name": "Left"
+          }
+        ]
+      }
+    },
+    {
+      "id": "RDE1695",
+      "parent_set": "RDES3",
+      "name": "Microscopic fat",
+      "definition": "The adrenal nodule contains macroscopic fat, as evidenced by at least one pixel attenuation value less than -10 HU.",
+      "version": {
+        "number": 1,
+        "date": "2023-06-23"
+      },
+      "status": {
+        "date": "06/23/2023",
+        "name": "Published"  
+      },
+      "index_codes": [],
+      "contributors": {
+        "people": [],
+        "organizations": []
+      },
+      "history": [],
+      "specialty": [],
+      "references": [],
+      "value_set": {
+        "min_cardinality": 1,
+        "max_cardinality": 1,
+        "values": [
+          {
+            "value": "1",
+            "name": "present",
+            "definition": ""
+          },
+          {
+            "value": "2",
+            "name": "absent",
+            "definition": ""
+          },
+          {
+            "value": "3",
+            "name": "unknown",
+            "definition": ""
+          },
+          {
+            "value": "4",
+            "name": "indeterminate",
+            "definition": ""
+          }
+        ]
+      }
+    }
+  ]
+}
