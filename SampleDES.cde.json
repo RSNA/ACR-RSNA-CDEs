@@ -110,6 +110,7 @@
         "max_cardinality": 1,
         "values": [
           {
+            "code": "RDE42.0",
             "value": "R",
             "name": "Right",
             "index_codes": [
@@ -128,6 +129,7 @@
             ]
           },
           {
+            "code": "RDE42.1",
             "value": "L",
             "name": "Left",
             "index_codes": [
@@ -349,10 +351,12 @@
         "max_cardinality": 1,
         "values": [
           {
+            "code": "RDE42.0",
             "value": "R",
             "name": "Right"
           },
           {
+            "code": "RDE42.1",
             "value": "L",
             "name": "Left"
           }
@@ -385,24 +389,20 @@
         "max_cardinality": 1,
         "values": [
           {
-            "value": "1",
-            "name": "present",
-            "definition": ""
+            "code": "RDE1695.0",
+            "name": "present"
           },
           {
-            "value": "2",
-            "name": "absent",
-            "definition": ""
+            "code": "RDE1695.1",
+            "name": "absent"
           },
           {
-            "value": "3",
-            "name": "unknown",
-            "definition": ""
+            "code": "RDE1695.2",
+            "name": "unknown"
           },
           {
-            "value": "4",
-            "name": "indeterminate",
-            "definition": ""
+            "code": "RDE1695.2",
+            "name": "indeterminate"
           }
         ]
       }
