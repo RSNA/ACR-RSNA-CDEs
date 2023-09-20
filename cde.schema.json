@@ -20,7 +20,8 @@
                         },
                         {
                             "type": "string",
-                            "pattern": "TO_BE_DETERMINED"
+                            "pattern": "TO_BE_DETERMINED\\d+",
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive RDES will be assigned and used for all further references"
                         }
                     ]
                 },
@@ -97,7 +98,8 @@
                         },
                         {
                             "type": "string",
-                            "pattern": "TO_BE_DETERMINED"
+                            "pattern": "TO_BE_DETERMINED\\d+",
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive RDE will be assigned and used for all further references"
                         }
                     ]
                 },
@@ -109,7 +111,8 @@
                         },
                         {
                             "type": "string",
-                            "pattern": "TO_BE_DETERMINED"
+                            "pattern": "TO_BE_DETERMINED\\d+",
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive RDES will be assigned and used for all further references"
                         }
                     ]
                 },
@@ -432,7 +435,7 @@
                     }
                 }
             },
-            "required": ["name", "value"]
+            "required": ["name", "code"]
         },
         "specialty": {
             "type": "object",
