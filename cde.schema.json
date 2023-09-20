@@ -16,12 +16,13 @@
                     "anyOf": [
                         {
                             "type": "string",
-                            "pattern": "^RDES\\d+"
+                            "pattern": "^RDES\\d+",
+                            "examples": ["RDES42", "RDES1042"]
                         },
                         {
                             "type": "string",
                             "pattern": "TO_BE_DETERMINED\\d+",
-                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive RDES will be assigned and used for all further references"
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive a set number will be assigned and used for all further references overwriting this value"
                         }
                     ]
                 },
@@ -88,18 +89,19 @@
         "element": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Each data element has a unique identifier of the format \"RDE[0-9]+\" (e.g., \"RDE54\") and a textual name.",
+            "description": "Each data element has a unique id and a textual name.",
             "properties": {
                 "id": {
                     "anyOf": [
                         {
                             "type": "string",
-                            "pattern": "^RDE\\d+"
+                            "pattern": "^RDE\\d+",
+                            "examples": ["RDES42", "RDES1042"]
                         },
                         {
                             "type": "string",
                             "pattern": "TO_BE_DETERMINED\\d+",
-                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive RDE will be assigned and used for all further references"
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive an element number will be assigned and used for all further references overwriting this value"
                         }
                     ]
                 },
@@ -107,12 +109,13 @@
                     "anyOf": [
                         {
                             "type": "string",
-                            "pattern": "^RDES\\d+"
+                            "pattern": "^RDES\\d+",
+                            "examples": ["RDES42", "RDES1042"]
                         },
                         {
                             "type": "string",
                             "pattern": "TO_BE_DETERMINED\\d+",
-                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive RDES will be assigned and used for all further references"
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive RDES will be assigned and used for all further references overwriting this value"
                         }
                     ]
                 },
@@ -120,7 +123,7 @@
                     "type": "string"
                 },
                 "definition": {
-                    "description": "Each CDE must have a definition.",
+                    "description": "A human readable definition explaining the clinical context of the data element",
                     "type": "string"
                 },
                 "question": {
