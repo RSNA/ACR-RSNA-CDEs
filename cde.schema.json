@@ -416,14 +416,32 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "A unique machine readable identifier for each choice in a value set made up of the parent element id, period, and a number. The number following the period begins with zero and is assigned upon first submission of the element to the radelement archive.",
+                    "anyOf": [
+                        {
+                            "pattern": "RDE\\d+.\\d+",
+                            "examples": ["RDE25.0", "RDE25.1"]
+                        },
+                        {
+                            "pattern": "TO_BE_DETERMINED.\\d+",
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive a set number will be assigned and used for all further references overwriting this value"
+                        }
+                    ]
+                },
                 "value": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Element value is intended to provide a human and/or machine readable string that could be use to caluculate a score, identify a position on a decision tree",
+                    "examples": ["2", "5", "Non-Viable"]
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Human readable answer to the question"
                 },
                 "definition": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Human readable definiton of the value in the specific clinical context"
                 },
                 "index_codes": {
                     "type": "array",
