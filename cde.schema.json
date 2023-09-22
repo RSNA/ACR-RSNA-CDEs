@@ -491,7 +491,11 @@
         "status": {
             "type": "object",
             "properties": {
-                "status": {
+                "date" : {
+                    "type": "string",
+                    "format": "date"
+                },
+                "name": {
                     "type": "string",
                     "enum": ["Proposed", "Published", "Retired"]
                 }
