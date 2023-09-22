@@ -8,7 +8,7 @@
   },
   "status": {
     "date": "2016-01-03",
-    "name": "proposed"
+    "name": "Proposed"
   },
   "references": [
     {
@@ -103,7 +103,7 @@
       },
       "status": {
         "date": "2016-01-03",
-        "name": "proposed"
+        "name": "Proposed"
       },
       "value_set": {
         "min_cardinality": 1,
@@ -373,7 +373,7 @@
         "date": "2023-06-23"
       },
       "status": {
-        "date": "06/23/2023",
+        "date": "2023-06-23",
         "name": "Published"  
       },
       "index_codes": [],
