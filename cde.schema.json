@@ -267,8 +267,16 @@
         "person": {
             "type": "object",
             "additionalProperties": false,
+            "$comment": "the e-mail property is the unique identifier used to match people between systems",
             "properties": {
                 "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                },
+                "affiliation": {
                     "type": "string"
                 },
                 "orcid_id": {
@@ -283,10 +291,10 @@
                 },
                 "role": {
                     "type": "string",
-                    "enum": ["author", "editor", "translator", "reviewer", "contributor"]
+                    "enum": ["Author", "Editor", "Translator", "Reviewer"]
                 }
             },
-            "required": ["name"]
+            "required": ["name", "email"]
         },
         "body_part": {
             "type": "object",

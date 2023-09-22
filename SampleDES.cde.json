@@ -33,12 +33,15 @@
     "people": [
       {
         "name": "Tarik Alkasab",
-        "role": "author"
+        "role": "Author",
+        "email": "talkasab@partners.org"
       },
       {
         "name": "Marc Kohli",
         "orcid_id": "0000-0003-3720-0156",
-        "role": "editor"
+        "email": "marc.kohli@ucsf.edu",
+        "role": "Editor",
+        "affiliation": "UCSF"
       }
     ]
   },
