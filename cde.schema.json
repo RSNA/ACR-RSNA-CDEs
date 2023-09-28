@@ -474,7 +474,8 @@
                     "type": "string"
                 },
                 "abbreviation": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["AB", "BR", "CA", "CH", "ER", "GI", "GU", "HN", "IR", "MI", "MK", "NR", "OB", "OI", "OT", "PD", "QI", "RS", "VA"]
                 }
             },
             "required": ["name", "abbreviation"]        
