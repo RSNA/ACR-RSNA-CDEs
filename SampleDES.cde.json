@@ -47,11 +47,11 @@
   },
   "specialties": [
     {
-      "name": "Abdominal",
+      "name": "Abdominal Radiology",
       "abbreviation": "AB"
     },
     {
-      "name": "Genitourinary",
+      "name": "Genitourinary Radiology",
       "abbreviation": "GU"
     }
   ],
