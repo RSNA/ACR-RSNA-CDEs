@@ -65,7 +65,7 @@
                         "$ref": "#/definitions/event"
                     }
                 },
-                "specialty": {
+                "specialties": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/specialty"
@@ -84,7 +84,7 @@
                     }
                 }
             },
-            "required": ["id", "name", "description", "version", "status", "elements", "history", "index_codes", "specialty"]
+            "required": ["id", "name", "description", "version", "status", "elements", "history", "index_codes", "specialties"]
         },
         "element": {
             "type": "object",
@@ -474,8 +474,7 @@
                     "type": "string"
                 },
                 "abbreviation": {
-                    "type": "string",
-                    "enum": ["AB", "BR", "CA", "CH", "ER", "GI", "GU", "HN", "IR", "MI", "MK", "NR", "OB", "OI", "OT", "PD", "QI", "RS", "VA"]
+                    "type": "string"
                 }
             },
             "required": ["name", "abbreviation"]        
