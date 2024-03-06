@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/element_set",    
+    "$ref": "#/definitions/element_set",
     "definitions": {
         "element_set": {
             "type": "object",
@@ -33,8 +33,11 @@
                     "type": "string",
                     "description": "plain text, or XHTML div are acceptable"
                 },
-                "version": {
+                "set_version": {
                     "$ref": "#/definitions/version"
+                },
+                "schema_version": {
+                    "$ref": "#/definitions/schema_version"
                 },
                 "status": {
                     "$ref": "#/definitions/status"
@@ -84,7 +87,7 @@
                     }
                 }
             },
-            "required": ["id", "name", "description", "version", "status", "elements", "history", "index_codes", "specialty"]
+            "required": ["id", "name", "description", "set_version", "status", "elements", "history", "index_codes", "specialty","schema_version"]
         },
         "element": {
             "type": "object",
@@ -130,8 +133,11 @@
                     "description": "How a user might be prompted to provide a value",
                     "type": "string"
                 },
-                "version": {
+                "element_version": {
                     "$ref": "#/definitions/version"
+                },
+                "schema_version": {
+                    "$ref": "#/definitions/schema_version"
                 },
                 "status": {
                     "$ref": "#/definitions/status"
@@ -177,7 +183,7 @@
                     "$ref": "#/definitions/boolean_value"
                 }
             },
-            "required": ["id", "name", "version", "status"],
+            "required": ["id", "name", "element_version", "status", "schema_version"],
             "oneOf": [
                 {
                     "required": ["integer_value"]
@@ -495,6 +501,10 @@
             },
             "required": ["date", "number"],
             "title": "Version"
+        },
+        "schema_version": {
+            "type": "number",
+            "description": "Identifies which schema version/release the set or element conforms to (e.g. 1.0, 2.0)"
         },
         "status": {
             "type": "object",
