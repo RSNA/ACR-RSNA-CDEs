@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/element_set",
+    "$id": "https://github.com/RSNA/ACR-RSNA-CDEs/tree/v1.0.0",
     "definitions": {
         "element_set": {
             "type": "object",
@@ -503,7 +504,7 @@
             "title": "Version"
         },
         "schema_version": {
-            "type": "number",
+            "type": "string",
             "description": "Identifies which schema version/release the set or element conforms to (e.g. 1.0, 2.0)"
         },
         "status": {
