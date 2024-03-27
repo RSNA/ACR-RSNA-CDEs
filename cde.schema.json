@@ -69,7 +69,7 @@
                         "$ref": "#/definitions/event"
                     }
                 },
-                "specialty": {
+                "specialties": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/specialty"
@@ -88,7 +88,7 @@
                     }
                 }
             },
-            "required": ["id", "name", "description", "set_version", "status", "elements", "history", "index_codes", "specialty","schema_version"]
+            "required": ["id", "name", "description", "set_version", "status", "elements", "history", "index_codes", "specialties", "schema_version"]
         },
         "element": {
             "type": "object",
