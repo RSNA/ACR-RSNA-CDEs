@@ -23,6 +23,7 @@
                         {
                             "type": "string",
                             "pattern": "TO_BE_DETERMINED\\d+",
+                            "examples": ["TO_BE_DETERMINED123"],
                             "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive a set number will be assigned and used for all further references overwriting this value"
                         }
                     ]
@@ -105,6 +106,7 @@
                         {
                             "type": "string",
                             "pattern": "TO_BE_DETERMINED\\d+",
+                            "examples": ["TO_BE_DETERMINED123"],
                             "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive an element number will be assigned and used for all further references overwriting this value"
                         }
                     ]
@@ -436,11 +438,12 @@
                     "description": "A unique machine readable identifier for each choice in a value set made up of the parent element id, period, and a number. The number following the period begins with zero and is assigned upon first submission of the element to the radelement archive.",
                     "anyOf": [
                         {
-                            "pattern": "RDE\\d+.\\d+",
+                            "pattern": "RDE\\d+\\.\\d+",
                             "examples": ["RDE25.0", "RDE25.1"]
                         },
                         {
-                            "pattern": "TO_BE_DETERMINED.\\d+",
+                            "pattern": "TO_BE_DETERMINED\\d+.\\d+",
+                            "examples": ["TO_BE_DETERMINED123.0"],
                             "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive a set number will be assigned and used for all further references overwriting this value"
                         }
                     ]
