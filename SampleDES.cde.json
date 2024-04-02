@@ -298,83 +298,6 @@
       "boolean_value": "boolean"
     },
     {
-      "id": "RDE42",
-      "parent_set": "RDES3",
-      "name": "Side",
-      "definition": "The side of the body (right or left).",
-      "question": "",
-      "element_version": {
-        "number": 1,
-        "date": "2016-01-03"
-      },
-      "schema_version": "1.0.0",
-      "status": {
-        "name": "Proposed",
-        "date": "2016-01-03"
-      },
-      "index_codes": [
-        {
-          "system": "RADLEX",
-          "code": "RID5824",
-          "display": "Left",
-          "url": "http://www.radlex.org/RID/RID5824"
-        },
-        {
-          "system": "RADLEX",
-          "code": "RID5825",
-          "display": "Right",
-          "url": "http://www.radlex.org/RID/RID5825"
-        },
-        {
-          "system": "SNOMEDCT",
-          "code": "7771000",
-          "display": "Left",
-          "url": "http://purl.bioontology.org/ontology/SNOMEDCT/7771000"
-        },
-        {
-          "system": "SNOMEDCT",
-          "code": "24028007",
-          "display": "Right",
-          "url": "http://purl.bioontology.org/ontology/SNOMEDCT/24028007"
-        },
-        {
-          "system": "SNOMEDCT",
-          "code": "272741003",
-          "display": "Laterality",
-          "url": "http://purl.bioontology.org/ontology/SNOMEDCT/272741003"
-        },
-        {
-          "system": "RADLEX",
-          "code": "RID5821",
-          "display": "laterality",
-          "url": "http://www.radlex.org/RID/RID5821"
-        }
-      ],
-      "contributors": {
-        "people": [],
-        "organizations": []
-      },
-      "history": [],
-      "specialty": [],
-      "references": [],
-      "value_set": {
-        "min_cardinality": 1,
-        "max_cardinality": 1,
-        "values": [
-          {
-            "code": "RDE42.0",
-            "value": "R",
-            "name": "Right"
-          },
-          {
-            "code": "RDE42.1",
-            "value": "L",
-            "name": "Left"
-          }
-        ]
-      }
-    },
-    {
       "id": "RDE1695",
       "parent_set": "RDES3",
       "name": "Microscopic fat",
@@ -413,7 +336,7 @@
             "name": "unknown"
           },
           {
-            "code": "RDE1695.2",
+            "code": "RDE1695.3",
             "name": "indeterminate"
           }
         ]
