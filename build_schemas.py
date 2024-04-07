@@ -17,7 +17,7 @@ ELEMENT_DEFINITIONS = ["element", *COMMON_DEFINITIONS]
 element_schema = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/element",
-    "$id": set_schema["$schema"].replace(SET_SCHEMA_FILENAME, ELEMENT_SCHEMA_FILENAME),
+    "$id": set_schema["$id"].replace(SET_SCHEMA_FILENAME, ELEMENT_SCHEMA_FILENAME),
     "definitions": { def_name: set_schema["definitions"][def_name] for def_name in ELEMENT_DEFINITIONS }
 }
 
