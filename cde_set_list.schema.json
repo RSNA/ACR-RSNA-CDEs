@@ -1,0 +1,677 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/set_list",
+    "$id": "https://github.com/ACR-RSNA-CDEs/blob/v1.0.0/cde_set_list.schema.json",
+    "definitions": {
+        "set_list": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/element_set"
+            }
+        },
+        "element_set": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^\\$": {
+                    "description": "Any property starting with $ is reserved for notations and extensions",
+                    "tsType": "any"
+                }
+            },
+            "properties": {
+                "id": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "pattern": "^RDES\\d+",
+                            "examples": [
+                                "RDES42",
+                                "RDES1042"
+                            ]
+                        },
+                        {
+                            "type": "string",
+                            "pattern": "TO_BE_DETERMINED\\d+",
+                            "examples": [
+                                "TO_BE_DETERMINED123"
+                            ],
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive a set number will be assigned and used for all further references overwriting this value"
+                        }
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "plain text, or XHTML div are acceptable"
+                },
+                "set_version": {
+                    "$ref": "#/definitions/version"
+                },
+                "schema_version": {
+                    "$ref": "#/definitions/schema_version"
+                },
+                "status": {
+                    "$ref": "#/definitions/status"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "index_codes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/index_code"
+                    }
+                },
+                "body_parts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/body_part"
+                    }
+                },
+                "contributors": {
+                    "type": "object",
+                    "$ref": "#/definitions/contributors"
+                },
+                "history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/event"
+                    }
+                },
+                "specialties": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/specialty"
+                    }
+                },
+                "elements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/element"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/reference"
+                    }
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "description",
+                "set_version",
+                "status",
+                "elements",
+                "history",
+                "index_codes",
+                "specialties",
+                "schema_version"
+            ]
+        },
+        "element": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Each data element has a unique id and a textual name.",
+            "properties": {
+                "id": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "pattern": "^RDE\\d+",
+                            "examples": [
+                                "RDES42",
+                                "RDES1042"
+                            ]
+                        },
+                        {
+                            "type": "string",
+                            "pattern": "TO_BE_DETERMINED\\d+",
+                            "examples": [
+                                "TO_BE_DETERMINED123"
+                            ],
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive an element number will be assigned and used for all further references overwriting this value"
+                        }
+                    ]
+                },
+                "parent_set": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "pattern": "^RDES\\d+",
+                            "examples": [
+                                "RDES42",
+                                "RDES1042"
+                            ]
+                        },
+                        {
+                            "type": "string",
+                            "pattern": "TO_BE_DETERMINED\\d+",
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive RDES will be assigned and used for all further references overwriting this value"
+                        }
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "definition": {
+                    "description": "A human readable definition explaining the clinical context of the data element",
+                    "type": "string"
+                },
+                "question": {
+                    "description": "How a user might be prompted to provide a value",
+                    "type": "string"
+                },
+                "element_version": {
+                    "$ref": "#/definitions/version"
+                },
+                "schema_version": {
+                    "$ref": "#/definitions/schema_version"
+                },
+                "status": {
+                    "$ref": "#/definitions/status"
+                },
+                "index_codes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/index_code"
+                    }
+                },
+                "contributors": {
+                    "type": "object",
+                    "$ref": "#/definitions/contributors"
+                },
+                "history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/event"
+                    }
+                },
+                "specialty": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/specialty"
+                    }
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/reference"
+                    }
+                },
+                "integer_value": {
+                    "$ref": "#/definitions/integer_value"
+                },
+                "value_set": {
+                    "$ref": "#/definitions/value_set"
+                },
+                "float_value": {
+                    "$ref": "#/definitions/float_value"
+                },
+                "boolean_value": {
+                    "$ref": "#/definitions/boolean_value"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "element_version",
+                "status",
+                "schema_version"
+            ],
+            "oneOf": [
+                {
+                    "required": [
+                        "integer_value"
+                    ]
+                },
+                {
+                    "required": [
+                        "value_set"
+                    ]
+                },
+                {
+                    "required": [
+                        "float_value"
+                    ]
+                },
+                {
+                    "required": [
+                        "boolean_value"
+                    ]
+                }
+            ]
+        },
+        "event": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "status": {
+                    "$ref": "#/definitions/status"
+                }
+            }
+        },
+        "image": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                },
+                "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                },
+                "caption": {
+                    "type": "string"
+                },
+                "rights": {
+                    "type": "string"
+                },
+                "contributors": {
+                    "type": "object",
+                    "$ref": "#/definitions/contributors"
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/reference"
+                    }
+                }
+            },
+            "required": [
+                "url"
+            ]
+        },
+        "biological_sex": {
+            "type": "string",
+            "enum": [
+                "M",
+                "F"
+            ]
+        },
+        "contributors": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "people": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/person"
+                    }
+                },
+                "organizations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/organization"
+                    }
+                }
+            },
+            "required": [
+                "people",
+                "organizations"
+            ]
+        },
+        "person": {
+            "type": "object",
+            "additionalProperties": false,
+            "$comment": "the e-mail property is the unique identifier used to match people between systems",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                },
+                "affiliation": {
+                    "type": "string"
+                },
+                "orcid_id": {
+                    "type": "string"
+                },
+                "twitter_handle": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "role": {
+                    "type": "string",
+                    "enum": [
+                        "Author",
+                        "Editor",
+                        "Translator",
+                        "Reviewer"
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "email"
+            ]
+        },
+        "body_part": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "index_codes": {
+                    "$ref": "#/definitions/index_code"
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+        "index_code": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "system": {
+                    "type": "string",
+                    "enum": [
+                        "RADLEX",
+                        "SNOMEDCT",
+                        "LOINC",
+                        "ACRCOMMON"
+                    ]
+                },
+                "code": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "display": {
+                    "type": "string"
+                }
+            }
+        },
+        "integer_value": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "min": {
+                    "description": "Value must be greater than or equal to minimum.",
+                    "type": "integer"
+                },
+                "max": {
+                    "description": "Value must be less than or equal to the maximum.",
+                    "type": "integer"
+                },
+                "step": {
+                    "default": 1,
+                    "type": "integer"
+                },
+                "unit": {
+                    "type": "string"
+                }
+            }
+        },
+        "float_value": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "min": {
+                    "description": "Value must be greater than or equal to minimum.",
+                    "type": "number"
+                },
+                "max": {
+                    "description": "Value must be less than or equal to the maximum.",
+                    "type": "number"
+                },
+                "step": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string"
+                }
+            }
+        },
+        "boolean_value": {
+            "type": "string",
+            "const": "boolean"
+        },
+        "organization": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "abbreviation": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string",
+                    "enum": [
+                        "author",
+                        "sponsor",
+                        "translator",
+                        "reviewer",
+                        "contributor"
+                    ]
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+        "value_set": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "min_cardinality": {
+                    "description": "defines the minimum number of values to select from the value set",
+                    "type": "integer"
+                },
+                "max_cardinality": {
+                    "description": "defines the maximum number of values to select from the value set",
+                    "type": "integer"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/value"
+                    },
+                    "minItems": 1
+                }
+            },
+            "required": [
+                "values",
+                "min_cardinality"
+            ]
+        },
+        "value": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "A unique machine readable identifier for each choice in a value set made up of the parent element id, period, and a number. The number following the period begins with zero and is assigned upon first submission of the element to the radelement archive.",
+                    "anyOf": [
+                        {
+                            "pattern": "RDE\\d+\\.\\d+",
+                            "examples": [
+                                "RDE25.0",
+                                "RDE25.1"
+                            ]
+                        },
+                        {
+                            "pattern": "TO_BE_DETERMINED\\d+.\\d+",
+                            "examples": [
+                                "TO_BE_DETERMINED123.0"
+                            ],
+                            "description": "The TO_BE_DETERMINED123 pattern is used for author convenience and tracking during the authoring process. Upon submission to the radelement archive a set number will be assigned and used for all further references overwriting this value"
+                        }
+                    ]
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Element value is intended to provide a human and/or machine readable string that could be use to caluculate a score, identify a position on a decision tree",
+                    "examples": [
+                        "2",
+                        "5",
+                        "Non-Viable"
+                    ]
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Human readable answer to the question"
+                },
+                "definition": {
+                    "type": "string",
+                    "description": "Human readable definiton of the value in the specific clinical context"
+                },
+                "index_codes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/index_code"
+                    }
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/image"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "code"
+            ]
+        },
+        "specialty": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "abbreviation": {
+                    "type": "string",
+                    "enum": [
+                        "AB",
+                        "BR",
+                        "CA",
+                        "CH",
+                        "ER",
+                        "GI",
+                        "GU",
+                        "HN",
+                        "IR",
+                        "MI",
+                        "MK",
+                        "NR",
+                        "OB",
+                        "OI",
+                        "OT",
+                        "PD",
+                        "QI",
+                        "RS",
+                        "VA"
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "abbreviation"
+            ]
+        },
+        "version": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "number": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                }
+            },
+            "required": [
+                "date",
+                "number"
+            ],
+            "title": "Version"
+        },
+        "schema_version": {
+            "type": "string",
+            "description": "Identifies which schema version/release the set or element conforms to (e.g. 1.0.0, 2.0.0) follows semver.org conventions",
+            "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+        },
+        "status": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "name": {
+                    "type": "string",
+                    "enum": [
+                        "Proposed",
+                        "Published",
+                        "Retired"
+                    ]
+                }
+            },
+            "required": [
+                "date",
+                "name"
+            ]
+        },
+        "reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "citation": {
+                    "description": "Required - Provide a bibliographic citation, including all the author names (no et Al)",
+                    "type": "string"
+                },
+                "doi_url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "pubmed_id": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [
+                "citation"
+            ]
+        }
+    }
+}
