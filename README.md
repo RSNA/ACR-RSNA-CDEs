@@ -8,7 +8,7 @@ Information around the content that is represented within this structure can be 
 
 Our repository has an [API](https://radelement.org/about/docs)
 
-## Repository Intruduction
+## Repository Introduction
 **cde.schema.json**
 This file contains the latest version of the schema, written in JSON schema draft-07
 
