@@ -527,7 +527,8 @@
             "properties": {
                 "date" : {
                     "type": "string",
-                    "format": "date"
+                    "format": "date",
+                    "description": "This shows the status as submitted, under review etc"
                 },
                 "name": {
                     "type": "string",
