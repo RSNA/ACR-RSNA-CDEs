@@ -29,24 +29,29 @@
                     ]
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description" :"This is the name of the set and should follow the guidelines"
+            
                 },
                 "description": {
                     "type": "string",
                     "description": "plain text, or XHTML div are acceptable"
                 },
                 "set_version": {
-                    "$ref": "#/definitions/version"
+                    "$ref": "#/definitions/version",
+                    "description": "This defines the version of the set"
                 },
                 "schema_version": {
                     "$ref": "#/definitions/schema_version"
+                
                 },
                 "status": {
-                    "$ref": "#/definitions/status"
+                    "$ref": "#/definitions/status",
+                    "description": "This defines the status of the set as published or being reviewed"
                 },
                 "url": {
                     "type": "string",
-                    "format": "uri"
+                    "format": "url"
                 },
                 "index_codes": {
                     "type": "array",
@@ -57,12 +62,14 @@
                 "body_parts": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/body_part"
+                        "$ref": "#/definitions/body_part",
+                        "description": "Anatomic description of the body part"
                     }
                 },
                 "contributors": {
                     "type": "object",
-                    "$ref": "#/definitions/contributors"
+                    "$ref": "#/definitions/contributors",
+                    "description": "Contributoring authors or groups"
                 },
                 "history": {
                     "type": "array",
@@ -73,19 +80,21 @@
                 "specialties": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/specialty"
+                        "$ref": "#/definitions/specialty",
+                        "description": "Subspecialties relevant to the set"
                     }
                 },
                 "elements": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/element"
+                        "$ref": "#/definitions/element"                        
                     }
                 },
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/reference"
+                        "$ref": "#/definitions/reference",
+                        "description": "Identify any pertient references related to the set"
                     }
                 }
             },
@@ -126,7 +135,8 @@
                     ]
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description" :"This is the name of the set and should follow the guidelines"
                 },
                 "definition": {
                     "description": "A human readable definition explaining the clinical context of the data element",
@@ -140,7 +150,8 @@
                     "$ref": "#/definitions/version"
                 },
                 "schema_version": {
-                    "$ref": "#/definitions/schema_version"
+                    "$ref": "#/definitions/schema_version",
+                    "description": "Identifies which schema version/release the set or element conforms to"
                 },
                 "status": {
                     "$ref": "#/definitions/status"
