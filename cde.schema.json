@@ -81,7 +81,7 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/specialty",
-                        "description": "Subspecialties relevant to the set"
+                        "description": "Radiology subspecialties relevant to the set"
                     }
                 },
                 "elements": {
