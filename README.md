@@ -19,6 +19,7 @@ A JSON file representing a CDE set that idenfies the questions (elements) needed
 A local development tool that creates schema files to validate json documents containing lists of sets, lists of elements, and a single element. The checks are automatic in vscode if you use the following file suffixes:
 
 | granularity  | filename         |
+| ------------ | ---------------- |
 | element      | *.cde.json       |
 | element list | *.cde_list.json  |
 | set          | *.cdes.json      |
