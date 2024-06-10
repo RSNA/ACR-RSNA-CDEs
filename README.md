@@ -27,8 +27,5 @@ A local development tool that creates schema files to validate json documents co
 **deprecated**
 Includes prior versions of the schema in several legacy formats
 
-**.vscode**
-Configured to automate checking of files against the following schemas.
-
-**.gitignore**
+**.vscode, .gitignore**
 Configuration for Visual Studio Code, and Git
