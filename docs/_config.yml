@@ -22,7 +22,7 @@ title: RSNA/ACR CDE Documentation
 email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
   Documentation for the RSNA/ACR Common Data Elements project. 
-baseurl: "/ACR-RNSA-CDE" # the subpath of your site, e.g. /blog
+baseurl: "/ACR-RNSA-CDEs" # the subpath of your site, e.g. /blog
 domain: rsna.github.io
 url: "https://rsna.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
