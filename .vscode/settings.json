@@ -1,8 +1,20 @@
 {
     "json.schemas": [
         {
-            "fileMatch": ["*.cde.json"],
+            "fileMatch": ["*.cdes.json"],
             "url": "./cde.schema.json"
+        },
+        {
+            "fileMatch": ["*.cdes_list.json"],
+            "url": "./cde_set_list_schema.json"
+        },
+        {
+            "fileMatch": ["*.cde.json"],
+            "url": "./cde_element.schema.json"
+        },
+        {
+            "fileMatch": ["*.cde_list.json"],
+            "url": "./cde_element_list.schema.json"
         }
     ]
 }
