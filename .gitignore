@@ -1,3 +1,6 @@
 .DS_store
 deprecated/cde_xml2json.rb
 deprecated/create_artifacts.sh
+cde_element_list.schema.json
+cde_element.schema.json
+cde_set_list.schema.json
