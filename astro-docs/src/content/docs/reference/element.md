@@ -1,10 +1,10 @@
 ---
-title: CDE Element Guidance
+title: Element Standards
 ---
 Submitters are advised to review existing Elements on radelement.org, perhaps in Elements Sets analogous to the Set being proposed, to get a sense of typical naming, definition and value set patterns.
 
 ## Element ID
-Leave Element ID codes blank at the time of submission. They are assigned as part of the publication process.
+Element ID is automatically assigned by radelement. When authoring JSON the schema allows for TO_BE_DETERMINEDnnn as a validation pattern.
 
 ## Element Definition
 Express the full semantics of the Element and provide a clear description of the specific intended use. A few words is typically inadequate; i.e., don’t just repeat the Element Name.
@@ -30,17 +30,16 @@ It is acceptable (and desirable) for elements in different Sets to have the same
 If appropriate, consider the following terms for Element Names. 
 
 Qualitative Representation Terms:
-- **>**:  hyphen
-- **>**: Category
-- **>**: Characterization
-- **>**: Classification
-- **>**: Description
-- **>**: Evaluation
-- **>**: Location
-- **>**: Score
-- **>**: Severity 
-- **>**: Status
-- **>**: Type
+- Category
+- Characterization
+- Classification
+- Description
+- Evaluation
+- Location
+- Score
+- Severity 
+- Status
+- Type
 
 Quantitative Representation Terms 
 - Amount - Non-numeric categorical descriptor, e.g. few, many, etc.
@@ -57,117 +56,52 @@ Quantitative Representation Terms
 - Width
 
 ## Avoid using the following terms. 
-Measure - Use more specific terms (rate, size, length, etc.)
-Number - Use “count” instead.
-
+- Measure - Use more specific terms (rate, size, length, etc.)
+- Number - Use “count” instead.
 
 ## Element Name - Detection Elements
 It is not necessary to include either “Presence of” or “Detection” in the element name to distinguish from other Elements that describe severity, type, etc. Values and definitions will provide context.
 
 AVOID
+- Brain swelling detection
+- Presence of brain swelling
+
 PREFER
-Brain swelling detection
-or
-Presence of brain swelling
-Brain swelling
+- Brain swelling
 
 ## Combine Detection and Categorization Elements
 Where there is a need for both detection and categorization fields within a set, combine these into a single Element and add value of “absent”. This is only appropriate for Elements that are single vs. multiple select to prevent documenting both “absent” and a category in error.
 
-AVOID
-Separate Elements
-PREFER
-Combined Elements
-Element Name
-Values
-Element Name
-Values
-Herniation detection
-present
-absent
-Herniation
-absent
-uncal
-central
-Cingulate
-indeterminate
-Herniation type
-uncal
-central
-cingulate
-
-
 ## Normalcy, Appropriateness, Correctness 
-Analogous to the case above of detection/categorization, when characterizing “appropriateness” (e.g., of the position of an enteric tube), one can define a single element with value of “appropriate” and multiple other values indicating inappropriate categories/abnormalities/incorrectness (e.g., “bronchus”, “gastreoesophageal junction”, etc.).
-
-
-AVOID
-Element Name Specifies Usage
-PREFER
-Brief Element Name 
-Element Name
-Values
-Definition
-Element Name
-Values
-Definition
-Anatomic focus of leg
-hip
-thigh
-knee
-leg
-ankle
-Anatomic focus of leg.
-Anatomic focus
-hip
-thigh
-knee
-leg
-ankle
-Anatomic focus of leg.
-
+When characterizing “appropriateness” (e.g., of the position of an enteric tube), use an element with value of “appropriate” and multiple other values indicating inappropriate categories/abnormalities/incorrectness (e.g., “bronchus”, “gastreoesophageal junction”, etc.).
 
 ## Element Type
-CDEs have four data types:
-Integer: a number used for observations that can be counted, such as a number of occurrences, or ordered
-Numeric: a floating point number used for measurements 
-Value Set: a pick list from which one or more values can be selected
-
-This may be a fixed response (present or absent), categorical with a fixed set of responses or a measurement with a defined upper or lower limits and potentially a default value.
-e.g.. hemorrhage: present/absent
-Hemorrhage type: epidural, subdural, subarachnoid, intraparenchymal, intraventricular.
-ASPECTS score ( 0 - 10) integer; default 10.
-
-## Element Minimum Cardinality
-Indicate the number of values required for the containing Element Set to be valid.
-A value of 0 indicates the Element is optional. A value of 1 or more indicates the Element is required, i.e. that 0 values is invalid.
-Be judicious. Required means that if all other elements are present but this one is absent, then the Element Set must be rejected. 
-
-## Element Maximum Cardinality
-Indicate the number of values beyond which the containing Element Set is invalid. Most often, this is 1.
+Elements have three types:
+- Integer: a number used for observations that can be counted, such as a number of occurrences, or ordered
+    - ASPECTS score ( 0 - 10) integer; default 10.
+    - minimum and maximum can also be specified
+- Float: a decimal number used for measurements (e.g. 0.3 cm)
+    - Set to the appropriate level of precision through inclusion of a step value (e.g. 0.01)
+    - minimum and maximum can be specified
+    - Use units that allow for measurements to be represented with no more than one decimal place
+        - e.g. with units set to cm minimum value must be at least 0.1 cm
+        - AVOID 0.01 cm (use 0.1 mm)
+- Value Set: a pick list from which one or more values can be selected
 
 ## Measurement Elements
 - Appropriate Units - The Unified Code for Units of Measure (UCUM) should be used as a reference for appropriate units.
 (Unit is currently a free text in the MARVAL authoring tool, however an update is pending that will limit users to UCUM units.)
 
-Numeric = the decimal point can be set to the appropriate level of precision (eg, "step level: .1") and range of allowable values, and a unit of measure specified
-
-## Minimum Allowable Entry for Numeric Element  
-Maximum limits for numeric entries will vary, however minimum allowable entry for numeric fields should be set as follows:
-Unit with minimum allowable entry
-- cm  = 0.1 cm
-- mm = 1 mm
-
 ## Volume
-When describing volume the following are to be avoided.
-Volume Units
--AVOID = cm3, mm3
--PREFER = mL, mcL
+When describing cubic units are to be avoided. 
+- AVOID = cm3, mm3
+- PREFER = mL, mcL
 
 ## Single-Labeled vs. Multiple Separate Data Elements
-Example, in coronary artery imaging, several properties of a lesion (e.g., severity of stenosis, degree of calcification) can be assessed at different locations (left main artery, circumflex artery, obtuse marginal artery) in the coronary anatomy. There are two approaches:
+Frequently, leisonal properties (e.g., severity of stenosis, degree of calcification) can be assessed at different locations (e.g. left main artery, circumflex artery, obtuse marginal artery). 
+
+There are two approaches:
 - Define multiple data elements for each property at each possible location (e.g., separate element for stenosis at the circumflex, calcification at the circumflex, stenosis at the obtuse marginal, calcification at the obtuse marginal, etc.).
 - Define a single data element for encoding each possible lesion where the location of the lesion is a possible choice (e.g., an element for lesion location [circumflex, obtuse marginal], and single elements for severity of stenosis and calcification).
+
 Which approach should be taken can be decided on a case by case basis, but in general, the first approach is favored.
-
-

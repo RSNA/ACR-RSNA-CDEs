@@ -1,5 +1,5 @@
 ---
-title: CDE Set Guidance
+title: Set Standards
 ---
 ## Literature Search
 
@@ -26,9 +26,9 @@ CDE set scope avoids data that is mostly not obtained from images but rather fro
 
 For example:
 
-* a Set for a pulmonary nodule would include Elements for size, location, and solidity 
-* a Set for pancreatitis would include Elements for the presence of necrosis, presence of peripancreatic collections, size of peripancreatic collections, and patency of the adjacent vessels 
-* a Set for acute stroke could include Elements for vascular territory, presence of hemorrhage, midline shift, and an ASPECTS score
+- a Set for a pulmonary nodule would include Elements for size, location, and solidity 
+- a Set for pancreatitis would include Elements for the presence of necrosis, presence of peripancreatic collections, size of peripancreatic collections, and patency of the adjacent vessels 
+- a Set for acute stroke could include Elements for vascular territory, presence of hemorrhage, midline shift, and an ASPECTS score
 
 For a simple radiology procedure, the scope may be congruent with all the observations typically reported for the entire procedure.
 For more complex interpretations, image interpretation and diagnosis may involve forking paths of conditional ("If/then") logic where each finding leads to a new set of observations, such as in a flowchart. In such cases, the scope of a Set will typically correspond to one "branch" of that graph.
@@ -41,19 +41,19 @@ CDEs should not include data elements that are contained elsewhere in the patien
 
 ### EHR , RIS, and PACS Data - Elements in a Set
 
-Avoid including Elements for information already captured and available within the patient’s EHR or the radiology information system. CDEs are intended to be used within such systems, so documenting these items in CDEs is duplicative and CDE’s try to avoid modelling information outside our domain. CDEs should only contain elements that capture image derived features
+Avoid including Elements for information already captured and available within the patient’s EHR or the radiology information system. CDEs are intended to be used within such systems, so documenting these items in CDEs is duplicative and CDE’s try to avoid modelling information outside our domain. CDEs should only contain features derived from images
 
 **Specifically Avoid:**
 
-- Patient demographics—Age, sex, MRN, etc.
-- Patient health—History or current, comorbidities, previous history of disease/surgery, pulse rate, etc. describe the patient, but aren’t derived from an imaging exam. 
-- Exam description—Procedure, modality, scanner info, position, views, etc. CDEs correspond with a set of images, and those images already have a standardized way for representing what was performed. DICOM has spent a lot of time thinking about how to model this including more granular procedure steps.
+- Patient demographics: Age, sex, MRN, etc.
+- Patient history: complaints, comorbidities, family or surgical history, vital signs, lab values
+- Exam description: procedure, modality, scanner info, position, views, etc. CDEs correspond with a set of images, and those images already have a standardized way for representing what was performed. DICOM has spent a lot of time thinking about how to model this including more granular procedure steps.
 
 There may be exception cases. It’s a matter of weighing the cost and benefit of storing this type of information in CDEs.
 
 ## Set ID
 
-Leave Set ID codes blank at the time of submission. They are assigned as part of the publication process. This intentionally inhibits usage of sets and codes with draft semantics that might conflict with the final published semantics, which would undercut the essential purpose of CDE codes.
+Set IDs are assigned by radelement.org during the review and publication process. This intentionally eliminates ID conflicts and conflicting draft and final semantics, which would undercut the essential purpose of CDE codes. If authoring in JSON, the validation allows TO_BE_DETERMINEDnnn.
 
 ## Set Definition
 Describe the full semantics of the Set, specifically the nature of the finding or assessment, and the context of use. Include references when the Set is based on established scientific literature. During the Review Process, this definition will also serve as a basis for assessing the completeness of the Elements in the Set.

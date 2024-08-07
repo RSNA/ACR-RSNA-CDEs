@@ -21,7 +21,11 @@ export default defineConfig({
 				// },
 				{
 					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					items: [
+						{ label: 'Set Standards', slug: 'reference/set' },
+						{ label: 'Element Standards', slug: 'reference/element' },
+						{ label: 'Valueset Standards', slug: 'reference/valueset' }
+					]
 				},
 			],
 		}),
