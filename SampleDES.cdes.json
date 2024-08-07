@@ -2,10 +2,11 @@
   "id": "RDES3",
   "name": "CAR/DS Adrenal Nodule",
   "description": "ACR Assist project for describing adrenal nodules.",
-  "version": {
+  "set_version": {
     "number": 1,
     "date": "2016-01-03"
   },
+  "schema_version": "1.0.0",
   "status": {
     "date": "2016-01-03",
     "name": "Proposed"
@@ -45,7 +46,7 @@
       }
     ]
   },
-  "specialty": [
+  "specialties": [
     {
       "name": "Abdominal Radiology",
       "abbreviation": "AB"
@@ -62,10 +63,11 @@
       "parent_set": "RDES3",
       "name": "Nodule size",
       "definition": "The greatest linear dimension of the adrenal nodule.",
-      "version": {
+      "element_version": {
         "number": 1,
         "date": "2016-01-03"
       },
+      "schema_version": "1.0.0",
       "status": {
         "name": "Proposed",
         "date": "2016-01-03"
@@ -100,10 +102,11 @@
       "parent_set": "RDES3",
       "name": "Side",
       "definition": "The side of the body (right or left)",
-      "version": {
+      "element_version": {
         "number": 1,
         "date": "2016-01-03"
       },
+      "schema_version": "1.0.0",
       "status": {
         "date": "2016-01-03",
         "name": "Proposed"
@@ -159,10 +162,11 @@
       "name": "Unenhanced attenuation",
       "definition": "Mean attenuation in Hounsfield units (HU) of the region of interest on CT images obtained without IV contrast.",
       "question": "Enter the attenuation of the region of interest on the unenhnaced CT.",
-      "version": {
+      "element_version": {
         "number": 1,
         "date": "2016-01-03"
       },
+      "schema_version": "1.0.0",
       "status": {
         "name": "Published",
         "date": "2016-01-03"
@@ -201,10 +205,11 @@
       "name": "Enhanced attenuation",
       "definition": "Mean attenuation in Hounsfield units (HU) of the region of interest on CT images obtained immediately after IV contrast administration.",
       "question": "",
-      "version": {
+      "element_version": {
         "number": 1,
         "date": "2016-01-03"
       },
+      "schema_version": "1.0.0",
       "status": {
         "name": "Published",
         "date": "2016-01-03"
@@ -230,10 +235,11 @@
       "name": "Delayed attenuation",
       "definition": "Mean attenuation in Hounsfield units (HU) of the region of interest on CT images otained at least 3 min after IV contrast administration.",
       "question": "Enter the attenuation of the region of interest on delayed CT images.",
-      "version": {
+      "element_version": {
         "number": 1,
         "date": "2016-01-03"
       },
+      "schema_version": "1.0.0",
       "status": {
         "name": "Published",
         "date": "2016-01-03"
@@ -272,10 +278,11 @@
       "name": "Uniformly cystic",
       "definition": "Indicates if the adrenal nodule is uniformly cystic. ",
       "question": "Is the adrenal nodule uniformly cystic?",
-      "version": {
+      "element_version": {
         "number": 1,
         "date": "2016-01-03"
       },
+      "schema_version": "1.0.0",
       "status": {
         "name": "Proposed",
         "date": "2016-01-03"
@@ -291,90 +298,15 @@
       "boolean_value": "boolean"
     },
     {
-      "id": "RDE42",
-      "parent_set": "RDES3",
-      "name": "Side",
-      "definition": "The side of the body (right or left).",
-      "question": "",
-      "version": {
-        "number": 1,
-        "date": "2016-01-03"
-      },
-      "status": {
-        "name": "Proposed",
-        "date": "2016-01-03"
-      },
-      "index_codes": [
-        {
-          "system": "RADLEX",
-          "code": "RID5824",
-          "display": "Left",
-          "url": "http://www.radlex.org/RID/RID5824"
-        },
-        {
-          "system": "RADLEX",
-          "code": "RID5825",
-          "display": "Right",
-          "url": "http://www.radlex.org/RID/RID5825"
-        },
-        {
-          "system": "SNOMEDCT",
-          "code": "7771000",
-          "display": "Left",
-          "url": "http://purl.bioontology.org/ontology/SNOMEDCT/7771000"
-        },
-        {
-          "system": "SNOMEDCT",
-          "code": "24028007",
-          "display": "Right",
-          "url": "http://purl.bioontology.org/ontology/SNOMEDCT/24028007"
-        },
-        {
-          "system": "SNOMEDCT",
-          "code": "272741003",
-          "display": "Laterality",
-          "url": "http://purl.bioontology.org/ontology/SNOMEDCT/272741003"
-        },
-        {
-          "system": "RADLEX",
-          "code": "RID5821",
-          "display": "laterality",
-          "url": "http://www.radlex.org/RID/RID5821"
-        }
-      ],
-      "contributors": {
-        "people": [],
-        "organizations": []
-      },
-      "history": [],
-      "specialty": [],
-      "references": [],
-      "value_set": {
-        "min_cardinality": 1,
-        "max_cardinality": 1,
-        "values": [
-          {
-            "code": "RDE42.0",
-            "value": "R",
-            "name": "Right"
-          },
-          {
-            "code": "RDE42.1",
-            "value": "L",
-            "name": "Left"
-          }
-        ]
-      }
-    },
-    {
       "id": "RDE1695",
       "parent_set": "RDES3",
       "name": "Microscopic fat",
       "definition": "The adrenal nodule contains macroscopic fat, as evidenced by at least one pixel attenuation value less than -10 HU.",
-      "version": {
+      "element_version": {
         "number": 1,
         "date": "2023-06-23"
       },
+      "schema_version": "1.0.0",
       "status": {
         "date": "2023-06-23",
         "name": "Published"  
@@ -404,7 +336,7 @@
             "name": "unknown"
           },
           {
-            "code": "RDE1695.2",
+            "code": "RDE1695.3",
             "name": "indeterminate"
           }
         ]
