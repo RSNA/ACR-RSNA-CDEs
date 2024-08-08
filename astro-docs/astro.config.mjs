@@ -12,19 +12,19 @@ export default defineConfig({
 				github: 'https://github.com/withastro/starlight',
 			},
 			sidebar: [
-				// {
-				// 	label: 'Guides',
-				// 	items: [
-				// 		// Each item here is one entry in the navigation menu.
-				// 		{ label: 'Example Guide', slug: 'guides/example' },
-				// 	],
-				// },
+				{
+					label: 'Guides',
+					items: [
+						// Each item here is one entry in the navigation menu.
+						{ label: 'Authoring and Conventions', slug: 'guides/author' },
+					],
+				},
 				{
 					label: 'Reference',
 					items: [
 						{ label: 'Set Standards', slug: 'reference/set' },
 						{ label: 'Element Standards', slug: 'reference/element' },
-						{ label: 'Valueset Standards', slug: 'reference/valueset' }
+						{ label: 'Value Set and Value Standards', slug: 'reference/valueset' }
 					]
 				},
 			],

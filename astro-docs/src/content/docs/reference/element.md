@@ -16,20 +16,37 @@ For Elements that are measurements, define the method sufficiently to get consis
 Include references when the Element is based on established scientific literature, such as BI-RADS, TI-RADS, ASPECTS, SLICS, TLICS, NASCET, AoSpine, Fazekas Score and many others.
 
 ## Element Name
-Think of the Element Name as a data item label within the Set.  
-
 Keep names as short as possible. Since elements all exist within the context of their specific parent Element Set, it is only necessary for the name to distinguish elements from the other elements in the same Set. The full semantics are in the Element Definition. 
 
 Avoid reiterating semantics already present in the Set Name. Avoid jargon and acronyms. The Name is not a prompt, and should not be in the form of a question.
 
 Capitalize the first word of the name only ("Vascular territory", not "Vascular Territory").
 
-It is acceptable (and desirable) for elements in different Sets to have the same name when they capture equivalent  information. E.g. the Location element in the Pulmonary Nodule Set and the Location element in the Epidural Hematoma Set both capture the anatomical location of the pathology. Two such elements would still have different Element IDs, and definitions specific to the Set they are in.
+It is acceptable (and desirable) for elements in different Sets to have the same name when they capture equivalent information. E.g. the Location element in the Pulmonary Nodule Set and the Location element in the Epidural Hematoma Set both capture the anatomical location of the pathology. Two such elements would still have different Element IDs, and definitions specific to the Set they are in.
 
-## Element Name - Terms
+Avoid unnecessary specificity in the Name.
+
+PREFERRED
+- Anatomic focus
+    - hip
+    - thigh
+    - knee
+    - lower leg
+    - ankle
+
+AVOID
+- Anatomic focus of leg
+    - hip
+    - thigh
+    - knee
+    - lower leg
+    - ankle
+
+
+### Element Name - Terms
 If appropriate, consider the following terms for Element Names. 
 
-Qualitative Representation Terms:
+Acceptable Qualitative Representation Terms:
 - Category
 - Characterization
 - Classification
@@ -41,7 +58,7 @@ Qualitative Representation Terms:
 - Status
 - Type
 
-Quantitative Representation Terms 
+Acceptable Quantitative Representation Terms 
 - Amount - Non-numeric categorical descriptor, e.g. few, many, etc.
 - Average
 - Count - Numeric value arrived at by counting.
@@ -55,7 +72,7 @@ Quantitative Representation Terms
 - Volume
 - Width
 
-## Avoid using the following terms. 
+Avoid using:
 - Measure - Use more specific terms (rate, size, length, etc.)
 - Number - Use “count” instead.
 
@@ -71,6 +88,22 @@ PREFER
 
 ## Combine Detection and Categorization Elements
 Where there is a need for both detection and categorization fields within a set, combine these into a single Element and add value of “absent”. This is only appropriate for Elements that are single vs. multiple select to prevent documenting both “absent” and a category in error.
+
+AVOID
+- Herniation
+    - present
+    - absent
+- Herniation Type
+    - uncal
+    - central
+    - cingulate
+
+PREFER
+- Herniation
+    - absent
+    - uncal
+    - central
+    - cingulate
 
 ## Normalcy, Appropriateness, Correctness 
 When characterizing “appropriateness” (e.g., of the position of an enteric tube), use an element with value of “appropriate” and multiple other values indicating inappropriate categories/abnormalities/incorrectness (e.g., “bronchus”, “gastreoesophageal junction”, etc.).
