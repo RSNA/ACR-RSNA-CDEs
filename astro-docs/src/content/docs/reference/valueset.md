@@ -28,7 +28,7 @@ Do not embed/pre-coordinate the name of the Element in the values for the Elemen
   - indeterminate
 
 ## Value Set Codes
-Defines the identify of a value codes for element 
+Each value in a value set is issued an identifer based on the parent element ID by radelement. For example: the first answer choice for RDE35 would be RDE35.0. As this is done by radelement, if authoring in JSON, the validation allows TO_BE_DETERMINEDnnn.
 
 ## Values for Detection
 Detection type elements should use the below standardized values where possible and avoid options of, “undetermined”, “equivocal”, etc.   
