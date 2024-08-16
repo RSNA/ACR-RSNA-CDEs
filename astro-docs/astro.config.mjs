@@ -8,15 +8,14 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'RSNA/ACR Common Data Elements',
-			social: {
-				github: 'https://github.com/withastro/starlight',
-			},
 			sidebar: [
 				{
 					label: 'Guides',
 					items: [
 						// Each item here is one entry in the navigation menu.
 						{ label: 'Authoring and Conventions', slug: 'guides/author' },
+						{ label: 'Review Process', slug: 'guides/review' },
+						{ label: 'Use CDEs in PowerScribe', slug: 'guides/powerscribe'}
 					],
 				},
 				{
