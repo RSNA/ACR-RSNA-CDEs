@@ -39,7 +39,7 @@
                 },
                 "set_version": {
                     "$ref": "#/definitions/version",
-                    "description": "This defines the version of the set"
+                    "description": "This is an auto- increment field that increases by one each time a set is added to radelement"
                 },
                 "schema_version": {
                     "$ref": "#/definitions/schema_version"
@@ -51,7 +51,7 @@
                 },
                 "url": {
                     "type": "string",
-                    "format": "url"
+                    "format": "uri"
                 },
                 "index_codes": {
                     "type": "array",
@@ -147,7 +147,8 @@
                     "type": "string"
                 },
                 "element_version": {
-                    "$ref": "#/definitions/version"
+                    "$ref": "#/definitions/version",
+                    "description": "This is an auto-increment field that increases by one each time an element is sent to radelement"
                 },
                 "schema_version": {
                     "$ref": "#/definitions/schema_version",
