@@ -105,6 +105,19 @@ PREFER
     - central
     - cingulate
 
+## Concurrent Use of Detection and Quantification Elements
+When modeling sets, a common occurrance is to have both detection and quantification use cases. In some cases, a quantification of 0 would indicate abscence. In other cases, authors may choose to include 
+
+For example, in modeling emphysema the set below with separate detection and quantification elements is just as valid as having a set that only includes a detection or quantification element.
+- Emphysema
+    - present
+    - absent
+    - indterminate
+    - unknown
+- Percent of lung involved (Integer)
+
+This decision is left to the set author as both situations can be appropriate.
+
 ## Normalcy, Appropriateness, Correctness 
 When characterizing “appropriateness” (e.g., of the position of an enteric tube), use an element with value of “appropriate” and multiple other values indicating inappropriate categories/abnormalities/incorrectness (e.g., “bronchus”, “gastreoesophageal junction”, etc.).
 

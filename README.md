@@ -4,7 +4,7 @@ This repository defines the data model behind the [RSNA/ACR CDE project](https:/
 
 This data model provides the structure and syntax of a well-formed CDE set containing elements and values. It is most useful for those developing software tools to create or consume CDEs. 
 
-Information around the content that is represented within this structure can be found in our [authoring guide](https://radelement.org/about/guides/authoring) and our [standardization guide](https://radelement.org/about/guides/standardization). 
+Information around the content that is represented within this structure can be found in our [documentation](https://rsna.github.io/ACR-RSNA-CDEs/). 
 
 Our repository has an [API](https://radelement.org/about/docs)
 
