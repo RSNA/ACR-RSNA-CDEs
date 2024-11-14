@@ -109,6 +109,24 @@
           "url": "http://www.radlex.org/RID/RID11086"
         }
       ],
+      "body_parts": [
+        {
+          "name": "endocrine gland",
+          "index_codes": {
+            "system": "SNOMEDCT",
+            "code": "119261009",
+            "display": "endocrine gland part"
+          }
+        },
+        {
+          "name": "adrenal gland",
+          "index_codes": {
+            "system": "SNOMEDCT",
+            "code": "362894002",
+            "display": "adrenal part"
+          }
+        }
+      ],
       "contributors": {
         "people": [],
         "organizations": []
@@ -143,6 +161,24 @@
         "people": [],
         "organizations": []
       },
+      "body_parts": [
+        {
+          "name": "endocrine gland",
+          "index_codes": {
+            "system": "SNOMEDCT",
+            "code": "119261009",
+            "display": "endocrine gland part"
+          }
+        },
+        {
+          "name": "adrenal gland",
+          "index_codes": {
+            "system": "SNOMEDCT",
+            "code": "362894002",
+            "display": "adrenal part"
+          }
+        }
+      ],
       "history": [],
       "specialty": [],
       "references": [
@@ -170,6 +206,24 @@
         "date": "2024-02-13"
       },
       "index_codes": [],
+      "body_parts": [
+        {
+          "name": "endocrine gland",
+          "index_codes": {
+            "system": "SNOMEDCT",
+            "code": "119261009",
+            "display": "endocrine gland part"
+          }
+        },
+        {
+          "name": "adrenal gland",
+          "index_codes": {
+            "system": "SNOMEDCT",
+            "code": "362894002",
+            "display": "adrenal part"
+          }
+        }
+      ],
       "contributors": {
         "people": [],
         "organizations": []
@@ -248,6 +302,24 @@
         "date": "2024-02-12"
       },
       "index_codes": [],
+      "body_parts": [
+        {
+          "name": "endocrine gland",
+          "index_codes": {
+            "system": "SNOMEDCT",
+            "code": "119261009",
+            "display": "endocrine gland part"
+          }
+        },
+        {
+          "name": "adrenal gland",
+          "index_codes": {
+            "system": "SNOMEDCT",
+            "code": "362894002",
+            "display": "adrenal part"
+          }
+        }
+      ],
       "contributors": {
         "people": [],
         "organizations": []
@@ -391,6 +463,24 @@
         "date": "2024-02-13"
       },
       "index_codes": [],
+      "body_parts": [
+        {
+          "name": "endocrine gland",
+          "index_codes": {
+            "system": "SNOMEDCT",
+            "code": "119261009",
+            "display": "endocrine gland part"
+          }
+        },
+        {
+          "name": "adrenal gland",
+          "index_codes": {
+            "system": "SNOMEDCT",
+            "code": "362894002",
+            "display": "adrenal part"
+          }
+        }
+      ],
       "contributors": {
         "people": [],
         "organizations": []

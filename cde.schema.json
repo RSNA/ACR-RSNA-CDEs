@@ -163,6 +163,13 @@
                         "$ref": "#/definitions/index_code"
                     }
                 },
+                "body_parts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/body_part",
+                        "description": "Array of coded body parts. Use where an element can only be used in one or more body parts."
+                    }
+                },
                 "contributors": {
                     "type": "object",
                     "$ref": "#/definitions/contributors"
