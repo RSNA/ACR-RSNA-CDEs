@@ -193,9 +193,6 @@
                 },
                 "float_value": {
                     "$ref": "#/definitions/float_value"
-                },
-                "boolean_value": {
-                    "$ref": "#/definitions/boolean_value"
                 }
             },
             "required": ["id", "name", "element_version", "status", "schema_version"],
@@ -208,9 +205,6 @@
                 },
                 {
                     "required": ["float_value"]
-                },
-                {
-                    "required": ["boolean_value"]
                 }
             ]
         },
@@ -387,10 +381,6 @@
                     "type": "string"
                 }
             }
-        },
-        "boolean_value": {
-            "type": "string",
-            "const": "boolean"
         },
         "organization": {
             "type": "object",
