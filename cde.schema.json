@@ -303,9 +303,6 @@
                 "orcid_id": {
                     "type": "string"
                 },
-                "twitter_handle": {
-                    "type": "string"
-                },
                 "url": {
                     "type": "string",
                     "format": "uri"
