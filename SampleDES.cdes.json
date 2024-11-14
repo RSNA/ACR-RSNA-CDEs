@@ -60,6 +60,24 @@
       "abbreviation": "OI"
     }
   ],
+  "body_parts": [
+    {
+      "name": "endocrine gland",
+      "index_codes": {
+        "system": "SNOMEDCT",
+        "code": "119261009",
+        "display": "endocrine gland part"
+      }
+    },
+    {
+      "name": "adrenal gland",
+      "index_codes": {
+        "system": "SNOMEDCT",
+        "code": "362894002",
+        "display": "adrenal part"
+      }
+    }
+  ],
   "index_codes": [],
   "elements": [
     {
