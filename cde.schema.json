@@ -226,7 +226,8 @@
                 "status": {
                     "$ref": "#/definitions/status"
                 }
-            }
+            },
+            "required": ["date", "status"]
         },
         "image": {
             "type": "object",
