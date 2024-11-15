@@ -276,16 +276,18 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/person"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "organizations": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/organization"
-                    }
+                    },
+                    "minItems": 1
                 }
             },
-            "required": ["people", "organizations"]
+            "required": ["people"]
         },
         "person": {
             "type": "object",
