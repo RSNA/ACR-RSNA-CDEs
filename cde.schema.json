@@ -90,6 +90,12 @@
                         "$ref": "#/definitions/element"                        
                     }
                 },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/image"
+                    }
+                },
                 "references": {
                     "type": "array",
                     "items": {
@@ -186,6 +192,12 @@
                         "$ref": "#/definitions/specialty"
                     }
                 },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/image"
+                    }
+                },                
                 "references": {
                     "type": "array",
                     "items": {
