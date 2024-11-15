@@ -419,18 +419,20 @@
             "properties": {
                 "min_cardinality": {
                     "description": "defines the minimum number of values to select from the value set",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "max_cardinality": {
                     "description": "defines the maximum number of values to select from the value set",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 1
                 },
                 "values": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/value"
                     },
-                    "minItems": 1
+                    "minItems": 2
                 }
             },
             "required": ["values", "min_cardinality"]
