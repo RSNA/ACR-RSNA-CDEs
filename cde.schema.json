@@ -316,7 +316,7 @@
                     "enum": ["Author", "Editor", "Translator", "Reviewer"]
                 }
             },
-            "required": ["name", "email"]
+            "required": ["name", "email", "role"]
         },
         "body_part": {
             "type": "object",
