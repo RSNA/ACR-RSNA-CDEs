@@ -264,10 +264,6 @@
             },
             "required": ["url"]
         },
-        "biological_sex": {
-            "type": "string",
-            "enum": ["M", "F"]
-        },
         "contributors": {
             "type": "object",
             "additionalProperties": false,
