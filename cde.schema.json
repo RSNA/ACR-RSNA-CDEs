@@ -408,7 +408,7 @@
                 },
                 "role": {
                     "type": "string",
-                    "enum": ["author", "sponsor", "translator", "reviewer", "contributor"]
+                    "enum": ["Author", "Sponsor", "Translator", "Contributor"]
                 }
             },
             "required": ["name"]

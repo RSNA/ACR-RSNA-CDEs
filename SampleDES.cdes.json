@@ -28,7 +28,8 @@
     "organizations": [
       {
         "name": "American College of Radiology",
-        "abbreviation": "ACR"
+        "abbreviation": "ACR",
+        "role": "Sponsor"
       }
     ],
     "people": [
