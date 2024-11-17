@@ -193,7 +193,8 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/event"
-                    }, "minItems": 1
+                    }, 
+                    "minItems": 1
                 },
                 "specialty": {
                     "type": "array",
