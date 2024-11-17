@@ -23,7 +23,6 @@
       "pubmed_id": "20489083"
     }
   ],
-  "history": [],
   "contributors": {
     "organizations": [
       {
@@ -79,7 +78,6 @@
       }
     }
   ],
-  "index_codes": [],
   "elements": [
     {
       "id": "RDE43",
@@ -143,9 +141,6 @@
             "affiliation": "UCSF"
           }        ]
       },
-      "history": [],
-      "specialty": [],
-      "references": [],
       "integer_value": {
         "min": -1024,
         "max": 1024,
@@ -168,7 +163,6 @@
         "name": "Published",
         "date": "2024-02-13"
       },
-      "index_codes": [],
       "contributors": {
         "people": [
           {
@@ -202,10 +196,6 @@
             "display": "adrenal part"
           }
         }
-      ],
-      "history": [],
-      "specialty": [],
-      "references": [
       ],
       "integer_value": {
         "min": -1024,
@@ -229,7 +219,6 @@
         "name": "Published",
         "date": "2024-02-13"
       },
-      "index_codes": [],
       "body_parts": [
         {
           "name": "endocrine gland",
@@ -264,9 +253,6 @@
           }
         ]
       },
-      "history": [],
-      "specialty": [],
-      "references": [],
       "integer_value": {
         "min": -1024,
         "max": 1024,
@@ -289,7 +275,6 @@
         "name": "Published",
         "date": "2024-02-13"
       },
-      "index_codes": [],
       "contributors": {
         "people": [
           {
@@ -306,9 +291,6 @@
           }
         ]
       },
-      "history": [],
-      "specialty": [],
-      "references": [],
       "value_set": {
         "min_cardinality": 1,
         "max_cardinality": 1,
@@ -349,7 +331,6 @@
         "name": "Published",
         "date": "2024-02-12"
       },
-      "index_codes": [],
       "body_parts": [
         {
           "name": "endocrine gland",
@@ -384,9 +365,6 @@
           }
         ]
       },
-      "history": [],
-      "specialty": [],
-      "references": [],
       "value_set": {
         "min_cardinality": 1,
         "max_cardinality": 1,
@@ -433,7 +411,6 @@
         "name": "Published",
         "date": "2024-02-13"
       },
-      "index_codes": [],
       "contributors": {
         "people": [
           {
@@ -450,9 +427,6 @@
           }
         ]
       },
-      "history": [],
-      "specialty": [],
-      "references": [],
       "value_set": {
         "min_cardinality": 1,
         "max_cardinality": 1,
@@ -505,7 +479,6 @@
         "name": "Published",
         "date": "2024-02-13"
       },
-      "index_codes": [],
       "contributors": {
         "people": [
           {
@@ -522,9 +495,6 @@
           }
         ]
       },
-      "history": [],
-      "specialty": [],
-      "references": [],
       "integer_value": {
         "min": 0,
         "step": 1,
@@ -546,7 +516,6 @@
         "name": "Published",
         "date": "2024-02-13"
       },
-      "index_codes": [],
       "body_parts": [
         {
           "name": "endocrine gland",
@@ -581,9 +550,6 @@
           }
         ]
       },
-      "history": [],
-      "specialty": [],
-      "references": [],
       "value_set": {
         "min_cardinality": 1,
         "max_cardinality": 1,
@@ -630,7 +596,6 @@
         "name": "Published",
         "date": "2024-02-13"
       },
-      "index_codes": [],
       "contributors": {
         "people": [
           {
@@ -647,9 +612,6 @@
           }
         ]
       },
-      "history": [],
-      "specialty": [],
-      "references": [],
       "value_set": {
         "min_cardinality": 1,
         "max_cardinality": 1,
@@ -708,7 +670,6 @@
         "name": "Published",
         "date": "2024-02-13"
       },
-      "index_codes": [],
       "contributors": {
         "people": [
           {
@@ -725,9 +686,6 @@
           }
         ]
       },
-      "history": [],
-      "specialty": [],
-      "references": [],
       "value_set": {
         "min_cardinality": 1,
         "max_cardinality": 9,
