@@ -127,6 +127,12 @@
         }
       ],
       "contributors": {
+        "organizations": [
+          {
+            "name": "American College of Radiology",
+            "abbreviation": "ACR"
+          }
+        ],
         "people": [
           {
             "name": "Tarik Alkasab",
@@ -164,6 +170,12 @@
         "date": "2024-02-13"
       },
       "contributors": {
+        "organizations": [
+          {
+            "name": "American College of Radiology",
+            "abbreviation": "ACR"
+          }
+        ],
         "people": [
           {
             "name": "Tarik Alkasab",
@@ -238,6 +250,12 @@
         }
       ],
       "contributors": {
+        "organizations": [
+          {
+            "name": "American College of Radiology",
+            "abbreviation": "ACR"
+          }
+        ],
         "people": [
           {
             "name": "Tarik Alkasab",
@@ -276,6 +294,12 @@
         "date": "2024-02-13"
       },
       "contributors": {
+        "organizations": [
+          {
+            "name": "American College of Radiology",
+            "abbreviation": "ACR"
+          }
+        ],
         "people": [
           {
             "name": "Tarik Alkasab",
@@ -297,19 +321,47 @@
         "values": [
           {
             "code": "RDE42.0",
-            "value": "0",
+            "value": "L",
             "name": "left",
-            "definition": ""
+            "definition": "",
+            "index_codes": [
+              {
+                "system": "RADLEX",
+                "code": "RID5824",
+                "url": "http://radlex.org/rid",
+                "display": "Left"
+              },
+              {
+                "system": "SNOMEDCT",
+                "code": "7771000",
+                "url": "http://snomed.info/sct",
+                "display": "Left"
+              }
+            ]
           },
           {
             "code": "RDE42.1",
-            "value": "1",
+            "value": "R",
             "name": "right",
-            "definition": ""
+            "definition": "",
+            "index_codes": [
+              {
+                "system": "RADLEX",
+                "code": "RID5828",
+                "url": "http://radlex.org/rid",
+                "display": "Right"
+              },
+              {
+                "system": "SNOMEDCT",
+                "code": "24028007",
+                "url": "http://snomed.info/sct",
+                "display": "Right"
+              }
+            ]
           },
           {
             "code": "RDE42.2",
-            "value": "2",
+            "value": "U",
             "name": "unknown",
             "definition": ""
           }
@@ -350,6 +402,12 @@
         }
       ],
       "contributors": {
+        "organizations": [
+          {
+            "name": "American College of Radiology",
+            "abbreviation": "ACR"
+          }
+        ],
         "people": [
           {
             "name": "Tarik Alkasab",
@@ -412,6 +470,12 @@
         "date": "2024-02-13"
       },
       "contributors": {
+        "organizations": [
+          {
+            "name": "American College of Radiology",
+            "abbreviation": "ACR"
+          }
+        ],
         "people": [
           {
             "name": "Tarik Alkasab",
@@ -480,6 +544,12 @@
         "date": "2024-02-13"
       },
       "contributors": {
+        "organizations": [
+          {
+            "name": "American College of Radiology",
+            "abbreviation": "ACR"
+          }
+        ],
         "people": [
           {
             "name": "Tarik Alkasab",
@@ -535,6 +605,12 @@
         }
       ],
       "contributors": {
+        "organizations": [
+          {
+            "name": "American College of Radiology",
+            "abbreviation": "ACR"
+          }
+        ],
         "people": [
           {
             "name": "Tarik Alkasab",
@@ -597,6 +673,12 @@
         "date": "2024-02-13"
       },
       "contributors": {
+        "organizations": [
+          {
+            "name": "American College of Radiology",
+            "abbreviation": "ACR"
+          }
+        ],
         "people": [
           {
             "name": "Tarik Alkasab",
@@ -671,6 +753,12 @@
         "date": "2024-02-13"
       },
       "contributors": {
+        "organizations": [
+          {
+            "name": "American College of Radiology",
+            "abbreviation": "ACR"
+          }
+        ],
         "people": [
           {
             "name": "Tarik Alkasab",
