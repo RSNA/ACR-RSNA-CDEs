@@ -60,6 +60,9 @@
       "abbreviation": "OI"
     }
   ],
+  "modalities": [
+    {"code": "CT"}
+  ],
   "body_parts": [
     {
       "name": "endocrine gland",
@@ -125,6 +128,9 @@
             "display": "adrenal part"
           }
         }
+      ],
+      "modalities": [
+        {"code": "CT"}
       ],
       "contributors": {
         "organizations": [
@@ -209,6 +215,9 @@
           }
         }
       ],
+      "modalities": [
+        {"code": "CT"}
+      ],
       "integer_value": {
         "min": -1024,
         "max": 1024,
@@ -248,6 +257,9 @@
             "display": "adrenal part"
           }
         }
+      ],
+      "modalities": [
+        {"code": "CT"}
       ],
       "contributors": {
         "organizations": [
@@ -400,6 +412,9 @@
             "display": "adrenal part"
           }
         }
+      ],
+      "modalities": [
+        {"code": "CT"}
       ],
       "contributors": {
         "organizations": [

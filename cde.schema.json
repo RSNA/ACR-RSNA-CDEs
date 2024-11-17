@@ -88,6 +88,13 @@
                     },
                     "minItems": 1
                 },
+                "modalities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/modality"
+                    },
+                    "minItems": 1
+                },
                 "elements": {
                     "type": "array",
                     "items": {
@@ -185,6 +192,13 @@
                     },
                     "minItems": 1
                 },
+                "modalities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/modality"
+                    },
+                    "minItems": 1
+                },                
                 "contributors": {
                     "type": "object",
                     "$ref": "#/definitions/contributors"
@@ -411,6 +425,17 @@
                 },
                 "unit": {
                     "type": "string"
+                }
+            }
+        },
+        "modality":{
+            "type":"object",
+            "additionalProperties": false,
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "enum": ["CT", "FL", "MR", "MG", "NM", "PET", "US", "XR"],
+                    "description": "Definition for specifying an applicable modality using DICOM modality codes"
                 }
             }
         },
