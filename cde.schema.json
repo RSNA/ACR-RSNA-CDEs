@@ -57,14 +57,16 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/index_code"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "body_parts": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/body_part",
                         "description": "Anatomic description of the body part"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "contributors": {
                     "type": "object",
@@ -75,30 +77,34 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/event"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "specialties": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/specialty",
                         "description": "Radiology subspecialties relevant to the set"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "elements": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/element"                        
-                    }
+                    },
+                    "minItems": 1
                 },
                 "references": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/reference",
                         "description": "Identify any pertient references related to the set"
-                    }
+                    },
+                    "minItems": 1
                 }
             },
-            "required": ["id", "name", "description", "set_version", "status", "elements", "history", "index_codes", "specialties", "schema_version"]
+            "required": ["id", "name", "description", "set_version", "status", "elements", "specialties", "schema_version"]
         },
         "element": {
             "type": "object",
@@ -161,7 +167,8 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/index_code"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "contributors": {
                     "type": "object",
@@ -171,19 +178,22 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/event"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "specialty": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/specialty"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "references": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/reference"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "integer_value": {
                     "$ref": "#/definitions/integer_value"
@@ -257,7 +267,8 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/reference"
-                    }
+                    },
+                    "minItems": 1
                 }
             },
             "required": ["url"]
@@ -274,16 +285,18 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/person"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "organizations": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/organization"
-                    }
+                    },
+                    "minItems": 1
                 }
             },
-            "required": ["people", "organizations"]
+            "required": ["people"]
         },
         "person": {
             "type": "object",
@@ -477,13 +490,15 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/index_code"
-                    }
+                    },
+                    "minItems": 1
                 },
                 "images": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/image"
-                    }
+                    },
+                    "minItems": 1
                 }
             },
             "required": ["name", "code"]
