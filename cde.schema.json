@@ -30,7 +30,7 @@
                 },
                 "name": {
                     "type": "string",
-                    "description" :"This is the name of the set and should follow the guidelines"            
+                    "description" :"Set names should follow conventions listed here: https://rsna.github.io/ACR-RSNA-CDEs/reference/set/"
                 },
                 "description": {
                     "type": "string",
@@ -69,7 +69,6 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/body_part"
-
                     },
                     "minItems": 1
                 },
@@ -166,7 +165,7 @@
                 },
                 "name": {
                     "type": "string",
-                    "description" :"This is the name of the set and should follow the guidelines"
+                    "description" :"Element names consistent with https://rsna.github.io/ACR-RSNA-CDEs/reference/element/"
                 },
                 "definition": {
                     "description": "A human readable definition explaining the clinical context of the data element",
