@@ -88,10 +88,24 @@
                     },
                     "minItems": 1
                 },
+                "modalities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/modality"
+                    },
+                    "minItems": 1
+                },
                 "elements": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/element"                        
+                    },
+                    "minItems": 1
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/image"
                     },
                     "minItems": 1
                 },
@@ -170,6 +184,21 @@
                     },
                     "minItems": 1
                 },
+                "body_parts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/body_part",
+                        "description": "Array of coded body parts. Use where an element can only be used in one or more body parts."
+                    },
+                    "minItems": 1
+                },
+                "modalities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/modality"
+                    },
+                    "minItems": 1
+                },                
                 "contributors": {
                     "type": "object",
                     "$ref": "#/definitions/contributors"
@@ -178,16 +207,23 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/event"
-                    },
+                    }, 
                     "minItems": 1
                 },
                 "specialty": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/specialty"
-                    },
+                    }, 
                     "minItems": 1
                 },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/image"
+                    },
+                    "minItems": 1
+                },                
                 "references": {
                     "type": "array",
                     "items": {
@@ -203,9 +239,6 @@
                 },
                 "float_value": {
                     "$ref": "#/definitions/float_value"
-                },
-                "boolean_value": {
-                    "$ref": "#/definitions/boolean_value"
                 }
             },
             "required": ["id", "name", "element_version", "status", "schema_version"],
@@ -218,9 +251,6 @@
                 },
                 {
                     "required": ["float_value"]
-                },
-                {
-                    "required": ["boolean_value"]
                 }
             ]
         },
@@ -235,7 +265,8 @@
                 "status": {
                     "$ref": "#/definitions/status"
                 }
-            }
+            },
+            "required": ["date", "status"]
         },
         "image": {
             "type": "object",
@@ -272,10 +303,6 @@
                 }
             },
             "required": ["url"]
-        },
-        "biological_sex": {
-            "type": "string",
-            "enum": ["M", "F"]
         },
         "contributors": {
             "type": "object",
@@ -316,9 +343,6 @@
                 "orcid_id": {
                     "type": "string"
                 },
-                "twitter_handle": {
-                    "type": "string"
-                },
                 "url": {
                     "type": "string",
                     "format": "uri"
@@ -328,7 +352,7 @@
                     "enum": ["Author", "Editor", "Translator", "Reviewer"]
                 }
             },
-            "required": ["name", "email"]
+            "required": ["name", "email", "role"]
         },
         "body_part": {
             "type": "object",
@@ -404,9 +428,16 @@
                 }
             }
         },
-        "boolean_value": {
-            "type": "string",
-            "const": "boolean"
+        "modality":{
+            "type":"object",
+            "additionalProperties": false,
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "enum": ["CT", "FL", "MR", "MG", "NM", "PET", "US", "XR"],
+                    "description": "Definition for specifying an applicable modality using DICOM modality codes"
+                }
+            }
         },
         "organization": {
             "type": "object",
@@ -427,7 +458,7 @@
                 },
                 "role": {
                     "type": "string",
-                    "enum": ["author", "sponsor", "translator", "reviewer", "contributor"]
+                    "enum": ["Author", "Sponsor", "Translator", "Contributor"]
                 }
             },
             "required": ["name"]
@@ -438,18 +469,20 @@
             "properties": {
                 "min_cardinality": {
                     "description": "defines the minimum number of values to select from the value set",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "max_cardinality": {
                     "description": "defines the maximum number of values to select from the value set",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 1
                 },
                 "values": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/value"
                     },
-                    "minItems": 1
+                    "minItems": 2
                 }
             },
             "required": ["values", "min_cardinality"]
