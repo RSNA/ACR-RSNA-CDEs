@@ -30,28 +30,26 @@
                 },
                 "name": {
                     "type": "string",
-                    "description" :"This is the name of the set and should follow the guidelines"
-            
+                    "description" :"This is the name of the set and should follow the guidelines"            
                 },
                 "description": {
                     "type": "string",
-                    "description": "plain text, or XHTML div are acceptable"
+                    "description": "CDE Set description including the expected clinical use case. Plain text, or XHTML div are acceptable"
                 },
                 "set_version": {
-                    "$ref": "#/definitions/version",
-                    "description": "This is an auto- increment field that increases by one each time a set is added to radelement"
+                    "$ref": "#/definitions/version"
                 },
                 "schema_version": {
                     "$ref": "#/definitions/schema_version"
                 
                 },
                 "status": {
-                    "$ref": "#/definitions/status",
-                    "description": "This defines the status of the set as published or being reviewed"
+                    "$ref": "#/definitions/status"
                 },
                 "url": {
                     "type": "string",
-                    "format": "uri"
+                    "format": "uri",
+                    "description": "A link to the set on radelement.org"
                 },
                 "index_codes": {
                     "type": "array",
@@ -63,15 +61,14 @@
                 "body_parts": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/body_part",
-                        "description": "Anatomic description of the body part"
+                        "$ref": "#/definitions/body_part"
+
                     },
                     "minItems": 1
                 },
                 "contributors": {
                     "type": "object",
-                    "$ref": "#/definitions/contributors",
-                    "description": "Contributoring authors or groups"
+                    "$ref": "#/definitions/contributors"
                 },
                 "history": {
                     "type": "array",
@@ -83,8 +80,7 @@
                 "specialties": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/specialty",
-                        "description": "Radiology subspecialties relevant to the set"
+                        "$ref": "#/definitions/specialty"
                     },
                     "minItems": 1
                 },
@@ -127,8 +123,7 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/reference",
-                        "description": "Identify any pertient references related to the set"
+                        "$ref": "#/definitions/reference"
                     },
                     "minItems": 1
                 }
@@ -182,12 +177,10 @@
                     "type": "string"
                 },
                 "element_version": {
-                    "$ref": "#/definitions/version",
-                    "description": "This is an auto-increment field that increases by one each time an element is sent to radelement"
+                    "$ref": "#/definitions/version"
                 },
                 "schema_version": {
-                    "$ref": "#/definitions/schema_version",
-                    "description": "Identifies which schema version/release the set or element conforms to"
+                    "$ref": "#/definitions/schema_version"
                 },
                 "status": {
                     "$ref": "#/definitions/status"
@@ -202,8 +195,7 @@
                 "body_parts": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/body_part",
-                        "description": "Array of coded body parts. Use where an element can only be used in one or more body parts."
+                        "$ref": "#/definitions/body_part"
                     },
                     "minItems": 1
                 },
@@ -271,6 +263,7 @@
         },
         "event": {
             "type": "object",
+            "description": "Metadata regarding the status (e.g. Published) and an associated time stamp. Used for element and set history",
             "additionalProperties": false,
             "properties": {
                 "date": {
@@ -285,6 +278,7 @@
         },
         "image": {
             "type": "object",
+            "description": "URLs to specify exemplar images. Currently supported at the set, element, or value levels",
             "additionalProperties": false,
             "properties": {
                 "url": {
@@ -321,6 +315,7 @@
         },
         "contributors": {
             "type": "object",
+            "description": "People and organizations who have contributed to the CDE and an indication of their role",
             "additionalProperties": false,
             "properties": {
                 "people": {
@@ -342,8 +337,8 @@
         },
         "person": {
             "type": "object",
+            "description": "Specifies someone who has contributed to an Element or Set. E-mail is the unique identifier used to match people between systems",
             "additionalProperties": false,
-            "$comment": "the e-mail property is the unique identifier used to match people between systems",
             "properties": {
                 "name": {
                     "type": "string"
@@ -371,6 +366,7 @@
         },
         "body_part": {
             "type": "object",
+            "description": "References to external ontologies describing the body part referenced by the set or element",
             "additionalProperties": false,
             "properties": {
                 "name": {
@@ -384,6 +380,7 @@
         },
         "index_code": {
             "type": "object",
+            "description": "Used in set, element, and value definitions to link to external ontologies",
             "additionalProperties": false,
             "properties": {
                 "system": {
@@ -404,6 +401,7 @@
         },
         "integer_value": {
             "type": "object",
+            "description": "Defines structure for integer elements",
             "additionalProperties": false,
             "properties": {
                 "min": {
@@ -419,12 +417,14 @@
                     "type": "integer"
                 },
                 "unit": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Use UCUM (https://ucum.org/) compatible units"
                 }
             }
         },
         "float_value": {
             "type": "object",
+            "description": "Defines structure for float (decimal) elements",
             "additionalProperties": false,
             "properties": {
                 "min": {
@@ -445,6 +445,7 @@
         },
         "modality":{
             "type":"object",
+            "description": "Used in set and element defintions to specify applicable imaging modalities (optional)",
             "additionalProperties": false,
             "properties": {
                 "code": {
@@ -480,6 +481,7 @@
         },
         "value_set": {
             "type": "object",
+            "description": "Specifies an enumerated list of text choices for an element",
             "additionalProperties": false,
             "properties": {
                 "min_cardinality": {
@@ -504,6 +506,7 @@
         },
         "value": {
             "type": "object",
+            "description": "An individual answer to an element question",
             "additionalProperties": false,
             "properties": {
                 "code": {
@@ -553,6 +556,7 @@
         },
         "specialty": {
             "type": "object",
+            "description": "Radiology subspecialties relevant to the set or element. Uses RSNA's standardized two-letter abbreviations",
             "additionalProperties": false,
             "properties": {
                 "name": {
@@ -567,6 +571,7 @@
         },
         "version": {
             "type": "object",
+            "description": "This is an auto- increment field that increases by one each time a set is added to radelement",
             "additionalProperties": false,
             "properties": {
                 "number": {
@@ -588,11 +593,11 @@
         },
         "status": {
             "type": "object",
+            "description": "This defines the status of the set or element (Proposed, Published, or Retiered and records the date of last action",
             "properties": {
                 "date" : {
                     "type": "string",
-                    "format": "date",
-                    "description": "This shows the status as submitted, under review etc"
+                    "format": "date"
                 },
                 "name": {
                     "type": "string",
@@ -603,10 +608,10 @@
         },
         "reference": {
             "type": "object",
+            "description": "Bibliographic citations, including all the author names (no et Al)",
             "additionalProperties": false,
             "properties": {
                 "citation": {
-                    "description": "Required - Provide a bibliographic citation, including all the author names (no et Al)",
                     "type": "string"
                 },
                 "doi_url": {
