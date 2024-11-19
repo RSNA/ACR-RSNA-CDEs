@@ -97,8 +97,23 @@
                 },
                 "elements": {
                     "type": "array",
+                    "description": "When authoring (e.g., PUT/POST), published elements can be referenced (element_ref_id). GET requests return full element definitions",
                     "items": {
-                        "$ref": "#/definitions/element"                        
+                        "anyOf": [
+                            {
+                                "type": "object",
+                                "$ref": "#/definitions/element"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "element_ref_id": {"type": "string"},
+                                    "element_version": {"type": "number"}
+                                },
+                                "additionalProperties": false,
+                                "required": ["element_ref_id", "element_version"]
+                            }
+                        ]    
                     },
                     "minItems": 1
                 },
