@@ -30,28 +30,33 @@
                 },
                 "name": {
                     "type": "string",
-                    "description" :"This is the name of the set and should follow the guidelines"
-            
+                    "description" :"Set names should follow conventions listed here: https://rsna.github.io/ACR-RSNA-CDEs/reference/set/"
                 },
                 "description": {
                     "type": "string",
-                    "description": "plain text, or XHTML div are acceptable"
+                    "description": "CDE Set description including the expected clinical use case. Plain text, or XHTML div are acceptable"
                 },
                 "set_version": {
-                    "$ref": "#/definitions/version",
-                    "description": "This is an auto- increment field that increases by one each time a set is added to radelement"
+                    "$ref": "#/definitions/version"
                 },
                 "schema_version": {
                     "$ref": "#/definitions/schema_version"
                 
                 },
-                "status": {
-                    "$ref": "#/definitions/status",
-                    "description": "This defines the status of the set as published or being reviewed"
+                "current_status": {
+                    "$ref": "#/definitions/status"
+                },
+                "status_history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/status"
+                    },
+                    "minItems": 1
                 },
                 "url": {
                     "type": "string",
-                    "format": "uri"
+                    "format": "uri",
+                    "description": "A link to the set on radelement.org"
                 },
                 "index_codes": {
                     "type": "array",
@@ -63,28 +68,18 @@
                 "body_parts": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/body_part",
-                        "description": "Anatomic description of the body part"
+                        "$ref": "#/definitions/body_part"
                     },
                     "minItems": 1
                 },
                 "contributors": {
                     "type": "object",
-                    "$ref": "#/definitions/contributors",
-                    "description": "Contributoring authors or groups"
-                },
-                "history": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/event"
-                    },
-                    "minItems": 1
+                    "$ref": "#/definitions/contributors"
                 },
                 "specialties": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/specialty",
-                        "description": "Radiology subspecialties relevant to the set"
+                        "$ref": "#/definitions/specialty"
                     },
                     "minItems": 1
                 },
@@ -97,8 +92,23 @@
                 },
                 "elements": {
                     "type": "array",
+                    "description": "When authoring (e.g., PUT/POST), published elements can be referenced (element_ref_id). GET requests return full element definitions",
                     "items": {
-                        "$ref": "#/definitions/element"                        
+                        "anyOf": [
+                            {
+                                "type": "object",
+                                "$ref": "#/definitions/element"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "element_ref_id": {"type": "string"},
+                                    "element_version": {"type": "number"}
+                                },
+                                "additionalProperties": false,
+                                "required": ["element_ref_id", "element_version"]
+                            }
+                        ]    
                     },
                     "minItems": 1
                 },
@@ -112,13 +122,12 @@
                 "references": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/reference",
-                        "description": "Identify any pertient references related to the set"
+                        "$ref": "#/definitions/reference"
                     },
                     "minItems": 1
                 }
             },
-            "required": ["id", "name", "description", "set_version", "status", "elements", "specialties", "schema_version"]
+            "required": ["id", "name", "description", "set_version", "current_status", "elements", "specialties", "schema_version"]
         },
         "element": {
             "type": "object",
@@ -156,7 +165,7 @@
                 },
                 "name": {
                     "type": "string",
-                    "description" :"This is the name of the set and should follow the guidelines"
+                    "description" :"Element names consistent with https://rsna.github.io/ACR-RSNA-CDEs/reference/element/"
                 },
                 "definition": {
                     "description": "A human readable definition explaining the clinical context of the data element",
@@ -167,14 +176,12 @@
                     "type": "string"
                 },
                 "element_version": {
-                    "$ref": "#/definitions/version",
-                    "description": "This is an auto-increment field that increases by one each time an element is sent to radelement"
+                    "$ref": "#/definitions/version"
                 },
                 "schema_version": {
-                    "$ref": "#/definitions/schema_version",
-                    "description": "Identifies which schema version/release the set or element conforms to"
+                    "$ref": "#/definitions/schema_version"
                 },
-                "status": {
+                "current_status": {
                     "$ref": "#/definitions/status"
                 },                
                 "index_codes": {
@@ -187,8 +194,7 @@
                 "body_parts": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/body_part",
-                        "description": "Array of coded body parts. Use where an element can only be used in one or more body parts."
+                        "$ref": "#/definitions/body_part"
                     },
                     "minItems": 1
                 },
@@ -206,7 +212,7 @@
                 "history": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/event"
+                        "$ref": "#/definitions/status"
                     }, 
                     "minItems": 1
                 },
@@ -241,7 +247,7 @@
                     "$ref": "#/definitions/float_value"
                 }
             },
-            "required": ["id", "name", "element_version", "status", "schema_version"],
+            "required": ["id", "name", "element_version", "current_status", "schema_version"],
             "oneOf": [
                 {
                     "required": ["integer_value"]
@@ -254,22 +260,9 @@
                 }
             ]
         },
-        "event": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "date": {
-                    "type": "string",
-                    "format": "date"
-                },
-                "status": {
-                    "$ref": "#/definitions/status"
-                }
-            },
-            "required": ["date", "status"]
-        },
         "image": {
             "type": "object",
+            "description": "URLs to specify exemplar images. Currently supported at the set, element, or value levels",
             "additionalProperties": false,
             "properties": {
                 "url": {
@@ -306,6 +299,7 @@
         },
         "contributors": {
             "type": "object",
+            "description": "People and organizations who have contributed to the CDE and an indication of their role",
             "additionalProperties": false,
             "properties": {
                 "people": {
@@ -327,8 +321,8 @@
         },
         "person": {
             "type": "object",
+            "description": "Specifies someone who has contributed to an Element or Set. E-mail is the unique identifier used to match people between systems",
             "additionalProperties": false,
-            "$comment": "the e-mail property is the unique identifier used to match people between systems",
             "properties": {
                 "name": {
                     "type": "string"
@@ -356,6 +350,7 @@
         },
         "body_part": {
             "type": "object",
+            "description": "References to external ontologies describing the body part referenced by the set or element",
             "additionalProperties": false,
             "properties": {
                 "name": {
@@ -369,6 +364,7 @@
         },
         "index_code": {
             "type": "object",
+            "description": "Used in set, element, and value definitions to link to external ontologies",
             "additionalProperties": false,
             "properties": {
                 "system": {
@@ -389,6 +385,7 @@
         },
         "integer_value": {
             "type": "object",
+            "description": "Defines structure for integer elements",
             "additionalProperties": false,
             "properties": {
                 "min": {
@@ -404,12 +401,14 @@
                     "type": "integer"
                 },
                 "unit": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Use UCUM (https://ucum.org/) compatible units"
                 }
             }
         },
         "float_value": {
             "type": "object",
+            "description": "Defines structure for float (decimal) elements",
             "additionalProperties": false,
             "properties": {
                 "min": {
@@ -430,6 +429,7 @@
         },
         "modality":{
             "type":"object",
+            "description": "Used in set and element defintions to specify applicable imaging modalities (optional)",
             "additionalProperties": false,
             "properties": {
                 "code": {
@@ -465,6 +465,7 @@
         },
         "value_set": {
             "type": "object",
+            "description": "Specifies an enumerated list of text choices for an element",
             "additionalProperties": false,
             "properties": {
                 "min_cardinality": {
@@ -489,6 +490,7 @@
         },
         "value": {
             "type": "object",
+            "description": "An individual answer to an element question",
             "additionalProperties": false,
             "properties": {
                 "code": {
@@ -538,6 +540,7 @@
         },
         "specialty": {
             "type": "object",
+            "description": "Radiology subspecialties relevant to the set or element. Uses RSNA's standardized two-letter abbreviations",
             "additionalProperties": false,
             "properties": {
                 "name": {
@@ -552,6 +555,7 @@
         },
         "version": {
             "type": "object",
+            "description": "This is an auto- increment field that increases by one each time a set is added to radelement",
             "additionalProperties": false,
             "properties": {
                 "number": {
@@ -573,25 +577,25 @@
         },
         "status": {
             "type": "object",
+            "description": "This defines the status of the set or element (Proposed, Published, or Retiered and records the date of last action",
             "properties": {
                 "date" : {
                     "type": "string",
-                    "format": "date",
-                    "description": "This shows the status as submitted, under review etc"
+                    "format": "date"
                 },
-                "name": {
+                "status": {
                     "type": "string",
                     "enum": ["Proposed", "Published", "Retired"]
                 }
             },
-            "required": ["date", "name"]
+            "required": ["date", "status"]
         },
         "reference": {
             "type": "object",
+            "description": "Bibliographic citations, including all the author names (no et Al)",
             "additionalProperties": false,
             "properties": {
                 "citation": {
-                    "description": "Required - Provide a bibliographic citation, including all the author names (no et Al)",
                     "type": "string"
                 },
                 "doi_url": {

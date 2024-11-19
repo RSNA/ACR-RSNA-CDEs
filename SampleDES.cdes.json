@@ -7,10 +7,20 @@
     "date": "2016-01-03"
   },
   "schema_version": "1.0.0",
-  "status": {
+  "current_status": {
     "date": "2016-01-03",
-    "name": "Proposed"
+    "status": "Proposed"
   },
+  "status_history": [
+    {
+      "date": "1900-01-01",
+      "status": "Proposed"
+    },
+    {
+      "date": "2016-01-03",
+      "status": "Proposed"
+    }
+  ],
   "references": [
     {
       "citation": "Sangwaiya MJ, Boland GW, Cronin CG et-al. Incidental adrenal lesions: accuracy of characterization with contrast-enhanced washout multidetector CT-10-minute delayed imaging protocol revisited in a large patient cohort. Radiology. 2010;256 (2): 504-10.",
@@ -93,8 +103,8 @@
         "number": 1,
         "date": "2016-01-03"
       },
-      "status": {
-        "name": "Published",
+      "current_status": {
+        "status": "Published",
         "date": "2016-01-03"
       },
       "index_codes": [
@@ -171,8 +181,8 @@
         "number": 1,
         "date": "2024-02-13"
       },
-      "status": {
-        "name": "Published",
+      "current_status": {
+        "status": "Published",
         "date": "2024-02-13"
       },
       "contributors": {
@@ -236,8 +246,8 @@
         "number": 1,
         "date": "2024-02-13"
       },
-      "status": {
-        "name": "Published",
+      "current_status": {
+        "status": "Published",
         "date": "2024-02-13"
       },
       "body_parts": [
@@ -301,8 +311,8 @@
         "number": 1,
         "date": "2024-02-13"
       },
-      "status": {
-        "name": "Published",
+      "current_status": {
+        "status": "Published",
         "date": "2024-02-13"
       },
       "contributors": {
@@ -391,8 +401,8 @@
         "number": 1,
         "date": "2024-02-12"
       },
-      "status": {
-        "name": "Published",
+      "current_status": {
+        "status": "Published",
         "date": "2024-02-12"
       },
       "body_parts": [
@@ -480,8 +490,8 @@
         "number": 1,
         "date": "2024-02-13"
       },
-      "status": {
-        "name": "Published",
+      "current_status": {
+        "status": "Published",
         "date": "2024-02-13"
       },
       "contributors": {
@@ -554,8 +564,8 @@
         "number": 1,
         "date": "2024-02-13"
       },
-      "status": {
-        "name": "Published",
+      "current_status": {
+        "status": "Published",
         "date": "2024-02-13"
       },
       "contributors": {
@@ -597,8 +607,8 @@
         "number": 1,
         "date": "2024-02-13"
       },
-      "status": {
-        "name": "Published",
+      "current_status": {
+        "status": "Published",
         "date": "2024-02-13"
       },
       "body_parts": [
@@ -683,8 +693,8 @@
         "number": 1,
         "date": "2024-02-13"
       },
-      "status": {
-        "name": "Published",
+      "current_status": {
+        "status": "Published",
         "date": "2024-02-13"
       },
       "contributors": {
@@ -763,8 +773,8 @@
         "number": 1,
         "date": "2024-02-13"
       },
-      "status": {
-        "name": "Published",
+      "current_status": {
+        "status": "Published",
         "date": "2024-02-13"
       },
       "contributors": {
