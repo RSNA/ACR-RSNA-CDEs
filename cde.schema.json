@@ -43,8 +43,15 @@
                     "$ref": "#/definitions/schema_version"
                 
                 },
-                "status": {
+                "current_status": {
                     "$ref": "#/definitions/status"
+                },
+                "status_history": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/status"
+                    },
+                    "minItems": 1
                 },
                 "url": {
                     "type": "string",
@@ -69,13 +76,6 @@
                 "contributors": {
                     "type": "object",
                     "$ref": "#/definitions/contributors"
-                },
-                "history": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/event"
-                    },
-                    "minItems": 1
                 },
                 "specialties": {
                     "type": "array",
@@ -128,7 +128,7 @@
                     "minItems": 1
                 }
             },
-            "required": ["id", "name", "description", "set_version", "status", "elements", "specialties", "schema_version"]
+            "required": ["id", "name", "description", "set_version", "current_status", "elements", "specialties", "schema_version"]
         },
         "element": {
             "type": "object",
@@ -182,7 +182,7 @@
                 "schema_version": {
                     "$ref": "#/definitions/schema_version"
                 },
-                "status": {
+                "current_status": {
                     "$ref": "#/definitions/status"
                 },                
                 "index_codes": {
@@ -213,7 +213,7 @@
                 "history": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/event"
+                        "$ref": "#/definitions/status"
                     }, 
                     "minItems": 1
                 },
@@ -248,7 +248,7 @@
                     "$ref": "#/definitions/float_value"
                 }
             },
-            "required": ["id", "name", "element_version", "status", "schema_version"],
+            "required": ["id", "name", "element_version", "current_status", "schema_version"],
             "oneOf": [
                 {
                     "required": ["integer_value"]
@@ -260,21 +260,6 @@
                     "required": ["float_value"]
                 }
             ]
-        },
-        "event": {
-            "type": "object",
-            "description": "Metadata regarding the status (e.g. Published) and an associated time stamp. Used for element and set history",
-            "additionalProperties": false,
-            "properties": {
-                "date": {
-                    "type": "string",
-                    "format": "date"
-                },
-                "status": {
-                    "$ref": "#/definitions/status"
-                }
-            },
-            "required": ["date", "status"]
         },
         "image": {
             "type": "object",
@@ -599,12 +584,12 @@
                     "type": "string",
                     "format": "date"
                 },
-                "name": {
+                "status": {
                     "type": "string",
                     "enum": ["Proposed", "Published", "Retired"]
                 }
             },
-            "required": ["date", "name"]
+            "required": ["date", "status"]
         },
         "reference": {
             "type": "object",
