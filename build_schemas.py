@@ -20,13 +20,15 @@ ELEMENT_DEFINITIONS = [
     "status",
     "index_code",
     "contributors",
-    "event",
+    # "event", no longer in v1.1.0 schema
     "specialty",
     "reference",
     "integer_value",
     "value_set",
     "float_value",
-    "boolean_value",
+    # "boolean_value", no longer in v1.1.0 schema
+    'modality',
+    'body_part', # this does not exist on an element as of v1.1.0 yet
     "person",
     "organization",
     "value",
