@@ -1,0 +1,56 @@
+{
+  "node": "DataElement",
+  "id": "RDE2_000077",
+  "name": "severity",
+  "kind": "categorical - ordinal",
+  "definition": "Graded severity of the finding.",
+  "synonyms": [
+    {
+      "term": "grade",
+      "type": "synonym"
+    }
+  ],
+  "version": 2,
+  "status": "published",
+  "status_date": "2026-03-10",
+  "value_set": {
+    "id": "RDE2_000077",
+    "name": "severity values",
+    "ordered": true,
+    "values": [
+      {
+        "id": "RDE2_000077.0",
+        "name": "mild",
+        "value": "mild",
+        "rank": 1
+      },
+      {
+        "id": "RDE2_000077.1",
+        "name": "moderate",
+        "value": "moderate",
+        "rank": 2
+      },
+      {
+        "id": "RDE2_000077.2",
+        "name": "severe",
+        "value": "severe",
+        "rank": 3
+      }
+    ]
+  },
+  "bound_by": [
+    {
+      "name": "spinal canal stenosis",
+      "id": "RDE2_000640"
+    },
+    {
+      "name": "pulmonary edema",
+      "id": "RDE2_000655"
+    },
+    {
+      "name": "hydronephrosis",
+      "id": "RDE2_000660"
+    }
+  ],
+  "mappings": []
+}

@@ -1,0 +1,120 @@
+{
+  "node": "DataElement",
+  "id": "RDE2_000001",
+  "name": "presence",
+  "kind": "categorical",
+  "definition": "Whether the finding is identified on the current study.",
+  "synonyms": [
+    {
+      "term": "present/absent",
+      "type": "lay"
+    }
+  ],
+  "version": 3,
+  "status": "published",
+  "status_date": "2026-05-01",
+  "value_set": {
+    "id": "RDE2_000001",
+    "name": "presence values",
+    "ordered": false,
+    "values": [
+      {
+        "id": "RDE2_000001.0",
+        "name": "present",
+        "value": "present",
+        "definition": "The finding is identified with near-definitive confidence.",
+        "codes": [
+          {
+            "system": "RADLEX",
+            "code": "RID28472",
+            "display": "present"
+          },
+          {
+            "system": "SNOMEDCT",
+            "code": "52101004",
+            "display": "Present (qualifier value)"
+          },
+          {
+            "system": "LOINC",
+            "code": "LA9633-4",
+            "display": "Present"
+          }
+        ]
+      },
+      {
+        "id": "RDE2_000001.1",
+        "name": "possible",
+        "value": "possible",
+        "definition": "Suggested but not asserted with near-definitive confidence (possible, probable, suspected).",
+        "codes": []
+      },
+      {
+        "id": "RDE2_000001.2",
+        "name": "absent",
+        "value": "absent",
+        "definition": "The finding is specifically not identified.",
+        "codes": [
+          {
+            "system": "SNOMEDCT",
+            "code": "2667000",
+            "display": "Absent (qualifier value)"
+          }
+        ]
+      },
+      {
+        "id": "RDE2_000001.3",
+        "name": "indeterminate",
+        "value": "indeterminate",
+        "definition": "Cannot be determined from this study.",
+        "codes": [
+          {
+            "system": "SNOMEDCT",
+            "code": "82334004",
+            "display": "Indeterminate (qualifier value)"
+          }
+        ]
+      },
+      {
+        "id": "RDE2_000001.4",
+        "name": "unknown",
+        "value": "unknown",
+        "definition": "Not assessed or not recorded.",
+        "codes": [
+          {
+            "system": "SNOMEDCT",
+            "code": "261665006",
+            "display": "Unknown (qualifier value)"
+          }
+        ]
+      }
+    ]
+  },
+  "bound_by": [
+    {
+      "name": "pulmonary nodule",
+      "id": "RDE2_000123",
+      "required": true
+    },
+    {
+      "name": "thyroid nodule",
+      "id": "RDE2_000124",
+      "required": true
+    },
+    {
+      "name": "pleural effusion",
+      "id": "RDE2_000502",
+      "required": true
+    },
+    {
+      "name": "upper abdominal abnormality",
+      "id": "RDE2_000610",
+      "required": true
+    },
+    {
+      "name": "pacemaker",
+      "id": "RDE2_000777",
+      "required": false
+    }
+  ],
+  "mappings": []
+}

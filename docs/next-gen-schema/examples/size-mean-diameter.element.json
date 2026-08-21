@@ -1,0 +1,42 @@
+{
+  "node": "DataElement",
+  "id": "RDE2_000014",
+  "name": "size (mean diameter)",
+  "kind": "quantitative",
+  "definition": "Mean of the long- and short-axis diameters measured on the plane showing the maximal dimension.",
+  "synonyms": [
+    {
+      "term": "average diameter",
+      "type": "synonym"
+    }
+  ],
+  "version": 1,
+  "status": "proposed",
+  "status_date": "2026-08-20",
+  "quantity": {
+    "type": "length",
+    "units": [
+      "mm",
+      "cm"
+    ],
+    "min": 0,
+    "max": 300,
+    "step": 0.1,
+    "method": "Mean of long and short axis on a single plane; lung windows; per Fleischner 2017 convention."
+  },
+  "bound_by": [
+    {
+      "name": "pulmonary nodule",
+      "id": "RDE2_000123"
+    },
+    {
+      "name": "lymph node",
+      "id": "RDE2_000530"
+    },
+    {
+      "name": "liver lesion",
+      "id": "RDE2_000611"
+    }
+  ],
+  "mappings": []
+}

@@ -1,0 +1,75 @@
+{
+  "node": "AnatomicLocation",
+  "id": "RID199",
+  "name": "common bile duct",
+  "contained_by": "abdomen",
+  "part_of": "biliary tree",
+  "owner": "RadLex / AnatomicLocations.org - the node is upstream; the bindings below are ours",
+  "elements": [
+    {
+      "ref": "RDE2_000001",
+      "name": "presence",
+      "kind": "categorical",
+      "edge_note": "visualized / not visualized",
+      "values": [
+        "present",
+        "possible",
+        "absent",
+        "indeterminate",
+        "unknown"
+      ]
+    },
+    {
+      "id": "RDE2_000090",
+      "name": "caliber",
+      "kind": "length",
+      "required": true,
+      "definition": "Maximal inner diameter, measured perpendicular to the long axis, distal to the cystic duct insertion."
+    },
+    {
+      "id": "RDE2_000091",
+      "name": "wall thickness",
+      "kind": "length",
+      "definition": "Thickness of the duct wall where best seen."
+    },
+    {
+      "ref": "RDE2_000070",
+      "name": "intraluminal content",
+      "kind": "categorical",
+      "values": [
+        "none",
+        "sludge",
+        "stone",
+        "mass"
+      ]
+    }
+  ],
+  "inherits_from": [
+    {
+      "name": "biliary tree",
+      "edge": "partOf",
+      "note": "bindings on the parent apply here unless overridden"
+    }
+  ],
+  "scoped_classes": [
+    {
+      "name": "bile duct dilation",
+      "id": "RDE2_000702",
+      "entity_type": "diagnosis",
+      "note": "INTERPRETED_FROM the caliber binding"
+    },
+    {
+      "name": "choledocholithiasis",
+      "id": "RDE2_000703",
+      "entity_type": "finding"
+    }
+  ],
+  "mappings": [
+    {
+      "system": "SNOMEDCT",
+      "code": "79741001",
+      "display": "Common bile duct structure",
+      "match": "exactMatch"
+    }
+  ]
+}

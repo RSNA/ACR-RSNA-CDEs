@@ -1,0 +1,9 @@
+# Next-Generation Schema Analysis
+
+* [Next-Generation CDE Schema: Current Understanding](00-current-understanding.md) - Referenced baseline for the CDE schema redesign — scope, terms, the assumed grammar, what the committee has decided, requirements evidence, prior art, and open issues.
+* [What the Vocabulary Must Express](01-what-the-vocabulary-must-express.md) - What the finding vocabulary has to be able to express — what a FindingClass is, anatomic scope guidance, the breadth of what is reported on, measurement versus interpretation, and what entity_type is recording.
+* [Design Questions Raised in Review](02-review-questions.md) - Five structural design questions raised in an April–May 2026 review of the OIFM material, with the answers given and each question's open/resolved status.
+* [Draft Structures for Worked Examples](03-draft-structures.md) - The vocabulary as a graph — node types, the edge catalog, a standard neighborhood visualization, and the two flat serializations (review form and canonical form) — written to make worked examples possible.
+* [AnatomicLocations.org Gaps](04-anatomy-gaps.md) - Specific gaps found in the AnatomicLocations.org data during analysis for the CDE schema redesign, recorded so the main documents do not go stale as they close.
+* [RadLex Baseline: Synonyms and External References](05-radlex-baseline.md) - What RadLex 4.3 actually does for synonyms and external ontology references, verified directly against the published OWL — the baseline our vocabulary must interoperate with and improve on.
+* [tools/](tools/) - `render_neighborhood.py` generates the dossier diagrams from `examples/`. The bundle validator lives one level up at [`docs/check_bundle.py`](../check_bundle.py).

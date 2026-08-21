@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 640" font-family="system-ui, sans-serif" role="img"
+     aria-label="Two planes: Observations in one report point down into the shared vocabulary graph of FindingClasses, DataElements, Values, and AnatomicLocations.">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+  <rect width="1060" height="640" fill="#ffffff"/>
+
+  <!-- plane backdrops -->
+  <rect x="30" y="36" width="1000" height="204" rx="14" fill="#faf5ff" stroke="#d8b4fe" stroke-dasharray="6 5"/>
+  <text x="54" y="66" font-size="12" font-weight="700" fill="#7e22ce" letter-spacing="1">GRAMMAR — ONE REPORT (IHE IDR)</text>
+  <text x="54" y="84" font-size="10" fill="#a855f7">new nodes every report</text>
+  <rect x="30" y="392" width="1000" height="214" rx="14" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="54" y="422" font-size="12" font-weight="700" fill="#475569" letter-spacing="1">VOCABULARY — THIS PROJECT</text>
+  <text x="54" y="440" font-size="10" fill="#94a3b8">shared, versioned, committee-governed</text>
+
+  <!-- observations -->
+  <rect x="150" y="112" width="270" height="96" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.6"/>
+  <text x="285" y="142" text-anchor="middle" font-size="14" font-weight="700" fill="#5b21b6">Observation obs-1</text>
+  <text x="285" y="163" text-anchor="middle" font-size="11" fill="#6d28d9">presence = present · confidence: —</text>
+  <text x="285" y="182" text-anchor="middle" font-size="11" fill="#6d28d9">(pneumonia, lower lobe of right lung)</text>
+
+  <rect x="650" y="112" width="270" height="96" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.6"/>
+  <text x="785" y="142" text-anchor="middle" font-size="14" font-weight="700" fill="#5b21b6">Observation obs-2</text>
+  <text x="785" y="163" text-anchor="middle" font-size="11" fill="#6d28d9">presence = present</text>
+  <text x="785" y="182" text-anchor="middle" font-size="11" fill="#6d28d9">(pleural effusion)</text>
+
+  <line x1="650" y1="160" x2="424" y2="160" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrp)"/>
+  <text x="537" y="148" text-anchor="middle" font-size="11" fill="#6d28d9">MAY_BE_CAUSED_BY</text>
+  <line x1="455" y1="166" x2="455" y2="516" stroke="#7c3aed" stroke-width="1.3" stroke-dasharray="2 4" marker-end="url(#arrp)"/>
+  <rect x="428" y="228" width="66" height="16" rx="3" fill="#ffffff"/>
+  <text x="461" y="240" text-anchor="middle" font-size="10" font-weight="600" fill="#7c3aed">EXPRESSES</text>
+
+  <!-- cross-plane orthogonal edges -->
+  <g stroke="#94a3b8" stroke-width="1.4" fill="none">
+    <!-- obs-1 -> pneumonia -->
+    <path d="M 200 208 L 200 462 L 236 462" marker-end="url(#arr)"/>
+    <!-- obs-1 -> value 'present' -->
+    <path d="M 170 208 L 170 592 L 752 592 L 752 573" marker-end="url(#arr)"/>
+    <!-- obs-1 -> right lower lobe -->
+    <path d="M 400 208 L 400 340 L 890 340 L 890 448" marker-end="url(#arr)"/>
+    <!-- obs-2 -> pleural effusion -->
+    <path d="M 700 208 L 700 310 L 480 310 L 480 448" marker-end="url(#arr)"/>
+    <!-- obs-2 -> same value 'present' -->
+    <path d="M 760 208 L 760 539" marker-end="url(#arr)"/>
+  </g>
+  <g font-size="11" fill="#475569">
+    <text x="208" y="256">OF_CLASS</text>
+    <text x="162" y="256" text-anchor="end">presence = present</text>
+    <text x="470" y="332" text-anchor="middle">AT_LOCATION</text>
+    <text x="588" y="302" text-anchor="middle">OF_CLASS</text>
+    <text x="768" y="250">presence =</text>
+    <text x="768" y="264">present</text>
+    <text x="818" y="566" fill="#7c3aed" font-size="10">same Value node — nothing is copied</text>
+  </g>
+
+  <!-- vocabulary row -->
+  <g>
+    <rect x="240" y="448" width="190" height="56" rx="9" fill="#dbeafe" stroke="#1e40af" stroke-width="1.4"/>
+    <text x="256" y="473" font-size="13" font-weight="600" fill="#1e3a8a">pneumonia</text>
+    <text x="256" y="491" font-size="10" fill="#3730a3">FindingClass · diagnosis</text>
+
+    <line x1="430" y1="476" x2="466" y2="476" stroke="#94a3b8" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+    <rect x="240" y="520" width="420" height="44" rx="9" fill="#ffffff" stroke="#7c3aed" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="450" y="538" text-anchor="middle" font-size="11" font-weight="600" fill="#5b21b6">pleural effusion MAY_BE_CAUSED_BY pneumonia</text>
+    <text x="450" y="554" text-anchor="middle" font-size="9.5" fill="#6d28d9">vocabulary relationship · RDE2_000900 · a potential, stated once</text>
+
+    <rect x="470" y="448" width="190" height="56" rx="9" fill="#dbeafe" stroke="#1e40af" stroke-width="1.4"/>
+    <text x="486" y="473" font-size="13" font-weight="600" fill="#1e3a8a">pleural effusion</text>
+    <text x="486" y="491" font-size="10" fill="#3730a3">FindingClass · finding</text>
+
+    <rect x="700" y="543" width="104" height="26" rx="13" fill="#f0fdf4" stroke="#4ade80"/>
+    <text x="752" y="560" text-anchor="middle" font-size="11" fill="#14532d">present</text>
+    <text x="818" y="552" font-size="10" fill="#94a3b8">Value · of DataElement presence</text>
+
+    <rect x="790" y="448" width="200" height="56" rx="9" fill="#fef3c7" stroke="#92400e" stroke-width="1.4"/>
+    <text x="806" y="473" font-size="13" font-weight="600" fill="#78350f">lower lobe of right lung</text>
+    <text x="806" y="491" font-size="10" fill="#92400e">AnatomicLocation · RID1315</text>
+  </g>
+  <text x="530" y="628" text-anchor="middle" font-size="11" fill="#475569">The vocabulary states the potential once, as an identified relationship; every report edge of that type is an expression of it — and can cite it.</text>
+</svg>

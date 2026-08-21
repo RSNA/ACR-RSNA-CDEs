@@ -1,0 +1,24 @@
+# Provenance
+
+* [Notes — Provenance](SOURCES.md) - Provenance for the notes directory — upstream URLs for the fetched OIFM copies and extraction records for the sanitized committee material.
+
+# Sanitized Committee Extracts
+
+Raw committee material is kept out of the public repository (gitignored `raw_sources/`); these extracts preserve the substantive content with participants' identifying details removed.
+
+* [Proposed Schema Changes Deck — Extract](proposed-schema-changes-deck-extract.md) - Complete text extraction of the 22-slide schema-changes deck presented to the RSNA-ACR CDE Committee at SIIM, 12 June 2026.
+* [SIIM Meeting Minutes — Extract](siim-meeting-extract.md) - Sanitized extract of the SIIM committee meeting minutes — nomenclature debate, decoupled graph structure, attribute types, anatomic location, relationships, metadata, and action items.
+* [Committee Meeting Notes — Extract](committee-notes-extract.md) - Sanitized extract of RSNA/ACR CDE Committee schema discussion notes — source of the Finding Class / Data Element / Value terminology and the draft reusable-element list.
+* [CDE Schema Recommendations — Part II](schema-recommendations-part2.md) - The initial written proposal for iterating the schema forward — templates set aside, findings/attributes decoupled, explicit relationships, expanded metadata, location guidance, governance separated, and quantity types.
+
+# Standards Extracts
+
+* [IHE IDR Phase II — Extract](ihe-idr-extract.md) - What the IHE Imaging Diagnostic Report (IDR) Phase II public-comment draft says about encoding findings as FHIR Observations — the grammar this vocabulary must fit — read directly from the supplement.
+
+# OIFM Reference Copies
+
+Copies of public Open Imaging Finding Model documents, retrieved 2026-07-29; edit the upstream source, not these.
+
+* [Finding Models: Overview](oifm-overview.md) - OIFM overview of finding models — why they exist, what they contain, and modelling guidance. Copy of the upstream document.
+* [FindingModel Source Schema v2 Draft](oifm-schema-v2-draft.md) - Proposed OIFM source-format and supporting file schemas for FindingModel authoring. Copy of the upstream gist.
+* [Finding Model Structured Metadata Fields](oifm-metadata-fields.md) - Reference for the structured metadata fields on FindingModelBase and FindingModelFull. Copy of the upstream gist.

@@ -1,0 +1,277 @@
+{
+  "aria": "The thyroid nodule FindingClass and its typed edges - the location-anchored smoke-test case.",
+  "center": {
+    "name": "thyroid nodule",
+    "entity_type": "finding"
+  },
+  "elements": [
+    {
+      "ref": "RDE2_000001",
+      "name": "presence",
+      "kind": "categorical",
+      "required": true,
+      "values": [
+        "present",
+        "possible",
+        "absent",
+        "indeterminate",
+        "unknown"
+      ]
+    },
+    {
+      "id": "RDE2_000041",
+      "name": "composition",
+      "kind": "categorical",
+      "definition": "Internal composition on ultrasound (ACR TI-RADS).",
+      "values": [
+        {
+          "id": "RDE2_000041.0",
+          "name": "cystic or almost completely cystic",
+          "value": "cystic-or-almost-completely-cystic",
+          "definition": "Fluid-filled; no or negligible solid component."
+        },
+        {
+          "id": "RDE2_000041.1",
+          "name": "spongiform",
+          "value": "spongiform",
+          "definition": "Composed predominantly (>50%) of small cystic spaces."
+        },
+        {
+          "id": "RDE2_000041.2",
+          "name": "mixed cystic and solid",
+          "value": "mixed-cystic-and-solid",
+          "definition": "Both cystic and solid components."
+        },
+        {
+          "id": "RDE2_000041.3",
+          "name": "solid or almost completely solid",
+          "value": "solid-or-almost-completely-solid",
+          "definition": "Soft tissue with no or negligible cystic component."
+        }
+      ]
+    },
+    {
+      "id": "RDE2_000042",
+      "name": "echogenicity",
+      "kind": "categorical",
+      "definition": "Echogenicity of the solid component relative to thyroid parenchyma (ACR TI-RADS).",
+      "values": [
+        {
+          "id": "RDE2_000042.0",
+          "name": "anechoic",
+          "value": "anechoic",
+          "definition": "No internal echoes - applies to cystic nodules."
+        },
+        {
+          "id": "RDE2_000042.1",
+          "name": "hyperechoic or isoechoic",
+          "value": "hyperechoic-or-isoechoic",
+          "definition": "Brighter than or equal to surrounding parenchyma."
+        },
+        {
+          "id": "RDE2_000042.2",
+          "name": "hypoechoic",
+          "value": "hypoechoic",
+          "definition": "Darker than surrounding parenchyma."
+        },
+        {
+          "id": "RDE2_000042.3",
+          "name": "very hypoechoic",
+          "value": "very-hypoechoic",
+          "definition": "Darker than the strap muscles."
+        }
+      ]
+    },
+    {
+      "id": "RDE2_000043",
+      "name": "shape",
+      "kind": "categorical",
+      "edge_note": "taller-than-wide",
+      "definition": "Shape on the transverse image (ACR TI-RADS).",
+      "values": [
+        {
+          "id": "RDE2_000043.0",
+          "name": "wider-than-tall",
+          "value": "wider-than-tall",
+          "definition": "Anteroposterior diameter less than or equal to transverse."
+        },
+        {
+          "id": "RDE2_000043.1",
+          "name": "taller-than-wide",
+          "value": "taller-than-wide",
+          "definition": "Anteroposterior diameter greater than transverse; strong malignancy predictor."
+        }
+      ]
+    },
+    {
+      "id": "RDE2_000044",
+      "name": "margin",
+      "kind": "categorical",
+      "definition": "Nodule border (ACR TI-RADS). Note: ill-defined scores benign; lobulated/irregular scores suspicious.",
+      "values": [
+        {
+          "id": "RDE2_000044.0",
+          "name": "smooth",
+          "value": "smooth",
+          "definition": "Well-defined, regular border."
+        },
+        {
+          "id": "RDE2_000044.1",
+          "name": "ill-defined",
+          "value": "ill-defined",
+          "definition": "Border cannot be clearly traced - scores 0, not suspicious."
+        },
+        {
+          "id": "RDE2_000044.2",
+          "name": "lobulated or irregular",
+          "value": "lobulated-or-irregular",
+          "definition": "Protrusions or jagged edges - suspicious."
+        },
+        {
+          "id": "RDE2_000044.3",
+          "name": "extra-thyroidal extension",
+          "value": "extra-thyroidal-extension",
+          "definition": "Obvious invasion of adjacent soft tissue or vessels."
+        }
+      ]
+    },
+    {
+      "id": "RDE2_000045",
+      "name": "echogenic foci",
+      "kind": "categorical",
+      "definition": "Echogenic foci within the nodule (ACR TI-RADS); values may co-occur and score additively.",
+      "values": [
+        {
+          "id": "RDE2_000045.0",
+          "name": "none or large comet-tail artifacts",
+          "value": "none-or-large-comet-tail-artifacts",
+          "definition": "No foci, or large comet-tail artifacts in cystic components (benign)."
+        },
+        {
+          "id": "RDE2_000045.1",
+          "name": "macrocalcifications",
+          "value": "macrocalcifications",
+          "definition": "Coarse calcifications with shadowing."
+        },
+        {
+          "id": "RDE2_000045.2",
+          "name": "peripheral calcifications",
+          "value": "peripheral-calcifications",
+          "definition": "Rim calcification along the nodule edge."
+        },
+        {
+          "id": "RDE2_000045.3",
+          "name": "punctate echogenic foci",
+          "value": "punctate-echogenic-foci",
+          "definition": "Small echogenic foci without shadowing; may be microcalcification or inspissated colloid."
+        }
+      ],
+      "multi_select": true
+    },
+    {
+      "ref": "RDE2_000016",
+      "name": "size (3 axes)",
+      "kind": "three lengths"
+    }
+  ],
+  "scope": [
+    {
+      "name": "thyroid gland",
+      "ref": "RID7578",
+      "kind": "structure",
+      "strength": "required"
+    }
+  ],
+  "related": [
+    {
+      "name": "nodule",
+      "edge": "SUBTYPE_OF"
+    },
+    {
+      "name": "TI-RADS category",
+      "edge": "ASSESSED_BY",
+      "note": "assessment"
+    },
+    {
+      "name": "thyroid cancer",
+      "edge": "MAY_REPRESENT",
+      "note": "diagnosis"
+    }
+  ],
+  "metadata": [
+    {
+      "name": "neoplastic : potential",
+      "type": "Etiology",
+      "edge": "HAS_ETIOLOGY"
+    },
+    {
+      "name": "hyperplastic / colloid",
+      "type": "Etiology",
+      "edge": "HAS_ETIOLOGY",
+      "note": "(?) missing Etiology value"
+    },
+    {
+      "name": "US",
+      "type": "Modality",
+      "edge": "SEEN_ON",
+      "note": "characterization"
+    },
+    {
+      "name": "CT",
+      "type": "Modality",
+      "edge": "SEEN_ON",
+      "note": "incidental"
+    },
+    {
+      "name": "MR",
+      "type": "Modality",
+      "edge": "SEEN_ON",
+      "note": "incidental"
+    },
+    {
+      "name": "PET",
+      "type": "Modality",
+      "edge": "SEEN_ON",
+      "note": "incidental"
+    },
+    {
+      "name": "neck",
+      "type": "BodyRegion",
+      "edge": "IN_REGION"
+    },
+    {
+      "name": "head & neck",
+      "type": "Subspecialty",
+      "edge": "IN_SUBSPECIALTY"
+    },
+    {
+      "name": "sex-neutral",
+      "type": "SexSpecificity",
+      "edge": "SEX"
+    },
+    {
+      "name": "all ages",
+      "type": "AgeProfile",
+      "edge": "AGE_APPLICABILITY"
+    },
+    {
+      "name": "years - stable or slowly growing",
+      "type": "ExpectedTimeCourse",
+      "edge": "TIME_COURSE"
+    }
+  ],
+  "definition": "A discrete lesion within the thyroid gland, radiologically distinct from the surrounding parenchyma.",
+  "synonyms": [],
+  "id": "RDE2_000124",
+  "version": 1,
+  "status": "proposed",
+  "status_date": "2026-08-20",
+  "mappings": [
+    {
+      "system": "SNOMEDCT",
+      "code": "237495005",
+      "display": "Thyroid nodule (disorder)",
+      "match": "exactMatch"
+    }
+  ]
+}

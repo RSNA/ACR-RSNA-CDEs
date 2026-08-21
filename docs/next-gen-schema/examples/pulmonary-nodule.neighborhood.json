@@ -1,0 +1,210 @@
+{
+  "aria": "The pulmonary nodule FindingClass node and its typed edges to shared nodes: data elements, values, anatomic location, related classes, and metadata concepts.",
+  "center": {
+    "name": "pulmonary nodule",
+    "entity_type": "finding"
+  },
+  "elements": [
+    {
+      "ref": "RDE2_000001",
+      "name": "presence",
+      "kind": "categorical",
+      "required": true,
+      "values": [
+        "present",
+        "possible",
+        "absent",
+        "indeterminate",
+        "unknown"
+      ]
+    },
+    {
+      "id": "RDE2_000015",
+      "name": "attenuation",
+      "kind": "categorical",
+      "edge_note": "drives management",
+      "definition": "Attenuation class of the nodule on CT, per Fleischner usage.",
+      "values": [
+        {
+          "id": "RDE2_000015.0",
+          "name": "solid",
+          "value": "solid",
+          "definition": "Homogeneous soft-tissue attenuation that obscures the underlying lung parenchyma."
+        },
+        {
+          "id": "RDE2_000015.1",
+          "name": "part-solid",
+          "value": "part-solid",
+          "definition": "Both ground-glass and solid components."
+        },
+        {
+          "id": "RDE2_000015.2",
+          "name": "ground-glass",
+          "value": "ground-glass",
+          "definition": "Hazy increased attenuation that does not obscure vessels or bronchial walls."
+        }
+      ]
+    },
+    {
+      "ref": "RDE2_000014",
+      "name": "size (mean diameter)",
+      "kind": "length"
+    },
+    {
+      "id": "RDE2_000031",
+      "name": "margin",
+      "kind": "categorical",
+      "definition": "Character of the nodule's interface with surrounding lung.",
+      "values": [
+        {
+          "id": "RDE2_000031.0",
+          "name": "smooth",
+          "value": "smooth",
+          "definition": "Well-defined, regular interface."
+        },
+        {
+          "id": "RDE2_000031.1",
+          "name": "lobulated",
+          "value": "lobulated",
+          "definition": "Undulating contour from uneven growth."
+        },
+        {
+          "id": "RDE2_000031.2",
+          "name": "spiculated",
+          "value": "spiculated",
+          "definition": "Linear strands radiating into the parenchyma; suspicious."
+        },
+        {
+          "id": "RDE2_000031.3",
+          "name": "ill-defined",
+          "value": "ill-defined",
+          "definition": "Margins cannot be clearly traced."
+        }
+      ]
+    }
+  ],
+  "scope": [
+    {
+      "name": "lung",
+      "ref": "RID1301",
+      "kind": "structure",
+      "strength": "required"
+    }
+  ],
+  "related": [
+    {
+      "name": "nodule",
+      "edge": "SUBTYPE_OF"
+    },
+    {
+      "name": "lung cancer",
+      "edge": "MAY_REPRESENT",
+      "note": "diagnosis"
+    },
+    {
+      "name": "Fleischner recommendation",
+      "edge": "ASSESSED_BY",
+      "note": "assessment - incidental"
+    },
+    {
+      "name": "Lung-RADS category",
+      "edge": "ASSESSED_BY",
+      "note": "assessment - screening"
+    },
+    {
+      "name": "solid component",
+      "edge": "MAY_HAVE_COMPONENT",
+      "note": "finding - sub-finding of a part-solid nodule, with its own size"
+    }
+  ],
+  "metadata": [
+    {
+      "name": "neoplastic : benign",
+      "type": "Etiology",
+      "edge": "HAS_ETIOLOGY"
+    },
+    {
+      "name": "neoplastic : malignant",
+      "type": "Etiology",
+      "edge": "HAS_ETIOLOGY"
+    },
+    {
+      "name": "inflammatory : infectious",
+      "type": "Etiology",
+      "edge": "HAS_ETIOLOGY"
+    },
+    {
+      "name": "congenital",
+      "type": "Etiology",
+      "edge": "HAS_ETIOLOGY"
+    },
+    {
+      "name": "CT",
+      "type": "Modality",
+      "edge": "SEEN_ON"
+    },
+    {
+      "name": "XR",
+      "type": "Modality",
+      "edge": "SEEN_ON"
+    },
+    {
+      "name": "chest",
+      "type": "BodyRegion",
+      "edge": "IN_REGION"
+    },
+    {
+      "name": "chest radiology",
+      "type": "Subspecialty",
+      "edge": "IN_SUBSPECIALTY"
+    },
+    {
+      "name": "sex-neutral",
+      "type": "SexSpecificity",
+      "edge": "SEX"
+    },
+    {
+      "name": "all ages",
+      "type": "AgeProfile",
+      "edge": "AGE_APPLICABILITY"
+    },
+    {
+      "name": "years - progressive or stable",
+      "type": "ExpectedTimeCourse",
+      "edge": "TIME_COURSE"
+    }
+  ],
+  "definition": "A rounded or oval opacity within the lung parenchyma measuring less than 30 mm.",
+  "synonyms": [
+    {
+      "term": "lung nodule",
+      "type": "synonym"
+    },
+    {
+      "term": "SPN",
+      "type": "abbreviation"
+    },
+    {
+      "term": "pulmonary node",
+      "type": "deprecated"
+    }
+  ],
+  "id": "RDE2_000123",
+  "version": 1,
+  "status": "proposed",
+  "status_date": "2026-08-19",
+  "mappings": [
+    {
+      "system": "RADLEX",
+      "code": "RID50149",
+      "display": "pulmonary nodule",
+      "match": "exactMatch"
+    },
+    {
+      "system": "SNOMEDCT",
+      "code": "427359005",
+      "display": "Solitary nodule of lung (finding)",
+      "match": "exactMatch"
+    }
+  ]
+}
