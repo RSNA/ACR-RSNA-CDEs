@@ -253,7 +253,7 @@ The committee's draft reusable-element list ([committee notes](../../notes/commi
 
 *Laterality is deliberately absent* — carried by the AnatomicLocation node. Location in general is likewise not a canonical element: it is the Observation's AnatomicLocation pointer ([00 §1.3](./00-current-understanding.md)). There may be data elements that express *more precise* location than the anatomic location codes permit — position within a structure, relation to a landmark — but those are ordinary elements defined where needed, not canonical ones. The committee's canonical **grading scales** (mild/moderate/severe and kin) are shared **elements** — one `severity` bound by every class that grades — since values belong to exactly one element.
 
-**Surfaced by source review** (Radiopaedia, Radiology Assistant, Wikipedia — 2026-08-20), candidates for the canonical list:
+**Surfaced by source review** (Radiopaedia, Radiology Assistant, Wikipedia, 2026-08-20; full findings in [`notes/source-review-2026-08-20.md`](../../notes/source-review-2026-08-20.md)), candidates for the canonical list:
 
 | Element | Kind | Why |
 |---|---|---|

@@ -37,6 +37,7 @@ The raw committee material — a slide deck, meeting minutes, meeting notes, and
 
 | File | Upstream |
 |---|---|
+| `source-review-2026-08-20.md` | Radiopaedia, Radiology Assistant, and Wikipedia articles on pulmonary and thyroid nodules, Lung-RADS, Fleischner, and ACR TI-RADS; URLs in the file's frontmatter |
 | `ihe-idr-extract.md` | IHE RAD IDR Phase II, Rev. 1.2 public-comment draft (2026-03-04): https://www.ihe.net/uploadedFiles/Documents/Radiology/IHE_RAD_Suppl_IDR_PhII_Rev1-2_PC_2026-03-04.pdf — read directly, 2026-08-21 |
 
 ## Not retained

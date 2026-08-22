@@ -13,6 +13,7 @@ Raw committee material is kept out of the public repository (gitignored `raw_sou
 
 # Standards Extracts
 
+* [Source Review of Nodule Content](source-review-2026-08-20.md) - Findings from checking the pulmonary-nodule and thyroid-nodule example content against Radiopaedia, Radiology Assistant, and Wikipedia on 2026-08-20, including foundational content those pages suggest the vocabulary should capture.
 * [IHE IDR Phase II — Extract](ihe-idr-extract.md) - What the IHE Imaging Diagnostic Report (IDR) Phase II public-comment draft says about encoding findings as FHIR Observations — the grammar this vocabulary must fit — read directly from the supplement.
 
 # OIFM Reference Copies

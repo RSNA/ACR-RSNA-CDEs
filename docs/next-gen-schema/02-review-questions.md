@@ -63,7 +63,7 @@ The observation behind it: the documents describe what each `entity_type` value 
 
 > "We haven't (yet) found a material difference between the different entity types in terms of how they're specified/defined. It's almost analogous to the 'semantic type' concept in SNOMED, which doesn't affect the concepts themselves or how you can use them as labels, but could be used as useful context in downstream apps."
 
-**Status: open at the time; since settled.** The answer given was "label, not constraint" — later analysis showed it half-right: some values carry structural obligations and some are pure labels, and the allowed values are now fixed at seven with `grouping` and `recommendation` dropped ([01 §5](./01-what-the-vocabulary-must-express.md)). The original record: See [01 §5](./01-what-the-vocabulary-must-express.md) for a proposed decomposition into two orthogonal axes — what an assertion is *about*, and what *kind* of assertion it is — which would explain why the single field resists definition. Also [00, Issue C](./00-current-understanding.md).
+**Status: open at the time; since settled.** The answer given was "label, not constraint" — later analysis showed it half-right: some values carry structural obligations and some are pure labels, and the allowed values are now fixed at seven with `grouping` and `recommendation` dropped ([01 §5](./01-what-the-vocabulary-must-express.md)). The values and what each obliges a class to carry are in [01 §5](./01-what-the-vocabulary-must-express.md); the reasoning question it left behind is [00 Issue C](./00-current-understanding.md).
 
 ---
 
@@ -76,7 +76,7 @@ The observation behind it: the documents describe what each `entity_type` value 
 - Simple case: width–height–depth, which "in fact, could be a sub-component finding for many findings."
 - Complex case: a set of specific angular measurements in the assessment of scoliosis that are always grouped together.
 
-**Status: open, and now competing with an alternative.** [Deck slide 13](../../notes/proposed-schema-changes-deck-extract.md) models width × height × depth as a *quantity type with three components* rather than as a grouping finding — two representations of the same thing. See [00, Issue I](./00-current-understanding.md). Subsequent work also separated measurement from interpretation and identified *method* as a third component; see [01 §4](./01-what-the-vocabulary-must-express.md).
+**Status: settled since.** The committee decided the multi-component representation (a quantity type with components, not a grouping finding; [00 §8 Decided](./00-current-understanding.md)). The record of the exchange: [Deck slide 13](../../notes/proposed-schema-changes-deck-extract.md) models width × height × depth as a *quantity type with three components* rather than as a grouping finding — two representations of the same thing. Subsequent work also separated measurement from interpretation and identified *method* as a third component; see [01 §4](./01-what-the-vocabulary-must-express.md).
 
 ---
 

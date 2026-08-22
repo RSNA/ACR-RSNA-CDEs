@@ -75,6 +75,10 @@ Table B.3-1 shows the pattern on real sentences. The rows that matter most to us
 | **Temporal Comparison**; **Tracking UIDs** on `BodyStructure.identifier` to correlate the same entity across reports (lines 1590–1613) | DICOM (112039/112040) tracking identifiers; reclassification, merge, and split rules | longitudinal identity — not yet in our scope |
 | **Compound Statement** — "liver, gallbladder, pancreas, and spleen are unremarkable" | individual observations per anatomic entity | the grouping / negation-propagation case ([00 Issue A](../docs/next-gen-schema/00-current-understanding.md)) |
 
+### Query patterns (§6.7.3.6.y, lines 1888 onward)
+
+IDR's example consumer queries start from `Observation?subject=...&category=imaging` and filter by `BodyStructure.included_structure`. It notes that by "avoiding pre-coordination of the morphology or measured property" a query on an anatomy code can retrieve all observations on it, and it anticipates **fuzzy matching over an anatomical tree** (server-side flag, client-side expansion to the descendant terms, or "more general codes" on the structure) so that a query for "liver" finds the caudate lobe. That is the containment and is-a traversal our scope guidance relies on ([01 §2](../docs/next-gen-schema/01-what-the-vocabulary-must-express.md)); the anatomy hierarchy serves both sides.
+
 ## 5. Questions IDR is asking *us* (reviewer notes, lines 257–269)
 
 IDR's open questions about RadElement are requirements on this vocabulary:
