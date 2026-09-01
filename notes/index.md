@@ -1,6 +1,6 @@
 # Provenance
 
-* [Notes — Provenance](SOURCES.md) - Provenance for the notes directory — upstream URLs for the fetched OIFM copies and extraction records for the sanitized committee material.
+* [Notes — Provenance](SOURCES.md) - Provenance for the notes directory — upstream URLs for the fetched OIFM copies and extraction records for the sanitized committee and working-group material.
 
 # Sanitized Committee Extracts
 
@@ -10,6 +10,15 @@ Raw committee material is kept out of the public repository (gitignored `raw_sou
 * [SIIM Meeting Minutes — Extract](siim-meeting-extract.md) - Sanitized extract of the SIIM committee meeting minutes — nomenclature debate, decoupled graph structure, attribute types, anatomic location, relationships, metadata, and action items.
 * [Committee Meeting Notes — Extract](committee-notes-extract.md) - Sanitized extract of RSNA/ACR CDE Committee schema discussion notes — source of the Finding Class / Data Element / Value terminology and the draft reusable-element list.
 * [CDE Schema Recommendations — Part II](schema-recommendations-part2.md) - The initial written proposal for iterating the schema forward — templates set aside, findings/attributes decoupled, explicit relationships, expanded metadata, location guidance, governance separated, and quantity types.
+
+# Working Group, August 2026
+
+Material from the working sessions that followed the analysis bundle being pushed to `next-gen-2026`. The call summary and the email thread are sanitized; the memo is a verbatim copy of an external contributor's document.
+
+* [Working Group Call, 20 August 2026 — Extract](working-group-call-2026-08-20-extract.md) - Sanitized extract of the 20 August 2026 schema working-group call, covering prototyping on a relational store before the graph, edge properties versus nodes, compositional versus associative edges, and the agreement to separate Diagnosis from Finding.
+* [Schema Review Exchange, 25 August 2026 — Extract](review-exchange-2026-08-25-extract.md) - Sanitized extract of the 25 August 2026 email exchange on the next-generation schema, covering the Diagnosis node and its relationship types, conditional relationships versus subtype classes, bilaterality, anatomic scope for scored slots, and how study indication selects an assessment.
+* [Conditional Relationships — Engineering Memo](conditional-relationships-memo.md) - An engineering comparison of two ways to express a relationship that applies only under a condition, a condition property on the edge or explicit subtype classes, with the recommendation and the reasoning that tips it. Copy of the memo circulated 26 August 2026.
+
 
 # Standards Extracts
 
