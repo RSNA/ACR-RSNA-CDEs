@@ -9,7 +9,7 @@ Each section header names the relationship type doing the gathering; each
 chip inside is a typed reference to a shared node (color = node type).
 See examples/*.neighborhood.json for the spec format.
 """
-import json, sys, html
+import json, sys, html, re
 
 ACCENT = {  # node-type accents
     "class":    ("#2563eb", "#1e3a8a"),
@@ -18,6 +18,22 @@ ACCENT = {  # node-type accents
     "concept":  ("#64748b", "#334155"),
 }
 INK, MUTED, RULE, CARD_BORDER = "#1f2937", "#64748b", "#e2e8f0", "#cbd5e1"
+
+_NUMERIC_ATTR_RE = re.compile(
+    r'(?P<prefix>\b(?:font-size|font-weight|height|letter-spacing|rx|stroke-dasharray|'
+    r'stroke-width|transform|viewBox|width|x|x1|x2|y|y1|y2)=")'
+    r'(?P<value>[^"]*)"'
+)
+_NUMBER_RE = re.compile(r'-?(?:\d+(?:\.\d*)?|\.\d+)')
+
+def fmt_svg_numbers(svg):
+    """Format every numeric SVG attribute value to at most three decimal places."""
+    def attr(match):
+        def number(token):
+            value = f'{float(token.group()):.3f}'.rstrip("0").rstrip(".")
+            return "0" if value == "-0" else value
+        return match.group("prefix") + _NUMBER_RE.sub(number, match.group("value")) + '"'
+    return _NUMERIC_ATTR_RE.sub(attr, svg)
 
 def esc(s): return html.escape(str(s), quote=True)
 
@@ -225,7 +241,7 @@ def render(spec):
     for frag, h in body:
         out.append(f'<g transform="translate(0,{body_off})">{frag}</g>')
     out.append("</svg>")
-    return "".join(out)
+    return fmt_svg_numbers("".join(out))
 
 def render_element(spec):
     """DataElement dossier: value set (or quantity), binders with per-binding overrides, mappings."""
@@ -341,7 +357,7 @@ def render_element(spec):
     for frag in body:
         out.append(f'<g transform="translate(0,{body_off})">{frag}</g>')
     out.append("</svg>")
-    return "".join(out)
+    return fmt_svg_numbers("".join(out))
 
 def render_location(spec):
     """AnatomicLocation dossier: descriptor elements bound to the structure, inherited bindings,
@@ -417,9 +433,10 @@ def render_location(spec):
     for frag in body:
         out.append(f'<g transform="translate(0,{body_off})">{frag}</g>')
     out.append("</svg>")
-    return "".join(out)
+    return fmt_svg_numbers("".join(out))
 
 if __name__ == "__main__":
-    spec = json.load(open(sys.argv[1]))
+    spec = json.load(open(sys.argv[1], encoding="utf-8"))
     kind = spec.get("node")
-    print(render_element(spec) if kind == "DataElement" else render_location(spec) if kind == "AnatomicLocation" else render(spec))
+    rendered = render_element(spec) if kind == "DataElement" else render_location(spec) if kind == "AnatomicLocation" else render(spec)
+    sys.stdout.buffer.write((rendered.rstrip("\r\n") + "\n").encode("utf-8"))

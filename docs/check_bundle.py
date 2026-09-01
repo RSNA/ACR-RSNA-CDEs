@@ -139,9 +139,9 @@ for spec, svg in spec_map.items():
     sp, sv = os.path.join(base, spec), os.path.join(base, svg)
     if not os.path.exists(sp): err(f"missing spec {spec}"); continue
     if not os.path.exists(sv): err(f"missing diagram {svg}"); continue
-    out = subprocess.run([sys.executable, tool, sp], capture_output=True, text=True)
-    if out.returncode: err(f"renderer failed on {spec}: {out.stderr.strip()[:200]}"); continue
-    if out.stdout.strip() != open(sv, encoding="utf-8").read().strip(): err(f"{svg} is stale — regenerate from {spec}")
+    out = subprocess.run([sys.executable, tool, sp], capture_output=True)
+    if out.returncode: err(f"renderer failed on {spec}: {out.stderr.decode('utf-8', errors='replace').strip()[:200]}"); continue
+    if out.stdout != open(sv, "rb").read(): err(f"{svg} is stale — regenerate from {spec}")
 # every svg referenced from a doc must exist (covered by link check) and every diagram file must be referenced
 referenced = set()
 for f in md_files:
