@@ -23,8 +23,8 @@
       "id": "RDE2_000090",
       "name": "caliber",
       "kind": "length",
-      "required": true,
-      "definition": "Maximal inner diameter, measured perpendicular to the long axis, distal to the cystic duct insertion."
+      "definition": "Maximal inner diameter, measured perpendicular to the long axis, distal to the cystic duct insertion.",
+      "binding_id": "RDE2_000831"
     },
     {
       "id": "RDE2_000091",
@@ -56,7 +56,8 @@
       "name": "bile duct dilation",
       "id": "RDE2_000702",
       "entity_type": "diagnosis",
-      "note": "INTERPRETED_FROM the caliber binding"
+      "note": "INTERPRETED_FROM the caliber binding",
+      "interpreted_from": "RDE2_000831"
     },
     {
       "name": "choledocholithiasis",

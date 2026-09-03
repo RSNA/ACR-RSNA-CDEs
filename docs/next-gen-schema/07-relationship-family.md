@@ -34,7 +34,7 @@ sources:
 
 **Status:** Draft for review. This answers the request in the [25 August exchange](../../notes/review-exchange-2026-08-25-extract.md): a tentative, explicitly non-comprehensive catalog of the relationships needed between findings and diagnoses, to validate against the proposed edge object. Prior-art surveys were run 2026-09-01; primary sources are cited inline.
 
-**Framing.** Everything here is a **class-level potential** in the vocabulary plane. A report edge between two Observations expresses a vocabulary relationship and can cite it ([03 §5](./03-draft-structures.md)); nothing here obliges any report to contain anything. With Diagnosis now agreed to be its own node type ([exchange §1](../../notes/review-exchange-2026-08-25-extract.md)), each relationship states its domain and range. F is FindingClass, D is Diagnosis, A is Assessment.
+**Framing.** Everything here is a **class-level potential** in the vocabulary plane. A report edge between two Observations expresses a vocabulary relationship and can cite it ([03 §5](./03-draft-structures.md)); nothing here obliges any report to contain anything. With Diagnosis now agreed to be its own node type ([exchange §1](../../notes/review-exchange-2026-08-25-extract.md)), each relationship states its domain and range. F is FindingClass, D is Diagnosis, A is Assessment, G is the Grouping node type added on 2026-09-02 ([10 S8](./10-decision-record-2026-09-02.md)).
 
 **Out of scope:** the anatomy family (`SCOPED_TO`, `ADJACENT_TO`), element bindings (`HAS_ELEMENT`), and the context edges to concept nodes ([03 §2](./03-draft-structures.md)). Those are separate families; keeping them out of this catalog is deliberate.
 
@@ -46,7 +46,7 @@ Seven pairs and one escape hatch. Assertion direction is the left-hand name; too
 
 | Relationship (inverse) | From → To | Character | Meaning |
 |---|---|---|---|
-| `SUBTYPE_OF` (`HAS_SUBTYPE`) | F→F, D→D | transitive ⟨?⟩ ([00 Issue A](./00-current-understanding.md)) | taxonomy, more to less specific; written `rdfs:subClassOf` formally |
+| `SUBTYPE_OF` (`HAS_SUBTYPE`) | F/D/G→F/D/G, either direction across the labels | transitive ⟨?⟩ ([00 Issue A](./00-current-understanding.md)) | taxonomy, more to less specific; written `rdfs:subClassOf` formally. One taxonomy over all three node types, unrestricted by the finding or diagnosis label; the earlier F→F, D→D restriction was withdrawn on 2026-09-02 ([10 S1](./10-decision-record-2026-09-02.md)) |
 | `MAY_HAVE_COMPONENT` (`MAY_BE_COMPONENT_OF`) | F→F | compositional | the target can occur as a described sub-part with its own elements, and is genuinely optional in all cases; the gated case is the open conditionality question ([exchange §2](../../notes/review-exchange-2026-08-25-extract.md)) |
 | `MAY_CAUSE` (`MAY_BE_CAUSED_BY`) | F/D→F/D | causal | the source can produce the target as a distinct second entity |
 | `MAY_MANIFEST_AS` (`MAY_REPRESENT`) | D→F/D | evidential | the diagnosis can show itself as the target; the inverse is how a report reads, finding toward conclusion |
@@ -55,7 +55,7 @@ Seven pairs and one escape hatch. Assertion direction is the left-hand name; too
 | `ASSESSED_BY` (`ASSESSES`) | F/D→A | interpretive | a standardized scheme applies to the source; which scheme applies in a given study comes from the exam object in the instance layer, not from this edge ([exchange §5](../../notes/review-exchange-2026-08-25-extract.md)) |
 | `MAY_BE_RELATED_TO` | F/D↔F/D | symmetric, catch-all | an association the author cannot yet type; a triage queue, not a home. Every use is a candidate for replacement by a typed edge |
 
-`INTERPRETED_FROM` (A→binding) stays as defined in [03 §2](./03-draft-structures.md): it is the fine-grained twin of `ASSESSED_BY`, naming the specific inputs a scheme is computed from rather than the scheme itself.
+`INTERPRETED_FROM` (F/D/A→binding) stays as defined in [03 §2](./03-draft-structures.md): it is the fine-grained twin of `ASSESSED_BY`, naming the specific inputs a scheme is computed from rather than the scheme itself. Its domain was widened on 2026-09-02 from assessments to any class that interprets a measurement, which [03 §9](./03-draft-structures.md) already relied on for bile duct dilation ([08 §2](./08-worked-examples.md)).
 
 The domain of `MAY_MANIFEST_AS` extends to D→D deliberately: radiologists use findings and diagnoses loosely enough that a diagnosis can manifest as another diagnosis (neurofibromatosis manifesting as optic glioma). That makes the boundary with `MAY_CAUSE` the load-bearing definition in this family, so it gets its own section.
 
@@ -66,6 +66,8 @@ The domain of `MAY_MANIFEST_AS` extends to D→D deliberately: radiologists use 
 **`MAY_CAUSE` is consequential**: the target is a distinct second entity the source produced. A renal abscess is a new thing pyelonephritis made.
 
 The test: if the target resolved, would a clinician say the source "got better," or that "a complication resolved"? The first is manifestation, the second is causation.
+
+**`SUBTYPE_OF` is a third thing, and the finding or diagnosis label does not decide it.** Subsumption means every instance of the source is an instance of the target, and it has a plain-language test: can you say "X without Y" and mean something? "Empyema without effusion" is not a sentence, so empyema is a subtype of pleural effusion even though one is labelled a diagnosis and the other a finding. "Consolidation without pneumonia" is an ordinary sentence, so consolidation is a manifestation of pneumonia and not a subtype. An obligate manifestation edge whose target is the whole of the source is a subtype edge in disguise and should be authored as one ([10 S1](./10-decision-record-2026-09-02.md)).
 
 `MAY_PROGRESS_TO` is neither. It asserts identity-preserving evolution: acute hemorrhage becomes chronic hemorrhage, infarct becomes encephalomalacia. The entity persists and changes state. SNOMED CT is the precedent for insisting these stay separate: its `Due to` asserts causality while agnostic about sequence, its `After` asserts sequence while agnostic about causality, and the two are never conflated (SNOMED CT Concept Model, docs.snomed.org). Progression is a third, stronger claim: sequence plus identity. An edge author who can assert only sequence has no edge in this family and should say nothing, or use `OCCURS_WITH` if co-occurrence is the actual observation.
 
@@ -112,7 +114,7 @@ Whether the causal pair also takes typicality (how often pyelonephritis causes a
 
 ## 4. The differential is a derived view, not an edge
 
-The differential of a finding is the set of diagnoses reachable over `MAY_REPRESENT`, filtered by the context edges (age stage, modality, anatomic scope), ranked by specificity then typicality. The differential of a diagnosis is its siblings under shared findings. No `DIFFERENTIAL_OF` edge type exists.
+The differential of a finding is the set of diagnoses reachable over `MAY_REPRESENT`, together with its diagnosis subtypes now that the taxonomy crosses the label ([10 S1](./10-decision-record-2026-09-02.md)), filtered by the context edges (age stage, modality, anatomic scope), ranked by specificity then typicality. The differential of a diagnosis is its siblings under shared findings. No `DIFFERENTIAL_OF` edge type exists.
 
 The precedent is direct. The Radiology Gamuts Ontology, the ontology-backed successor to Reeder and Felson, carries 55,000+ links using exactly two relation types, is-a and may-cause, and produces every differential by traversing incoming causal links to a finding (Budovec, Lam, and Kahn, RadioGraphics 2014; gamuts.net). No source surveyed, across RGO, HPO/Orphanet, SNOMED CT, UMLS, Radiopaedia, and STATdx, stores differentials as diagnosis-to-diagnosis edges; the curated ranked lists in practitioner references are editorial products keyed to one page, which is what a sort key over derived results reproduces.
 

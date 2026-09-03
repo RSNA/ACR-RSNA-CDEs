@@ -52,5 +52,12 @@
       "id": "RDE2_000660"
     }
   ],
-  "mappings": []
+  "mappings": [
+    {
+      "system": "SNOMEDCT",
+      "code": "246112005",
+      "display": "Severity",
+      "match": "exactMatch"
+    }
+  ]
 }

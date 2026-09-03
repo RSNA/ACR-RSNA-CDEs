@@ -1,0 +1,11 @@
+{
+  "title": "Pleural effusion: one finding, its diagnosis subtypes, and the causes that point at it",
+  "aria": "Causes on the left, the pleural abnormality grouping box in the middle containing the pleural effusion finding with its six diagnosis subtypes and the pleural thickening finding, companion findings on the right.",
+  "nodes": [
+    "RDE2_000516", "RDE2_000502",
+    "RDE2_000511", "RDE2_000512", "RDE2_000514", "RDE2_000515", "RDE2_000510", "RDE2_000513",
+    "RDE2_000532", "RDE2_000534",
+    "RDE2_000520", "RDE2_000526", "RDE2_000525", "RDE2_000522", "RDE2_000523", "RDE2_000521", "RDE2_000524",
+    "RDE2_000533", "RDE2_000530", "RDE2_000531"
+  ]
+}

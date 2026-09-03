@@ -1,0 +1,122 @@
+---
+type: Decision Record
+title: Decision Record, 2 and 3 September 2026
+description: Every decision taken while building the graph, the examples, and the mat-and-tree pictures, sorted into structure, display, and content, with each one marked as the owner's decision, a Claude proposal the owner accepted, or a Claude default or invention that the owner has not reviewed.
+tags: [next-gen-schema, decisions, provenance, structure, display, content]
+status: draft
+generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1"], at: 2026-09-03 }
+sources:
+  - id: session
+    resource: "https://claude.ai/code/session_0148zNHjv5iPYG6nH5V14DUD"
+    title: The working conversation of 1 to 3 September 2026 in which these decisions were taken; the owner's words are quoted from it
+    author: "human:talkasab"
+  - id: exchange
+    resource: /notes/review-exchange-2026-08-25-extract.md
+    title: The 25 August exchange that some structure decisions build on
+  - id: spec
+    resource: /docs/next-gen-schema/09-mat-and-tree.md
+    title: The display specification that applies the display decisions
+  - id: examples
+    resource: /docs/next-gen-schema/08-worked-examples.md
+    title: The worked examples that apply the content decisions
+---
+
+# Decision Record, 2 and 3 September 2026
+
+**Status:** Draft. This is the record of provenance; the current state of what was decided lives in [09](./09-mat-and-tree.md) for display, in [03](./03-draft-structures.md) and [07](./07-relationship-family.md) for structure, and in [08](./08-worked-examples.md) for content. When this record and those documents disagree, this record is the authority on *who decided*, and those documents are the authority on *what is current*.
+
+## How to read the provenance column
+
+| Mark | Meaning |
+|---|---|
+| **OWNER** | The owner stated it. The quotation is verbatim from the session[^session]. This is the decision. |
+| **PROPOSED, ACCEPTED** | Claude proposed it and the owner accepted it in words. The owner's acceptance is quoted. |
+| **NOT OBJECTED** | Claude proposed it, put it to the owner explicitly, and the owner moved on without objecting. It stands, but it is not the owner's decision. |
+| **CLAUDE DEFAULT** | Claude chose it to keep moving and recorded the choice. The owner has not reviewed it. Reversible. |
+| **CLAUDE INVENTION** | Content Claude wrote (clinical values, code choices, wording) that no one has checked. Treat as unverified. |
+
+Decisions are numbered by section: **S** structure, **D** display, **C** content. A struck-through entry was superseded by a later decision in the same record.
+
+## S. Structure: what the vocabulary is
+
+| # | Decision | Provenance | Applied in |
+|---|---|---|---|
+| S1 | `SUBTYPE_OF` is one taxonomy over finding, diagnosis, and grouping nodes, unrestricted by the finding or diagnosis label, in either direction. | **OWNER**: "there is absolutely NO QUESTION that a radiologist would say, 'empyema' is a sub-type of 'pleural effusion'." Then, on Claude's attempt to allow only diagnosis-under-finding: "I'm... dubious about the restriction on subtype not working from findingclass up to diagnosis. Truly, you don't seem to get how interchangably radiologists use these." | [07 §1, §2](./07-relationship-family.md) |
+| S2 | The test for subsumption is "can you say X without Y and mean something?" | **NOT OBJECTED**: Claude's proposal after S1. | [07 §2](./07-relationship-family.md) |
+| S3 | Subsumption implies nothing about element bindings. There is no inherited binding over `SUBTYPE_OF`; the anatomy inheritance of 03 §9 is a declared rule for the anatomy graph, not a property of is-a. | **OWNER**: "there is NO implied inheritance of element relationships. Where did THAT come from? This is ontology, not OOP." | [08](./08-worked-examples.md), [03 §9](./03-draft-structures.md) |
+| S4 | Node types carry no "obligations". Confidence belongs to the report-plane assertion, for findings as much as diagnoses; the 01 §5 "must carry" column for diagnosis is struck. | **OWNER**: "'Obligations'? 'confidence and criteria on a diagnosis'?" and "confidence can EQUALLY apply to findings, not just diagnoses." | [01 §5](./01-what-the-vocabulary-must-express.md) |
+| S5 | Only a few generalities are clinically meaningful (lesion, mass, process, anatomic variant, post-operative finding, and a small number like them). "Nodules in general" is not. | **OWNER**: "IN GENERAL, talking about the class of 'nodules' is NOT clinically meaningful, and most of what you have here falls into that category." | [08](./08-worked-examples.md) |
+| S6 | Those generalities are patterns applied at a location, not nodes in the taxonomy. "Hepatic lesion" is a class; "lesion" is not. | **OWNER**: "I think they are PATTERNS that recur in the hierarchy, usually in location-based contexts." | [08](./08-worked-examples.md), [06](./06-next-steps.md) |
+| S7 | Patterns are not written into the graph in any form. They are an authoring guide and possibly a lint check. | **OWNER**: "I don't think there's enough reason to write it into the graph... This is an authoring guide and maybe a linting tool check." | [06](./06-next-steps.md) |
+| S8 | Grouping is a node type, narrowly: the negative-only nodes such as `renal abnormality` that sit above findings and diagnoses alike. | **OWNER** inclination: "are these their own node type? I'm thinking they may be." The narrowing to negative-only nodes, and the test "would a radiologist ever write it in the positive?", are **NOT OBJECTED** Claude proposals. | [03 §1](./03-draft-structures.md), [08](./08-worked-examples.md) |
+| S9 | There is no such thing as a required element. The `required` property is removed from `HAS_ELEMENT` edges, the specs, the documents, and every renderer. Presence is an ordinary attribute. | **OWNER**: "we've been SO CLEAR about this--THERE IS NO SUCH THING AS A REQUIRED ELEMENT." | [03 §2](./03-draft-structures.md), graph, `render_cards.py`, `render_neighborhood.py` |
+| S10 | Context metadata (sex specificity, age, modality, time course, etiology, region, subspecialty) is a distinct node class, not free-text metadata. | **OWNER**: "probably best as a different kind of node class, right?" (It already was `Concept`; the owner's question confirmed it.) | [03 §1](./03-draft-structures.md), `graph/concepts.jsonl` |
+| S11 | Modality, body region, and subspecialty concepts are RadLex nodes and carry RIDs. Etiology, sex, age, and time course get our own provisional codes now, as a lookup table, until official versions exist. | **OWNER**: "Modality, body region, and subspecialy are DEFINITELY in RadLex. Etiology, sex, age, course--can't we define our own codes for now, and document them until we make official versions? Might as well start the lookup table." | `graph/concepts.jsonl`, [graph README](graph/README.md) |
+| S12 | An anatomic location carries one id, its RID; a RadLex code is never shown alongside an anatomic location because the RID is the RadLex code. | **OWNER**: "Don't show both an anatomic location and a RadLex code for anything--the anatomic location code IS the RadLex code, essentially, and will be literally soon." | [09 §2.3](./09-mat-and-tree.md) |
+| S13 | `SCOPED_TO` and the seven context edge types propagate down `SUBTYPE_OF` at render time when a node has none of its own, shown as inherited. The graph stays explicit. | **CLAUDE DEFAULT**, taken during the build in answer to the owner's question "why no modality, region, sex etc on the acute pyelonephritis?" Claude recommended propagation; the owner did not respond to the recommendation. | `render_cards.py`, [09 §4](./09-mat-and-tree.md) |
+| S14 | Non-imaging causes (heart failure, cirrhosis) are Diagnosis nodes with no elements, so that causal edges have targets. | **CLAUDE DEFAULT**, recorded in the build plan; the owner never answered the question. | [08 §3](./08-worked-examples.md) |
+| S15 | Causal edges may carry an `expected` property: hints about the caused entity's values given the cause. | **CLAUDE INVENTION**. The owner later ruled (D9) that only typicality and specificity appear on an edge in the picture; the property itself remains in the graph, unreviewed. | graph, [07](./07-relationship-family.md) open question |
+| S16 | Bindings that must be cited carry `RDE2_` ids like relationships do. | **CLAUDE DEFAULT**, resolving the open item in 06 §4. | [03 §2](./03-draft-structures.md), graph |
+| S17 | `INTERPRETED_FROM` runs from any class that interprets a measurement, not only from assessments. | **CLAUDE DEFAULT**, reconciling 03 §9 with 07 §1. | [07 §1](./07-relationship-family.md) |
+| S18 | The causal pair takes typicality (07 Q2 answered yes). | **CLAUDE DEFAULT**, assumed so the pyelonephritis example could be written. | [08 §2](./08-worked-examples.md) |
+
+**Rejected by the owner** (recorded so they are not proposed again): a morphology "form" axis derived from name suffixes (focal, diffuse, collection, deposition, discontinuity), upper-level `lesion` / `mass` / `process` FindingClasses, a `Pattern` node type or annotation in the graph, "obligations" as a property of node types, and inherited element bindings.
+
+## D. Display: how the pictures look
+
+| # | Decision | Provenance | Applied in |
+|---|---|---|---|
+| D1 | Nested containment is the direction for the picture. | **OWNER**: "Nested containment is definitely what we want." | [09](./09-mat-and-tree.md) |
+| D2 | Anatomy must be demonstrated in the picture. | **OWNER**: "Definitely need to have anatomy demonstrated--not seeing that is distressing." | [09 §2.3](./09-mat-and-tree.md) |
+| D3 | The earlier arrows were unacceptable because the arrowheads were not aligned with their lines. | **OWNER**: "the issue is that the arrow hears aren't aligned with the arrow lines--it looks AWFUL." | resolved by D8 (no wires on the mat) |
+| D4 | The picture should feel like cards being assembled on a canvas, not points in space; each card carries its important information directly on it, or quickly available without clicking. | **OWNER**: "each card (node) has its important information DIRECTLY ON THE CARD (or at least quickly available WITHOUT clicking or anything)... the things that are contained should feel more like cards that we're assembling on a canvas rather than points in space." | [09 §2](./09-mat-and-tree.md) |
+| D5 | The mat: the page is about one context object; connected objects are brought in as cards inside dotted or shaded containers that say how they relate to the context object; tables carry the internal metadata; cards are logically grouped. | **OWNER**: "the "mat" is the CONTEXT of what we're looking at--and then we bring in the connected objects and have some dotted/shaded container that says how they're associated to the CONTEXT OBJECT this display is about. (We can have tables for the internal metadata of the included nodes.) And we can try to logically group all of the cards for the linked nodes." | [09 §2](./09-mat-and-tree.md) |
+| D6 | The mat reaches one hop; a card's own connections to third parties do not become cards. | **PROPOSED, ACCEPTED**: "That's the right idea." | [09 §2.1](./09-mat-and-tree.md) |
+| D7 | The mat replaces the site's node-neighborhood diagram and the constellation diagrams; the old renderer is deleted. | **PROPOSED, ACCEPTED**: "Yes, this is the basic architecture of the node neighhborhood, replacing everything that's done that before--why not? It's in git." | `render_cards.py`; `render_constellation.py` deleted |
+| D8 | No wires on the mat. | **PROPOSED, ACCEPTED**: "On the CONTAINMENT style pages, yes, no wires." | [09 §2.5](./09-mat-and-tree.md) |
+| D9 | Edge properties draw as a dotted bounding box around the linked card, gray, listed under the card, with the last one in the box's bottom line; and only the typicality and specificity axes go there. | **OWNER**: "a dotted bounding box around the linked node, where the edge properties are gray, but listed one atop another under the linked node, with their bottom one being incorporated into the bottom line of the box." Then: "that is WAY too much detail to be putting on an edge like that... I think the frequency / specificity axes is about as much as they can take." | [09 §2.4](./09-mat-and-tree.md) |
+| D10 | Base ids are shown for everything. | **OWNER**: "you MUST show the base IDs for EVERYTHING." | [09 §2.3](./09-mat-and-tree.md) |
+| D11 | Codes appear everywhere relevant, and a code is never shown without its preferred term. | **OWNER**: "we need to show the relevant codes EVERWHERE and you MUST NEVER show a raw code without the preferred term associated with it. EVER." | [09 §3](./09-mat-and-tree.md) |
+| D12 | Codes go about one level down: a code for the element "presence", not for each of its values. | **OWNER**: "maybe one level down, so you show a code for the idea of 'presence', but not all the codes for 'present', 'absent', etc." | [09 §3](./09-mat-and-tree.md) |
+| D13 | Mappings to other ontologies are not in the title bar; they had been given too much prominence. | **OWNER**: "You're giving WAY too much prominence to the connections to nodes in other ontologies. Why would you put those in the TITLE BAR?" | [09 §2.3](./09-mat-and-tree.md) |
+| D14 | Attributes on the context object are a table; on a card they are elliptical, without every presence choice spelled out. | **OWNER**: "when you're showing them on the finding card, you can be more elliptical--don't need to see all the presence choices." and "The attributes should be the table-like thing you had above." | [09 §2.3](./09-mat-and-tree.md) |
+| D15 | Every card has the same fixed zones, like a trading-card frame; the context stats are a consistent bottom row. | **OWNER**: "It's NOT OK for them to be loosey-goosey. That's like hit points and attach strength or so on on a MtG caard, right?" and "Put the stats as the consistent bottom row." | [09 §2.3](./09-mat-and-tree.md) |
+| D16 | Mini-cards are minimal: about the code and the name. Hover reveals more. | **OWNER**: "That's TOO much detail on the mini-cards. Does SVG allow for hover popovers or something like that? You need a minimal view of the connection--maybe almost just the code and the name." | [09 §2.2](./09-mat-and-tree.md) |
+| D17 | The hover detail is a more detailed mini-card, not the full mat. | **OWNER**: "Hover detail should be like a more detailed mini-card. Not the full mat, but enough detail." | [09 §2.6](./09-mat-and-tree.md) |
+| D18 | No edge ids on the mat. | **OWNER**: "we don't need the edge ids on the neighborhood mat." | [09 §2.4](./09-mat-and-tree.md) |
+| D19 | Subspecialty is one of the stat cells. | **OWNER**: "And where did subspecialty go?" (It had been dropped by Claude in error.) | [09 §2.3](./09-mat-and-tree.md) |
+| D20 | The layout must be drastically tighter, and the text must not be tiny. | **OWNER**: "their layout needs to be drastically tightened." and "why is all the text so f---ing tiny?" | [09 §5](./09-mat-and-tree.md) |
+| D21 | The tree is an outline of the mini-cards themselves, not text lines and not a literal family tree of boxes and wires. | **OWNER**: "They need to be much more like an expanding outline of the mini-cards than a literal family tree." and "I literally mean the mini cards, not LINES." | [09 §6](./09-mat-and-tree.md) |
+| D22 | On the tree, hovering or clicking a node pops up its other relationships within the visible tree and a more detailed but not complete card. | **OWNER**: "can we set them up so that on hover or click or something, the OTHER relationships within the visible tree pop up for the selected node, along with a more detailed (but not complete) card?" | [09 §6](./09-mat-and-tree.md), site |
+| D23 | Where an object lives is a fact about that object; it is not marked beside its mini-card in a container. | **OWNER**, by question: "How does the fact that some of the findings are in the kidney and some not matter for showing them in the 'manifests as' box?" Claude withdrew the mark. | [09 §2.2](./09-mat-and-tree.md) |
+| D24 | Container order: a kind of, kinds of, manifests as, may be caused by, may cause, progresses to, progresses from, occurs with, assessed by. Empty containers vanish. | **NOT OBJECTED**: "THat's OK for a first pass." | [09 §2.4](./09-mat-and-tree.md) |
+| ~~D25~~ | ~~Relationship edges are drawn on the tree with labels.~~ | **OWNER** at first ("I think that CAN be done well. Try it."), then withdrawn by the owner after both agent attempts (D21). | superseded |
+| D26 | Both pictures are deterministic SVG generated from the graph, byte-checked; the interactive layer is JavaScript on the site only. | **CLAUDE DEFAULT**; the owner asked for "a page that actually has the working hover". | `render_cards.py`, `build_site.py` |
+
+**Rejected by the owner:** columns of chips with labelled curves (the original constellation renderer), an anatomy lane of location cards wired to classes, anatomy as an outer container, codes in the title bar, mini-cards carrying definition and mappings and stats on the mat, relationship lines under tree rows in place of cards, and both agents' round-two layouts as too loose with too-small type.
+
+## C. Content: the facts in the examples
+
+Everything in this section that is not marked OWNER is Claude's clinical or terminological judgment and has not been reviewed by a radiologist. That includes every typicality and specificity value.
+
+| # | Decision or content | Provenance | Applied in |
+|---|---|---|---|
+| C1 | The two worked examples are acute pyelonephritis and pleural effusion; the effusion example was to lean on the many causes (idiopathic, heart failure, cirrhosis, pneumonia, cancer). | **OWNER**: "Take a crack at a pyelonephritis example... let's think about a pleural effusion example, leaning on how it can be idiopathic, caused by heart failure, by cirrhosis, by pneumonia, by a cancer... Think about what the properties would be." | [08](./08-worked-examples.md) |
+| C2 | The pyelonephritis family: pyelonephritis with acute and chronic subtypes, emphysematous under acute, xanthogranulomatous under chronic; the five manifesting findings; renal abscess under renal lesion; progression acute to chronic; hydronephrosis as occurs-with. | **CLAUDE INVENTION**, guided by the Hood taxonomy rows. | `graph/pyelonephritis.jsonl` |
+| C3 | Every typicality and specificity value in the pyelonephritis family (striated nephrogram frequent and highly suggestive; fat stranding frequent and suggestive; enlargement frequent; parenchymal gas obligate and pathognomonic for emphysematous; cortical scarring very frequent for chronic; abscess occasional). | **CLAUDE INVENTION**: clinical estimates, no source cited. | graph |
+| C4 | The pleural effusion family: six diagnosis subtypes (parapneumonic, empyema, hemothorax, chylothorax, hepatic hydrothorax, malignant); seven causes; two caused findings; pleural thickening as occurs-with; the manifestations of empyema and malignant effusion; parapneumonic progressing to empyema. | **CLAUDE INVENTION**, with the cause list seeded by the owner's C1. | `graph/pleural-effusion.jsonl` |
+| C5 | Every typicality value on the causal edges, and every `expected` hint (heart failure bilateral right greater than left and simple; cirrhosis right-sided; pancreatitis left; malignancy large and recurrent; embolism small and ipsilateral; nephrotic bilateral). | **CLAUDE INVENTION**: textbook generalities, no source cited. | graph |
+| C6 | The pleural effusion elements: size (qualitative) as amount, fluid attenuation in Hounsfield units with a region-of-interest method, internal complexity as a multi-select of five values; and the shared elements change from prior, distribution, length. | **CLAUDE INVENTION**; the canonical-element list of 03 §7 was the seed. | `graph/core.jsonl`, `graph/pleural-effusion.jsonl` |
+| C7 | External codes on every class, looked up through the molu tool against BioPortal and UMLS; exact versus close as chosen by Claude; malignant pleural effusion left unmapped rather than guessed. | **CLAUDE INVENTION** for the match choices; the codes themselves are looked up, not invented. | graph |
+| C8 | Element-level codes: presence to SNOMED CT 386397008, severity to 246112005, distribution to 246457009, size (qualitative) close to 246115007, length to RadLex RID39123 and SNOMED CT 410667008, fluid attenuation close to RID28662, size (mean diameter) close to RID13432. | **CLAUDE INVENTION** in the choice of match; the RadLex and SNOMED terms are as returned. | graph, specs |
+| C9 | RadLex gaps recorded: striated nephrogram, perinephric fat stranding, chylothorax; and `pleural space` (RID1363) absent from AnatomicLocations.org. | Looked up; **CLAUDE** observation. | [04](./04-anatomy-gaps.md), [08](./08-worked-examples.md) |
+| C10 | The concept lookup table: RadLex RIDs for CT, US, XR, MR, PET, thorax, abdomen, neck, and five subspecialties; provisional `RDE2_0010xx` to `0014xx` codes for the OIFM etiology, sex, age, and time-course lists; one etiology added (`hyperplastic:physiologic`) and one time-course modifier (`slowly growing`) to cover values older specs used. | Table **OWNER**-directed (S11); the ids, aliases, and the two additions are **CLAUDE INVENTION**. | `graph/concepts.jsonl` |
+| C11 | Subspecialty, sex, age, and time-course edges on the two families (chest radiology for effusion; abdominal and genitourinary for pyelonephritis; sex-neutral; all ages; weeks and resolving for both). | **CLAUDE INVENTION**. | graph |
+| C12 | The report-plane samples for both examples. | **CLAUDE INVENTION**, illustrative. | `examples/*.report.jsonl` |
+| C13 | The observations about the Hood taxonomies: untyped rows are always parents; 73 mixed parents in the CT list; no diagnosis under an observation; the content diagnoses as siblings of pleural effusion. | **CLAUDE** measurement of the files as exported 2026-08-15. | [08](./08-worked-examples.md) |
+
+## Superseded material
+
+The constellation diagrams and their renderer (1 to 2 September 2026) are described in [the archive](archive/2026-09-02-constellation-diagrams.md). The eight round-one alternatives and the two round-two attempts that led to the mat and the tree are kept verbatim under [explorations](explorations/2026-09-02-diagram-alternatives/index.md), with [a review](explorations/2026-09-02-diagram-alternatives/review.md) of what each contributed.
+
+[^session]: The session is not committed to the repository. Quotations are copied from it verbatim, including the owner's capitals, double-hyphen dashes, and typing slips; nothing has been tidied.

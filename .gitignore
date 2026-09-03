@@ -6,3 +6,5 @@ cde_element.schema.json
 cde_set_list.schema.json
 raw_sources/
 .preview/
+site/
+__pycache__/

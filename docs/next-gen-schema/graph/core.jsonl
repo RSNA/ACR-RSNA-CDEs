@@ -1,0 +1,64 @@
+{"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"AGE_APPLICABILITY","name":"age applicability","node":"RelationshipType","range":"Concept (AgeProfile)"}
+{"definition":"A standardized scheme applies to the source.","domain":"FindingClass | Diagnosis","id":"ASSESSED_BY","inverse":"ASSESSES","name":"assessed by","node":"RelationshipType","props":["id","note"],"range":"FindingClass (assessment)"}
+{"definition":"The binding edge: the source is characterized by the target element. Carries its own id when something must cite it.","domain":"FindingClass | Diagnosis | AnatomicLocation","id":"HAS_ELEMENT","inverse":"BOUND_BY","name":"has element","node":"RelationshipType","props":["id","note"],"range":"DataElement"}
+{"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"HAS_ETIOLOGY","name":"has etiology","node":"RelationshipType","range":"Concept (Etiology)"}
+{"definition":"The source is an interpretation of the values of the cited binding (03 §9). Domain widened on 2026-09-02 from assessments only to any class that interprets a measurement.","domain":"FindingClass | Diagnosis","id":"INTERPRETED_FROM","inverse":"INTERPRETATION_OF","name":"interpreted from","node":"RelationshipType","range":"HAS_ELEMENT binding"}
+{"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"IN_REGION","name":"in region","node":"RelationshipType","range":"Concept (BodyRegion)"}
+{"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"IN_SUBSPECIALTY","name":"in subspecialty","node":"RelationshipType","range":"Concept (Subspecialty)"}
+{"definition":"An association the author cannot yet type; a triage queue, not a home.","domain":"FindingClass | Diagnosis","id":"MAY_BE_RELATED_TO","name":"may be related to","node":"RelationshipType","props":["id","note"],"range":"FindingClass | Diagnosis","symmetric":true}
+{"definition":"The source can produce the target as a distinct second entity (07 §2).","domain":"FindingClass | Diagnosis","formal":"RadLex May_Cause","id":"MAY_CAUSE","inverse":"MAY_BE_CAUSED_BY","name":"may cause","node":"RelationshipType","props":["id","typicality","expected","note"],"range":"FindingClass | Diagnosis"}
+{"definition":"The target can occur as a described sub-part with its own elements, and is genuinely optional in all cases (07 §1).","domain":"FindingClass","id":"MAY_HAVE_COMPONENT","inverse":"MAY_BE_COMPONENT_OF","name":"may have component","node":"RelationshipType","props":["id","note"],"range":"FindingClass"}
+{"definition":"The diagnosis can show itself as the target; the target is the source appearing on imaging, not a second entity (07 §2).","domain":"Diagnosis","id":"MAY_MANIFEST_AS","inverse":"MAY_REPRESENT","name":"may manifest as","node":"RelationshipType","props":["id","typicality","specificity","note"],"range":"FindingClass | Diagnosis"}
+{"definition":"Identity-preserving evolution: the same entity in a later state (07 §2).","domain":"FindingClass | Diagnosis","id":"MAY_PROGRESS_TO","inverse":"MAY_PROGRESS_FROM","name":"may progress to","node":"RelationshipType","props":["id","note"],"range":"FindingClass | Diagnosis"}
+{"definition":"Seen together; asserts and excludes nothing about causality or sequence.","domain":"FindingClass | Diagnosis","formal":"SNOMED Associated with","id":"OCCURS_WITH","name":"occurs with","node":"RelationshipType","props":["id","note"],"range":"FindingClass | Diagnosis","symmetric":true}
+{"definition":"How the finding compares with the most recent relevant prior study.","id":"RDE2_000002","kind":"categorical","name":"change from prior","node":"DataElement","status":"proposed","version":1}
+{"id":"RDE2_000002.0","name":"new","node":"Value","value":"new"}
+{"id":"RDE2_000002.1","name":"increased","node":"Value","value":"increased"}
+{"id":"RDE2_000002.2","name":"stable","node":"Value","value":"stable"}
+{"id":"RDE2_000002.3","name":"decreased","node":"Value","value":"decreased"}
+{"id":"RDE2_000002.4","name":"resolved","node":"Value","value":"resolved"}
+{"definition":"Qualitative size or amount when a measurement is not made or not meaningful.","id":"RDE2_000013","kind":"categorical","name":"size (qualitative)","node":"DataElement","ordered":true,"status":"proposed","synonyms":[{"term":"amount","type":"synonym"}],"version":1}
+{"id":"RDE2_000013.0","name":"trace","node":"Value","value":"trace"}
+{"id":"RDE2_000013.1","name":"small","node":"Value","value":"small"}
+{"id":"RDE2_000013.2","name":"moderate","node":"Value","value":"moderate"}
+{"id":"RDE2_000013.3","name":"large","node":"Value","value":"large"}
+{"definition":"Spatial distribution of the finding within the scoped structure.","id":"RDE2_000020","kind":"categorical","name":"distribution","node":"DataElement","status":"proposed","version":1}
+{"definition":"One region of the structure.","id":"RDE2_000020.0","name":"focal","node":"Value","value":"focal"}
+{"definition":"More than one separate region.","id":"RDE2_000020.1","name":"multifocal","node":"Value","value":"multifocal"}
+{"definition":"The structure as a whole.","id":"RDE2_000020.2","name":"diffuse","node":"Value","value":"diffuse"}
+{"definition":"Maximal pole-to-pole length of a paired or unpaired organ.","id":"RDE2_000092","kind":"quantitative","method":"Longest dimension on the image or reformat that shows both poles; for the kidney, the coronal plane through the hilum.","name":"length","node":"DataElement","quantity_type":"length","status":"proposed","units":["cm","mm"],"version":1}
+{"id":"RID1362","name":"pleura","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org"}
+{"id":"RID1363","name":"pleural space","node":"AnatomicLocation","owner":"RadLex; absent from AnatomicLocations.org release 1.0.0-rc.1 (04 gap log)"}
+{"id":"RID205","name":"kidney","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org"}
+{"id":"RID29662","name":"right kidney","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org","side":"right","unsided":"RID205"}
+{"id":"RID29663","name":"left kidney","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org","side":"left","unsided":"RID205"}
+{"id":"RID434","name":"perirenal space","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org"}
+{"definition":"Anatomic scope guidance (01 §2).","domain":"FindingClass | Diagnosis | Grouping","id":"SCOPED_TO","inverse":"SCOPE_OF","name":"scoped to","node":"RelationshipType","props":["kind","strength"],"range":"AnatomicLocation"}
+{"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"SEEN_ON","name":"seen on","node":"RelationshipType","range":"Concept (Modality)"}
+{"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"SEX","name":"sex specificity","node":"RelationshipType","range":"Concept (SexSpecificity)"}
+{"definition":"Every instance of the source is an instance of the target. One taxonomy over finding, diagnosis, and grouping nodes, unrestricted by which label the term carries. Test: if 'X without Y' is a meaningful sentence, X is not a subtype of Y. Whether it is transitive is 00 Issue A.","domain":"FindingClass | Diagnosis | Grouping","formal":"rdfs:subClassOf","id":"SUBTYPE_OF","inverse":"HAS_SUBTYPE","name":"subtype of","node":"RelationshipType","range":"FindingClass | Diagnosis | Grouping"}
+{"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"TIME_COURSE","name":"expected time course","node":"RelationshipType","range":"Concept (ExpectedTimeCourse)"}
+{"definition":"Near mapping to an external concept when no exact one exists.","domain":"any owned node","formal":"skos:closeMatch","id":"closeMatch","name":"close match","node":"RelationshipType","props":["display"],"range":"external code SYSTEM:code","symmetric":true}
+{"definition":"Mapping to an external concept, carrying the term as that ontology states it.","domain":"any owned node","formal":"skos:exactMatch","id":"exactMatch","name":"exact match","node":"RelationshipType","props":["display"],"range":"external code SYSTEM:code","symmetric":true}
+{"definition":"The element's value domain contains this value.","domain":"DataElement","formal":"skos:member","id":"member","name":"member","node":"RelationshipType","props":["rank"],"range":"Value"}
+{"edge":"HAS_ELEMENT","from":"RID205","props":{"note":"visualized / not visualized"},"to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RID205","id":"RDE2_000830","props":{"note":"renal length; observed on the sided kidney, bound on the unsided node"},"to":"RDE2_000092"}
+{"edge":"closeMatch","from":"RDE2_000013","props":{"display":"Size"},"to":"SNOMEDCT:246115007"}
+{"edge":"exactMatch","from":"RDE2_000020","props":{"display":"Distribution"},"to":"SNOMEDCT:246457009"}
+{"edge":"exactMatch","from":"RDE2_000092","props":{"display":"length"},"to":"RADLEX:RID39123"}
+{"edge":"exactMatch","from":"RDE2_000092","props":{"display":"Length"},"to":"SNOMEDCT:410667008"}
+{"edge":"exactMatch","from":"RID1363","props":{"display":"Pleural cavity structure"},"to":"SNOMEDCT:91381003"}
+{"edge":"exactMatch","from":"RID205","props":{"display":"Kidney structure"},"to":"SNOMEDCT:64033007"}
+{"edge":"exactMatch","from":"RID29663","props":{"display":"Left kidney structure"},"to":"SNOMEDCT:18639004"}
+{"edge":"member","from":"RDE2_000002","to":"RDE2_000002.0"}
+{"edge":"member","from":"RDE2_000002","to":"RDE2_000002.1"}
+{"edge":"member","from":"RDE2_000002","to":"RDE2_000002.2"}
+{"edge":"member","from":"RDE2_000002","to":"RDE2_000002.3"}
+{"edge":"member","from":"RDE2_000002","to":"RDE2_000002.4"}
+{"edge":"member","from":"RDE2_000013","props":{"rank":1},"to":"RDE2_000013.0"}
+{"edge":"member","from":"RDE2_000013","props":{"rank":2},"to":"RDE2_000013.1"}
+{"edge":"member","from":"RDE2_000013","props":{"rank":3},"to":"RDE2_000013.2"}
+{"edge":"member","from":"RDE2_000013","props":{"rank":4},"to":"RDE2_000013.3"}
+{"edge":"member","from":"RDE2_000020","to":"RDE2_000020.0"}
+{"edge":"member","from":"RDE2_000020","to":"RDE2_000020.1"}
+{"edge":"member","from":"RDE2_000020","to":"RDE2_000020.2"}

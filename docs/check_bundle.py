@@ -34,15 +34,21 @@ except ImportError:
         return d
 
 # ---------------------------------------------------------------- collect files
-md_files = ["index.md"] + sorted(f for d in BUNDLE_DIRS for f in glob.glob(os.path.join(d, "*.md")))
-concepts = [f for f in md_files if os.path.basename(f) != "index.md"]
+RESERVED = {"index.md", "log.md"}          # OKF §3: reserved filenames, not concept documents
+md_files = ["index.md"] + sorted(f for d in BUNDLE_DIRS for f in glob.glob(os.path.join(d, "**", "*.md"), recursive=True))
+concepts = [f for f in md_files if os.path.basename(f) not in RESERVED]
 indexes  = [f for f in md_files if os.path.basename(f) == "index.md"]
+logs     = [f for f in md_files if os.path.basename(f) == "log.md"]
 headings = {}   # file -> set of numbered headings like "2.6.3"
 descs    = {}   # file -> frontmatter description
 
 # ---------------------------------------------------------------- 1. frontmatter
 for f in md_files:
     text = read(f); fm = frontmatter(text); is_index = f in indexes
+    if f in logs:
+        if fm is not None: err(f"{f}: log.md must not carry frontmatter (OKF §9)")
+        if not re.search(r'^## \d{4}-\d{2}-\d{2}', text, re.M): err(f"{f}: log.md needs date headings (## YYYY-MM-DD)")
+        continue
     if is_index:
         if f == "index.md":
             if fm is None: err(f"{f}: bundle-root index should declare okf_version")
@@ -79,7 +85,12 @@ doc_alias = {"00": "docs/next-gen-schema/00-current-understanding.md",
              "02": "docs/next-gen-schema/02-review-questions.md",
              "03": "docs/next-gen-schema/03-draft-structures.md",
              "04": "docs/next-gen-schema/04-anatomy-gaps.md",
-             "05": "docs/next-gen-schema/05-radlex-baseline.md"}
+             "05": "docs/next-gen-schema/05-radlex-baseline.md",
+             "06": "docs/next-gen-schema/06-next-steps.md",
+             "07": "docs/next-gen-schema/07-relationship-family.md",
+             "08": "docs/next-gen-schema/08-worked-examples.md",
+             "09": "docs/next-gen-schema/09-mat-and-tree.md",
+             "10": "docs/next-gen-schema/10-decision-record-2026-09-02.md"}
 for f in md_files:
     text = read(f)
     body = re.sub(r'```.*?```', '', text, flags=re.S)
@@ -92,14 +103,14 @@ for f in md_files:
                    else os.path.normpath(os.path.join(ROOT, os.path.dirname(f), path))
         if not os.path.exists(resolved): err(f"{f}: broken link -> {tgt}")
     # cross-doc section refs like [00 §2.6.3] or [01 §3.1, §4]
-    for m in re.finditer(r'\[(0[0-5])[ ,]+§([\d.]+)', body):
+    for m in re.finditer(r'\[(0[0-9]|10)[ ,]+§([\d.]+)', body):
         target = doc_alias[m.group(1)]
         if m.group(2).rstrip(".") not in headings.get(target, set()):
             err(f"{f}: section ref [{m.group(1)} §{m.group(2)}] has no heading in {os.path.basename(target)}")
     # intra-doc refs: §N.N not on a line that is a cross-doc ref
     if f in doc_alias.values():
         for line in body.split("\n"):
-            if re.search(r'\[0[0-5][ ,]+§', line): continue
+            if re.search(r'\[[^\]]*§', line): continue   # any bracketed ref ([00 §2], [exchange §1.2]) is not an intra-doc ref
             for r in re.findall(r'§(\d+\.\d+(?:\.\d+)?)', line):
                 if r not in headings[f]: err(f"{f}: intra-doc ref §{r} has no such heading")
 
@@ -127,15 +138,26 @@ for d in BUNDLE_DIRS:
         err(f"index.md: bundle directory {d}/ is not listed")
 
 # ---------------------------------------------------------------- 5. diagrams in sync with specs
-tool = os.path.join(ROOT, "docs/next-gen-schema/tools/render_neighborhood.py")
-spec_map = {"examples/pulmonary-nodule.neighborhood.json": "diagrams/fc-neighborhood.svg",
-            "examples/thyroid-nodule.neighborhood.json": "diagrams/thyroid-neighborhood.svg",
-            "examples/presence.element.json": "diagrams/de-presence.svg",
-            "examples/severity.element.json": "diagrams/de-severity.svg",
-            "examples/size-mean-diameter.element.json": "diagrams/de-size-mean-diameter.svg",
-            "examples/common-bile-duct.location.json": "diagrams/al-common-bile-duct.svg"}
+tool_n = os.path.join(ROOT, "docs/next-gen-schema/tools/render_neighborhood.py")
+tool_c = os.path.join(ROOT, "docs/next-gen-schema/tools/render_cards.py")
+spec_map = {"examples/pulmonary-nodule.neighborhood.json": (tool_n, "diagrams/fc-neighborhood.svg"),
+            "examples/thyroid-nodule.neighborhood.json": (tool_n, "diagrams/thyroid-neighborhood.svg"),
+            "examples/presence.element.json": (tool_n, "diagrams/de-presence.svg"),
+            "examples/severity.element.json": (tool_n, "diagrams/de-severity.svg"),
+            "examples/size-mean-diameter.element.json": (tool_n, "diagrams/de-size-mean-diameter.svg"),
+            "examples/common-bile-duct.location.json": (tool_n, "diagrams/al-common-bile-duct.svg"),
+            "examples/pleural-effusion.mat.json": (tool_c, "diagrams/mat-pleural-effusion.svg"),
+            "examples/acute-pyelonephritis.mat.json": (tool_c, "diagrams/mat-acute-pyelonephritis.svg"),
+            "examples/pleural-abnormality.tree.json": (tool_c, "diagrams/tree-pleural-abnormality.svg"),
+            "examples/renal-abnormality.tree.json": (tool_c, "diagrams/tree-renal-abnormality.svg")}
 base = os.path.join(ROOT, "docs/next-gen-schema")
-for spec, svg in spec_map.items():
+# the canonical graph: valid, and every file byte-exact in canonical order
+gcheck = subprocess.run([sys.executable, os.path.join(base, "tools/graph.py"), "check"], capture_output=True)
+if gcheck.returncode:
+    for line in gcheck.stdout.decode("utf-8", errors="replace").splitlines():
+        if line.startswith(("ERROR", "NOT CANONICAL")): err(f"graph: {line}")
+    if not gcheck.stdout.strip(): err(f"graph check failed: {gcheck.stderr.decode('utf-8', errors='replace')[:200]}")
+for spec, (tool, svg) in spec_map.items():
     sp, sv = os.path.join(base, spec), os.path.join(base, svg)
     if not os.path.exists(sp): err(f"missing spec {spec}"); continue
     if not os.path.exists(sv): err(f"missing diagram {svg}"); continue

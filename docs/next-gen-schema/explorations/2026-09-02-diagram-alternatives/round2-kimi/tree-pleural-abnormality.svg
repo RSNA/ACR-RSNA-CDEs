@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 438" font-family="system-ui, sans-serif" role="img" aria-label="Pleural abnormality — is-a family tree">
+<defs><marker id="arr0" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="13" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L12,5 L0,10 z" fill="#dc2626"/></marker><marker id="arr1" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="13" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L12,5 L0,10 z" fill="#7c3aed"/></marker><marker id="arr2" viewBox="0 0 12 10" refX="11" refY="5" markerWidth="13" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L12,5 L0,10 z" fill="#0891b2"/></marker></defs>
+<rect width="1240" height="438" fill="#ffffff"/>
+<path d="M830.0,132 V188 H536.0 V202" fill="none" stroke="#cbd5e1" stroke-width="1.4"/>
+<path d="M536.0,250 V306 H116.0 V320" fill="none" stroke="#cbd5e1" stroke-width="1.4"/>
+<path d="M536.0,250 V306 H284.0 V320" fill="none" stroke="#cbd5e1" stroke-width="1.4"/>
+<path d="M536.0,250 V306 H452.0 V320" fill="none" stroke="#cbd5e1" stroke-width="1.4"/>
+<path d="M536.0,250 V306 H620.0 V320" fill="none" stroke="#cbd5e1" stroke-width="1.4"/>
+<path d="M536.0,250 V306 H788.0 V320" fill="none" stroke="#cbd5e1" stroke-width="1.4"/>
+<path d="M536.0,250 V306 H956.0 V320" fill="none" stroke="#cbd5e1" stroke-width="1.4"/>
+<path d="M830.0,132 V188 H1124.0 V202" fill="none" stroke="#cbd5e1" stroke-width="1.4"/>
+<path d="M1124.0,250 V306 H1124.0 V320" fill="none" stroke="#cbd5e1" stroke-width="1.4"/>
+<path d="M192,332 H196 V257 H1064.0 V250" fill="none" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#arr1)"/>
+<path d="M560,368 V375 H1064 V368" fill="none" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#arr1)"/>
+<path d="M896,368 V384 H56 V368" fill="none" stroke="#0891b2" stroke-width="1.6" marker-end="url(#arr2)"/>
+<path d="M612.0,214 H616.0 V139 H1064.0 V202" fill="none" stroke="#64748b" stroke-width="1.6" stroke-dasharray="5 4"/>
+<g data-node="RDE2_000516"><rect x="754.0" y="84" width="152" height="48" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.4" stroke-dasharray="5 3"/><text x="830.0" y="100" font-size="9.5" fill="#334155" text-anchor="middle" font-weight="600">pleural abnormality</text><text x="830.0" y="126" font-size="6.8" fill="#64748b" text-anchor="middle">GROUPING · RDE2_000516</text></g>
+<g data-node="RDE2_000502"><rect x="460.0" y="202" width="152" height="48" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.4"/><text x="536.0" y="218" font-size="9.5" fill="#1e3a8a" text-anchor="middle" font-weight="600">pleural effusion</text><text x="536.0" y="244" font-size="6.8" fill="#64748b" text-anchor="middle">FINDING · RDE2_000502</text></g>
+<g data-node="RDE2_000510"><path d="M49,320 H183 L192,329 V359 L183,368 H49 L40,359 V329 Z" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.4"/><text x="116.0" y="336" font-size="9.5" fill="#4c1d95" text-anchor="middle" font-weight="600">empyema</text><text x="116.0" y="362" font-size="6.8" fill="#64748b" text-anchor="middle">DIAGNOSIS · RDE2_000510</text></g>
+<g data-node="RDE2_000511"><path d="M217,320 H351 L360,329 V359 L351,368 H217 L208,359 V329 Z" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.4"/><text x="284.0" y="336" font-size="9.5" fill="#4c1d95" text-anchor="middle" font-weight="600">hemothorax</text><text x="284.0" y="362" font-size="6.8" fill="#64748b" text-anchor="middle">DIAGNOSIS · RDE2_000511</text></g>
+<g data-node="RDE2_000512"><path d="M385,320 H519 L528,329 V359 L519,368 H385 L376,359 V329 Z" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.4"/><text x="452.0" y="336" font-size="9.5" fill="#4c1d95" text-anchor="middle" font-weight="600">chylothorax</text><text x="452.0" y="362" font-size="6.8" fill="#64748b" text-anchor="middle">DIAGNOSIS · RDE2_000512</text></g>
+<g data-node="RDE2_000513"><path d="M553,320 H687 L696,329 V359 L687,368 H553 L544,359 V329 Z" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.4"/><text x="620.0" y="336" font-size="9.5" fill="#4c1d95" text-anchor="middle" font-weight="600">malignant pleural</text><text x="620.0" y="347" font-size="9.5" fill="#4c1d95" text-anchor="middle" font-weight="600">effusion</text><text x="620.0" y="362" font-size="6.8" fill="#64748b" text-anchor="middle">DIAGNOSIS · RDE2_000513</text></g>
+<g data-node="RDE2_000514"><path d="M721,320 H855 L864,329 V359 L855,368 H721 L712,359 V329 Z" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.4"/><text x="788.0" y="336" font-size="9.5" fill="#4c1d95" text-anchor="middle" font-weight="600">hepatic hydrothorax</text><text x="788.0" y="362" font-size="6.8" fill="#64748b" text-anchor="middle">DIAGNOSIS · RDE2_000514</text></g>
+<g data-node="RDE2_000515"><path d="M889,320 H1023 L1032,329 V359 L1023,368 H889 L880,359 V329 Z" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.4"/><text x="956.0" y="336" font-size="9.5" fill="#4c1d95" text-anchor="middle" font-weight="600">parapneumonic effusion</text><text x="956.0" y="362" font-size="6.8" fill="#64748b" text-anchor="middle">DIAGNOSIS · RDE2_000515</text></g>
+<g data-node="RDE2_000532"><rect x="1048.0" y="202" width="152" height="48" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.4"/><text x="1124.0" y="218" font-size="9.5" fill="#1e3a8a" text-anchor="middle" font-weight="600">pleural thickening</text><text x="1124.0" y="244" font-size="6.8" fill="#64748b" text-anchor="middle">FINDING · RDE2_000532</text></g>
+<g data-node="RDE2_000534"><rect x="1048" y="320" width="152" height="48" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.4"/><text x="1124.0" y="336" font-size="9.5" fill="#1e3a8a" text-anchor="middle" font-weight="600">nodular pleural</text><text x="1124.0" y="347" font-size="9.5" fill="#1e3a8a" text-anchor="middle" font-weight="600">thickening</text><text x="1124.0" y="362" font-size="6.8" fill="#64748b" text-anchor="middle">FINDING · RDE2_000534</text></g>
+<rect x="932.45" y="241" width="129.55" height="14" rx="3" fill="#ffffff" fill-opacity="0.93"/><text x="1058.0" y="252" font-size="8.5" fill="#7c3aed" text-anchor="end" font-weight="600">very frequent · suggestive</text>
+<rect x="852.975" y="378" width="209.025" height="14" rx="3" fill="#ffffff" fill-opacity="0.93"/><text x="1058" y="389" font-size="8.5" fill="#7c3aed" text-anchor="end" font-weight="600">manifests as · frequent · highly suggestive</text>
+<rect x="58" y="387" width="68.775" height="14" rx="3" fill="#ffffff" fill-opacity="0.93"/><text x="62" y="398" font-size="8.5" fill="#0891b2" text-anchor="start" font-weight="600">progresses to</text>
+<rect x="1002.575" y="123" width="59.425000000000004" height="14" rx="3" fill="#ffffff" fill-opacity="0.93"/><text x="1058.0" y="134" font-size="8.5" fill="#64748b" text-anchor="end" font-weight="600">occurs with</text>
+<text x="40" y="50" font-size="15" fill="#1f2937" text-anchor="start" font-weight="700">Pleural abnormality</text>
+<path d="M40,72 h26" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#arr1)"/>
+<text x="72" y="75" font-size="8.5" fill="#1f2937" text-anchor="start">manifests as</text>
+<path d="M146.1,72 h26" stroke="#dc2626" stroke-width="1.6" marker-end="url(#arr0)"/>
+<text x="178.1" y="75" font-size="8.5" fill="#1f2937" text-anchor="start">may cause</text>
+<path d="M238.175,72 h26" stroke="#0891b2" stroke-width="1.6" marker-end="url(#arr2)"/>
+<text x="270.175" y="75" font-size="8.5" fill="#1f2937" text-anchor="start">progresses to</text>
+<path d="M348.95000000000005,72 h26" stroke="#64748b" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="380.95000000000005" y="75" font-size="8.5" fill="#1f2937" text-anchor="start">occurs with</text>
+<path d="M450.37500000000006,72 h26" stroke="#cbd5e1" stroke-width="1.4"/>
+<text x="482.37500000000006" y="75" font-size="8.5" fill="#1f2937" text-anchor="start">is a (subtype of)</text>
+</svg>

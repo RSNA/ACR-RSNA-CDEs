@@ -9,7 +9,6 @@
       "ref": "RDE2_000001",
       "name": "presence",
       "kind": "categorical",
-      "required": true,
       "values": [
         "present",
         "possible",

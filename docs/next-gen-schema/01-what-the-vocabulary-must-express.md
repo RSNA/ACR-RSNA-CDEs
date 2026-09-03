@@ -206,7 +206,7 @@ The [SIIM minutes](../../notes/siim-meeting-extract.md) treat this as optional �
 | Value | Meaning | A class of this type must carry |
 |---|---|---|
 | `finding` | what you SEE — requires further characterization to reach a diagnosis | value sets for its DataElements |
-| `diagnosis` | what you CONCLUDE — a nameable pathologic entity | confidence; the criteria applied |
+| `diagnosis` | what you CONCLUDE — a nameable pathologic entity | ~~confidence; the criteria applied~~ — struck 2026-09-02: confidence belongs to the report-plane assertion, for findings just as much as diagnoses ([10 S4](./10-decision-record-2026-09-02.md)); Diagnosis is now its own node type rather than an `entity_type` value ([exchange §1](../../notes/review-exchange-2026-08-25-extract.md)) |
 | `measurement` | a quantified index not belonging to one structure (cardiothoracic ratio) — single-structure measurements are location bindings (§3.1) | quantity type, permitted units, method (§4.3) |
 | `assessment` | a standardized score or category applied to findings | the scale, and what it is computed from |
 | `normal_variant` | present and unusual, typically not pathological | — |
@@ -218,7 +218,7 @@ The finding/diagnosis definitions are OIFM's, unchanged: a finding is what you s
 **Dropped from the OIFM enum:**
 
 - `recommendation` — a suggested follow-up is not a finding. It has no subject in the patient, and under the IHE grammar it is a different element of the report, not an Observation pointing at a FindingClass.
-- `grouping` — "a collection of related findings described together" is a structural role, not a kind of finding. `upper abdominal abnormality` is a `finding` that happens to sit above others in the is-a hierarchy; whether a class is a grouping falls out of its relationships. Making it also an `entity_type` value would state the same fact twice. (The inference question it raises is [00, Issue A](./00-current-understanding.md).)
+- `grouping` — (superseded 2026-09-02: a narrow `Grouping` **node type** returns for the negative-only nodes such as `renal abnormality`, which cannot be a FindingClass or a Diagnosis once those are separate types and the node parents both; [10 S8](./10-decision-record-2026-09-02.md). The argument below still holds for positively reportable classes.) "a collection of related findings described together" is a structural role, not a kind of finding. `upper abdominal abnormality` is a `finding` that happens to sit above others in the is-a hierarchy; whether a class is a grouping falls out of its relationships. Making it also an `entity_type` value would state the same fact twice. (The inference question it raises is [00, Issue A](./00-current-understanding.md).)
 
 **Third column is the point.** The values differ in what they structurally require, which is what [02 Q1](./02-review-questions.md) was asking after: for `measurement`, `diagnosis`, and `assessment` the answer to "does entity_type have structural consequences" is yes; for the rest it is a classification label. To be tested against the published sets in the smoke test.
 

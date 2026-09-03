@@ -92,29 +92,31 @@
   "bound_by": [
     {
       "name": "pulmonary nodule",
-      "id": "RDE2_000123",
-      "required": true
+      "id": "RDE2_000123"
     },
     {
       "name": "thyroid nodule",
-      "id": "RDE2_000124",
-      "required": true
+      "id": "RDE2_000124"
     },
     {
       "name": "pleural effusion",
-      "id": "RDE2_000502",
-      "required": true
+      "id": "RDE2_000502"
     },
     {
       "name": "upper abdominal abnormality",
-      "id": "RDE2_000610",
-      "required": true
+      "id": "RDE2_000610"
     },
     {
       "name": "pacemaker",
-      "id": "RDE2_000777",
-      "required": false
+      "id": "RDE2_000777"
     }
   ],
-  "mappings": []
+  "mappings": [
+    {
+      "system": "SNOMEDCT",
+      "code": "386397008",
+      "display": "Presence",
+      "match": "exactMatch"
+    }
+  ]
 }

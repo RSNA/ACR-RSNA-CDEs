@@ -1,0 +1,121 @@
+{"definition":"Fluid within the pleural space beyond the physiologic few millilitres. The class carries what can be seen; its causes are the incoming MAY_CAUSE edges and its named kinds are its diagnosis subtypes.","entity_type":"finding","id":"RDE2_000502","name":"pleural effusion","node":"FindingClass","status":"proposed","status_date":"2026-09-02","synonyms":[{"term":"pleural fluid","type":"synonym"},{"term":"hydrothorax","type":"synonym"}],"version":1}
+{"definition":"Mean CT attenuation of the pleural fluid. Simple versus complex is an interpretation of this value together with internal complexity, not a value of its own.","id":"RDE2_000504","kind":"quantitative","max":100,"method":"Mean attenuation in a region of interest in the dependent, non-loculated portion of the fluid, avoiding the wall and any enhancing pleura.","min":-20,"name":"fluid attenuation","node":"DataElement","quantity_type":"attenuation","status":"proposed","units":["[hnsf'U]"],"version":1}
+{"definition":"Features within the fluid beyond simple homogeneous attenuation. Multi-select: several may be present.","id":"RDE2_000505","kind":"categorical","multi_select":true,"name":"internal complexity","node":"DataElement","status":"proposed","version":1}
+{"definition":"Linear strands crossing the fluid.","id":"RDE2_000505.0","name":"septations","node":"Value","value":"septations"}
+{"definition":"Fluid fixed in a non-dependent or lenticular configuration.","id":"RDE2_000505.1","name":"loculation","node":"Value","value":"loculation"}
+{"definition":"Gas within the fluid without prior instrumentation.","id":"RDE2_000505.2","name":"gas","node":"Value","value":"gas"}
+{"definition":"Layering higher-attenuation material.","id":"RDE2_000505.3","name":"dependent debris","node":"Value","value":"dependent-debris"}
+{"definition":"Two fluid layers of different attenuation.","id":"RDE2_000505.4","name":"fluid-fluid level","node":"Value","value":"fluid-fluid-level"}
+{"definition":"Infected pleural fluid: pus in the pleural space. A subtype of pleural effusion because 'empyema without effusion' is not a meaningful sentence.","id":"RDE2_000510","name":"empyema","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","synonyms":[{"term":"pleural empyema","type":"synonym"}],"version":1}
+{"definition":"Blood in the pleural space.","id":"RDE2_000511","name":"hemothorax","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Chyle in the pleural space from disruption or obstruction of the thoracic duct.","id":"RDE2_000512","name":"chylothorax","node":"Diagnosis","note":"No RadLex concept found. Candidate for upstream proposal.","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Pleural effusion from pleural involvement by malignancy.","id":"RDE2_000513","name":"malignant pleural effusion","node":"Diagnosis","note":"No exact SNOMED CT concept returned by search; UMLS C0080032 exists. Left unmapped rather than guessed.","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Pleural effusion from transdiaphragmatic passage of ascites in cirrhosis, usually right-sided.","id":"RDE2_000514","name":"hepatic hydrothorax","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Pleural effusion accompanying pneumonia, before it becomes an empyema.","id":"RDE2_000515","name":"parapneumonic effusion","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Any abnormality of the pleura or pleural space. Negative-only node.","id":"RDE2_000516","name":"pleural abnormality","node":"Grouping","status":"proposed","version":1}
+{"definition":"Inability of the heart to maintain adequate output, with venous congestion.","id":"RDE2_000520","name":"heart failure","node":"Diagnosis","note":"Non-imaging diagnosis carried as a node so that causal edges have a target; no elements of its own.","status":"proposed","version":1}
+{"definition":"End-stage hepatic fibrosis with nodular regeneration.","id":"RDE2_000521","name":"cirrhosis","node":"Diagnosis","note":"Non-imaging diagnosis carried as a node so that causal edges have a target; no elements of its own.","status":"proposed","version":1}
+{"definition":"Infection of the lung parenchyma.","id":"RDE2_000522","name":"pneumonia","node":"Diagnosis","note":"Non-imaging diagnosis carried as a node so that causal edges have a target; no elements of its own.","status":"proposed","version":1}
+{"definition":"Inflammation of the pancreas.","id":"RDE2_000523","name":"pancreatitis","node":"Diagnosis","note":"Non-imaging diagnosis carried as a node so that causal edges have a target; no elements of its own.","status":"proposed","version":1}
+{"definition":"Any malignant neoplasm, primary or metastatic.","id":"RDE2_000524","name":"malignant neoplastic disease","node":"Diagnosis","note":"Non-imaging diagnosis carried as a node so that causal edges have a target; no elements of its own.","status":"proposed","version":1}
+{"definition":"Thromboembolic occlusion of pulmonary arteries.","id":"RDE2_000525","name":"pulmonary embolism","node":"Diagnosis","note":"Non-imaging diagnosis carried as a node so that causal edges have a target; no elements of its own.","status":"proposed","version":1}
+{"definition":"Heavy proteinuria with hypoalbuminemia and edema.","id":"RDE2_000526","name":"nephrotic syndrome","node":"Diagnosis","note":"Non-imaging diagnosis carried as a node so that causal edges have a target; no elements of its own.","status":"proposed","version":1}
+{"definition":"Volume loss of lung adjacent to a space-occupying pleural process.","entity_type":"finding","id":"RDE2_000530","name":"compressive atelectasis","node":"FindingClass","status":"proposed","version":1}
+{"definition":"Displacement of the mediastinum from the midline.","entity_type":"finding","id":"RDE2_000531","name":"mediastinal shift","node":"FindingClass","status":"proposed","version":1}
+{"definition":"Thickening of the pleura beyond a fine line.","entity_type":"finding","id":"RDE2_000532","name":"pleural thickening","node":"FindingClass","status":"proposed","version":1}
+{"definition":"Enhancing, thickened visceral and parietal pleura separated by fluid.","entity_type":"finding","id":"RDE2_000533","name":"split pleura sign","node":"FindingClass","status":"proposed","version":1}
+{"definition":"Pleural thickening with a nodular contour.","entity_type":"finding","id":"RDE2_000534","name":"nodular pleural thickening","node":"FindingClass","status":"proposed","version":1}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000502","to":"RDE2_001200"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000502","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000502","to":"RDE2_000002"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000502","props":{"note":"amount"},"to":"RDE2_000013"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000502","to":"RDE2_000504"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000502","to":"RDE2_000505"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000510","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000511","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000512","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000513","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000514","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000515","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000530","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000530","to":"RDE2_000077"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000531","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000532","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000532","to":"RDE2_000020"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000533","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000534","to":"RDE2_000001"}
+{"edge":"HAS_ETIOLOGY","from":"RDE2_000502","props":{"note":"at class level, 'idiopathic' is an etiology; at report level it is the absence of any expressed cause edge"},"to":"RDE2_001024"}
+{"edge":"HAS_ETIOLOGY","from":"RDE2_000510","to":"RDE2_001002"}
+{"edge":"HAS_ETIOLOGY","from":"RDE2_000511","to":"RDE2_001007"}
+{"edge":"HAS_ETIOLOGY","from":"RDE2_000511","to":"RDE2_001010"}
+{"edge":"HAS_ETIOLOGY","from":"RDE2_000513","to":"RDE2_001004"}
+{"edge":"HAS_ETIOLOGY","from":"RDE2_000515","to":"RDE2_001002"}
+{"edge":"IN_REGION","from":"RDE2_000502","to":"RID1243"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000502","to":"RID50611"}
+{"edge":"MAY_CAUSE","from":"RDE2_000502","id":"RDE2_000917","props":{"typicality":"frequent"},"to":"RDE2_000530"}
+{"edge":"MAY_CAUSE","from":"RDE2_000502","id":"RDE2_000918","props":{"note":"large effusions","typicality":"occasional"},"to":"RDE2_000531"}
+{"edge":"MAY_CAUSE","from":"RDE2_000520","id":"RDE2_000911","props":{"expected":{"fluid attenuation":"simple","location":"bilateral, right greater than left"},"typicality":"frequent"},"to":"RDE2_000502"}
+{"edge":"MAY_CAUSE","from":"RDE2_000521","id":"RDE2_000912","props":{"expected":{"location":"right pleural space in most cases"},"typicality":"occasional"},"to":"RDE2_000514"}
+{"edge":"MAY_CAUSE","from":"RDE2_000522","id":"RDE2_000900","props":{"expected":{"amount":"small to moderate","location":"ipsilateral to the pneumonia"},"note":"the parapneumonic effusion subtype names this cause","typicality":"frequent"},"to":"RDE2_000502"}
+{"edge":"MAY_CAUSE","from":"RDE2_000523","id":"RDE2_000913","props":{"expected":{"location":"left"},"typicality":"occasional"},"to":"RDE2_000502"}
+{"edge":"MAY_CAUSE","from":"RDE2_000524","id":"RDE2_000914","props":{"expected":{"amount":"large; recurs after drainage"},"typicality":"occasional"},"to":"RDE2_000513"}
+{"edge":"MAY_CAUSE","from":"RDE2_000525","id":"RDE2_000915","props":{"expected":{"amount":"small","location":"ipsilateral"},"typicality":"frequent"},"to":"RDE2_000502"}
+{"edge":"MAY_CAUSE","from":"RDE2_000526","id":"RDE2_000916","props":{"expected":{"location":"bilateral"},"typicality":"frequent"},"to":"RDE2_000502"}
+{"edge":"MAY_MANIFEST_AS","from":"RDE2_000510","id":"RDE2_000921","props":{"specificity":"suggestive","typicality":"very_frequent"},"to":"RDE2_000532"}
+{"edge":"MAY_MANIFEST_AS","from":"RDE2_000510","id":"RDE2_000920","props":{"specificity":"highly_suggestive","typicality":"frequent"},"to":"RDE2_000533"}
+{"edge":"MAY_MANIFEST_AS","from":"RDE2_000513","id":"RDE2_000922","props":{"specificity":"highly_suggestive","typicality":"frequent"},"to":"RDE2_000534"}
+{"edge":"MAY_PROGRESS_TO","from":"RDE2_000515","id":"RDE2_000923","to":"RDE2_000510"}
+{"edge":"OCCURS_WITH","from":"RDE2_000502","id":"RDE2_000919","to":"RDE2_000532"}
+{"edge":"SCOPED_TO","from":"RDE2_000502","props":{"kind":"structure","strength":"required"},"to":"RID1363"}
+{"edge":"SCOPED_TO","from":"RDE2_000516","props":{"kind":"structure","strength":"required"},"to":"RID1362"}
+{"edge":"SCOPED_TO","from":"RDE2_000532","props":{"kind":"structure","strength":"required"},"to":"RID1362"}
+{"edge":"SCOPED_TO","from":"RDE2_000533","props":{"kind":"structure","strength":"required"},"to":"RID1362"}
+{"edge":"SCOPED_TO","from":"RDE2_000534","props":{"kind":"structure","strength":"required"},"to":"RID1362"}
+{"edge":"SEEN_ON","from":"RDE2_000502","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000502","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000502","to":"RID10345"}
+{"edge":"SEX","from":"RDE2_000502","to":"RDE2_001101"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000502","to":"RDE2_000516"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000510","to":"RDE2_000502"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000511","to":"RDE2_000502"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000512","to":"RDE2_000502"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000513","to":"RDE2_000502"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000514","to":"RDE2_000502"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000515","to":"RDE2_000502"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000532","to":"RDE2_000516"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000534","to":"RDE2_000532"}
+{"edge":"TIME_COURSE","from":"RDE2_000502","to":"RDE2_001303"}
+{"edge":"TIME_COURSE","from":"RDE2_000502","to":"RDE2_001404"}
+{"edge":"closeMatch","from":"RDE2_000504","props":{"display":"attenuation"},"to":"RADLEX:RID28662"}
+{"edge":"closeMatch","from":"RDE2_000510","props":{"display":"empyema"},"to":"RADLEX:RID3714"}
+{"edge":"closeMatch","from":"RDE2_000514","props":{"display":"Hydrothorax"},"to":"SNOMEDCT:79231000"}
+{"edge":"closeMatch","from":"RDE2_000530","props":{"display":"atelectasis"},"to":"RADLEX:RID28493"}
+{"edge":"closeMatch","from":"RDE2_000530","props":{"display":"Atelectasis"},"to":"SNOMEDCT:46621007"}
+{"edge":"exactMatch","from":"RDE2_000502","props":{"display":"pleural effusion"},"to":"RADLEX:RID34539"}
+{"edge":"exactMatch","from":"RDE2_000502","props":{"display":"Pleural effusion"},"to":"SNOMEDCT:60046008"}
+{"edge":"exactMatch","from":"RDE2_000510","props":{"display":"Empyema of pleura"},"to":"SNOMEDCT:58554001"}
+{"edge":"exactMatch","from":"RDE2_000511","props":{"display":"hemothorax"},"to":"RADLEX:RID34595"}
+{"edge":"exactMatch","from":"RDE2_000511","props":{"display":"Hemothorax"},"to":"SNOMEDCT:31892009"}
+{"edge":"exactMatch","from":"RDE2_000512","props":{"display":"Chylothorax"},"to":"SNOMEDCT:83035003"}
+{"edge":"exactMatch","from":"RDE2_000515","props":{"display":"Pleural effusion associated with pulmonary infection"},"to":"SNOMEDCT:81075000"}
+{"edge":"exactMatch","from":"RDE2_000520","props":{"display":"heart failure"},"to":"RADLEX:RID34795"}
+{"edge":"exactMatch","from":"RDE2_000520","props":{"display":"Heart failure"},"to":"SNOMEDCT:84114007"}
+{"edge":"exactMatch","from":"RDE2_000521","props":{"display":"cirrhosis"},"to":"RADLEX:RID3822"}
+{"edge":"exactMatch","from":"RDE2_000521","props":{"display":"Cirrhosis of liver"},"to":"SNOMEDCT:19943007"}
+{"edge":"exactMatch","from":"RDE2_000522","props":{"display":"pneumonia"},"to":"RADLEX:RID5350"}
+{"edge":"exactMatch","from":"RDE2_000522","props":{"display":"Pneumonia"},"to":"SNOMEDCT:233604007"}
+{"edge":"exactMatch","from":"RDE2_000523","props":{"display":"pancreatitis"},"to":"RADLEX:RID3529"}
+{"edge":"exactMatch","from":"RDE2_000523","props":{"display":"Pancreatitis"},"to":"SNOMEDCT:75694006"}
+{"edge":"exactMatch","from":"RDE2_000524","props":{"display":"malignant neoplastic disease"},"to":"RADLEX:RID34616"}
+{"edge":"exactMatch","from":"RDE2_000524","props":{"display":"Malignant neoplastic disease"},"to":"SNOMEDCT:363346000"}
+{"edge":"exactMatch","from":"RDE2_000525","props":{"display":"pulmonary embolism"},"to":"RADLEX:RID4834"}
+{"edge":"exactMatch","from":"RDE2_000525","props":{"display":"Pulmonary embolism"},"to":"SNOMEDCT:59282003"}
+{"edge":"exactMatch","from":"RDE2_000526","props":{"display":"Nephrotic syndrome"},"to":"SNOMEDCT:52254009"}
+{"edge":"exactMatch","from":"RDE2_000531","props":{"display":"Mediastinal shift"},"to":"SNOMEDCT:19616004"}
+{"edge":"exactMatch","from":"RDE2_000532","props":{"display":"Thickening of pleura"},"to":"SNOMEDCT:73725006"}
+{"edge":"exactMatch","from":"RDE2_000533","props":{"display":"split pleura sign"},"to":"RADLEX:RID35570"}
+{"edge":"member","from":"RDE2_000505","to":"RDE2_000505.0"}
+{"edge":"member","from":"RDE2_000505","to":"RDE2_000505.1"}
+{"edge":"member","from":"RDE2_000505","to":"RDE2_000505.2"}
+{"edge":"member","from":"RDE2_000505","to":"RDE2_000505.3"}
+{"edge":"member","from":"RDE2_000505","to":"RDE2_000505.4"}

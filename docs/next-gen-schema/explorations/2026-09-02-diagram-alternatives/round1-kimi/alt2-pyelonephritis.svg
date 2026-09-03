@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 767.0" font-family="system-ui, sans-serif" role="img" aria-label="Acute pyelonephritis as an indented outline with numbered margin notes for the typed relationships">
+<rect width="1240" height="767.0" fill="#ffffff"/>
+<text x="24" y="32" font-size="16" fill="#1f2937" text-anchor="start" font-weight="700">Acute pyelonephritis — annotated outline: taxonomy as a document, relationships as margin notes</text>
+<text x="24" y="52" font-size="9" fill="#64748b" text-anchor="start">Indentation is subsumption; numbered margin notes are the typed relationships. ◂ n markers on a row are the relationships that point at it.</text>
+<text x="868" y="66" font-size="9" fill="#64748b" text-anchor="start" font-weight="700" letter-spacing="1.2">RELATIONSHIP NOTES</text>
+<path d="M852,193.0 H868" stroke="#dc2626" stroke-width="1" opacity="0.55"/>
+<path d="M852,193.0 H860 V267.0 H868" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.55"/>
+<path d="M852,193.0 H860 V329.0 H868" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.55"/>
+<path d="M852,193.0 H860 V391.0 H868" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.55"/>
+<path d="M852,193.0 H860 V453.0 H868" fill="none" stroke="#0891b2" stroke-width="1" opacity="0.55"/>
+<path d="M852,193.0 H860 V515.0 H868" fill="none" stroke="#64748b" stroke-width="1" opacity="0.55"/>
+<path d="M852,227.0 H860 V603.0 H868" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.55"/>
+<path d="M852,261.0 H860 V665.0 H868" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.55"/>
+<text x="24" y="88" font-size="9" fill="#64748b" text-anchor="start" font-weight="700" letter-spacing="1.2">THE TAXONOMY — ONE SUBTYPE TREE OVER FINDINGS, DIAGNOSES, AND THE GROUPING NODE</text>
+<line x1="24" y1="94" x2="852" y2="94" stroke="#cbd5e1"/>
+<line x1="24" y1="142" x2="852" y2="142" stroke="#eef2f7"/>
+<text x="24" y="128.0" font-size="8.5" fill="#64748b" text-anchor="start">1</text>
+<rect x="60" y="117.0" width="50.0" height="15" rx="7.5" fill="#64748b"/><text x="85.0" y="128.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">GROUPING</text>
+<text x="118.0" y="129.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">renal abnormality</text>
+<rect x="254.39999999999998" y="117.0" width="72.24000000000001" height="15" rx="7.5" fill="#f1f5f9" stroke="#cbd5e1"/><text x="290.52" y="127.5" font-size="8" fill="#334155" text-anchor="middle" font-style="italic">negative-only</text>
+<rect x="334.64" y="117.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="370.76" y="127.5" font-size="8" fill="#78350f" text-anchor="middle">scope: kidney</text>
+<line x1="24" y1="176" x2="852" y2="176" stroke="#eef2f7"/>
+<text x="24" y="162.0" font-size="8.5" fill="#64748b" text-anchor="start">2</text>
+<path d="M64,125.0 V159.0 H86" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="86" y="151.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="113.25" y="162.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="148.5" y="163.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">pyelonephritis</text>
+<rect x="263.3" y="151.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="299.42" y="161.5" font-size="8" fill="#78350f" text-anchor="middle">scope: kidney</text>
+<text x="343.54" y="162.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="210" x2="852" y2="210" stroke="#eef2f7"/>
+<text x="24" y="196.0" font-size="8.5" fill="#64748b" text-anchor="start">3</text>
+<path d="M90,159.0 V193.0 H112" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="112" y="185.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="139.25" y="196.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="174.5" y="197.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">acute pyelonephritis</text>
+<text x="332.5" y="196.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="244" x2="852" y2="244" stroke="#eef2f7"/>
+<text x="24" y="230.0" font-size="8.5" fill="#64748b" text-anchor="start">4</text>
+<path d="M116,193.0 V227.0 H138" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="138" y="219.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="165.25" y="230.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="200.5" y="231.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">emphysematous pyelonephritis</text>
+<text x="416.1" y="230.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="278" x2="852" y2="278" stroke="#eef2f7"/>
+<text x="24" y="264.0" font-size="8.5" fill="#64748b" text-anchor="start">5</text>
+<path d="M90,159.0 V261.0 H112" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="112" y="253.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="139.25" y="264.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="174.5" y="265.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">chronic pyelonephritis</text>
+<text x="346.9" y="264.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="312" x2="852" y2="312" stroke="#eef2f7"/>
+<text x="24" y="298.0" font-size="8.5" fill="#64748b" text-anchor="start">6</text>
+<path d="M116,261.0 V295.0 H138" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="138" y="287.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="165.25" y="298.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="200.5" y="299.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">xanthogranulomatous pyelonephritis</text>
+<text x="459.29999999999995" y="298.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="346" x2="852" y2="346" stroke="#eef2f7"/>
+<text x="24" y="332.0" font-size="8.5" fill="#64748b" text-anchor="start">7</text>
+<path d="M64,125.0 V329.0 H86" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="86" y="321.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="108.75" y="332.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="139.5" y="333.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">striated nephrogram</text>
+<rect x="290.29999999999995" y="321.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="326.41999999999996" y="331.5" font-size="8" fill="#78350f" text-anchor="middle">scope: kidney</text>
+<text x="370.53999999999996" y="332.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required) · distribution</text>
+<line x1="24" y1="380" x2="852" y2="380" stroke="#eef2f7"/>
+<text x="24" y="366.0" font-size="8.5" fill="#64748b" text-anchor="start">8</text>
+<path d="M64,125.0 V363.0 H86" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="86" y="355.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="108.75" y="366.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="139.5" y="367.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">perinephric fat stranding</text>
+<rect x="333.5" y="355.0" width="119.6" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="393.3" y="365.5" font-size="8" fill="#78350f" text-anchor="middle" font-weight="700">scope: perirenal space</text>
+<text x="461.1" y="366.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required) · severity</text>
+<line x1="24" y1="414" x2="852" y2="414" stroke="#eef2f7"/>
+<text x="24" y="400.0" font-size="8.5" fill="#64748b" text-anchor="start">9</text>
+<path d="M64,125.0 V397.0 H86" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="86" y="389.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="108.75" y="400.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="139.5" y="401.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">renal enlargement</text>
+<rect x="275.9" y="389.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="312.02" y="399.5" font-size="8" fill="#78350f" text-anchor="middle">scope: kidney</text>
+<text x="356.14" y="400.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<text x="90" y="426" font-size="8.5" fill="#14532d" text-anchor="start">interpreted from binding RDE2_000830 (kidney HAS_ELEMENT length)</text>
+<line x1="24" y1="468" x2="852" y2="468" stroke="#eef2f7"/>
+<text x="24" y="454.0" font-size="8.5" fill="#64748b" text-anchor="start">10</text>
+<path d="M64,125.0 V451.0 H86" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="86" y="443.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="108.75" y="454.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="139.5" y="455.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">renal parenchymal gas</text>
+<rect x="304.7" y="443.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="340.82" y="453.5" font-size="8" fill="#78350f" text-anchor="middle">scope: kidney</text>
+<text x="384.94" y="454.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="502" x2="852" y2="502" stroke="#eef2f7"/>
+<text x="24" y="488.0" font-size="8.5" fill="#64748b" text-anchor="start">11</text>
+<path d="M64,125.0 V485.0 H86" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="86" y="477.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="108.75" y="488.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="139.5" y="489.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">renal cortical scarring</text>
+<rect x="319.1" y="477.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="355.22" y="487.5" font-size="8" fill="#78350f" text-anchor="middle">scope: kidney</text>
+<text x="399.34000000000003" y="488.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required) · distribution</text>
+<line x1="24" y1="536" x2="852" y2="536" stroke="#eef2f7"/>
+<text x="24" y="522.0" font-size="8.5" fill="#64748b" text-anchor="start">12</text>
+<path d="M64,125.0 V519.0 H86" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="86" y="511.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="108.75" y="522.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="139.5" y="523.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">renal lesion</text>
+<rect x="239.89999999999998" y="511.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="276.02" y="521.5" font-size="8" fill="#78350f" text-anchor="middle">scope: kidney</text>
+<text x="320.14" y="522.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required) · size (mean diameter)</text>
+<line x1="24" y1="570" x2="852" y2="570" stroke="#eef2f7"/>
+<text x="24" y="556.0" font-size="8.5" fill="#64748b" text-anchor="start">13</text>
+<path d="M90,519.0 V553.0 H112" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="112" y="545.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="139.25" y="556.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="174.5" y="557.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">renal abscess</text>
+<rect x="282.1" y="545.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="318.22" y="555.5" font-size="8" fill="#78350f" text-anchor="middle">scope: kidney</text>
+<text x="362.34000000000003" y="556.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required) · size (mean diameter)</text>
+<line x1="24" y1="604" x2="852" y2="604" stroke="#eef2f7"/>
+<text x="24" y="590.0" font-size="8.5" fill="#64748b" text-anchor="start">14</text>
+<path d="M64,125.0 V587.0 H86" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="86" y="579.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="108.75" y="590.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="139.5" y="591.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">hydronephrosis</text>
+<rect x="254.3" y="579.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="290.42" y="589.5" font-size="8" fill="#78350f" text-anchor="middle">scope: kidney</text>
+<text x="334.54" y="590.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required) · severity</text>
+<text x="846" y="556.0" font-size="8" fill="#64748b" text-anchor="end">◂ n1</text>
+<text x="846" y="332.0" font-size="8" fill="#64748b" text-anchor="end">◂ n2</text>
+<text x="846" y="366.0" font-size="8" fill="#64748b" text-anchor="end">◂ n3</text>
+<text x="846" y="400.0" font-size="8" fill="#64748b" text-anchor="end">◂ n4</text>
+<text x="846" y="264.0" font-size="8" fill="#64748b" text-anchor="end">◂ n5</text>
+<text x="846" y="590.0" font-size="8" fill="#64748b" text-anchor="end">◂ n6</text>
+<text x="846" y="454.0" font-size="8" fill="#64748b" text-anchor="end">◂ n7</text>
+<text x="846" y="488.0" font-size="8" fill="#64748b" text-anchor="end">◂ n8</text>
+<rect x="868" y="176.0" width="340" height="67" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+<circle cx="880" cy="192.0" r="9" fill="#dc2626"/><text x="880" y="195.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n1</text>
+<rect x="894" y="185.0" width="41.0" height="14" rx="7" fill="#dc2626"/><text x="914.5" y="195.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">CAUSES</text>
+<text x="943.0" y="195.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ renal abscess</text>
+<rect x="894" y="210.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="901" y="210.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="908" y="210.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="915" y="210.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="210.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="218.0" font-size="8.5" fill="#1f2937" text-anchor="start">occasional</text>
+<text x="894" y="230.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">assumes 07 Q2 answered yes: the causal pair takes typicality</text>
+<rect x="868" y="251.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1"/>
+<circle cx="880" cy="267.0" r="9" fill="#7c3aed"/><text x="880" y="270.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n2</text>
+<rect x="894" y="260.0" width="68.0" height="14" rx="7" fill="#7c3aed"/><text x="928.0" y="270.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">MANIFESTS AS</text>
+<text x="970.0" y="270.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ striated nephrogram</text>
+<rect x="894" y="285.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="901" y="285.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="908" y="285.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="915" y="285.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="285.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="293.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<path d="M990.08,284.5 L994.58,293.5 L985.58,293.5 Z" fill="#7c3aed"/>
+<text x="998.08" y="293.0" font-size="8.5" fill="#1f2937" text-anchor="start">highly suggestive</text>
+<rect x="868" y="313.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1"/>
+<circle cx="880" cy="329.0" r="9" fill="#7c3aed"/><text x="880" y="332.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n3</text>
+<rect x="894" y="322.0" width="68.0" height="14" rx="7" fill="#7c3aed"/><text x="928.0" y="332.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">MANIFESTS AS</text>
+<text x="970.0" y="332.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ perinephric fat stranding</text>
+<rect x="894" y="347.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="901" y="347.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="908" y="347.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="915" y="347.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="347.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="355.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<circle cx="990.08" cy="351.5" r="4" fill="#7c3aed"/>
+<text x="998.08" y="355.0" font-size="8.5" fill="#1f2937" text-anchor="start">suggestive</text>
+<rect x="868" y="375.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1"/>
+<circle cx="880" cy="391.0" r="9" fill="#7c3aed"/><text x="880" y="394.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n4</text>
+<rect x="894" y="384.0" width="68.0" height="14" rx="7" fill="#7c3aed"/><text x="928.0" y="394.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">MANIFESTS AS</text>
+<text x="970.0" y="394.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ renal enlargement</text>
+<rect x="894" y="409.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="901" y="409.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="908" y="409.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="915" y="409.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="409.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="417.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<circle cx="990.08" cy="413.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="998.08" y="417.0" font-size="8.5" fill="#1f2937" text-anchor="start">no specificity asserted</text>
+<rect x="868" y="437.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#0891b2" stroke-width="1"/>
+<circle cx="880" cy="453.0" r="9" fill="#0891b2"/><text x="880" y="456.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n5</text>
+<rect x="894" y="446.0" width="72.5" height="14" rx="7" fill="#0891b2"/><text x="930.25" y="456.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">PROGRESSES TO</text>
+<text x="974.5" y="456.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ chronic pyelonephritis</text>
+<rect x="868" y="499.0" width="340" height="80" rx="6" fill="#ffffff" stroke="#64748b" stroke-width="1"/>
+<circle cx="880" cy="515.0" r="9" fill="#64748b"/><text x="880" y="518.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n6</text>
+<rect x="894" y="508.0" width="63.5" height="14" rx="7" fill="#64748b"/><text x="925.75" y="518.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">OCCURS WITH</text>
+<text x="965.5" y="518.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">↔ hydronephrosis</text>
+<text x="894" y="553.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">obstruction predisposes</text>
+<text x="894" y="566.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">an obstructed infected system is pyonephrosis, not modeled here</text>
+<rect x="868" y="587.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1"/>
+<circle cx="880" cy="603.0" r="9" fill="#7c3aed"/><text x="880" y="606.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n7</text>
+<rect x="894" y="596.0" width="68.0" height="14" rx="7" fill="#7c3aed"/><text x="928.0" y="606.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">MANIFESTS AS</text>
+<text x="970.0" y="606.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ renal parenchymal gas</text>
+<rect x="894" y="621.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="901" y="621.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="908" y="621.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="915" y="621.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="922" y="621.0" width="5" height="9" rx="1" fill="#7c3aed"/>
+<text x="936" y="629.0" font-size="8.5" fill="#1f2937" text-anchor="start">obligate</text>
+<path d="M990.08,620.5 L995.08,625.5 L990.08,630.5 L985.08,625.5 Z" fill="#7c3aed"/>
+<text x="998.08" y="629.0" font-size="8.5" fill="#1f2937" text-anchor="start">pathognomonic</text>
+<rect x="868" y="649.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1"/>
+<circle cx="880" cy="665.0" r="9" fill="#7c3aed"/><text x="880" y="668.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n8</text>
+<rect x="894" y="658.0" width="68.0" height="14" rx="7" fill="#7c3aed"/><text x="928.0" y="668.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">MANIFESTS AS</text>
+<text x="970.0" y="668.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ renal cortical scarring</text>
+<rect x="894" y="683.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="901" y="683.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="908" y="683.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="915" y="683.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="922" y="683.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="691.0" font-size="8.5" fill="#1f2937" text-anchor="start">very frequent</text>
+<circle cx="1013.88" cy="687.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="1021.88" y="691.0" font-size="8.5" fill="#1f2937" text-anchor="start">no specificity asserted</text>
+<rect x="24" y="723.0" width="1192" height="30" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+<rect x="36" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="43" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="50" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="57" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="64" y="735.0" width="5" height="9" rx="1" fill="#475569"/>
+<text x="76" y="743.0" font-size="8.5" fill="#1f2937" text-anchor="start">obligate</text>
+<rect x="132.08" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="139.08" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="146.08" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="153.08" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="160.08" y="735.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="172.08" y="743.0" font-size="8.5" fill="#1f2937" text-anchor="start">very frequent</text>
+<rect x="251.96" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="258.96000000000004" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="265.96000000000004" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="272.96000000000004" y="735.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="279.96000000000004" y="735.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="291.96000000000004" y="743.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<rect x="348.04" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="355.04" y="735.0" width="5" height="9" rx="1" fill="#475569"/><rect x="362.04" y="735.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="369.04" y="735.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="376.04" y="735.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="388.04" y="743.0" font-size="8.5" fill="#1f2937" text-anchor="start">occasional</text>
+<path d="M467.64,734.0 L472.64,739.0 L467.64,744.0 L462.64,739.0 Z" fill="#7c3aed"/>
+<text x="475.64" y="743.0" font-size="8.5" fill="#1f2937" text-anchor="start">pathognomonic</text>
+<path d="M559.52,734.0 L564.02,743.0 L555.02,743.0 Z" fill="#7c3aed"/>
+<text x="567.52" y="743.0" font-size="8.5" fill="#1f2937" text-anchor="start">highly suggestive</text>
+<circle cx="670.4399999999999" cy="739.0" r="4" fill="#7c3aed"/>
+<text x="678.4399999999999" y="743.0" font-size="8.5" fill="#1f2937" text-anchor="start">suggestive</text>
+<circle cx="748.04" cy="739.0" r="4" fill="#fff" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="756.04" y="743.0" font-size="8.5" fill="#1f2937" text-anchor="start">none asserted</text>
+</svg>
+

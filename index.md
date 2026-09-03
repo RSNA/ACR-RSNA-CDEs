@@ -6,6 +6,7 @@ okf_version: "0.2"
 
 * [Next-gen schema analysis](docs/next-gen-schema/) - Working analyses of the proposed CDE schema redesign: current understanding, the assertion model, and open design questions.
 * [Notes](notes/) - Public reference material: sanitized extracts of committee material and copies of the OIFM reference documents, with provenance.
+* [Plans](docs/plans/) - Working plans with their status; the graph-and-site plan of 2026-09-02 is the current one.
 
 # Current Schema Assets
 

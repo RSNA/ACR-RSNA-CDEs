@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1600" width="1280" height="1600" role="img" aria-labelledby="title desc">
+  <title id="title">Pleural effusion constellation — nested taxonomy and small multiples</title>
+  <desc id="desc">Taxonomic subsumption is shown as literal containment. Below it, source-centered cards show each typed relationship and all of its properties locally, followed by binding and anatomy cards.</desc>
+  <defs>
+    <style>
+      text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #182230; }
+      .eyebrow { font-size: 10.5px; font-weight: 780; letter-spacing: 1.45px; fill: #5b6677; }
+      .title { font-size: 28px; font-weight: 770; letter-spacing: -.5px; }
+      .subtitle { font-size: 13px; fill: #5b6677; }
+      .section { font-size: 17px; font-weight: 760; }
+      .note { font-size: 11px; fill: #667085; }
+      .name { font-size: 13px; font-weight: 730; }
+      .name-sm { font-size: 11.5px; font-weight: 710; }
+      .body { font-size: 10.5px; fill: #344054; }
+      .tiny { font-size: 9.3px; fill: #667085; }
+      .meta { font-size: 9px; font-weight: 680; letter-spacing: .45px; fill: #667085; }
+      .card { fill: #fff; stroke: #ccd5e1; stroke-width: 1; }
+      .finding { fill: #edf5ff; stroke: #6e9fd9; stroke-width: 1.2; }
+      .diagnosis { fill: #f4efff; stroke: #a58bd6; stroke-width: 1.2; }
+      .grouping { fill: #f4f5f7; stroke: #667085; stroke-width: 1.5; stroke-dasharray: 5 3; }
+      .anatomy { fill: #edf8f1; stroke: #72ad86; stroke-width: 1.1; }
+      .element { fill: #fff8e6; stroke: #d7a83d; stroke-width: 1.1; }
+      .cause { fill: #fff0ee; stroke: #dda29d; }
+      .manifest { fill: #f3efff; stroke: #b5a2de; }
+      .progress { fill: #eaf8f6; stroke: #74b8b1; }
+      .occurs { fill: #f3f5f7; stroke: #a9b1bc; stroke-dasharray: 4 3; }
+      .relation { font-size: 9.5px; font-weight: 800; letter-spacing: .55px; }
+      .rule { stroke: #d9dee7; stroke-width: 1; }
+    </style>
+    <marker id="arrow-red" markerUnits="userSpaceOnUse" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#b83e38"/></marker>
+    <marker id="arrow-purple" markerUnits="userSpaceOnUse" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#6545a4"/></marker>
+    <marker id="arrow-teal" markerUnits="userSpaceOnUse" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#14766f"/></marker>
+    <marker id="arrow-gray" markerUnits="userSpaceOnUse" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#596579"/></marker>
+  </defs>
+
+  <rect width="1280" height="1600" fill="#fafbfc"/>
+  <rect x="0" y="0" width="1280" height="8" fill="#59408a"/>
+  <text x="38" y="42" class="eyebrow">CONSTELLATION · SMALL MULTIPLES</text>
+  <text x="38" y="72" class="title">Pleural effusion</text>
+  <text x="38" y="96" class="subtitle">Containment answers “what kind of thing?” Cards answer “what relationship, in which direction, with which properties?”</text>
+
+  <g transform="translate(878 28)" aria-label="node key">
+    <rect x="0" y="0" width="86" height="24" rx="5" class="finding"/><text x="43" y="16" text-anchor="middle" class="tiny">FINDING</text>
+    <rect x="94" y="0" width="86" height="24" rx="12" class="diagnosis"/><text x="137" y="16" text-anchor="middle" class="tiny">DIAGNOSIS</text>
+    <rect x="188" y="0" width="86" height="24" rx="3" class="grouping"/><text x="231" y="16" text-anchor="middle" class="tiny">GROUPING</text>
+    <rect x="0" y="32" width="86" height="24" rx="12" class="anatomy"/><text x="43" y="48" text-anchor="middle" class="tiny">ANATOMY</text>
+    <path d="M104 32h62l14 12-14 12h-62l-10-12Z" class="element"/><text x="137" y="48" text-anchor="middle" class="tiny">ELEMENT</text>
+  </g>
+
+  <!-- Taxonomy by literal containment -->
+  <g id="contained-taxonomy" aria-label="Taxonomy by containment">
+    <text x="38" y="137" class="section">1 · Taxonomy as containment</text>
+    <text x="1242" y="137" text-anchor="end" class="note">Every inner box is a SUBTYPE_OF its enclosing box · label may change inside the tree</text>
+    <rect x="28" y="152" width="1224" height="340" rx="12" class="grouping"/>
+    <rect x="46" y="170" width="230" height="34" rx="4" fill="#667085"/>
+    <text x="60" y="192" fill="#fff" style="font-size:13px;font-weight:760">pleural abnormality</text>
+    <text x="292" y="192" class="meta">GROUPING · RDE2_000516 · negative-only</text>
+
+    <g data-node="RDE2_000502">
+      <rect x="52" y="220" width="790" height="246" rx="10" class="finding"/>
+      <rect x="52" y="220" width="790" height="46" rx="10" fill="#d9eaff"/>
+      <text x="72" y="241" class="name">pleural effusion</text>
+      <text x="72" y="258" class="meta">FINDING · RDE2_000502</text>
+      <text x="816" y="246" text-anchor="end" class="tiny">contains 6 DIAGNOSIS subtypes</text>
+    </g>
+
+    <g data-node="RDE2_000515"><rect x="72" y="286" width="230" height="64" rx="24" class="diagnosis"/><text x="187" y="312" text-anchor="middle" class="name-sm">parapneumonic effusion</text><text x="187" y="334" text-anchor="middle" class="meta">RDE2_000515</text></g>
+    <g data-node="RDE2_000510"><rect x="322" y="286" width="230" height="64" rx="24" class="diagnosis"/><text x="437" y="312" text-anchor="middle" class="name-sm">empyema</text><text x="437" y="334" text-anchor="middle" class="meta">RDE2_000510</text></g>
+    <g data-node="RDE2_000511"><rect x="572" y="286" width="230" height="64" rx="24" class="diagnosis"/><text x="687" y="312" text-anchor="middle" class="name-sm">hemothorax</text><text x="687" y="334" text-anchor="middle" class="meta">RDE2_000511</text></g>
+    <g data-node="RDE2_000512"><rect x="72" y="370" width="230" height="64" rx="24" class="diagnosis"/><text x="187" y="396" text-anchor="middle" class="name-sm">chylothorax</text><text x="187" y="418" text-anchor="middle" class="meta">RDE2_000512</text></g>
+    <g data-node="RDE2_000514"><rect x="322" y="370" width="230" height="64" rx="24" class="diagnosis"/><text x="437" y="396" text-anchor="middle" class="name-sm">hepatic hydrothorax</text><text x="437" y="418" text-anchor="middle" class="meta">RDE2_000514</text></g>
+    <g data-node="RDE2_000513"><rect x="572" y="370" width="230" height="64" rx="24" class="diagnosis"/><text x="687" y="396" text-anchor="middle" class="name-sm">malignant pleural effusion</text><text x="687" y="418" text-anchor="middle" class="meta">RDE2_000513</text></g>
+
+    <g data-node="RDE2_000532">
+      <rect x="870" y="220" width="354" height="246" rx="10" class="finding"/>
+      <rect x="870" y="220" width="354" height="46" rx="10" fill="#d9eaff"/>
+      <text x="890" y="241" class="name">pleural thickening</text>
+      <text x="890" y="258" class="meta">FINDING · RDE2_000532</text>
+      <g data-node="RDE2_000534"><rect x="894" y="294" width="306" height="118" rx="8" class="finding"/><text x="1047" y="332" text-anchor="middle" class="name">nodular pleural thickening</text><text x="1047" y="356" text-anchor="middle" class="meta">FINDING · RDE2_000534</text><text x="1047" y="382" text-anchor="middle" class="tiny">nested subtype</text></g>
+    </g>
+  </g>
+
+  <!-- Cause cards -->
+  <g id="cause-cards" aria-label="Cause relationship cards">
+    <text x="38" y="530" class="section">2 · Cause cards</text>
+    <text x="1242" y="530" text-anchor="end" class="note">One source per card · one local arrow · expected describes the target under that cause</text>
+
+    <!-- card 1 -->
+    <g data-edge="RDE2_000911" transform="translate(28 550)">
+      <rect width="292" height="178" rx="10" class="card"/><rect width="292" height="7" rx="4" fill="#b83e38"/>
+      <text x="16" y="31" class="meta">DIAGNOSIS · RDE2_000520</text><text x="16" y="52" class="name">heart failure</text>
+      <line x1="16" y1="68" x2="276" y2="68" class="rule"/>
+      <rect x="16" y="82" width="112" height="24" rx="5" class="cause"/><text x="72" y="98" text-anchor="middle" class="relation">MAY_CAUSE →</text>
+      <rect x="138" y="82" width="138" height="24" rx="6" class="finding"/><text x="207" y="98" text-anchor="middle" class="name-sm">pleural effusion</text>
+      <rect x="16" y="118" width="70" height="22" rx="11" fill="#fde7e4"/><text x="51" y="133" text-anchor="middle" class="tiny">frequent</text>
+      <text x="16" y="153" class="body"><tspan font-weight="700">expected</tspan> bilateral, right &gt; left;</text><text x="16" y="168" class="body">simple fluid</text>
+    </g>
+    <!-- card 2 -->
+    <g data-edge="RDE2_000916" transform="translate(338 550)">
+      <rect width="292" height="178" rx="10" class="card"/><rect width="292" height="7" rx="4" fill="#b83e38"/>
+      <text x="16" y="31" class="meta">DIAGNOSIS · RDE2_000526</text><text x="16" y="52" class="name">nephrotic syndrome</text><line x1="16" y1="68" x2="276" y2="68" class="rule"/>
+      <rect x="16" y="82" width="112" height="24" rx="5" class="cause"/><text x="72" y="98" text-anchor="middle" class="relation">MAY_CAUSE →</text><rect x="138" y="82" width="138" height="24" rx="6" class="finding"/><text x="207" y="98" text-anchor="middle" class="name-sm">pleural effusion</text>
+      <rect x="16" y="118" width="70" height="22" rx="11" fill="#fde7e4"/><text x="51" y="133" text-anchor="middle" class="tiny">frequent</text><text x="16" y="157" class="body"><tspan font-weight="700">expected</tspan> bilateral</text>
+    </g>
+    <!-- card 3 -->
+    <g data-edge="RDE2_000915" transform="translate(648 550)">
+      <rect width="292" height="178" rx="10" class="card"/><rect width="292" height="7" rx="4" fill="#b83e38"/>
+      <text x="16" y="31" class="meta">DIAGNOSIS · RDE2_000525</text><text x="16" y="52" class="name">pulmonary embolism</text><line x1="16" y1="68" x2="276" y2="68" class="rule"/>
+      <rect x="16" y="82" width="112" height="24" rx="5" class="cause"/><text x="72" y="98" text-anchor="middle" class="relation">MAY_CAUSE →</text><rect x="138" y="82" width="138" height="24" rx="6" class="finding"/><text x="207" y="98" text-anchor="middle" class="name-sm">pleural effusion</text>
+      <rect x="16" y="118" width="70" height="22" rx="11" fill="#fde7e4"/><text x="51" y="133" text-anchor="middle" class="tiny">frequent</text><text x="16" y="157" class="body"><tspan font-weight="700">expected</tspan> small; ipsilateral</text>
+    </g>
+    <!-- card 4 -->
+    <g data-edge="RDE2_000900" transform="translate(958 550)">
+      <rect width="294" height="178" rx="10" class="card"/><rect width="294" height="7" rx="4" fill="#b83e38"/>
+      <text x="16" y="31" class="meta">DIAGNOSIS · RDE2_000522</text><text x="16" y="52" class="name">pneumonia</text><line x1="16" y1="68" x2="278" y2="68" class="rule"/>
+      <rect x="16" y="82" width="112" height="24" rx="5" class="cause"/><text x="72" y="98" text-anchor="middle" class="relation">MAY_CAUSE →</text><rect x="138" y="82" width="140" height="24" rx="6" class="finding"/><text x="208" y="98" text-anchor="middle" class="name-sm">pleural effusion</text>
+      <rect x="16" y="118" width="70" height="22" rx="11" fill="#fde7e4"/><text x="51" y="133" text-anchor="middle" class="tiny">frequent</text><text x="16" y="153" class="body"><tspan font-weight="700">expected</tspan> small–moderate;</text><text x="16" y="168" class="body">ipsilateral to pneumonia</text>
+    </g>
+
+    <!-- card 5 -->
+    <g data-edge="RDE2_000913" transform="translate(28 746)">
+      <rect width="292" height="178" rx="10" class="card"/><rect width="292" height="7" rx="4" fill="#b83e38"/>
+      <text x="16" y="31" class="meta">DIAGNOSIS · RDE2_000523</text><text x="16" y="52" class="name">pancreatitis</text><line x1="16" y1="68" x2="276" y2="68" class="rule"/>
+      <rect x="16" y="82" width="112" height="24" rx="5" class="cause"/><text x="72" y="98" text-anchor="middle" class="relation">MAY_CAUSE →</text><rect x="138" y="82" width="138" height="24" rx="6" class="finding"/><text x="207" y="98" text-anchor="middle" class="name-sm">pleural effusion</text>
+      <rect x="16" y="118" width="78" height="22" rx="11" fill="#fde7e4"/><text x="55" y="133" text-anchor="middle" class="tiny">occasional</text><text x="16" y="157" class="body"><tspan font-weight="700">expected</tspan> left</text>
+    </g>
+    <!-- card 6 -->
+    <g data-edge="RDE2_000912" transform="translate(338 746)">
+      <rect width="292" height="178" rx="10" class="card"/><rect width="292" height="7" rx="4" fill="#b83e38"/>
+      <text x="16" y="31" class="meta">DIAGNOSIS · RDE2_000521</text><text x="16" y="52" class="name">cirrhosis</text><line x1="16" y1="68" x2="276" y2="68" class="rule"/>
+      <rect x="16" y="82" width="112" height="24" rx="5" class="cause"/><text x="72" y="98" text-anchor="middle" class="relation">MAY_CAUSE →</text><rect x="138" y="82" width="138" height="24" rx="12" class="diagnosis"/><text x="207" y="98" text-anchor="middle" class="name-sm">hepatic hydrothorax</text>
+      <rect x="16" y="118" width="78" height="22" rx="11" fill="#fde7e4"/><text x="55" y="133" text-anchor="middle" class="tiny">occasional</text><text x="16" y="153" class="body"><tspan font-weight="700">expected</tspan> right pleural space</text><text x="16" y="168" class="body">in most cases</text>
+    </g>
+    <!-- card 7 -->
+    <g data-edge="RDE2_000914" transform="translate(648 746)">
+      <rect width="292" height="178" rx="10" class="card"/><rect width="292" height="7" rx="4" fill="#b83e38"/>
+      <text x="16" y="31" class="meta">DIAGNOSIS · RDE2_000524</text><text x="16" y="52" class="name">malignant neoplastic disease</text><line x1="16" y1="68" x2="276" y2="68" class="rule"/>
+      <rect x="16" y="82" width="112" height="24" rx="5" class="cause"/><text x="72" y="98" text-anchor="middle" class="relation">MAY_CAUSE →</text><rect x="138" y="82" width="138" height="24" rx="12" class="diagnosis"/><text x="207" y="98" text-anchor="middle" style="font-size:9px;font-weight:710">malignant pleural effusion</text>
+      <rect x="16" y="118" width="78" height="22" rx="11" fill="#fde7e4"/><text x="55" y="133" text-anchor="middle" class="tiny">occasional</text><text x="16" y="153" class="body"><tspan font-weight="700">expected</tspan> large;</text><text x="16" y="168" class="body">recurs after drainage</text>
+    </g>
+    <!-- grammar card -->
+    <g transform="translate(958 746)">
+      <rect width="294" height="178" rx="10" fill="#f7f8fa" stroke="#ccd5e1"/>
+      <text x="16" y="31" class="eyebrow">HOW TO READ A CARD</text>
+      <rect x="16" y="47" width="110" height="24" rx="12" class="diagnosis"/><text x="71" y="63" text-anchor="middle" class="tiny">SOURCE</text>
+      <path d="M134 59H170" stroke="#b83e38" stroke-width="1.6" marker-end="url(#arrow-red)"/>
+      <rect x="178" y="47" width="100" height="24" rx="6" class="finding"/><text x="228" y="63" text-anchor="middle" class="tiny">TARGET</text>
+      <text x="16" y="96" class="body"><tspan font-weight="700">Relationship</tspan> names the arrow.</text>
+      <text x="16" y="116" class="body"><tspan font-weight="700">Typicality</tspan> is the frequency pill.</text>
+      <text x="16" y="136" class="body"><tspan font-weight="700">Expected</tspan> is conditional target detail.</text>
+      <text x="16" y="158" class="tiny">No specificity appears on causal edges.</text>
+    </g>
+  </g>
+
+  <!-- Behavior cards -->
+  <g id="behavior-cards" aria-label="Manifestation, progression, cause, and co-occurrence cards">
+    <text x="38" y="966" class="section">3 · Behavior and evidence cards</text>
+    <text x="1242" y="966" text-anchor="end" class="note">Different relationship families keep different borders, labels, and arrow colors</text>
+
+    <g transform="translate(28 986)" data-node="RDE2_000502">
+      <rect width="292" height="246" rx="10" class="card"/><rect width="292" height="7" rx="4" fill="#367ac8"/>
+      <text x="16" y="31" class="meta">FINDING · RDE2_000502</text><text x="16" y="52" class="name">pleural effusion</text><line x1="16" y1="67" x2="276" y2="67" class="rule"/>
+      <rect x="16" y="80" width="260" height="42" rx="6" class="cause"/><text x="28" y="97" class="relation">MAY_CAUSE · frequent →</text><text x="28" y="114" class="body">compressive atelectasis · RDE2_000917</text>
+      <rect x="16" y="131" width="260" height="48" rx="6" class="cause"/><text x="28" y="148" class="relation">MAY_CAUSE · occasional →</text><text x="28" y="165" class="body">mediastinal shift · large effusions · 000918</text>
+      <rect x="16" y="188" width="260" height="40" rx="6" class="occurs"/><text x="28" y="205" class="relation">OCCURS_WITH ↔</text><text x="28" y="220" class="body">pleural thickening · RDE2_000919</text>
+    </g>
+
+    <g transform="translate(338 986)" data-node="RDE2_000515">
+      <rect width="292" height="246" rx="10" class="card"/><rect width="292" height="7" rx="4" fill="#14766f"/>
+      <text x="16" y="31" class="meta">DIAGNOSIS · RDE2_000515</text><text x="16" y="52" class="name">parapneumonic effusion</text><line x1="16" y1="67" x2="276" y2="67" class="rule"/>
+      <text x="16" y="90" class="note">Identity-preserving evolution</text>
+      <rect x="16" y="106" width="260" height="64" rx="7" class="progress"/><text x="28" y="128" class="relation">MAY_PROGRESS_TO →</text><text x="28" y="151" class="name-sm">empyema</text>
+      <text x="16" y="194" class="body">RDE2_000923</text>
+      <text x="16" y="216" class="tiny">Temporal and identity-preserving;</text><text x="16" y="231" class="tiny">not causation and not subsumption.</text>
+    </g>
+
+    <g transform="translate(648 986)" data-node="RDE2_000510">
+      <rect width="292" height="246" rx="10" class="card"/><rect width="292" height="7" rx="4" fill="#6545a4"/>
+      <text x="16" y="31" class="meta">DIAGNOSIS · RDE2_000510</text><text x="16" y="52" class="name">empyema</text><line x1="16" y1="67" x2="276" y2="67" class="rule"/>
+      <rect x="16" y="80" width="260" height="64" rx="7" class="manifest"/><text x="28" y="99" class="relation">MAY_MANIFEST_AS →</text><text x="28" y="119" class="name-sm">pleural thickening</text><text x="28" y="136" class="tiny">very frequent · suggestive · RDE2_000921</text>
+      <rect x="16" y="154" width="260" height="72" rx="7" class="manifest"/><text x="28" y="173" class="relation">MAY_MANIFEST_AS →</text><text x="28" y="193" class="name-sm">split pleura sign</text><text x="28" y="210" class="tiny">frequent · highly suggestive</text><text x="28" y="222" class="tiny">RDE2_000920</text>
+    </g>
+
+    <g transform="translate(958 986)" data-node="RDE2_000513">
+      <rect width="294" height="246" rx="10" class="card"/><rect width="294" height="7" rx="4" fill="#6545a4"/>
+      <text x="16" y="31" class="meta">DIAGNOSIS · RDE2_000513</text><text x="16" y="52" class="name">malignant pleural effusion</text><line x1="16" y1="67" x2="278" y2="67" class="rule"/>
+      <rect x="16" y="80" width="262" height="86" rx="7" class="manifest"/><text x="28" y="101" class="relation">MAY_MANIFEST_AS →</text><text x="28" y="124" class="name-sm">nodular pleural thickening</text><text x="28" y="144" class="tiny">frequent · highly suggestive</text><text x="28" y="158" class="tiny">RDE2_000922</text>
+      <text x="16" y="194" class="body">The two independent qualifiers stay</text><text x="16" y="211" class="body">inside the same relationship card.</text>
+    </g>
+  </g>
+
+  <!-- Bindings and anatomy -->
+  <g id="binding-cards" aria-label="Data element bindings and anatomy scope">
+    <text x="38" y="1272" class="section">4 · Binding and scope cards</text>
+    <text x="1242" y="1272" text-anchor="end" class="note">Element edges are direct bindings; taxonomy does not imply inheritance</text>
+
+    <rect x="28" y="1292" width="758" height="268" rx="10" class="card"/>
+    <text x="48" y="1322" class="meta">PLEURAL EFFUSION · HAS_ELEMENT</text>
+    <text x="48" y="1344" class="note">Five direct bindings</text>
+    <g data-node="RDE2_000001"><path d="M48 1362h205l14 32-14 32H48Z" class="element"/><text x="64" y="1385" class="name-sm">presence</text><text x="64" y="1406" class="meta">REQUIRED · RDE2_000001</text></g>
+    <g data-node="RDE2_000002"><path d="M282 1362h205l14 32-14 32H282Z" class="element"/><text x="298" y="1385" class="name-sm">change from prior</text><text x="298" y="1406" class="meta">RDE2_000002</text></g>
+    <g data-node="RDE2_000013"><path d="M516 1362h232l14 32-14 32H516Z" class="element"/><text x="532" y="1385" class="name-sm">size (qualitative)</text><text x="532" y="1406" class="meta">NOTE “AMOUNT” · RDE2_000013</text></g>
+    <g data-node="RDE2_000504"><path d="M48 1442h322l14 32-14 32H48Z" class="element"/><text x="64" y="1465" class="name-sm">fluid attenuation</text><text x="64" y="1486" class="meta">QUANTITATIVE · RDE2_000504</text></g>
+    <g data-node="RDE2_000505"><path d="M400 1442h348l14 32-14 32H400Z" class="element"/><text x="416" y="1465" class="name-sm">internal complexity</text><text x="416" y="1486" class="meta">MULTI-SELECT · RDE2_000505</text></g>
+    <text x="48" y="1538" class="tiny">Each of the six diagnosis subtypes separately binds required presence; the parent binding is not inherited.</text>
+
+    <rect x="804" y="1292" width="448" height="268" rx="10" class="card"/>
+    <text x="824" y="1322" class="meta">SCOPED_TO · STRUCTURE · REQUIRED</text>
+    <g data-node="RID1363"><rect x="824" y="1350" width="166" height="48" rx="24" class="anatomy"/><text x="907" y="1371" text-anchor="middle" class="name-sm">pleural space</text><text x="907" y="1387" text-anchor="middle" class="meta">RID1363</text></g>
+    <text x="1010" y="1370" class="body"><tspan font-weight="700">← pleural effusion</tspan></text><text x="1010" y="1387" class="tiny">RDE2_000502</text>
+    <g data-node="RID1362"><rect x="824" y="1418" width="166" height="48" rx="24" class="anatomy"/><text x="907" y="1439" text-anchor="middle" class="name-sm">pleura</text><text x="907" y="1455" text-anchor="middle" class="meta">RID1362</text></g>
+    <text x="1010" y="1436" class="body"><tspan font-weight="700">← pleural branch</tspan></text><text x="1010" y="1453" class="tiny">grouping, thickening, split sign, nodular</text>
+    <line x1="824" y1="1485" x2="1232" y2="1485" class="rule"/>
+    <text x="824" y="1507" class="tiny">Related finding bindings:</text>
+    <text x="824" y="1525" class="tiny">atelectasis: presence + severity · thickening: presence + distribution</text>
+    <text x="824" y="1543" class="tiny">mediastinal shift, split pleura sign, nodular thickening: presence</text>
+  </g>
+
+  <text x="38" y="1585" style="font-size:10px;fill:#526071">Canonical sources: graph/core.jsonl and graph/pleural-effusion.jsonl. Repeated chips are references to the same node, not duplicate classes.</text>
+</svg>

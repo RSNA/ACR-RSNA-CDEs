@@ -38,5 +38,12 @@
       "id": "RDE2_000611"
     }
   ],
-  "mappings": []
+  "mappings": [
+    {
+      "system": "RADLEX",
+      "code": "RID13432",
+      "display": "diameter",
+      "match": "closeMatch"
+    }
+  ]
 }

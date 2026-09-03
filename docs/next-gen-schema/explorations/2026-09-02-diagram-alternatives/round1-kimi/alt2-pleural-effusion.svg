@@ -1,0 +1,256 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1244.0" font-family="system-ui, sans-serif" role="img" aria-label="Pleural effusion as an indented outline with numbered margin notes for the typed relationships">
+<rect width="1240" height="1244.0" fill="#ffffff"/>
+<text x="24" y="32" font-size="16" fill="#1f2937" text-anchor="start" font-weight="700">Pleural effusion — annotated outline: taxonomy as a document, relationships as margin notes</text>
+<text x="24" y="52" font-size="9" fill="#64748b" text-anchor="start">Indentation is subsumption; numbered margin notes are the typed relationships. ◂ n markers on a row are the relationships that point at it.</text>
+<text x="868" y="66" font-size="9" fill="#64748b" text-anchor="start" font-weight="700" letter-spacing="1.2">RELATIONSHIP NOTES</text>
+<path d="M852,159.0 H868" stroke="#dc2626" stroke-width="1" opacity="0.55"/>
+<path d="M852,159.0 H860 V220.0 H868" fill="none" stroke="#dc2626" stroke-width="1" opacity="0.55"/>
+<path d="M852,159.0 H860 V295.0 H868" fill="none" stroke="#64748b" stroke-width="1" opacity="0.55"/>
+<path d="M852,233.0 H860 V357.0 H868" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.55"/>
+<path d="M852,233.0 H860 V419.0 H868" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.55"/>
+<path d="M852,335.0 H860 V481.0 H868" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.55"/>
+<path d="M852,403.0 H860 V543.0 H868" fill="none" stroke="#0891b2" stroke-width="1" opacity="0.55"/>
+<path d="M852,667.0 H868" stroke="#dc2626" stroke-width="1" opacity="0.55"/>
+<path d="M852,701.0 H860 V741.0 H868" fill="none" stroke="#dc2626" stroke-width="1" opacity="0.55"/>
+<path d="M852,735.0 H860 V816.0 H868" fill="none" stroke="#dc2626" stroke-width="1" opacity="0.55"/>
+<path d="M852,769.0 H860 V891.0 H868" fill="none" stroke="#dc2626" stroke-width="1" opacity="0.55"/>
+<path d="M852,803.0 H860 V966.0 H868" fill="none" stroke="#dc2626" stroke-width="1" opacity="0.55"/>
+<path d="M852,837.0 H860 V1041.0 H868" fill="none" stroke="#dc2626" stroke-width="1" opacity="0.55"/>
+<path d="M852,871.0 H860 V1129.0 H868" fill="none" stroke="#dc2626" stroke-width="1" opacity="0.55"/>
+<text x="24" y="88" font-size="9" fill="#64748b" text-anchor="start" font-weight="700" letter-spacing="1.2">THE TAXONOMY — ONE SUBTYPE TREE OVER FINDINGS, DIAGNOSES, AND THE GROUPING NODE</text>
+<line x1="24" y1="94" x2="852" y2="94" stroke="#cbd5e1"/>
+<line x1="24" y1="142" x2="852" y2="142" stroke="#eef2f7"/>
+<text x="24" y="128.0" font-size="8.5" fill="#64748b" text-anchor="start">1</text>
+<rect x="60" y="117.0" width="50.0" height="15" rx="7.5" fill="#64748b"/><text x="85.0" y="128.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">GROUPING</text>
+<text x="118.0" y="129.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">pleural abnormality</text>
+<rect x="268.79999999999995" y="117.0" width="72.24000000000001" height="15" rx="7.5" fill="#f1f5f9" stroke="#cbd5e1"/><text x="304.91999999999996" y="127.5" font-size="8" fill="#334155" text-anchor="middle" font-style="italic">negative-only</text>
+<rect x="349.03999999999996" y="117.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="385.15999999999997" y="127.5" font-size="8" fill="#78350f" text-anchor="middle">scope: pleura</text>
+<line x1="24" y1="176" x2="852" y2="176" stroke="#eef2f7"/>
+<text x="24" y="162.0" font-size="8.5" fill="#64748b" text-anchor="start">2</text>
+<path d="M64,125.0 V159.0 H86" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="86" y="151.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="108.75" y="162.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="139.5" y="163.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">pleural effusion</text>
+<rect x="268.7" y="151.0" width="110.0" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="323.7" y="161.5" font-size="8" fill="#78350f" text-anchor="middle" font-weight="700">scope: pleural space</text>
+<text x="90" y="188" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required) · change from prior · size (qualitative): amount · fluid attenuation · internal complexity (multi-select)</text>
+<text x="90" y="208" font-size="8.5" fill="#64748b" text-anchor="start">internal complexity values: septations · loculation · gas · dependent debris · fluid-fluid level</text>
+<line x1="24" y1="250" x2="852" y2="250" stroke="#eef2f7"/>
+<text x="24" y="236.0" font-size="8.5" fill="#64748b" text-anchor="start">3</text>
+<path d="M90,159.0 V233.0 H112" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="112" y="225.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="139.25" y="236.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="174.5" y="237.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">empyema</text>
+<text x="238.9" y="236.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="284" x2="852" y2="284" stroke="#eef2f7"/>
+<text x="24" y="270.0" font-size="8.5" fill="#64748b" text-anchor="start">4</text>
+<path d="M90,159.0 V267.0 H112" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="112" y="259.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="139.25" y="270.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="174.5" y="271.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">hemothorax</text>
+<text x="260.5" y="270.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="318" x2="852" y2="318" stroke="#eef2f7"/>
+<text x="24" y="304.0" font-size="8.5" fill="#64748b" text-anchor="start">5</text>
+<path d="M90,159.0 V301.0 H112" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="112" y="293.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="139.25" y="304.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="174.5" y="305.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">chylothorax</text>
+<text x="267.7" y="304.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="352" x2="852" y2="352" stroke="#eef2f7"/>
+<text x="24" y="338.0" font-size="8.5" fill="#64748b" text-anchor="start">6</text>
+<path d="M90,159.0 V335.0 H112" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="112" y="327.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="139.25" y="338.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="174.5" y="339.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">malignant pleural effusion</text>
+<text x="375.7" y="338.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="386" x2="852" y2="386" stroke="#eef2f7"/>
+<text x="24" y="372.0" font-size="8.5" fill="#64748b" text-anchor="start">7</text>
+<path d="M90,159.0 V369.0 H112" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="112" y="361.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="139.25" y="372.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="174.5" y="373.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">hepatic hydrothorax</text>
+<text x="325.29999999999995" y="372.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="420" x2="852" y2="420" stroke="#eef2f7"/>
+<text x="24" y="406.0" font-size="8.5" fill="#64748b" text-anchor="start">8</text>
+<path d="M90,159.0 V403.0 H112" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="112" y="395.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="139.25" y="406.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="174.5" y="407.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">parapneumonic effusion</text>
+<text x="346.9" y="406.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="454" x2="852" y2="454" stroke="#eef2f7"/>
+<text x="24" y="440.0" font-size="8.5" fill="#64748b" text-anchor="start">9</text>
+<path d="M64,125.0 V437.0 H86" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="86" y="429.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="108.75" y="440.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="139.5" y="441.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">pleural thickening</text>
+<rect x="283.1" y="429.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="319.22" y="439.5" font-size="8" fill="#78350f" text-anchor="middle">scope: pleura</text>
+<text x="363.34000000000003" y="440.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required) · distribution</text>
+<line x1="24" y1="488" x2="852" y2="488" stroke="#eef2f7"/>
+<text x="24" y="474.0" font-size="8.5" fill="#64748b" text-anchor="start">10</text>
+<path d="M90,437.0 V471.0 H112" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+<rect x="112" y="463.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="134.75" y="474.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="165.5" y="475.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">nodular pleural thickening</text>
+<rect x="366.7" y="463.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="402.82" y="473.5" font-size="8" fill="#78350f" text-anchor="middle">scope: pleura</text>
+<text x="446.94" y="474.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<text x="24" y="498" font-size="9" fill="#64748b" text-anchor="start" font-weight="700" letter-spacing="1.2">ATTACHED BY RELATIONSHIP ONLY — NO SUBSUMPTION EDGE</text>
+<line x1="24" y1="504" x2="852" y2="504" stroke="#cbd5e1"/>
+<line x1="24" y1="552" x2="852" y2="552" stroke="#eef2f7"/>
+<text x="24" y="538.0" font-size="8.5" fill="#64748b" text-anchor="start">11</text>
+<rect x="60" y="527.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="82.75" y="538.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="113.5" y="539.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">compressive atelectasis</text>
+<text x="293.1" y="538.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required) · severity · size (mean diameter)</text>
+<line x1="24" y1="586" x2="852" y2="586" stroke="#eef2f7"/>
+<text x="24" y="572.0" font-size="8.5" fill="#64748b" text-anchor="start">12</text>
+<rect x="60" y="561.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="82.75" y="572.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="113.5" y="573.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">mediastinal shift</text>
+<text x="249.89999999999998" y="572.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<line x1="24" y1="620" x2="852" y2="620" stroke="#eef2f7"/>
+<text x="24" y="606.0" font-size="8.5" fill="#64748b" text-anchor="start">13</text>
+<rect x="60" y="595.0" width="45.5" height="15" rx="7.5" fill="#2563eb"/><text x="82.75" y="606.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">FINDING</text>
+<text x="113.5" y="607.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">split pleura sign</text>
+<rect x="249.89999999999998" y="595.0" width="72.24000000000001" height="15" rx="7.5" fill="#fffbeb" stroke="#d97706"/><text x="286.02" y="605.5" font-size="8" fill="#78350f" text-anchor="middle">scope: pleura</text>
+<text x="330.14" y="606.0" font-size="8.5" fill="#14532d" text-anchor="start">binds: presence (required)</text>
+<text x="24" y="630" font-size="9" fill="#64748b" text-anchor="start" font-weight="700" letter-spacing="1.2">CLINICAL CAUSES — DIAGNOSIS NODES WITH NO IMAGING ELEMENTS</text>
+<line x1="24" y1="636" x2="852" y2="636" stroke="#cbd5e1"/>
+<line x1="24" y1="684" x2="852" y2="684" stroke="#eef2f7"/>
+<text x="24" y="670.0" font-size="8.5" fill="#64748b" text-anchor="start">14</text>
+<rect x="60" y="659.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="87.25" y="670.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="122.5" y="671.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">cirrhosis</text>
+<line x1="24" y1="718" x2="852" y2="718" stroke="#eef2f7"/>
+<text x="24" y="704.0" font-size="8.5" fill="#64748b" text-anchor="start">15</text>
+<rect x="60" y="693.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="87.25" y="704.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="122.5" y="705.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">heart failure</text>
+<line x1="24" y1="752" x2="852" y2="752" stroke="#eef2f7"/>
+<text x="24" y="738.0" font-size="8.5" fill="#64748b" text-anchor="start">16</text>
+<rect x="60" y="727.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="87.25" y="738.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="122.5" y="739.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">malignant neoplastic disease</text>
+<line x1="24" y1="786" x2="852" y2="786" stroke="#eef2f7"/>
+<text x="24" y="772.0" font-size="8.5" fill="#64748b" text-anchor="start">17</text>
+<rect x="60" y="761.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="87.25" y="772.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="122.5" y="773.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">nephrotic syndrome</text>
+<line x1="24" y1="820" x2="852" y2="820" stroke="#eef2f7"/>
+<text x="24" y="806.0" font-size="8.5" fill="#64748b" text-anchor="start">18</text>
+<rect x="60" y="795.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="87.25" y="806.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="122.5" y="807.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">pancreatitis</text>
+<line x1="24" y1="854" x2="852" y2="854" stroke="#eef2f7"/>
+<text x="24" y="840.0" font-size="8.5" fill="#64748b" text-anchor="start">19</text>
+<rect x="60" y="829.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="87.25" y="840.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="122.5" y="841.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">pneumonia</text>
+<line x1="24" y1="888" x2="852" y2="888" stroke="#eef2f7"/>
+<text x="24" y="874.0" font-size="8.5" fill="#64748b" text-anchor="start">20</text>
+<rect x="60" y="863.0" width="54.5" height="15" rx="7.5" fill="#7c3aed"/><text x="87.25" y="874.0" font-size="7.5" fill="#ffffff" text-anchor="middle" font-weight="700">DIAGNOSIS</text>
+<text x="122.5" y="875.0" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">pulmonary embolism</text>
+<text x="846" y="538.0" font-size="8" fill="#64748b" text-anchor="end">◂ n1</text>
+<text x="846" y="572.0" font-size="8" fill="#64748b" text-anchor="end">◂ n2</text>
+<text x="846" y="440.0" font-size="8" fill="#64748b" text-anchor="end">◂ n3 n4</text>
+<text x="846" y="606.0" font-size="8" fill="#64748b" text-anchor="end">◂ n5</text>
+<text x="846" y="474.0" font-size="8" fill="#64748b" text-anchor="end">◂ n6</text>
+<text x="846" y="236.0" font-size="8" fill="#64748b" text-anchor="end">◂ n7</text>
+<text x="846" y="372.0" font-size="8" fill="#64748b" text-anchor="end">◂ n8</text>
+<text x="846" y="162.0" font-size="8" fill="#64748b" text-anchor="end">◂ n9 n11 n12 n13 n14</text>
+<text x="846" y="338.0" font-size="8" fill="#64748b" text-anchor="end">◂ n10</text>
+<rect x="868" y="142.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+<circle cx="880" cy="158.0" r="9" fill="#dc2626"/><text x="880" y="161.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n1</text>
+<rect x="894" y="151.0" width="41.0" height="14" rx="7" fill="#dc2626"/><text x="914.5" y="161.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">CAUSES</text>
+<text x="943.0" y="161.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ compressive atelectasis</text>
+<rect x="894" y="176.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="901" y="176.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="908" y="176.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="915" y="176.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="176.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="184.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<rect x="868" y="204.0" width="340" height="67" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+<circle cx="880" cy="220.0" r="9" fill="#dc2626"/><text x="880" y="223.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n2</text>
+<rect x="894" y="213.0" width="41.0" height="14" rx="7" fill="#dc2626"/><text x="914.5" y="223.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">CAUSES</text>
+<text x="943.0" y="223.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ mediastinal shift</text>
+<rect x="894" y="238.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="901" y="238.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="908" y="238.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="915" y="238.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="238.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="246.0" font-size="8.5" fill="#1f2937" text-anchor="start">occasional</text>
+<text x="894" y="258.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">large effusions</text>
+<rect x="868" y="279.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#64748b" stroke-width="1"/>
+<circle cx="880" cy="295.0" r="9" fill="#64748b"/><text x="880" y="298.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n3</text>
+<rect x="894" y="288.0" width="63.5" height="14" rx="7" fill="#64748b"/><text x="925.75" y="298.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">OCCURS WITH</text>
+<text x="965.5" y="298.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">↔ pleural thickening</text>
+<rect x="868" y="341.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1"/>
+<circle cx="880" cy="357.0" r="9" fill="#7c3aed"/><text x="880" y="360.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n4</text>
+<rect x="894" y="350.0" width="68.0" height="14" rx="7" fill="#7c3aed"/><text x="928.0" y="360.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">MANIFESTS AS</text>
+<text x="970.0" y="360.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ pleural thickening</text>
+<rect x="894" y="375.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="901" y="375.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="908" y="375.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="915" y="375.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="922" y="375.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="383.0" font-size="8.5" fill="#1f2937" text-anchor="start">very frequent</text>
+<circle cx="1013.88" cy="379.5" r="4" fill="#7c3aed"/>
+<text x="1021.88" y="383.0" font-size="8.5" fill="#1f2937" text-anchor="start">suggestive</text>
+<rect x="868" y="403.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1"/>
+<circle cx="880" cy="419.0" r="9" fill="#7c3aed"/><text x="880" y="422.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n5</text>
+<rect x="894" y="412.0" width="68.0" height="14" rx="7" fill="#7c3aed"/><text x="928.0" y="422.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">MANIFESTS AS</text>
+<text x="970.0" y="422.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ split pleura sign</text>
+<rect x="894" y="437.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="901" y="437.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="908" y="437.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="915" y="437.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="437.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="445.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<path d="M990.08,436.5 L994.58,445.5 L985.58,445.5 Z" fill="#7c3aed"/>
+<text x="998.08" y="445.0" font-size="8.5" fill="#1f2937" text-anchor="start">highly suggestive</text>
+<rect x="868" y="465.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1"/>
+<circle cx="880" cy="481.0" r="9" fill="#7c3aed"/><text x="880" y="484.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n6</text>
+<rect x="894" y="474.0" width="68.0" height="14" rx="7" fill="#7c3aed"/><text x="928.0" y="484.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">MANIFESTS AS</text>
+<text x="970.0" y="484.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ nodular pleural thickening</text>
+<rect x="894" y="499.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="901" y="499.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="908" y="499.0" width="5" height="9" rx="1" fill="#7c3aed"/><rect x="915" y="499.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="499.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="507.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<path d="M990.08,498.5 L994.58,507.5 L985.58,507.5 Z" fill="#7c3aed"/>
+<text x="998.08" y="507.0" font-size="8.5" fill="#1f2937" text-anchor="start">highly suggestive</text>
+<rect x="868" y="527.0" width="340" height="54" rx="6" fill="#ffffff" stroke="#0891b2" stroke-width="1"/>
+<circle cx="880" cy="543.0" r="9" fill="#0891b2"/><text x="880" y="546.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n7</text>
+<rect x="894" y="536.0" width="72.5" height="14" rx="7" fill="#0891b2"/><text x="930.25" y="546.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">PROGRESSES TO</text>
+<text x="974.5" y="546.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ empyema</text>
+<rect x="868" y="650.0" width="340" height="67" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+<circle cx="880" cy="666.0" r="9" fill="#dc2626"/><text x="880" y="669.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n8</text>
+<rect x="894" y="659.0" width="41.0" height="14" rx="7" fill="#dc2626"/><text x="914.5" y="669.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">CAUSES</text>
+<text x="943.0" y="669.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ hepatic hydrothorax</text>
+<rect x="894" y="684.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="901" y="684.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="908" y="684.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="915" y="684.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="684.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="692.0" font-size="8.5" fill="#1f2937" text-anchor="start">occasional</text>
+<text x="894" y="704.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">expect: right pleural space in most cases</text>
+<rect x="868" y="725.0" width="340" height="67" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+<circle cx="880" cy="741.0" r="9" fill="#dc2626"/><text x="880" y="744.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n9</text>
+<rect x="894" y="734.0" width="41.0" height="14" rx="7" fill="#dc2626"/><text x="914.5" y="744.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">CAUSES</text>
+<text x="943.0" y="744.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ pleural effusion</text>
+<rect x="894" y="759.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="901" y="759.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="908" y="759.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="915" y="759.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="759.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="767.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<text x="894" y="779.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">expect: simple · bilateral, right greater than left</text>
+<rect x="868" y="800.0" width="340" height="67" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+<circle cx="880" cy="816.0" r="9" fill="#dc2626"/><text x="880" y="819.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n10</text>
+<rect x="894" y="809.0" width="41.0" height="14" rx="7" fill="#dc2626"/><text x="914.5" y="819.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">CAUSES</text>
+<text x="943.0" y="819.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ malignant pleural effusion</text>
+<rect x="894" y="834.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="901" y="834.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="908" y="834.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="915" y="834.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="834.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="842.0" font-size="8.5" fill="#1f2937" text-anchor="start">occasional</text>
+<text x="894" y="854.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">expect: large; recurs after drainage</text>
+<rect x="868" y="875.0" width="340" height="67" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+<circle cx="880" cy="891.0" r="9" fill="#dc2626"/><text x="880" y="894.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n11</text>
+<rect x="894" y="884.0" width="41.0" height="14" rx="7" fill="#dc2626"/><text x="914.5" y="894.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">CAUSES</text>
+<text x="943.0" y="894.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ pleural effusion</text>
+<rect x="894" y="909.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="901" y="909.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="908" y="909.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="915" y="909.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="909.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="917.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<text x="894" y="929.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">expect: bilateral</text>
+<rect x="868" y="950.0" width="340" height="67" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+<circle cx="880" cy="966.0" r="9" fill="#dc2626"/><text x="880" y="969.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n12</text>
+<rect x="894" y="959.0" width="41.0" height="14" rx="7" fill="#dc2626"/><text x="914.5" y="969.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">CAUSES</text>
+<text x="943.0" y="969.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ pleural effusion</text>
+<rect x="894" y="984.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="901" y="984.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="908" y="984.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="915" y="984.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="984.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="992.0" font-size="8.5" fill="#1f2937" text-anchor="start">occasional</text>
+<text x="894" y="1004.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">expect: left</text>
+<rect x="868" y="1025.0" width="340" height="80" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+<circle cx="880" cy="1041.0" r="9" fill="#dc2626"/><text x="880" y="1044.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n13</text>
+<rect x="894" y="1034.0" width="41.0" height="14" rx="7" fill="#dc2626"/><text x="914.5" y="1044.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">CAUSES</text>
+<text x="943.0" y="1044.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ pleural effusion</text>
+<rect x="894" y="1059.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="901" y="1059.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="908" y="1059.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="915" y="1059.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="1059.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="1067.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<text x="894" y="1079.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">expect: small to moderate · ipsilateral to the pneumonia</text>
+<text x="894" y="1092.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">the parapneumonic effusion subtype names this cause</text>
+<rect x="868" y="1113.0" width="340" height="67" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+<circle cx="880" cy="1129.0" r="9" fill="#dc2626"/><text x="880" y="1132.0" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">n14</text>
+<rect x="894" y="1122.0" width="41.0" height="14" rx="7" fill="#dc2626"/><text x="914.5" y="1132.0" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="700">CAUSES</text>
+<text x="943.0" y="1132.0" font-size="10.5" fill="#1f2937" text-anchor="start" font-weight="600">→ pleural effusion</text>
+<rect x="894" y="1147.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="901" y="1147.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="908" y="1147.0" width="5" height="9" rx="1" fill="#dc2626"/><rect x="915" y="1147.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="922" y="1147.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="936" y="1155.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<text x="894" y="1167.0" font-size="8" fill="#64748b" text-anchor="start" font-style="italic">expect: small · ipsilateral</text>
+<rect x="24" y="1200.0" width="1192" height="30" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+<rect x="36" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="43" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="50" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="57" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="64" y="1212.0" width="5" height="9" rx="1" fill="#475569"/>
+<text x="76" y="1220.0" font-size="8.5" fill="#1f2937" text-anchor="start">obligate</text>
+<rect x="132.08" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="139.08" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="146.08" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="153.08" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="160.08" y="1212.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="172.08" y="1220.0" font-size="8.5" fill="#1f2937" text-anchor="start">very frequent</text>
+<rect x="251.96" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="258.96000000000004" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="265.96000000000004" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="272.96000000000004" y="1212.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="279.96000000000004" y="1212.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="291.96000000000004" y="1220.0" font-size="8.5" fill="#1f2937" text-anchor="start">frequent</text>
+<rect x="348.04" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="355.04" y="1212.0" width="5" height="9" rx="1" fill="#475569"/><rect x="362.04" y="1212.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="369.04" y="1212.0" width="5" height="9" rx="1" fill="#e2e8f0"/><rect x="376.04" y="1212.0" width="5" height="9" rx="1" fill="#e2e8f0"/>
+<text x="388.04" y="1220.0" font-size="8.5" fill="#1f2937" text-anchor="start">occasional</text>
+<path d="M467.64,1211.0 L472.64,1216.0 L467.64,1221.0 L462.64,1216.0 Z" fill="#7c3aed"/>
+<text x="475.64" y="1220.0" font-size="8.5" fill="#1f2937" text-anchor="start">pathognomonic</text>
+<path d="M559.52,1211.0 L564.02,1220.0 L555.02,1220.0 Z" fill="#7c3aed"/>
+<text x="567.52" y="1220.0" font-size="8.5" fill="#1f2937" text-anchor="start">highly suggestive</text>
+<circle cx="670.4399999999999" cy="1216.0" r="4" fill="#7c3aed"/>
+<text x="678.4399999999999" y="1220.0" font-size="8.5" fill="#1f2937" text-anchor="start">suggestive</text>
+<circle cx="748.04" cy="1216.0" r="4" fill="#fff" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="756.04" y="1220.0" font-size="8.5" fill="#1f2937" text-anchor="start">none asserted</text>
+</svg>
+

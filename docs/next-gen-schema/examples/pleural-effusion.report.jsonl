@@ -1,0 +1,8 @@
+{"observation":"obs-1","subject":"RDE2_000502","location":"RID1363","laterality":"right","values":{"RDE2_000001":"present","RDE2_000013":"moderate","RDE2_000002":"increased","RDE2_000504":{"value":8,"unit":"[hnsf'U]"},"RDE2_000505":[]}}
+{"observation":"obs-2","subject":"RDE2_000502","location":"RID1363","laterality":"left","values":{"RDE2_000001":"present","RDE2_000013":"small","RDE2_000002":"new"}}
+{"observation":"obs-3","subject":"RDE2_000530","values":{"RDE2_000001":"present","RDE2_000077":"moderate"}}
+{"relation":"CAUSED_BY","from":"obs-3","to":"obs-1","expresses":"RDE2_000917"}
+{"observation":"obs-4","subject":"RDE2_000520","values":{"RDE2_000001":"present"},"confidence":"possible","note":"asserted from the clinical history, not from a finding in this report"}
+{"relation":"CAUSED_BY","from":"obs-1","to":"obs-4","expresses":"RDE2_000911"}
+{"relation":"CAUSED_BY","from":"obs-2","to":"obs-4","expresses":"RDE2_000911"}
+{"observation":"obs-5","subject":"RDE2_000510","location":"RID1363","laterality":"right","values":{"RDE2_000001":"absent"}}

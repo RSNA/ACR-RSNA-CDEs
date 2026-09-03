@@ -18,6 +18,17 @@ sources:
 
 # Next Steps and Open Threads
 
+## 0. Update, 2026-09-02
+
+The canonical graph now exists ([`graph/`](graph/README.md)), with two constellation examples ([08](./08-worked-examples.md)), a validator (`tools/graph.py check`, run by the bundle checker), a mat and tree renderer (`tools/render_cards.py`, which replaced the constellation renderer the same day after review), and a site builder (`uv run docs/next-gen-schema/tools/build_site.py`, output in gitignored `site/`). Plan and status: [`docs/plans/2026-09-02-graph-and-site.md`](../plans/2026-09-02-graph-and-site.md). Decisions taken that day are in [10](./10-decision-record-2026-09-02.md), marked by provenance; the display grammar is [09](./09-mat-and-tree.md). New open items from it:
+
+- **Authoring-guide page for patterns** (lesion, mass, process, abnormality, variant, postsurgical change, applied at a location) and a checker rule that flags a class named `<organ> lesion` departing from the pattern. Nothing in the graph ([10 S6](./10-decision-record-2026-09-02.md)).
+- **Non-imaging causes as elementless Diagnosis nodes** was taken as a working default so the effusion example could be written; reversible.
+- **The `expected` property on causal edges** is a proposal; decide whether it stays loose text keyed by element name or becomes structured.
+- **Migrate the six interim specs** into `graph/` and make `render_neighborhood.py` read the graph, then delete `spec_to_graph.py`.
+- **Publish `site/`** (GitHub Pages workflow) once the owner wants it public; the bundle checker does not build the site.
+- **RadLex proposals surfaced**: striated nephrogram, perinephric fat stranding, chylothorax; and `pleural space` (RID1363) for AnatomicLocations.org.
+
 Written 2026-08-21, right after the first commit (`a53aa62`). Read [00](./00-current-understanding.md) first for what is settled; this document is only what is *not* finished. Run `python3 docs/check_bundle.py` from the repo root before every commit; the owner approves each commit.
 
 ## 1. Immediate: context metadata as real edges to RadLex nodes
@@ -37,7 +48,7 @@ Each case was chosen to break something specific ([03 §10](./03-draft-structure
 1. **Kidney** as a location dossier: bindings on unsided `RID205` inherited by `RID29663`/`RID29662` across the laterality triad. Proves inheritance works before relying on it.
 2. **Artery** as a structure-type binding (`artery HAS_ELEMENT diameter`). **Blocked** on the is-a relation landing in AnatomicLocations.org ([04](./04-anatomy-gaps.md)).
 3. **Part-solid nodule with a solid component**: the `solid component` FindingClass (`RDE2_000130`) is referenced but not defined; define it, bind its size, and write the two-Observation report sample end to end.
-4. **Acute pyelonephritis**: diagnosis from a constellation (striated nephrogram, renal enlargement, perinephric stranding), renal abscess as a `MAY_CAUSE` complication. Renal enlargement is a kidney location binding beyond normal, so this case exercises bindings and classes together.
+4. ~~**Acute pyelonephritis**~~ Done 2026-09-02 as a graph file ([08 §2](./08-worked-examples.md)); pleural effusion done alongside it ([08 §3](./08-worked-examples.md)).
 5. **Lung cancer staging**: the stage as an assessment with T, N, M as component assessments, each `INTERPRETED_FROM` specific finding bindings and never restating their values.
 6. **Upper abdominal abnormality**: negation propagation over `SUBTYPE_OF`; the test case for [00 Issue A](./00-current-understanding.md) and the closed-world assumption.
 
@@ -45,8 +56,8 @@ Sources to draft from: the corresponding OIFM models (treated as drafts, [00 §5
 
 ## 4. Half-baked in the model
 
-- **Binding identity.** `INTERPRETED_FROM` now targets a binding ([03 §9](./03-draft-structures.md)), which means `HAS_ELEMENT` edges need ids. The canonical sample fakes the target as a path (`RID199/HAS_ELEMENT/RDE2_000090`). Decide whether bindings get `RDE2_` ids like relationships do, and fix the syntax.
-- **Canonical form syntax.** [03 §6.2](./03-draft-structures.md) shows JSON Lines, but the sorting and determinism rules are the substance and the syntax is still a choice among JSONL, Turtle, and OWL functional syntax ([00 Issue D](./00-current-understanding.md)). Nothing reads or writes the canonical form yet; the review-form generator does not exist either, only its sample.
+- **Binding identity.** Resolved 2026-09-02: bindings that must be cited carry `RDE2_` ids (`RDE2_000830` kidney length, `RDE2_000831` bile duct caliber) and `INTERPRETED_FROM` targets the id ([08 §2](./08-worked-examples.md)). The `RID199/HAS_ELEMENT/RDE2_000090` path form in [03 §9](./03-draft-structures.md) is superseded.
+- **Canonical form syntax.** JSON Lines is now implemented in [`graph/`](graph/README.md) with the sorting rules enforced by `tools/graph.py`; the choice among JSONL, Turtle, and OWL functional syntax ([00 Issue D](./00-current-understanding.md)) remains open but there is now something to convert from. The review-form generator does not exist; the site's node pages are the nearest thing.
 - **Spec format is interim.** The renderer reads bespoke `*.neighborhood.json` / `*.element.json` / `*.location.json` files. Once the canonical form exists the renderer should read that and the specs disappear.
 - **Identifiers are made up.** Every `RDE2_` id in the examples was invented on the spot (`RDE2_000123`, `RDE2_000130`, `RDE2_000502`, `RDE2_000900`, and so on) with no registry; collisions are likely as examples grow. Even a checked-in `ids.tsv` would do until real minting exists. The canonical samples in `03` §6 still use the older `FC-`/`DE-` placeholders (14 occurrences) and should move to `RDE2_`.
 - **Illustrative binders.** The `severity` and `size (mean diameter)` element dossiers list binders (lymph node, liver lesion, spinal canal stenosis, pulmonary edema, hydronephrosis) that are not defined classes. Replace them as real classes appear.

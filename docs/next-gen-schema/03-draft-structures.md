@@ -51,6 +51,8 @@ sources:
 | Node type | Carries (scalars only) | Owned by |
 |---|---|---|
 | **FindingClass** | id, name, definition, typed synonyms, `entity_type`, version, status | us — ids from the shared `RDE2_NNNNNN` namespace ([00 Issue E](./00-current-understanding.md)); samples here still show the older `FC-`/`DE-` placeholders |
+| **Diagnosis** | as FindingClass, without `entity_type` | us — separate node type agreed 2026-08-25 ([exchange §1](../../notes/review-exchange-2026-08-25-extract.md)); shares one taxonomy with FindingClass ([10 S1](./10-decision-record-2026-09-02.md)) |
+| **Grouping** | id, name, definition | us — the negative-only nodes (`renal abnormality`) that sit above findings and diagnoses alike; added 2026-09-02 ([10 S8](./10-decision-record-2026-09-02.md)) |
 | **DataElement** | id, name, definition, typed synonyms, kind (categorical/quantitative), cardinality, ordinality, quantity type + permitted units + method, version, status | us |
 | **Value domain** | whether ordered | the element's own enumerated domain (ISO 11179 *value domain*; `owl:oneOf` of its Values) — owned by the element, not separately identified |
 | **Value** | id = `{element id}.{n}`, name, machine value = slug of the name, definition | us — first-class: an ISO 11179 *permissible value*; own index codes (LOINC LA codes fit here). Ids derive from the element (`RDE2_000001.0`, `.1`, …), so a value belongs to exactly one element; scale reuse is element reuse |
@@ -65,7 +67,7 @@ Identity metadata every owned node also carries: index codes, contributors, refe
 
 | Edge | From → To | Properties on the edge | Why |
 |---|---|---|---|
-| `HAS_ELEMENT` | FindingClass **or AnatomicLocation** → DataElement | own id ⟨?⟩, `required`, contextual note | the decoupling decision; this is the binding edge [00 §6](./00-current-understanding.md) says needs a name. Bound to a location it describes a normal structure (§9) and inherits down the anatomy |
+| `HAS_ELEMENT` | FindingClass **or AnatomicLocation** → DataElement | own id, contextual note (a `required` flag was carried here until 2026-09-02 and removed: there is no such thing as a required element, [08 §2](./08-worked-examples.md)) | the decoupling decision; this is the binding edge [00 §6](./00-current-understanding.md) says needs a name. Bound to a location it describes a normal structure (§9) and inherits down the anatomy |
 | `rdfs:range` | DataElement → its value domain | — | the domain is an `owl:oneOf` enumeration of the element's Values (FHIR: a *binding*; 11179: an enumerated value domain) |
 | `skos:member` | value domain → Value | rank (if ordered) | 11179: permissible values; `skos:OrderedCollection` carries ordinality |
 | `SCOPED_TO` | FindingClass → AnatomicLocation | `kind` (structure/region/type), `strength` | anatomic scope guidance [01 §2](./01-what-the-vocabulary-must-express.md) |
@@ -74,6 +76,8 @@ Identity metadata every owned node also carries: index codes, contributors, refe
 | `HAS_ETIOLOGY` · `IN_REGION` · `IN_SUBSPECIALTY` · `SEEN_ON` · `AGE_*` · `TIME_COURSE` | FindingClass → concept node | — | discoverability: "every malignant finding" is a traversal |
 
 Edge properties are why the formalism question ([00 Issue D](./00-current-understanding.md)) lands on named graphs / annotated axioms: `required` lives on `HAS_ELEMENT`, not on either node.
+
+**Since 2026-09-02** ([08](./08-worked-examples.md)): `INTERPRETED_FROM` runs from any FindingClass or Diagnosis that interprets a measurement, not only from assessments; `HAS_ELEMENT` edges that must be cited carry `RDE2_` ids (the binding-identity question of [06 §4](./06-next-steps.md), resolved); the causal pair carries `typicality` and a proposed `expected` property of value hints; and the canonical form of §6.2 exists as [`graph/`](graph/README.md), read by the validator, the constellation renderer, and the site builder.
 
 ### 2.1 Plain values versus formal relationships
 

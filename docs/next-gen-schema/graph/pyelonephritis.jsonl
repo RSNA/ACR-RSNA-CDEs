@@ -1,0 +1,93 @@
+{"definition":"Bacterial infection of the renal parenchyma and collecting system.","id":"RDE2_000800","name":"pyelonephritis","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Pyelonephritis in its acute phase: edema and tubular obstruction that produce the imaging manifestations below. A subtype rather than an acuity element because acute and chronic disease manifest differently (subtype-over-attribute rule, 2026-08-25 exchange).","id":"RDE2_000801","name":"acute pyelonephritis","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Alternating linear bands of higher and lower attenuation radiating from the papilla to the cortex on contrast-enhanced CT, or the equivalent on MR, from tubular obstruction and interstitial edema.","entity_type":"finding","id":"RDE2_000802","name":"striated nephrogram","node":"FindingClass","note":"No RadLex concept; the nearest is spotted nephrogram (RID35573). Candidate for upstream proposal.","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Increased attenuation with linear or hazy strands in the perirenal fat.","entity_type":"finding","id":"RDE2_000803","name":"perinephric fat stranding","node":"FindingClass","note":"No RadLex or SNOMED concept found. Candidate for upstream proposal.","status":"proposed","status_date":"2026-09-02","synonyms":[{"term":"perinephric stranding","type":"synonym"}],"version":1}
+{"definition":"Renal length beyond the expected range for age and body size. An interpretation of the renal length binding, not a measurement of its own (03 §9).","entity_type":"finding","id":"RDE2_000804","name":"renal enlargement","node":"FindingClass","status":"proposed","status_date":"2026-09-02","synonyms":[{"term":"nephromegaly","type":"synonym"}],"version":1}
+{"definition":"Gas within the renal parenchyma, as distinct from gas in the collecting system.","entity_type":"finding","id":"RDE2_000805","name":"renal parenchymal gas","node":"FindingClass","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Focal cortical thinning with retraction of the overlying contour, typically over a blunted calyx.","entity_type":"finding","id":"RDE2_000806","name":"renal cortical scarring","node":"FindingClass","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"A focal abnormality of the renal parenchyma not yet characterized. The lesion pattern applied at the kidney: a positively reportable class, so an ordinary FindingClass rather than a grouping node.","entity_type":"finding","id":"RDE2_000807","name":"renal lesion","node":"FindingClass","status":"proposed","status_date":"2026-09-02","synonyms":[{"term":"renal mass","type":"synonym"}],"version":1}
+{"definition":"Dilation of the renal collecting system.","entity_type":"finding","id":"RDE2_000808","name":"hydronephrosis","node":"FindingClass","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"A walled-off collection of pus within the renal parenchyma.","id":"RDE2_000809","name":"renal abscess","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Pyelonephritis with established parenchymal damage from prior or recurrent infection.","id":"RDE2_000811","name":"chronic pyelonephritis","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Necrotizing infection of the renal parenchyma by gas-forming organisms.","id":"RDE2_000812","name":"emphysematous pyelonephritis","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","version":1}
+{"definition":"Chronic granulomatous destruction of the renal parenchyma, usually with an obstructing staghorn calculus.","id":"RDE2_000813","name":"xanthogranulomatous pyelonephritis","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","synonyms":[{"term":"XGP","type":"abbreviation"}],"version":1}
+{"definition":"Any abnormality of the kidney. A negative-only node: reported as 'no renal abnormality' and never asserted in the positive; the closed-world negation sweep applies here.","id":"RDE2_000814","name":"renal abnormality","node":"Grouping","status":"proposed","version":1}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000800","to":"RDE2_001200"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000800","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000801","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000802","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000802","to":"RDE2_000020"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000803","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000803","to":"RDE2_000077"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000804","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000805","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000806","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000806","to":"RDE2_000020"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000807","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000807","to":"RDE2_000014"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000808","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000808","to":"RDE2_000077"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000809","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000809","to":"RDE2_000014"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000811","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000812","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000813","to":"RDE2_000001"}
+{"edge":"HAS_ETIOLOGY","from":"RDE2_000800","to":"RDE2_001002"}
+{"edge":"HAS_ETIOLOGY","from":"RDE2_000809","to":"RDE2_001002"}
+{"edge":"INTERPRETED_FROM","from":"RDE2_000804","to":"RDE2_000830"}
+{"edge":"IN_REGION","from":"RDE2_000800","to":"RID56"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000800","to":"RID50608"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000800","to":"RID50614"}
+{"edge":"MAY_CAUSE","from":"RDE2_000801","id":"RDE2_000907","props":{"note":"assumes 07 Q2 answered yes: the causal pair takes typicality","typicality":"occasional"},"to":"RDE2_000809"}
+{"edge":"MAY_MANIFEST_AS","from":"RDE2_000801","id":"RDE2_000902","props":{"specificity":"highly_suggestive","typicality":"frequent"},"to":"RDE2_000802"}
+{"edge":"MAY_MANIFEST_AS","from":"RDE2_000801","id":"RDE2_000903","props":{"specificity":"suggestive","typicality":"frequent"},"to":"RDE2_000803"}
+{"edge":"MAY_MANIFEST_AS","from":"RDE2_000801","id":"RDE2_000904","props":{"typicality":"frequent"},"to":"RDE2_000804"}
+{"edge":"MAY_MANIFEST_AS","from":"RDE2_000811","id":"RDE2_000906","props":{"typicality":"very_frequent"},"to":"RDE2_000806"}
+{"edge":"MAY_MANIFEST_AS","from":"RDE2_000812","id":"RDE2_000905","props":{"specificity":"pathognomonic","typicality":"obligate"},"to":"RDE2_000805"}
+{"edge":"MAY_PROGRESS_TO","from":"RDE2_000801","id":"RDE2_000908","to":"RDE2_000811"}
+{"edge":"OCCURS_WITH","from":"RDE2_000801","id":"RDE2_000909","props":{"note":"obstruction predisposes; an obstructed infected system is pyonephrosis, not modeled here"},"to":"RDE2_000808"}
+{"edge":"SCOPED_TO","from":"RDE2_000800","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000802","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000803","props":{"kind":"structure","strength":"required"},"to":"RID434"}
+{"edge":"SCOPED_TO","from":"RDE2_000804","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000805","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000806","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000807","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000808","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000809","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000814","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SEEN_ON","from":"RDE2_000800","to":"RID10312"}
+{"edge":"SEEN_ON","from":"RDE2_000800","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000800","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000802","to":"RID10312"}
+{"edge":"SEEN_ON","from":"RDE2_000802","to":"RID10321"}
+{"edge":"SEX","from":"RDE2_000800","to":"RDE2_001101"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000800","to":"RDE2_000814"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000801","to":"RDE2_000800"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000802","to":"RDE2_000814"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000803","to":"RDE2_000814"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000804","to":"RDE2_000814"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000805","to":"RDE2_000814"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000806","to":"RDE2_000814"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000807","to":"RDE2_000814"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000808","to":"RDE2_000814"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000809","to":"RDE2_000807"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000811","to":"RDE2_000800"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000812","to":"RDE2_000801"}
+{"edge":"SUBTYPE_OF","from":"RDE2_000813","to":"RDE2_000811"}
+{"edge":"TIME_COURSE","from":"RDE2_000801","to":"RDE2_001303"}
+{"edge":"TIME_COURSE","from":"RDE2_000801","to":"RDE2_001404"}
+{"edge":"closeMatch","from":"RDE2_000806","props":{"display":"Renal scarring"},"to":"SNOMEDCT:441872001"}
+{"edge":"closeMatch","from":"RDE2_000807","props":{"display":"kidney mass"},"to":"RADLEX:RID50658"}
+{"edge":"closeMatch","from":"RDE2_000807","props":{"display":"Renal mass"},"to":"SNOMEDCT:309088003"}
+{"edge":"exactMatch","from":"RDE2_000800","props":{"display":"pyelonephritis"},"to":"RADLEX:RID3547"}
+{"edge":"exactMatch","from":"RDE2_000800","props":{"display":"Pyelonephritis"},"to":"SNOMEDCT:45816000"}
+{"edge":"exactMatch","from":"RDE2_000801","props":{"display":"Acute pyelonephritis"},"to":"SNOMEDCT:36689008"}
+{"edge":"exactMatch","from":"RDE2_000804","props":{"display":"Large kidney"},"to":"SNOMEDCT:300444006"}
+{"edge":"exactMatch","from":"RDE2_000808","props":{"display":"hydronephrosis"},"to":"RADLEX:RID34393"}
+{"edge":"exactMatch","from":"RDE2_000808","props":{"display":"Hydronephrosis"},"to":"SNOMEDCT:43064006"}
+{"edge":"exactMatch","from":"RDE2_000809","props":{"display":"Renal abscess"},"to":"SNOMEDCT:3321001"}
+{"edge":"exactMatch","from":"RDE2_000811","props":{"display":"Chronic pyelonephritis"},"to":"SNOMEDCT:63302006"}
+{"edge":"exactMatch","from":"RDE2_000812","props":{"display":"Emphysematous pyelonephritis"},"to":"SNOMEDCT:236373001"}
+{"edge":"exactMatch","from":"RDE2_000813","props":{"display":"xanthogranulomatous pyelonephritis"},"to":"RADLEX:RID3707"}
+{"edge":"exactMatch","from":"RDE2_000813","props":{"display":"Xanthogranulomatous pyelonephritis"},"to":"SNOMEDCT:38898003"}

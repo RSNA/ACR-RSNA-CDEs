@@ -1,0 +1,9 @@
+{
+  "title": "Acute pyelonephritis: a diagnosis tree, the findings it manifests as, and what it causes",
+  "aria": "The renal abnormality grouping box contains the pyelonephritis diagnosis tree on the left and the renal findings on the right, with manifestation, causal, progression and co-occurrence edges between them.",
+  "nodes": [
+    "RDE2_000814", "RDE2_000800", "RDE2_000801", "RDE2_000812", "RDE2_000811", "RDE2_000813",
+    "RDE2_000802", "RDE2_000803", "RDE2_000804", "RDE2_000805", "RDE2_000808", "RDE2_000806",
+    "RDE2_000807", "RDE2_000809"
+  ]
+}

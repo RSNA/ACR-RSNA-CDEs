@@ -94,7 +94,7 @@ def elem_card(x, y, w, e):
          f'<text x="{x+16}" y="{y+37}" font-size="9.5" fill="{subcol}">{esc(sub)}</text>')
     for i, dl in enumerate(dlines):
         s += f'<text x="{x+16}" y="{y+54+16*i}" font-size="10.5" fill="{INK}">{esc(dl)}</text>'
-    prop = " · ".join(filter(None, ["required" if e.get("required") else None, e.get("edge_note")]))
+    prop = e.get("edge_note") or ""
     if prop:
         s += f'<text x="{x+w-12}" y="{y+20}" text-anchor="end" font-size="9.5" font-style="italic" fill="{MUTED}">{esc(prop)}</text>'
     py = y + 46 + 16 * len(dlines)
@@ -301,7 +301,7 @@ def render_element(spec):
     if bb:
         def binder(x, y, b):
             a2, dark2 = ACCENT["class"]
-            sub = " · ".join(filter(None, [b.get("id"), "required" if b.get("required") else None]))
+            sub = b.get("id") or ""
             w = max(tw(b["name"], 13), tw(sub, 9.5)) + 34
             h = 46
             s = (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="7" fill="#ffffff" stroke="{CARD_BORDER}"/>'
@@ -318,7 +318,7 @@ def render_element(spec):
                     s, w, h = binder(cx, cy, b)
                 frags.append(s); cx += w + 12; rowh = max(rowh, h)
             return "".join(frags), cy + rowh - cy0
-        full_section(f'BOUND BY — HAS_ELEMENT in-degree ×{len(bb)} · per-binding required', content)
+        full_section(f'BOUND BY — HAS_ELEMENT in-degree ×{len(bb)}', content)
 
     maps = spec.get("mappings", [])
     if maps:
