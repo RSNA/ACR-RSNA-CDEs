@@ -2,6 +2,12 @@
 
 Change history for the next-gen schema bundle, newest first. Decisions are recorded in [10](10-decision-record-2026-09-02.md); this log records what changed in the bundle and when.
 
+## 2026-09-04
+
+**Research** added [ontology background and follow-up questions](../../notes/ontology-background-research-2026-09-04.md), connecting primary standards to proposed examples for target identity, assertion context, negation, formal semantics, mappings, and diagnostic reasoning. Recommendations remain separate from model decisions.
+
+**Update** integrating knowledge that had only lived in the working session: the Hood taxonomy profile as a note with a `SOURCES.md` entry; the code-lookup policy folded into 03 §2.1 and an "adding a node" step in the graph README; the purpose of the pictures at the top of 09; the observation that only relationship sourcing now separates Diagnosis from FindingClass, in 03 §1 and 07; a pointer from 07's open question 2 to 10 S18. Process and tooling kept apart in a new [`tools/README.md`](tools/README.md) and a lessons section in the exploration review.
+
 ## 2026-09-03
 
 **Report plane, second round.** Added “Right kidney is unremarkable” as an absent renal-abnormality Observation, bound presence to both negative-only Grouping nodes, restricted anatomy in the report picture to referenced locations and scope paths, and made every observation- and definition-space relationship visibly land with source dots and target arrowheads.

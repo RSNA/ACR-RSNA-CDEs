@@ -22,6 +22,12 @@ Retrieved 2026-07-29. These are verbatim copies apart from a locally prepended O
 
 All three were circulated together as the starting material for the schema review (see [`docs/next-gen-schema/02-review-questions.md`](../docs/next-gen-schema/02-review-questions.md)), with the caveat from their author that they are "AI-organized distilled notes from hours of detailed interactions," intended to be further distilled into prompts rather than read as specifications.
 
+## Test material
+
+| File | Source | What it is |
+|---|---|---|
+| `hood-taxonomies-profile-2026-09-01.md` | https://github.com/openimagingdata/findingmodels/tree/main/lists, exported 2026-08-15, local checkout at `../findingmodels/lists` | A measured profile of Michael Hood's six per-modality finding taxonomies, used as test material for the vocabulary; the lists themselves are not copied here |
+
 ## Sanitized extracts of committee material
 
 The raw committee material — a slide deck, meeting minutes, meeting notes, and an initial written proposal — was not written for publication and is kept out of the repository (in the gitignored `raw_sources/` directory). What is committed instead are extracts preserving the substantive technical content with participants' identifying details removed.
@@ -51,6 +57,10 @@ The appendix to the exchange extract records a verification of the two candidate
 |---|---|
 | `source-review-2026-08-20.md` | Radiopaedia, Radiology Assistant, and Wikipedia articles on pulmonary and thyroid nodules, Lung-RADS, Fleischner, and ACR TI-RADS; URLs in the file's frontmatter |
 | `ihe-idr-extract.md` | IHE RAD IDR Phase II, Rev. 1.2 public-comment draft (2026-03-04): https://www.ihe.net/uploadedFiles/Documents/Radiology/IHE_RAD_Suppl_IDR_PhII_Rev1-2_PC_2026-03-04.pdf — read directly, 2026-08-21 |
+
+## Ontology background research, September 2026
+
+[`ontology-background-research-2026-09-04.md`](ontology-background-research-2026-09-04.md) synthesizes a requested GPT-5.6 Sol web survey and independent review of the branch. Primary sources and proposed follow-ups are cited in the note; it records research and recommendations, not approved vocabulary changes.
 
 ## Not retained
 

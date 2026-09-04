@@ -38,6 +38,10 @@ An edge: `{"edge": "<TYPE>", "from": "<id>", "to": "<id>", "id": "<optional reif
 
 Nodes sorted by `id`; then edges sorted by `(edge, from, to, id)`; keys sorted within each object; compact separators; UTF-8 with no escaping. `graph.py normalize` produces exactly this and the bundle checker fails if a file drifts from it, so a diff on these files is always a semantic diff.
 
+## Adding a node
+
+Write the node and its edges into the family's file, look up its codes under the policy of [03 §2.1](../03-draft-structures.md) (mechanics in [`tools/README.md`](../tools/README.md)), point context edges at entries in `concepts.jsonl`, run `graph.py normalize`, regenerate any committed diagram the node appears in, and run the bundle checker.
+
 ## Identifiers
 
 All owned nodes and reified edges share the `RDE2_NNNNNN` space. No registry exists yet ([06 §4](../06-next-steps.md)); the validator rejects duplicates across files, which is the interim registry. Blocks used so far, all invented for the examples:

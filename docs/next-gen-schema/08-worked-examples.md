@@ -120,4 +120,4 @@ The JSON Lines ground truth is [`examples/pyelonephritis.report.jsonl`](examples
 
 ## 6. Sources
 
-Codes were looked up through the molu command-line tool against BioPortal and UMLS on 2026-09-01 and 2026-09-02, with exact-label matches preferred and near matches recorded as `closeMatch`. Malignant pleural effusion has no exact SNOMED CT concept returned by search and is left unmapped rather than guessed. The Hood taxonomies are the per-modality finding lists in the openimagingdata findingmodels repository, exported 2026-08-15.
+Codes were looked up through the molu command-line tool against BioPortal and UMLS on 2026-09-01 and 2026-09-02, with exact-label matches preferred and near matches recorded as `closeMatch`. Malignant pleural effusion has no exact SNOMED CT concept returned by search and is left unmapped rather than guessed. The Hood taxonomies are the per-modality finding lists in the openimagingdata findingmodels repository, exported 2026-08-15; their shape and the numbers cited here are in [the profile](../../notes/hood-taxonomies-profile-2026-09-01.md).

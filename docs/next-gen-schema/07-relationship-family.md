@@ -34,7 +34,7 @@ sources:
 
 **Status:** Draft for review. This answers the request in the [25 August exchange](../../notes/review-exchange-2026-08-25-extract.md): a tentative, explicitly non-comprehensive catalog of the relationships needed between findings and diagnoses, to validate against the proposed edge object. Prior-art surveys were run 2026-09-01; primary sources are cited inline.
 
-**Framing.** Everything here is a **class-level potential** in the vocabulary plane. A report edge between two Observations expresses a vocabulary relationship and can cite it ([03 §5](./03-draft-structures.md)); nothing here obliges any report to contain anything. With Diagnosis now agreed to be its own node type ([exchange §1](../../notes/review-exchange-2026-08-25-extract.md)), each relationship states its domain and range. F is FindingClass, D is Diagnosis, A is Assessment, G is the Grouping node type added on 2026-09-02 ([10 S8](./10-decision-record-2026-09-02.md)).
+**Framing.** Everything here is a **class-level potential** in the vocabulary plane. Since the taxonomy is one and unrestricted (10 S1), the domain column below is the only structural thing that separates a Diagnosis from a FindingClass: a diagnosis is what can source `MAY_MANIFEST_AS`. That is a Claude observation recorded so the two-node-type decision can be revisited with it in view. A report edge between two Observations expresses a vocabulary relationship and can cite it ([03 §5](./03-draft-structures.md)); nothing here obliges any report to contain anything. With Diagnosis now agreed to be its own node type ([exchange §1](../../notes/review-exchange-2026-08-25-extract.md)), each relationship states its domain and range. F is FindingClass, D is Diagnosis, A is Assessment, G is the Grouping node type added on 2026-09-02 ([10 S8](./10-decision-record-2026-09-02.md)).
 
 **Out of scope:** the anatomy family (`SCOPED_TO`, `ADJACENT_TO`), element bindings (`HAS_ELEMENT`), and the context edges to concept nodes ([03 §2](./03-draft-structures.md)). Those are separate families; keeping them out of this catalog is deliberate.
 
@@ -153,7 +153,7 @@ Relationship types form their own hierarchy: a later, finer type can be declared
 ## 7. Open questions for review
 
 1. Does `OCCURS_WITH` need an association-strength property, or is untyped co-occurrence enough for alpha?
-2. Does the causal pair take typicality (§3.2, last paragraph)?
+2. Does the causal pair take typicality (§3.2, last paragraph)? Assumed yes in the worked examples so they could be written (10 S18, a Claude default); still not decided.
 3. `typicality: excluded` on an edge named `MAY_MANIFEST_AS` (§3.1): live with the naming tension, or split a negative edge type?
 4. The conditionality fork ([exchange §2](../../notes/review-exchange-2026-08-25-extract.md), [`conditional-relationships-memo`](../../notes/conditional-relationships-memo.md)) is unresolved and constrains `MAY_HAVE_COMPONENT`; this catalog takes no position.
 5. Whether relation types themselves carry mappings to their prior-art counterparts (e.g. `MAY_CAUSE` skos:exactMatch RadLex `May_Cause`) or the table above stays documentation.

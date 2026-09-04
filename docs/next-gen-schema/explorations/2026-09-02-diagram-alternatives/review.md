@@ -53,6 +53,17 @@ Both exposed the same two graph gaps rather than rendering faults: acute pyelone
 
 The owner's review of round two: the mats were the right direction but the layout had to be drastically tightened and the type was too small; edge properties should be a dotted box under the linked card carrying only typicality and specificity; subspecialty was missing; and neither tree worked, the tree should be an expanding outline of the mini-cards with relationships appearing on hover or click. Those became D9, D19, D20, D21, and D22.
 
+## What the exploration taught about briefing agents
+
+Process knowledge, kept here because this is the record of the process; the reusable form is in [`tools/README.md`](../../tools/README.md).
+
+- A prose brief with a ranked list produced eight designs that were easy to compare but hard to steer; a decision record with numbered, owner-marked rules produced two mats that were structurally right on the first try. Brief with the record.
+- "No overlaps" as the success criterion was met by both round-two agents in the same way: inflate every frame and shrink the type. Density has to be stated in numbers (type sizes, card heights, cards per row), or it will be traded away.
+- Both round-two attempts exposed gaps in the graph rather than faults in rendering (missing scope and context on subtypes, no element-level codes). Expect a rendering round to be partly a data round.
+- Codex declined the one requirement it judged unsolvable (labelled edges on the tree) and documented why; Kimi attempted it and the owner rejected the result. Both outcomes were useful, and the requirement was withdrawn. Ask for the attempt anyway.
+- Agents that rasterized and looked at their own output fixed real defects before delivery; the one that did not needed a review round for the same defects.
+- Keep each agent in its own gitignored directory and forbid edits under `docs/`; merging is the reviewer's job.
+
 ## What survived
 
 From claude-a: containment, the edge's facts written at one end. From claude-b: nothing drawn, but its anatomy lane made the case that anatomy belongs on the face instead. From Kimi's annotated outline and Kimi's round-two mat: the shape of the tree and the density of the final mat. From Codex round two: the hover detail's contents. From the owner: everything in the D section of the decision record.

@@ -22,8 +22,13 @@ Material from the working sessions that followed the analysis bundle being pushe
 
 # Standards Extracts
 
+* [Profile of the Hood Finding Taxonomies](hood-taxonomies-profile-2026-09-01.md) - What the six per-modality finding taxonomies by Michael Hood contain and how they are shaped, measured on 2026-09-01 from the 2026-08-15 export - row counts, typing, hierarchy depth, the recurring name patterns, and the structural facts the vocabulary work draws on.
 * [Source Review of Nodule Content](source-review-2026-08-20.md) - Findings from checking the pulmonary-nodule and thyroid-nodule example content against Radiopaedia, Radiology Assistant, and Wikipedia on 2026-08-20, including foundational content those pages suggest the vocabulary should capture.
 * [IHE IDR Phase II — Extract](ihe-idr-extract.md) - What the IHE Imaging Diagnostic Report (IDR) Phase II public-comment draft says about encoding findings as FHIR Observations — the grammar this vocabulary must fit — read directly from the supplement.
+
+# Research and Discussion
+
+* [Ontology Background Research and Follow-up Questions](ontology-background-research-2026-09-04.md) - Primary-source background and proposed worked examples for target identity, assertion context, negation, formal semantics, terminology mappings, and diagnostic reasoning in the next-generation CDE vocabulary.
 
 # OIFM Reference Copies
 

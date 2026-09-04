@@ -24,6 +24,8 @@ sources:
 
 ## 1. Two pictures
 
+**What they are for.** The committee that has to approve the vocabulary is made of radiologists, not ontologists. A picture earns its place when one of them can look at a real clinical family and, in under a minute, either agree that the model says what they believe or point at the thing that is wrong. The picture is an argument to be argued with, not decoration, and every rule below serves that. (Claude's framing, carried over from the first brief; the owner's own framing is the tabletop card deck of D4.)
+
 There are two generated pictures, and they split cleanly (D7):
 
 - **The mat** is the view of one object, the *context object*, one hop out. It is what a node's page on the site shows, and what a worked example shows when the context object is the family's hub.
