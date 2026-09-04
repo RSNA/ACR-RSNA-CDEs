@@ -140,6 +140,7 @@ for d in BUNDLE_DIRS:
 # ---------------------------------------------------------------- 5. diagrams in sync with specs
 tool_n = os.path.join(ROOT, "docs/next-gen-schema/tools/render_neighborhood.py")
 tool_c = os.path.join(ROOT, "docs/next-gen-schema/tools/render_cards.py")
+tool_r = os.path.join(ROOT, "docs/next-gen-schema/tools/render_report.py")
 spec_map = {"examples/pulmonary-nodule.neighborhood.json": (tool_n, "diagrams/fc-neighborhood.svg"),
             "examples/thyroid-nodule.neighborhood.json": (tool_n, "diagrams/thyroid-neighborhood.svg"),
             "examples/presence.element.json": (tool_n, "diagrams/de-presence.svg"),
@@ -149,7 +150,8 @@ spec_map = {"examples/pulmonary-nodule.neighborhood.json": (tool_n, "diagrams/fc
             "examples/pleural-effusion.mat.json": (tool_c, "diagrams/mat-pleural-effusion.svg"),
             "examples/acute-pyelonephritis.mat.json": (tool_c, "diagrams/mat-acute-pyelonephritis.svg"),
             "examples/pleural-abnormality.tree.json": (tool_c, "diagrams/tree-pleural-abnormality.svg"),
-            "examples/renal-abnormality.tree.json": (tool_c, "diagrams/tree-renal-abnormality.svg")}
+            "examples/renal-abnormality.tree.json": (tool_c, "diagrams/tree-renal-abnormality.svg"),
+            "examples/pyelonephritis.report.jsonl": (tool_r, "diagrams/report-pyelonephritis.svg")}
 base = os.path.join(ROOT, "docs/next-gen-schema")
 # the canonical graph: valid, and every file byte-exact in canonical order
 gcheck = subprocess.run([sys.executable, os.path.join(base, "tools/graph.py"), "check"], capture_output=True)

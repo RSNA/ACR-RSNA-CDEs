@@ -1,7 +1,7 @@
 ---
 type: Worked Example
-title: Two Worked Examples, Acute Pyelonephritis and Pleural Effusion
-description: Acute pyelonephritis and pleural effusion worked through as canonical graph files - what each exercises, what writing it broke, and which of its facts are verified and which are Claude's unreviewed clinical estimates.
+title: Worked Examples, Acute Pyelonephritis, Pleural Effusion, and One Report
+description: Acute pyelonephritis and pleural effusion worked through as canonical graph files, plus one report drawn across observation and definition planes.
 tags: [next-gen-schema, examples, content, pyelonephritis, pleural-effusion, graph]
 status: draft
 generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1"], at: 2026-09-02 }
@@ -28,7 +28,7 @@ sources:
     title: SNOMED CT via BioPortal, codes verified the same way
 ---
 
-# Two Worked Examples, Acute Pyelonephritis and Pleural Effusion
+# Worked Examples, Acute Pyelonephritis, Pleural Effusion, and One Report
 
 **Status:** Draft. The two examples exist as graph files ([`graph/pyelonephritis.jsonl`](graph/pyelonephritis.jsonl), [`graph/pleural-effusion.jsonl`](graph/pleural-effusion.jsonl)), as the mats and trees under `diagrams/` generated from those files by the renderer of [09](./09-mat-and-tree.md), and as pages in the generated site ([`graph/README.md`](graph/README.md) has the build commands). This document is about *content*: what each example exercises, what writing it broke, and where its facts came from. The structural decisions that writing them forced are recorded in [10](./10-decision-record-2026-09-02.md), sorted by provenance, and applied in [01](./01-what-the-vocabulary-must-express.md), [03](./03-draft-structures.md), and [07](./07-relationship-family.md).
 
@@ -68,7 +68,7 @@ All three specificity values of [07 §3.2](./07-relationship-family.md) occur in
 
 **There are no required elements.** The `required` property that earlier drafts carried on `HAS_ELEMENT` edges was removed from the graph, the specs, and the renderers on 2026-09-02; presence is an ordinary attribute row.
 
-**Renal enlargement is the [03 §9](./03-draft-structures.md) pattern.** The `length` element (`RDE2_000092`) is bound to the unsided kidney by a `HAS_ELEMENT` edge that carries an id, `RDE2_000830`; `renal enlargement INTERPRETED_FROM RDE2_000830`. This resolves the binding-identity question in [06 §4](./06-next-steps.md): bindings that must be cited get `RDE2_` ids like relationships do. The report sample ([`examples/pyelonephritis.report.jsonl`](examples/pyelonephritis.report.jsonl)) measures the left kidney, asserts enlargement as a second Observation interpreting the first, and cites the binding.
+**Renal enlargement is the [03 §9](./03-draft-structures.md) pattern.** The `length` element (`RDE2_000092`) is bound to the unsided kidney by a `HAS_ELEMENT` edge that carries an id, `RDE2_000830`; `renal enlargement INTERPRETED_FROM RDE2_000830`. This resolves the binding-identity question in [06 §4](./06-next-steps.md): bindings that must be cited get `RDE2_` ids like relationships do. The text-anchored report sample is now the two-plane example in §4.
 
 **What it broke, and how it was fixed:**
 
@@ -96,7 +96,21 @@ One finding node, its diagnosis subtypes, and the causes that point at it. In [`
 
 **The report sample** ([`examples/pleural-effusion.report.jsonl`](examples/pleural-effusion.report.jsonl)) has bilateral effusions as two Observations on the sided pleural spaces, compressive atelectasis caused by the larger one, heart failure asserted from the history with possible confidence, and empyema explicitly absent on the right.
 
-## 4. What the two examples share
+## 4. One report, two planes
+
+![One report sentence drawn across observation and definition planes](diagrams/report-pyelonephritis.svg)
+
+The two sentences produce six Observations in reading order: a present striated nephrogram; present mild hydronephrosis; present perinephric stranding; present pyelonephritis with the report's phrase “consistent with” retained as confidence; an absent renal abscess; and an absent renal abnormality from “Right kidney is unremarkable.” Each card points to what it is, where it is, and the data elements that carry its values. Every content value in this exercise is hypothetical.
+
+The vocabulary scopes pyelonephritis, hydronephrosis, renal abscess, and renal abnormality to `kidney` (RID205). The left-sided report Observations point to `left kidney` (RID29663), and the unremarkable Observation points to `right kidney` (RID29662); each sided kidney's explicit `SUBTYPE_OF kidney` edge satisfies the unsided scope. Perinephric stranding works the same way: its Observation is in `left perirenal space` (RID32987), which is a subtype of `perirenal space` (RID434), where the class is scoped. Only anatomy touched by report locations, scope targets, and the is-a paths between them appears.
+
+The sixth Observation gives the negative-only `renal abnormality` Grouping node a concrete report-plane role. Its presence value is `absent` at the right kidney, so “unremarkable” is a real Observation rather than an omitted positive finding, and the closed-world negation sweep of [03](./03-draft-structures.md) has an assertion to hang on.
+
+The two relationship systems do different work. In definition space the committee states once that `acute pyelonephritis MAY_MANIFEST_AS striated nephrogram`: a standing potential between classes. In observation space “consistent with” is the radiologist putting these particular findings together as this particular diagnosis, represented provisionally by three `SUPPORTS` edges. The absent abscess is connected to the diagnosis Observation by `ASSOCIATED_WITH`; the absence is its presence value, not a negated edge. None of the report edges points to a vocabulary relationship. Their correspondence is visible in the parallel structures.
+
+The JSON Lines ground truth is [`examples/pyelonephritis.report.jsonl`](examples/pyelonephritis.report.jsonl); `tools/render_report.py` validates it and generates the picture.
+
+## 5. What the two examples share
 
 - **Both need the Grouping node type** (10 S8): `renal abnormality` and `pleural abnormality`, each a negative-only parent of findings and diagnoses alike.
 - **Both cross the finding-diagnosis line in the taxonomy** (10 S1): renal abscess under renal lesion, six diagnoses under pleural effusion.
@@ -104,6 +118,6 @@ One finding node, its diagnosis subtypes, and the causes that point at it. In [`
 - **Both surfaced RadLex gaps** that the upstream-proposal workflow should carry: striated nephrogram, perinephric fat stranding, chylothorax, and a pleural space node in AnatomicLocations.org.
 - **Neither has an assessment.** No standardized scheme scores either family, which is the ordinary case and worth having on record.
 
-## 5. Sources
+## 6. Sources
 
 Codes were looked up through the molu command-line tool against BioPortal and UMLS on 2026-09-01 and 2026-09-02, with exact-label matches preferred and near matches recorded as `closeMatch`. Malignant pleural effusion has no exact SNOMED CT concept returned by search and is left unmapped rather than guessed. The Hood taxonomies are the per-modality finding lists in the openimagingdata findingmodels repository, exported 2026-08-15.

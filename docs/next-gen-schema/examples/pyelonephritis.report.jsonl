@@ -1,10 +1,11 @@
-{"observation":"obs-1","subject":"RID29663","values":{"RDE2_000092":{"value":14.1,"unit":"cm"}}}
-{"observation":"obs-2","subject":"RDE2_000804","location":"RID29663","values":{"RDE2_000001":"present"}}
-{"relation":"INTERPRETATION_OF","from":"obs-2","to":"obs-1","expresses":"RDE2_000830"}
-{"observation":"obs-3","subject":"RDE2_000802","location":"RID29663","values":{"RDE2_000001":"present","RDE2_000020":"multifocal"}}
-{"observation":"obs-4","subject":"RDE2_000803","location":"RID434","values":{"RDE2_000001":"present","RDE2_000077":"mild"}}
-{"observation":"obs-5","subject":"RDE2_000801","location":"RID29663","values":{"RDE2_000001":"present"},"confidence":"probable"}
-{"relation":"REPRESENTS","from":"obs-3","to":"obs-5","expresses":"RDE2_000902"}
-{"relation":"REPRESENTS","from":"obs-4","to":"obs-5","expresses":"RDE2_000903"}
-{"relation":"REPRESENTS","from":"obs-2","to":"obs-5","expresses":"RDE2_000904"}
-{"observation":"obs-6","subject":"RDE2_000809","location":"RID29663","values":{"RDE2_000001":"absent"}}
+{"report":"rep-1","text":"Left kidney demonstrated striated nephrogram, mild hydronephrosis, and perinephric stranding, consistent with pyelonephritis. No associated abscess. Right kidney is unremarkable."}
+{"observation":"obs-1","subject":"RDE2_000802","location":"RID29663","values":{"RDE2_000001":"present"},"quote":"striated nephrogram","span":[25,44]}
+{"observation":"obs-2","subject":"RDE2_000808","location":"RID29663","values":{"RDE2_000001":"present","RDE2_000077":"mild"},"quote":"mild hydronephrosis","span":[46,65]}
+{"observation":"obs-3","subject":"RDE2_000803","location":"RID32987","values":{"RDE2_000001":"present"},"quote":"perinephric stranding","span":[71,92]}
+{"observation":"obs-4","subject":"RDE2_000800","location":"RID29663","values":{"RDE2_000001":"present"},"confidence":"consistent with","quote":"consistent with pyelonephritis","span":[94,124]}
+{"observation":"obs-5","subject":"RDE2_000809","location":"RID29663","values":{"RDE2_000001":"absent"},"quote":"No associated abscess","span":[126,147]}
+{"observation":"obs-6","subject":"RDE2_000814","location":"RID29662","values":{"RDE2_000001":"absent"},"quote":"Right kidney is unremarkable","span":[149,177]}
+{"relation":"SUPPORTS","from":"obs-1","to":"obs-4","quote":"consistent with"}
+{"relation":"SUPPORTS","from":"obs-2","to":"obs-4","quote":"consistent with"}
+{"relation":"SUPPORTS","from":"obs-3","to":"obs-4","quote":"consistent with"}
+{"relation":"ASSOCIATED_WITH","from":"obs-5","to":"obs-4","quote":"associated"}

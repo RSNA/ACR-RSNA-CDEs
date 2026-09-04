@@ -45,7 +45,7 @@ The documents are full of em-dashes (about 338 across the eight prose files; `00
 
 Each case was chosen to break something specific ([03 §10](./03-draft-structures.md) has the one-line versions):
 
-1. **Kidney** as a location dossier: bindings on unsided `RID205` inherited by `RID29663`/`RID29662` across the laterality triad. Proves inheritance works before relying on it.
+1. ~~**Kidney laterality**~~ Done 2026-09-03 in the [one-sentence, two-plane example](./08-worked-examples.md#4-one-sentence-two-planes): the sided kidneys are explicit anatomy subtypes of unsided `RID205`, and report locations satisfy the unsided scope by walking that relation upward. The separate location-dossier treatment of inherited kidney bindings remains available as a future example.
 2. **Artery** as a structure-type binding (`artery HAS_ELEMENT diameter`). **Blocked** on the is-a relation landing in AnatomicLocations.org ([04](./04-anatomy-gaps.md)).
 3. **Part-solid nodule with a solid component**: the `solid component` FindingClass (`RDE2_000130`) is referenced but not defined; define it, bind its size, and write the two-Observation report sample end to end.
 4. ~~**Acute pyelonephritis**~~ Done 2026-09-02 as a graph file ([08 §2](./08-worked-examples.md)); pleural effusion done alongside it ([08 §3](./08-worked-examples.md)).
@@ -53,6 +53,8 @@ Each case was chosen to break something specific ([03 §10](./03-draft-structure
 6. **Upper abdominal abnormality**: negation propagation over `SUBTYPE_OF`; the test case for [00 Issue A](./00-current-understanding.md) and the closed-world assumption.
 
 Sources to draft from: the corresponding OIFM models (treated as drafts, [00 §5.1](./00-current-understanding.md)), and the verified findings in [`notes/source-review-2026-08-20.md`](../../notes/source-review-2026-08-20.md).
+
+Report-plane follow-ups from the 2026-09-03 example: define a certainty vocabulary for `confidence`; agree the observation-space relationship type list, including the provisional `SUPPORTS` and `ASSOCIATED_WITH`; and decide how `mild-to-moderate` and other compound severity phrases map to the ordered severity values.
 
 ## 4. Half-baked in the model
 

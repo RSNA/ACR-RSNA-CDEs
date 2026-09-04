@@ -1,7 +1,7 @@
 ---
 type: Decision Record
 title: Decision Record, 2 and 3 September 2026
-description: Every decision taken while building the graph, the examples, and the mat-and-tree pictures, sorted into structure, display, and content, with each one marked as the owner's decision, a Claude proposal the owner accepted, or a Claude default or invention that the owner has not reviewed.
+description: Every decision taken while building the graph, the examples, the mat-and-tree pictures, and the report-plane example, sorted into structure, display, and content, with each one marked by provenance.
 tags: [next-gen-schema, decisions, provenance, structure, display, content]
 status: draft
 generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1"], at: 2026-09-03 }
@@ -10,6 +10,13 @@ sources:
     resource: "https://claude.ai/code/session_0148zNHjv5iPYG6nH5V14DUD"
     title: The working conversation of 1 to 3 September 2026 in which these decisions were taken; the owner's words are quoted from it
     author: "human:talkasab"
+  - id: report-session
+    resource: "https://claude.ai/code/session_01C8QzRRzsPNZWS85s6evk9J"
+    title: The 3 September 2026 working session that specified the report-plane example
+    author: "human:talkasab"
+  - id: report-plan
+    resource: /docs/plans/2026-09-03-report-plane-example.md
+    title: The executable plan containing the owner's verbatim report-plane decisions
   - id: exchange
     resource: /notes/review-exchange-2026-08-25-extract.md
     title: The 25 August exchange that some structure decisions build on
@@ -59,6 +66,17 @@ Decisions are numbered by section: **S** structure, **D** display, **C** content
 | S16 | Bindings that must be cited carry `RDE2_` ids like relationships do. | **CLAUDE DEFAULT**, resolving the open item in 06 §4. | [03 §2](./03-draft-structures.md), graph |
 | S17 | `INTERPRETED_FROM` runs from any class that interprets a measurement, not only from assessments. | **CLAUDE DEFAULT**, reconciling 03 §9 with 07 §1. | [07 §1](./07-relationship-family.md) |
 | S18 | The causal pair takes typicality (07 Q2 answered yes). | **CLAUDE DEFAULT**, assumed so the pyelonephritis example could be written. | [08 §2](./08-worked-examples.md) |
+| S19 | An Observation carries what it is, where it is, data-element-to-value pairs, its report quote, and pointers to other Observations. | **OWNER**: "Observation should have: What it is--that is, the FindingClass it points to; WHERE it is--what anatomic location it points to; A COMPACT table of data element -> value pairs (with pointers to the data elements); A quote of the snippet of report text it's drawn from; Pointers to relevant OTHER Observation objects" ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | [03 §5](./03-draft-structures.md), [08 §4](./08-worked-examples.md) |
+| S20 | Classes are scoped to an unsided organ; a specific Observation is located in a sided organ; the sided organ's is-a relation to the unsided organ satisfies the scope. Kidney, left kidney, and right kidney are all present. | **OWNER**: "Pyelonephritis, renal abscess, etc, all go in 'kidney, NOS'. A SPECIFIC OBSERVATION is obviously in a SPECIFIC kidney--'left kidney' in this case. Since 'left kidney' IS A 'kidney, NOS', it satisfies the location requirement. This is EXACTLY the kind of issue I hope this diagram can help clear up." and "We must include kidney, left kidney, and right kidney, and they must be related as I have said." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | graph, [08 §4](./08-worked-examples.md) |
+| S21 | “Consistent with” is an observation-space relationship, distinct from the definition-space potential. | **OWNER**: "'Consistent with' is radiologist-talk for 'I'm putting THESE findings together as THIS diagnosis.' It's NOT the same relationship that the abstract ideas of 'pyelonephritis' and 'striated nephrogram' have in DEFINITION space--it's a DIFFERENT relationship in Observation space." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | [03 §5](./03-draft-structures.md), report example |
+| S22 | A report edge carries no pointer to the vocabulary relationship it parallels. | **OWNER**: "I don't think we need that, though I HOPE the structures in the two spaces might suggest that." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | [03 §5](./03-draft-structures.md), report example |
+| S23 | Severity is an element with the standard ordered values minimal, mild, moderate, and severe. | **OWNER**: "Definitely create a severity element with standard values 'minimal', 'mild', 'moderate', and 'severe'. We can argue about 'mild-to-moderate', etc., later." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | `examples/severity.element.json` |
+| S24 | The absent abscess relates to the diagnosis Observation by `ASSOCIATED_WITH`, not by a negated edge. | **OWNER**: "I agree, but I think the edge would be 'ASSOCIATED_WITH'--doesn't need to be negated." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | report example |
+| S25 | The provisional observation-space edge name for “consistent with” is `SUPPORTS`. | **CLAUDE DEFAULT** ([report-plane plan](../plans/2026-09-03-report-plane-example.md)). | report example, [06 §3](./06-next-steps.md) |
+| S26 | `confidence` carries the radiologist's phrase verbatim, “consistent with”, rather than a mapped certainty value. | **CLAUDE DEFAULT** ([report-plane plan](../plans/2026-09-03-report-plane-example.md)). | report example, [06 §3](./06-next-steps.md) |
+| S27 | `SUBTYPE_OF` is reused as the anatomy is-a edge. | **CLAUDE DEFAULT** ([report-plane plan](../plans/2026-09-03-report-plane-example.md)). | `graph/core.jsonl`, [graph README](graph/README.md) |
+| S28 | The text-anchored report uses one `report` line, followed by Observation lines with quotes and half-open spans, then relation lines. | **CLAUDE DEFAULT** ([report-plane plan](../plans/2026-09-03-report-plane-example.md)). | [03 §5](./03-draft-structures.md), report example |
+| S29 | Negative-only Grouping nodes bind presence so that they can be reported absent. | **OWNER-derived** from: "let's expand the example, add a second sentence--'Right kidney is unremarkable', corresponding to a finding of renal abnormality with a presence attribute of absent." | graph, [08 §4](./08-worked-examples.md) |
 
 **Rejected by the owner** (recorded so they are not proposed again): a morphology "form" axis derived from name suffixes (focal, diffuse, collection, deposition, discontinuity), upper-level `lesion` / `mass` / `process` FindingClasses, a `Pattern` node type or annotation in the graph, "obligations" as a property of node types, and inherited element bindings.
 
@@ -92,6 +110,13 @@ Decisions are numbered by section: **S** structure, **D** display, **C** content
 | D24 | Container order: a kind of, kinds of, manifests as, may be caused by, may cause, progresses to, progresses from, occurs with, assessed by. Empty containers vanish. | **NOT OBJECTED**: "THat's OK for a first pass." | [09 §2.4](./09-mat-and-tree.md) |
 | ~~D25~~ | ~~Relationship edges are drawn on the tree with labels.~~ | **OWNER** at first ("I think that CAN be done well. Try it."), then withdrawn by the owner after both agent attempts (D21). | superseded |
 | D26 | Both pictures are deterministic SVG generated from the graph, byte-checked; the interactive layer is JavaScript on the site only. | **CLAUDE DEFAULT**; the owner asked for "a page that actually has the working hover". | `render_cards.py`, `build_site.py` |
+| D27 | The deliverable is a drawing, a section in the worked examples, and a site page. | **OWNER**: "I think we need a drawing, a new section in the worked examples, AND the site page." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | [08 §4](./08-worked-examples.md), `render_report.py`, site |
+| D28 | The report text is at the top, with faint arrows to Observations below, clear interactions within observation space, then clear interactions to definitions at the bottom. | **OWNER**: "I would have said report TEXT on top, with faint arrows to relevant Observations below, with clear interactions WITHIN Observation space and then clear interactions to the definitions at the bottom." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | `render_report.py` |
+| D29 | The example is JSON Lines ground truth and the picture is generated from it so several agents can render the same truth. | **OWNER**: "Yes, let's make sure we have JSON lines so we agree on ground truth, and generate diagrams from a consistent ground truth. That way we can do the thing of having multiple agents take a crack at it." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | report example, `render_report.py` |
+| D30 | Layout details beyond D28 are renderer defaults. | **CLAUDE DEFAULT** ([report-plane plan](../plans/2026-09-03-report-plane-example.md)). | `render_report.py` |
+| D31 | Relationships in the two-plane diagram must visibly connect their diagnosis and finding cards. | **OWNER**: "on the two-plane diagram... the connections between the diagnoses/findings--they don't make it, they're just floating there." | `render_report.py` |
+| D32 | Unmentioned anatomy does not appear in the report picture. | **OWNER**: "why do you have the UNMENTIONED right kidney and right perirenal space on there?" | `render_report.py` |
+| D33 | The report picture includes only Observation locations, subject scope targets, and the anatomy is-a paths connecting them. | **CLAUDE DEFAULT**, the renderer rule used to apply D32 while retaining anatomy needed to prove scope satisfaction. | `render_report.py` |
 
 **Rejected by the owner:** columns of chips with labelled curves (the original constellation renderer), an anatomy lane of location cards wired to classes, anatomy as an outer container, codes in the title bar, mini-cards carrying definition and mappings and stats on the mat, relationship lines under tree rows in place of cards, and both agents' round-two layouts as too loose with too-small type.
 
@@ -114,6 +139,10 @@ Everything in this section that is not marked OWNER is Claude's clinical or term
 | C11 | Subspecialty, sex, age, and time-course edges on the two families (chest radiology for effusion; abdominal and genitourinary for pyelonephritis; sex-neutral; all ages; weeks and resolving for both). | **CLAUDE INVENTION**. | graph |
 | C12 | The report-plane samples for both examples. | **CLAUDE INVENTION**, illustrative. | `examples/*.report.jsonl` |
 | C13 | The observations about the Hood taxonomies: untyped rows are always parents; 73 mixed parents in the CT list; no diagnosis under an observation; the content diagnoses as siblings of pleural effusion. | **CLAUDE** measurement of the files as exported 2026-08-15. | [08](./08-worked-examples.md) |
+| C14 | The Observation points to the diagnosis the radiologist named, pyelonephritis, rather than a more specific diagnosis. | **OWNER**: "What the radiologist SAYS is 'pyelonephritis'. It's not our job to make their assertion more specific than they make it themselves, in spite of how obvious it is." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | report example |
+| C15 | Perinephric stranding is located in the left perirenal space. | **OWNER**: "Yes, perinephric stranding is in the LEFT perirenal space." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | report example |
+| C16 | All content values in the report-plane example are hypothetical. | **OWNER**: "Nah, no one thinks this is real yet--this is all understood as a hypothetical exercise to see how the framework works." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | [08 §4](./08-worked-examples.md) |
+| C17 | The report example adds “Right kidney is unremarkable” as an absent renal-abnormality Observation. | **OWNER**: "let's expand the example, add a second sentence--'Right kidney is unremarkable', corresponding to a finding of renal abnormality with a presence attribute of absent." | report example, [08 §4](./08-worked-examples.md) |
 
 ## Superseded material
 

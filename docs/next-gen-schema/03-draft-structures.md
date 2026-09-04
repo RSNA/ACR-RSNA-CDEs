@@ -140,20 +140,29 @@ Specs: [`examples/presence.element.json`](examples/presence.element.json), [`sev
 
 ![Observations in one report pointing into the vocabulary graph](diagrams/two-planes.svg)
 
-Observations (grammar, new nodes every report) are small stars of pointers into the vocabulary (shared, versioned, committee-governed). The planes are connected through relationships, not just through classes: **the vocabulary states a potential once** — `pleural effusion MAY_BE_CAUSED_BY pneumonia`, an identified relationship (`RDE2_000900`) — **and every report edge of that type is an expression of it.** "This effusion may be caused by this pneumonia" is one patient's instance of a general potentiality, and it can cite the vocabulary relationship it expresses (`EXPRESSES` in the figure).
+Observations (grammar, new nodes every report) are small stars of pointers into the vocabulary (shared, versioned, committee-governed). Each Observation records what it is (`subject`, pointing to a FindingClass, Diagnosis, or Grouping), where it is (`location`, pointing to an AnatomicLocation), a compact map of data-element pointers to values (`values`), the exact report text it came from (`quote` and its `[start, end)` `span`), and pointers to relevant other Observations through relation lines. A report begins with a `report` line carrying its id and full text.
 
-The same mechanism carries **sub-findings**. The vocabulary says a pulmonary nodule `MAY_HAVE_COMPONENT` a solid component — a potential, stated once, with its own id. A report of a part-solid nodule then contains *two* Observations, the nodule and its solid component (each with its own size, since Lung-RADS keys on the solid component's), joined by a report-level `HAS_COMPONENT` edge that expresses the vocabulary potential:
+The two planes carry different relationships between different objects. In definition space the committee states a standing potential once, such as `acute pyelonephritis MAY_MANIFEST_AS striated nephrogram`. In observation space the radiologist's “consistent with” puts these particular findings together as this particular diagnosis. The provisional report relationship name for that act is `SUPPORTS`; `ASSOCIATED_WITH` provisionally connects a related Observation without negating the edge itself. The report edge does not cite the vocabulary relationship. The structures correspond, and the reader is expected to see that correspondence.
+
+```jsonl
+{"report":"rep-1","text":"Left kidney demonstrated striated nephrogram … consistent with pyelonephritis."}
+{"observation":"obs-1","subject":"RDE2_000802","location":"RID29663","values":{"RDE2_000001":"present"},"quote":"striated nephrogram","span":[25,44]}
+{"observation":"obs-4","subject":"RDE2_000800","location":"RID29663","values":{"RDE2_000001":"present"},"confidence":"consistent with","quote":"consistent with pyelonephritis","span":[94,124]}
+{"relation":"SUPPORTS","from":"obs-1","to":"obs-4","quote":"consistent with"}
+```
+
+The same mechanism carries **sub-findings**. The vocabulary says a pulmonary nodule `MAY_HAVE_COMPONENT` a solid component, a potential stated once. A report of a part-solid nodule then contains *two* Observations, the nodule and its solid component (each with its own size, since Lung-RADS keys on the solid component's), joined by a report-level `HAS_COMPONENT` edge:
 
 ```jsonl
 {"edge":"MAY_HAVE_COMPONENT","id":"RDE2_000901","from":"RDE2_000123","to":"RDE2_000130"}
 {"observation":"obs-3","subject":"RDE2_000123","values":{"RDE2_000015":"part-solid","RDE2_000014":{"value":14,"unit":"mm"}}}
 {"observation":"obs-4","subject":"RDE2_000130","values":{"RDE2_000014":{"value":6,"unit":"mm"}}}
-{"relation":"HAS_COMPONENT","from":"obs-3","to":"obs-4","expresses":"RDE2_000901"}
+{"relation":"HAS_COMPONENT","from":"obs-3","to":"obs-4"}
 ```
 
-On the IHE side ([`notes/ihe-idr-extract.md` §4](../../notes/ihe-idr-extract.md)): IDR's Hierarchical Target Entity is exactly this case — its worked example is a pulmonary nodule with solid and non-solid components — encoded with `.hasMember`, which is *untyped*; and causation has **no FHIR mechanism yet**. So the `expresses` pointer and the causal edge are both things to raise with IHE as extensions, not things to assume.
+On the IHE side ([`notes/ihe-idr-extract.md` §4](../../notes/ihe-idr-extract.md)), IDR's Hierarchical Target Entity is exactly this case. Its worked example is a pulmonary nodule with solid and non-solid components, encoded with `.hasMember`, which is *untyped*; causation has **no FHIR mechanism yet**. The typed component and causal report edges are both things to raise with IHE as extensions, not things to assume.
 
-This is why vocabulary-level relationships are **reified**: they carry identity, provenance, approval status, and strength ([§2](#2-edges--the-actual-content-of-the-model)), and a report can point at them. It is the strongest concrete reason the formalism question ([00 Issue D](./00-current-understanding.md)) lands on annotated axioms or named graphs rather than plain triples — an unreified edge cannot be cited.
+This separation leaves vocabulary relationships free to carry identity, provenance, approval status, and strength ([§2](#2-edges--the-actual-content-of-the-model)) without making a report-level assertion an instance of one of them.
 
 ---
 

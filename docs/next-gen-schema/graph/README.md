@@ -53,3 +53,5 @@ All owned nodes and reified edges share the `RDE2_NNNNNN` space. No registry exi
 | `RDE2_0010xx` to `0014xx` | provisional context concepts (etiology, sex, age, time course duration and modifiers) |
 
 Anatomy nodes keep their RadLex `RID` ids, and so do the modality, region, and subspecialty concepts. A `Scheme-slug` id only appears when a spec names a concept the lookup table lacks; the validator treats it as a placeholder to resolve. Stubs that a spec only names carry `STUB-` ids and are meant to be replaced.
+
+Sided anatomy records retain `side` and `unsided` properties for convenient display and lookup, while explicit `SUBTYPE_OF` edges carry the graph semantics. The two forms are deliberately redundant.

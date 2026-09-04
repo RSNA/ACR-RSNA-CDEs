@@ -20,21 +20,27 @@
     "values": [
       {
         "id": "RDE2_000077.0",
-        "name": "mild",
-        "value": "mild",
+        "name": "minimal",
+        "value": "minimal",
         "rank": 1
       },
       {
         "id": "RDE2_000077.1",
-        "name": "moderate",
-        "value": "moderate",
+        "name": "mild",
+        "value": "mild",
         "rank": 2
       },
       {
         "id": "RDE2_000077.2",
+        "name": "moderate",
+        "value": "moderate",
+        "rank": 3
+      },
+      {
+        "id": "RDE2_000077.3",
         "name": "severe",
         "value": "severe",
-        "rank": 3
+        "rank": 4
       }
     ]
   },

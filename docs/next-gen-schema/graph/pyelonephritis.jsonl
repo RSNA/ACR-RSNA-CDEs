@@ -32,6 +32,7 @@
 {"edge":"HAS_ELEMENT","from":"RDE2_000811","to":"RDE2_000001"}
 {"edge":"HAS_ELEMENT","from":"RDE2_000812","to":"RDE2_000001"}
 {"edge":"HAS_ELEMENT","from":"RDE2_000813","to":"RDE2_000001"}
+{"edge":"HAS_ELEMENT","from":"RDE2_000814","to":"RDE2_000001"}
 {"edge":"HAS_ETIOLOGY","from":"RDE2_000800","to":"RDE2_001002"}
 {"edge":"HAS_ETIOLOGY","from":"RDE2_000809","to":"RDE2_001002"}
 {"edge":"INTERPRETED_FROM","from":"RDE2_000804","to":"RDE2_000830"}

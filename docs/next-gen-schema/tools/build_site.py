@@ -57,6 +57,11 @@ ul.edges{list-style:none;padding:0}ul.edges li{padding:5px 0;border-bottom:1px d
 blockquote{border-left:3px solid #cbd5e1;margin:0;padding:2px 14px;color:#334155}
 .treepanel{position:sticky;bottom:12px;background:#fff;border:1px solid #94a3b8;border-radius:10px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.12);margin-top:12px;font-size:14px}.treepanel h4{margin:8px 0 4px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#64748b}.treepanel ul{margin:0;padding-left:18px}.treepanel .lbl{color:#64748b;font-size:12px;letter-spacing:.03em;text-transform:uppercase;margin-right:6px}.treepanel .tp-head{font-size:16px;margin-bottom:6px}
 .diagram .mini{cursor:pointer}.diagram a:hover{text-decoration:none}.diagram a:hover .mini rect:first-child{stroke:#2563eb;stroke-width:2}.tree-page .diagram .detail{display:none !important}
+@media (min-width:901px){
+.tree-page{max-width:1500px}
+.tree-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+.tree-layout .treepanel{top:12px;bottom:auto;max-height:calc(100vh - 24px);overflow:auto;margin-top:0}
+}
 """
 
 JS = """
@@ -170,6 +175,8 @@ class Site:
             body.append('<h2>Mat</h2><p class="meta">Hover a card for its detail; click it to go to its own mat.</p><div class="diagram">' + self.linked_svg(self.cards.mat(nid), rel) + "</div>")
             trees = [k for k, v in self.views.items() if v["kind"] == "tree" and nid in self.tree_members(v["hub"])]
             if trees: body.append('<p class="meta">In the tree: ' + " · ".join(f'<a href="{rel}examples/{k}.html">{esc(self.g.nodes[self.views[k]["hub"]]["name"])}</a>' for k in trees) + "</p>")
+            if nid == "RDE2_000800":
+                body.append(f'<p class="meta">In a report: <a href="{rel}examples/pyelonephritis-report.html">one report, two planes</a></p>')
         if nid in DOSSIERS:
             body.append(f'<h2>Dossier</h2><div class="diagram"><img src="{rel}docs/next-gen-schema/diagrams/{DOSSIERS[nid]}" alt="dossier diagram for {esc(n["name"])}"></div>')
         outs, ins = self.g.out_edges(nid), self.g.in_edges(nid)
@@ -304,44 +311,66 @@ class Site:
                          "mappings": [c.code_str(*m) for m in c.mappings(nid)], "context": ctx, "rels": rels, "href": self.node_href(nid, rel)}
         js = """
 (function(){var INFO=%s;var panel=document.getElementById('treepanel');var svg=document.querySelector('.diagram svg');
-function clear(){svg.querySelectorAll('.mini').forEach(g=>{g.classList.remove('lit','sel');var r=g.querySelector('rect');r.setAttribute('stroke','#cbd5e1');r.setAttribute('stroke-width','1')});}
-function lit(id,color){var g=svg.querySelector('#m-'+CSS.escape(id));if(!g)return;var r=g.querySelector('rect');r.setAttribute('stroke',color);r.setAttribute('stroke-width','2.5');}
-function show(id){clear();var d=INFO[id];if(!d)return;lit(id,'#1f2937');
+var NS='http://www.w3.org/2000/svg';var layer=document.createElementNS(NS,'g');layer.setAttribute('id','relboxes');layer.setAttribute('pointer-events','none');svg.appendChild(layer);
+var pinned=null;
+function cardBox(id){var g=svg.querySelector('#m-'+CSS.escape(id));if(!g)return null;var r=g.querySelector('rect');return {x:+r.getAttribute('x'),y:+r.getAttribute('y'),w:+r.getAttribute('width'),h:+r.getAttribute('height')};}
+function el(name,attrs){var e=document.createElementNS(NS,name);for(var k in attrs)e.setAttribute(k,attrs[k]);layer.appendChild(e);return e;}
+function borderLabel(x,lineY,str,color,right){var t=el('text',{x:x,y:lineY+4,'font-size':12,fill:color,'letter-spacing':'.05em'},layer);if(!right)t.setAttribute('font-weight','700');else t.setAttribute('text-anchor','end');t.textContent=str;var w=t.getComputedTextLength();var k=el('rect',{x:right?x-w-8:x-4,y:lineY-8,width:w+8,height:16,fill:'#ffffff'},layer);layer.insertBefore(k,t);return w+14;}
+function draw(id){layer.replaceChildren();if(!id)return;var d=INFO[id];if(!d)return;
+var b=cardBox(id);if(b)el('rect',{x:b.x-3,y:b.y-3,width:b.w+6,height:b.h+6,rx:9,fill:'none',stroke:'#1f2937','stroke-width':1.5},layer);
+var byOther={},order=[];d.rels.forEach(function(r){if(!byOther[r.other]){byOther[r.other]={labels:[],props:[]};order.push(r.other)}byOther[r.other].labels.push(r.label.toUpperCase());if(r.props)byOther[r.other].props.push(r.props)});
+order.forEach(function(other){var b=cardBox(other);if(!b)return;var bx=b.x-3,by=b.y-3,bw=b.w+6,bh=b.h+6;
+el('rect',{x:bx,y:by,width:bw,height:bh,rx:9,fill:'none',stroke:'#94a3b8','stroke-width':1.2,'stroke-dasharray':'2 3'},layer);
+var cx=bx+12;byOther[other].labels.forEach(function(lbl){cx+=borderLabel(cx,by,lbl,'#7c3aed',false)});
+var px=bx+bw-10;byOther[other].props.forEach(function(p){px-=borderLabel(px,by+bh,p,'#64748b',true)})});}
+function fillPanel(id){var d=INFO[id];
 var h='<div class="tp-head"><b>'+d.name+'</b> <span class="rid">'+d.kind+' · '+id+'</span> · <a href="'+d.href+'">open its mat</a></div>';
 if(d.definition)h+='<p>'+d.definition+'</p>';h+='<p class="meta">'+d.anatomy+'</p>';
-if(d.rels.length){h+='<h4>Relationships within this tree</h4><ul>';d.rels.forEach(r=>{lit(r.other,'#7c3aed');h+='<li><span class="lbl">'+r.label+'</span> <a href="#" data-go="'+r.other+'">'+INFO[r.other].name+'</a>'+(r.props?' <span class="props">'+r.props+'</span>':'')+'</li>'});h+='</ul>'}else{h+='<p class="meta">No relationships to other members of this tree.</p>'}
+if(d.rels.length){h+='<h4>Relationships within this tree</h4><ul>';d.rels.forEach(function(r){h+='<li><span class="lbl">'+r.label+'</span> <a href="#" data-go="'+r.other+'">'+INFO[r.other].name+'</a>'+(r.props?' <span class="props">'+r.props+'</span>':'')+'</li>'});h+='</ul>'}else{h+='<p class="meta">No relationships to other members of this tree.</p>'}
 if(d.mappings.length)h+='<p class="meta">'+d.mappings.join(' · ')+'</p>';
-var ctx=Object.keys(d.context).map(k=>k.toLowerCase()+': '+d.context[k].join(', ')).join(' · ');if(ctx)h+='<p class="meta">'+ctx+'</p>';
-panel.innerHTML=h;panel.hidden=false;panel.querySelectorAll('a[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();show(a.dataset.go)}));}
-svg.querySelectorAll('.mini').forEach(g=>{g.addEventListener('click',e=>{e.preventDefault();show(g.dataset.node)});g.style.cursor='pointer'});
+var ctx=Object.keys(d.context).map(function(k){return k.toLowerCase()+': '+d.context[k].join(', ')}).join(' · ');if(ctx)h+='<p class="meta">'+ctx+'</p>';
+panel.innerHTML=h;panel.querySelectorAll('a[data-go]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();pin(a.dataset.go)})});}
+function pin(id){pinned=id;draw(id);fillPanel(id);}
+svg.querySelectorAll('.mini').forEach(function(g){g.style.cursor='pointer';
+g.addEventListener('click',function(e){e.preventDefault();pin(g.dataset.node)});
+g.addEventListener('mouseenter',function(){draw(g.dataset.node)});
+g.addEventListener('mouseleave',function(){draw(pinned)})});
 })();""" % json.dumps(info, ensure_ascii=False)
         return js
 
     def examples(self):
         cards = []
-        REPORTS = {"pleural-effusion-mat": "pleural-effusion.report.jsonl", "acute-pyelonephritis-mat": "pyelonephritis.report.jsonl"}
         for k, v in self.views.items():
             rel = "../"
             hub = self.g.nodes[v["hub"]]
             title = f'{hub["name"]}: the {v["kind"]}'
             if v["kind"] == "mat":
-                svg = self.linked_svg(self.cards.mat(v["hub"]), rel)
+                diagram = f'<div class="diagram">{self.linked_svg(self.cards.mat(v["hub"]), rel)}</div>'
                 intro = "One context object, drawn in full, with everything one relationship away as cards in labelled containers. Hover a card for its detail; click it to open its own mat."
-                extra = ""
             else:
-                svg = self.cards.tree(v["hub"])   # not linked: click is the interaction here
-                intro = "The is-a outline of the family: one mini-card per row, indented by subsumption. Click a card to see its relationships within the tree and a fuller card."
-                extra = f'<div id="treepanel" class="treepanel" hidden></div><script>document.querySelector("main").classList.add("tree-page");{self.tree_page_js(v["hub"], rel)}</script>'
-            report = os.path.join(EXAMPLES_DIR, REPORTS.get(k, "_"))
-            rep = f'<h2>Report-plane sample</h2><p class="meta">Observations pointing into the vocabulary, with report edges citing the relationship they express (03 §5).</p><pre>{esc(open(report, encoding="utf-8").read())}</pre>' if os.path.exists(report) else ""
+                intro = "The is-a outline of the family: one mini-card per row, indented by subsumption. Hover a card to preview its relationships as labelled boxes; click to pin them and open the detail panel."
+                diagram = ('<div class="tree-layout"><div class="diagram">' + self.cards.tree(v["hub"]) + '</div>'
+                           '<div id="treepanel" class="treepanel"><p class="meta">Click a card in the tree: its relationships within the tree are boxed on the outline and detailed here.</p></div></div>'
+                           f'<script>document.querySelector("main").classList.add("tree-page");{self.tree_page_js(v["hub"], rel)}</script>')
             body = (f'<h1>{esc(title)}</h1><p class="meta">{intro} · View: <a href="{rel}docs/next-gen-schema/examples/{v["file"]}">{v["file"]}</a> · '
                     f'discussed in <a href="{rel}docs/next-gen-schema/08-worked-examples.html">08</a> · decisions in <a href="{rel}docs/plans/2026-09-02-mat-and-tree-decisions.html">the mat-and-tree document</a></p>'
-                    f'<div class="diagram">{svg}</div>{extra}{rep}')
+                    f'{diagram}')
             self.page(f"examples/{k}.html", title, body, rel)
             cards.append(f'<div class="card"><h3><a href="examples/{k}.html">{esc(title)}</a></h3><p>{esc(intro[:120])}…</p></div>')
             self.search.append({"t": title, "u": f"examples/{k}.html", "k": "example"})
+        report_title = "One report, two planes"
+        report_intro = "Report TEXT on top, with faint arrows to relevant Observations below, with clear interactions WITHIN Observation space and then clear interactions to the definitions at the bottom."
+        report_path = os.path.join(EXAMPLES_DIR, "pyelonephritis.report.jsonl")
+        report_svg = os.path.join(BASE, "diagrams/report-pyelonephritis.svg")
+        report_body = (f'<h1>{report_title}</h1><p class="meta">{esc(report_intro)} · '
+                       f'Discussed in <a href="../docs/next-gen-schema/08-worked-examples.html#4-one-report-two-planes">08 §4</a>.</p>'
+                       f'<div class="diagram">{open(report_svg, encoding="utf-8").read()}</div>'
+                       f'<h2>JSON Lines ground truth</h2><pre>{esc(open(report_path, encoding="utf-8").read())}</pre>')
+        self.page("examples/pyelonephritis-report.html", report_title, report_body, "../")
+        cards.append(f'<div class="card"><h3><a href="examples/pyelonephritis-report.html">{report_title}</a></h3><p>{esc(report_intro)}</p></div>')
+        self.search.append({"t": report_title, "u": "examples/pyelonephritis-report.html", "k": "example"})
         dossiers = "".join(f'<div class="card"><h3>{self.link(nid, "")}</h3><p>object dossier · <a href="docs/next-gen-schema/diagrams/{svg}">diagram</a></p></div>' for nid, svg in DOSSIERS.items())
-        self.page("examples.html", "Examples", f'<h1>Worked examples</h1><h2>Mats and trees</h2><div class="cards">{"".join(cards)}</div>'
+        self.page("examples.html", "Examples", f'<h1>Worked examples</h1><h2>Mats, trees, and report planes</h2><div class="cards">{"".join(cards)}</div>'
                   f'<h2>Object dossiers</h2><p class="meta">The earlier single-node examples, rendered from examples/*.json by render_neighborhood.py.</p><div class="cards">{dossiers}</div>', "")
 
     # ---- documents -------------------------------------------------------------------

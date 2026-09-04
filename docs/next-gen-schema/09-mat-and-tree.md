@@ -113,24 +113,29 @@ When a node has no `SCOPED_TO` edge or none of a context edge type, the renderer
 
 ## 5. Density
 
-The layout is tight: base type 13 px, titles 18 px, mini-cards 40 px tall and three across, one-line stat cells that grow only when a cell holds several values. Whitespace is not a way to avoid overlap (D20).
+The layout is tight: base type 15 px, small text 12.5 px, titles 24 px, and nothing below 12 px (SVG units; about 11 px as rendered on the site at full page width). Mini-cards are 50 px tall and tile three across; tree rows are the card height plus 16 px, the clearance the tree page's relationship labels need above and below a card (§6). One-line stat cells grow only when a cell holds several values. Whitespace is not a way to avoid overlap (D20).
 
 ## 6. The tree
 
 The tree is an outline of mini-cards: one mini-card per row, indented by subsumption, rooted at the grouping node, every descendant included, with thin guide lines from a parent's left edge to its children. Nothing else is drawn statically: no relationship edges, no labels (D21). Each row has the same hover detail as on the mat.
 
-On the site, the tree page adds a click layer (D22): clicking a card lights up every card in the visible tree it has a relationship with, and opens a panel listing those relationships with their typicality and specificity, plus a fuller card with anatomy, mappings, and stats. Names in the panel are clickable to walk the tree. The committed SVG is the fully expanded outline with no relationships on it, which is what a static image can honestly carry (D26).
+On the site, the tree page adds a click layer (D22): clicking a card draws a dotted edge box (§2.4) around every related card in the visible tree — the relationship in uppercase riding the box's top border, any typicality and specificity in gray on the bottom border, the selected card itself in a solid dark box — and hovering a card previews the same boxes until the pointer leaves. The detail panel (the relationships with their typicality and specificity, plus a fuller card with anatomy, mappings, and stats; names clickable to walk the tree) sits in a sticky column to the right of the diagram, falling back below it on narrow screens; rows are 66 px tall (card plus 16 px) so the border labels fit between rows. The committed SVG is the fully expanded outline with no relationships on it, which is what a static image can honestly carry (D26).
 
-## 7. Tooling
+## 7. The report picture
+
+The report picture places report text at the top, the report's Observation cards and their relationships in the middle, and the shared definitions below. Each Observation points to its subject class, sided anatomic location, and data elements; the definition plane shows the corresponding class relationships, unsided scope, anatomy subtype trees, and element bindings. `tools/render_report.py` validates the text anchors and every vocabulary pointer before it draws the deterministic SVG from JSON Lines ground truth (D27 to D30, S19 to S28).
+
+## 8. Tooling
 
 | Piece | Where |
 |---|---|
 | Renderer | `tools/render_cards.py`; `mat` and `tree` subcommands, or a view file |
+| Report renderer | `tools/render_report.py`; a text-anchored `*.report.jsonl` file in, deterministic two-plane SVG out |
 | View files | `examples/*.mat.json`, `examples/*.tree.json`: `{"kind", "hub"}` |
 | Committed pictures | `diagrams/mat-*.svg`, `diagrams/tree-*.svg`, byte-checked by `docs/check_bundle.py` |
 | Site | `tools/build_site.py` renders a mat for every finding, diagnosis, and grouping node, and a tree page with the click layer for every tree view |
 | Object dossiers | `tools/render_neighborhood.py` and `examples/*.{neighborhood,element,location}.json`, the older single-node pictures, unchanged |
 
-## 8. What this replaced
+## 9. What this replaced
 
 The column-and-curve constellation renderer of 1 to 2 September 2026 ([archive](archive/2026-09-02-constellation-diagrams.md)), and the two rounds of alternatives that led here ([explorations](explorations/2026-09-02-diagram-alternatives/index.md)).

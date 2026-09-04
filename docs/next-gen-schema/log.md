@@ -4,6 +4,10 @@ Change history for the next-gen schema bundle, newest first. Decisions are recor
 
 ## 2026-09-03
 
+**Report plane, second round.** Added “Right kidney is unremarkable” as an absent renal-abnormality Observation, bound presence to both negative-only Grouping nodes, restricted anatomy in the report picture to referenced locations and scope paths, and made every observation- and definition-space relationship visibly land with source dots and target arrowheads.
+
+**Report plane example.** Added a text-anchored JSON Lines report and a generated two-plane picture for one pyelonephritis sentence. The example shows five report Observations, observation-space relationships, pointers into definition classes, anatomy, and elements, and sided anatomy satisfying unsided scope through explicit `SUBTYPE_OF` edges. Added the report validator/renderer, four-value severity scale, sided perirenal-space nodes, worked-example explanation, and generated-site page.
+
 **Restructure** for the mat-and-tree work. Added [09 The Mat and the Tree](09-mat-and-tree.md) as the display specification and [10 Decision Record](10-decision-record-2026-09-02.md) with every decision marked by provenance and sorted into structure, display, and content. Retitled 08 to [Two Worked Examples](08-worked-examples.md) and moved its decisions section into 10. Created `archive/` for superseded material and `explorations/` for the two rounds of diagram alternatives, both with their own indexes. Extended the bundle checker to subdirectories and to treat `log.md` as reserved. A separate cleanup plan for incidental documentation issues is in `docs/plans/2026-09-03-doc-cleanup-plan.md`.
 
 ## 2026-09-02

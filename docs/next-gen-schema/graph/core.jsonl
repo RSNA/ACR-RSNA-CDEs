@@ -1,6 +1,6 @@
 {"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"AGE_APPLICABILITY","name":"age applicability","node":"RelationshipType","range":"Concept (AgeProfile)"}
 {"definition":"A standardized scheme applies to the source.","domain":"FindingClass | Diagnosis","id":"ASSESSED_BY","inverse":"ASSESSES","name":"assessed by","node":"RelationshipType","props":["id","note"],"range":"FindingClass (assessment)"}
-{"definition":"The binding edge: the source is characterized by the target element. Carries its own id when something must cite it.","domain":"FindingClass | Diagnosis | AnatomicLocation","id":"HAS_ELEMENT","inverse":"BOUND_BY","name":"has element","node":"RelationshipType","props":["id","note"],"range":"DataElement"}
+{"definition":"The binding edge: the source is characterized by the target element. Carries its own id when something must cite it.","domain":"FindingClass | Diagnosis | Grouping | AnatomicLocation","id":"HAS_ELEMENT","inverse":"BOUND_BY","name":"has element","node":"RelationshipType","props":["id","note"],"range":"DataElement"}
 {"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"HAS_ETIOLOGY","name":"has etiology","node":"RelationshipType","range":"Concept (Etiology)"}
 {"definition":"The source is an interpretation of the values of the cited binding (03 §9). Domain widened on 2026-09-02 from assessments only to any class that interprets a measurement.","domain":"FindingClass | Diagnosis","id":"INTERPRETED_FROM","inverse":"INTERPRETATION_OF","name":"interpreted from","node":"RelationshipType","range":"HAS_ELEMENT binding"}
 {"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"IN_REGION","name":"in region","node":"RelationshipType","range":"Concept (BodyRegion)"}
@@ -32,17 +32,23 @@
 {"id":"RID205","name":"kidney","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org"}
 {"id":"RID29662","name":"right kidney","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org","side":"right","unsided":"RID205"}
 {"id":"RID29663","name":"left kidney","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org","side":"left","unsided":"RID205"}
+{"id":"RID32986","name":"right perirenal space","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org","side":"right","unsided":"RID434"}
+{"id":"RID32987","name":"left perirenal space","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org","side":"left","unsided":"RID434"}
 {"id":"RID434","name":"perirenal space","node":"AnatomicLocation","owner":"RadLex / AnatomicLocations.org"}
 {"definition":"Anatomic scope guidance (01 §2).","domain":"FindingClass | Diagnosis | Grouping","id":"SCOPED_TO","inverse":"SCOPE_OF","name":"scoped to","node":"RelationshipType","props":["kind","strength"],"range":"AnatomicLocation"}
 {"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"SEEN_ON","name":"seen on","node":"RelationshipType","range":"Concept (Modality)"}
 {"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"SEX","name":"sex specificity","node":"RelationshipType","range":"Concept (SexSpecificity)"}
-{"definition":"Every instance of the source is an instance of the target. One taxonomy over finding, diagnosis, and grouping nodes, unrestricted by which label the term carries. Test: if 'X without Y' is a meaningful sentence, X is not a subtype of Y. Whether it is transitive is 00 Issue A.","domain":"FindingClass | Diagnosis | Grouping","formal":"rdfs:subClassOf","id":"SUBTYPE_OF","inverse":"HAS_SUBTYPE","name":"subtype of","node":"RelationshipType","range":"FindingClass | Diagnosis | Grouping"}
+{"definition":"Every instance of the source is an instance of the target. One taxonomy over finding, diagnosis, grouping, and anatomic-location nodes, unrestricted by which label the term carries. Sided anatomic locations are subtypes of the unsided location. Test: if 'X without Y' is a meaningful sentence, X is not a subtype of Y. Whether it is transitive is 00 Issue A.","domain":"FindingClass | Diagnosis | Grouping | AnatomicLocation","formal":"rdfs:subClassOf","id":"SUBTYPE_OF","inverse":"HAS_SUBTYPE","name":"subtype of","node":"RelationshipType","range":"FindingClass | Diagnosis | Grouping | AnatomicLocation"}
 {"definition":"Discoverability edge to a shared concept node; placeholder pending the resource of 06 §1.","domain":"FindingClass | Diagnosis | Grouping","id":"TIME_COURSE","name":"expected time course","node":"RelationshipType","range":"Concept (ExpectedTimeCourse)"}
 {"definition":"Near mapping to an external concept when no exact one exists.","domain":"any owned node","formal":"skos:closeMatch","id":"closeMatch","name":"close match","node":"RelationshipType","props":["display"],"range":"external code SYSTEM:code","symmetric":true}
 {"definition":"Mapping to an external concept, carrying the term as that ontology states it.","domain":"any owned node","formal":"skos:exactMatch","id":"exactMatch","name":"exact match","node":"RelationshipType","props":["display"],"range":"external code SYSTEM:code","symmetric":true}
 {"definition":"The element's value domain contains this value.","domain":"DataElement","formal":"skos:member","id":"member","name":"member","node":"RelationshipType","props":["rank"],"range":"Value"}
 {"edge":"HAS_ELEMENT","from":"RID205","props":{"note":"visualized / not visualized"},"to":"RDE2_000001"}
 {"edge":"HAS_ELEMENT","from":"RID205","id":"RDE2_000830","props":{"note":"renal length; observed on the sided kidney, bound on the unsided node"},"to":"RDE2_000092"}
+{"edge":"SUBTYPE_OF","from":"RID29662","to":"RID205"}
+{"edge":"SUBTYPE_OF","from":"RID29663","to":"RID205"}
+{"edge":"SUBTYPE_OF","from":"RID32986","to":"RID434"}
+{"edge":"SUBTYPE_OF","from":"RID32987","to":"RID434"}
 {"edge":"closeMatch","from":"RDE2_000013","props":{"display":"Size"},"to":"SNOMEDCT:246115007"}
 {"edge":"exactMatch","from":"RDE2_000020","props":{"display":"Distribution"},"to":"SNOMEDCT:246457009"}
 {"edge":"exactMatch","from":"RDE2_000092","props":{"display":"length"},"to":"RADLEX:RID39123"}
