@@ -1,6 +1,6 @@
 # Plan: canonical graph, two constellation examples, and a browsable site
 
-**Written:** 2026-09-02. **Status:** complete (2026-09-02); follow-ups are listed in [06 §0](../next-gen-schema/06-next-steps.md). **Owner approves each commit.**
+**Written:** 2026-09-02. **Status:** complete (2026-09-02); follow-ups are listed in [06 §4](../next-gen-schema/06-next-steps.md). **Owner approves each commit.**
 
 ## Goal
 
@@ -65,4 +65,4 @@ These were open at the start; the defaults below are recorded so they can be rev
 
 ## Out of scope
 
-Publishing to GitHub Pages; migrating the dossier renderer to the graph; the context-metadata edges of 06 §1; the prose pass of 06 §2.
+Publishing to GitHub Pages; migrating the dossier renderer to the graph; the context-metadata upstream proposals and the prose pass, both in the 06 §4 queue.

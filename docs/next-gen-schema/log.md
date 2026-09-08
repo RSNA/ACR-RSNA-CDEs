@@ -4,6 +4,8 @@ Change history for the next-gen schema bundle, newest first. Decisions are recor
 
 ## 2026-09-04
 
+**Update** to 06: rewritten as a current-state handoff (start here, what exists, waiting on the owner, the queue in order, half-baked, decisions that belong to others, housekeeping); the dated narrative it carried is in this log.
+
 **Research** added [ontology background and follow-up questions](../../notes/ontology-background-research-2026-09-04.md), connecting primary standards to proposed examples for target identity, assertion context, negation, formal semantics, mappings, and diagnostic reasoning. Recommendations remain separate from model decisions.
 
 **Update** integrating knowledge that had only lived in the working session: the Hood taxonomy profile as a note with a `SOURCES.md` entry; the code-lookup policy folded into 03 §2.1 and an "adding a node" step in the graph README; the purpose of the pictures at the top of 09; the observation that only relationship sourcing now separates Diagnosis from FindingClass, in 03 §1 and 07; a pointer from 07's open question 2 to 10 S18. Process and tooling kept apart in a new [`tools/README.md`](tools/README.md) and a lessons section in the exploration review.

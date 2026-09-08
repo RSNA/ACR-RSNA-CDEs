@@ -9,7 +9,7 @@
 - [ ] **03 §9** still shows the `RID199/HAS_ELEMENT/RDE2_000090` path form for a binding target; bindings now carry ids (`RDE2_000831` for the bile duct caliber). Update the sample.
 - [ ] **03 §6.2** canonical-form sample still uses `FC-`/`DE-` placeholder ids and shows a `required` property. Regenerate the sample from `graph.py dump`.
 - [ ] **03 §3** describes the dossier renderer as the standard neighborhood view; since 09 the mat is. Reword to present the dossier as the element and location view and point at 09 for classes.
-- [ ] **06** has grown a "§0 update" block on top of the 2026-08-21 handoff. Rewrite 06 as a current handoff and move the dated narrative into `log.md`.
+- [x] **06** rewritten as a current handoff on 2026-09-04; dated narrative moved to `log.md`.
 - [ ] **07 §7 and the closing "consequential edits owed"** list is partly done (the domain column, the subsumption test) and partly not (00 §2.4 and §5.1 corrections, the ten-exemplar-sets request). Tick or move.
 - [ ] **00 §8 issues list** does not know about the Grouping node type, the unrestricted taxonomy, or the removal of `required`. Add pointers to 10.
 - [ ] **02 Q5** says a grouping is "not an entity_type at all"; it is now a node type (S8). Add a pointer.
