@@ -4,7 +4,7 @@ title: Draft Structures for Worked Examples
 description: The vocabulary as a graph — node types, the edge catalog, a standard neighborhood visualization, and the two flat serializations (review form and canonical form) — written to make worked examples possible.
 tags: [next-gen-schema, cde, draft, examples, graph]
 status: draft
-generated: { by: ["human:talkasab", "claude-code/claude-fable-5"], at: 2026-08-20 }
+generated: { by: ["human:talkasab", "claude-code/claude-fable-5", "codex/gpt-5"], at: 2026-09-09 }
 sources:
   - id: baseline
     resource: /docs/next-gen-schema/00-current-understanding.md
@@ -67,11 +67,11 @@ Identity metadata every owned node also carries: index codes, contributors, refe
 
 | Edge | From → To | Properties on the edge | Why |
 |---|---|---|---|
-| `HAS_ELEMENT` | FindingClass **or AnatomicLocation** → DataElement | own id, contextual note (a `required` flag was carried here until 2026-09-02 and removed: there is no such thing as a required element, [08 §2](./08-worked-examples.md)) | the decoupling decision; this is the binding edge [00 §6](./00-current-understanding.md) says needs a name. Bound to a location it describes a normal structure (§9) and inherits down the anatomy |
+| `HAS_ELEMENT` | FindingClass **or AnatomicLocation** → DataElement | own id, contextual note (a `required` flag was carried here until 2026-09-02 and removed: there is no such thing as a required element, [08 §2](./08-worked-examples.md)) | the decoupling decision; this is the binding edge [00 §6](./00-current-understanding.md) says needs a name. Bound to a location it describes a normal structure (§9); a subtype may satisfy the binding's subject by subsumption, but no edge is copied |
 | `rdfs:range` | DataElement → its value domain | — | the domain is an `owl:oneOf` enumeration of the element's Values (FHIR: a *binding*; 11179: an enumerated value domain) |
 | `skos:member` | value domain → Value | rank (if ordered) | 11179: permissible values; `skos:OrderedCollection` carries ordinality |
 | `SCOPED_TO` | FindingClass → AnatomicLocation | `kind` (structure/region/type), `strength` | anatomic scope guidance [01 §2](./01-what-the-vocabulary-must-express.md) |
-| `rdfs:subClassOf` | FindingClass → FindingClass | — (transitive ⟨?⟩) | the is-a of [00 Issue A](./00-current-understanding.md); written `SUBTYPE_OF` informally |
+| `rdfs:subClassOf` | FindingClass → FindingClass | — (transitive ⟨?⟩) | the is-a of [00 Issue A](./00-current-understanding.md); written `SUBTYPE_OF` informally; never propagates another outgoing edge |
 | `MAY_HAVE_COMPONENT` · `MAY_CAUSE` · `MAY_REPRESENT` · `INTERPRETED_FROM` · `ASSESSED_BY` · `OCCURS_WITH` · `ADJACENT_TO` · `MAY_BE_RELATED_TO` | FindingClass ↔ FindingClass | **own id** (`RDE2_…`), provenance, approval status, strength ⟨?⟩ | typed relationships, [00 §4](./00-current-understanding.md) topic 5; identified so a report-level relationship can cite the potential it expresses (§5) |
 | `HAS_ETIOLOGY` · `IN_REGION` · `IN_SUBSPECIALTY` · `SEEN_ON` · `AGE_*` · `TIME_COURSE` | FindingClass → concept node | — | discoverability: "every malignant finding" is a traversal |
 
@@ -313,7 +313,7 @@ and on the grammar side an Observation whose subject *is* the location:
 {"observation":"obs-8","subject":"RID199","values":{"RDE2_000090":{"value":4,"unit":"mm"}}}
 ```
 
-Note `obs-7`: the binding is on unsided `kidney` (RID205), the observation is on `left kidney` (RID29663) — **inheritance across the laterality triad**, the same mechanism that will carry type-level bindings (`artery HAS_ELEMENT diameter`) once the is-a relation exists. And `INTERPRETED_FROM` targets the *binding*, which means bindings carry identity too — the same reification argument as §5, applied to `HAS_ELEMENT`.
+Note `obs-7`: the binding is on unsided `kidney` (RID205), while the observation is on `left kidney` (RID29663). Because left kidney is a subtype of kidney, it satisfies the binding's subject. This is an applicability check, not inheritance: no `HAS_ELEMENT` edge is copied to the left-kidney node. `INTERPRETED_FROM` targets the *binding*, which means bindings carry identity too — the same reification argument as §5, applied to `HAS_ELEMENT`.
 
 ## 10. Next up
 
@@ -324,7 +324,7 @@ Note `obs-7`: the binding is on unsided `kidney` (RID205), the observation is on
 1. **pulmonary nodule** — drafted here
 2. **thyroid nodule** — spec written; exercises scope + granularity ([01 §2.4](./01-what-the-vocabulary-must-express.md))
 3. **upper abdominal abnormality** — negation propagation over `SUBTYPE_OF` ([00 Issue A](./00-current-understanding.md))
-4. **common bile duct** — drafted in §9 as bindings on the location; next: a kidney example to exercise laterality inheritance, and an artery example once structure-type bindings are possible
+4. **common bile duct** — drafted in §9 as bindings on the location; next: a kidney example to exercise laterality applicability, and an artery example once structure-type bindings are possible
 5. **part-solid pulmonary nodule with a solid component** — the sub-finding case (§5): `MAY_HAVE_COMPONENT` in the vocabulary, `HAS_COMPONENT` between two Observations in the report, the component carrying its own size
 6. **acute pyelonephritis** — a `diagnosis` constituted by a constellation: striated nephrogram, renal enlargement, perinephric fat stranding, with renal abscess as a complication (`MAY_CAUSE`) and hydronephrosis as an associated finding. Exercises the multi-finding diagnosis question ([02 Q4/Q5](./02-review-questions.md)), `MAY_REPRESENT` from each driving finding, and kidney location bindings (enlargement is `kidney HAS_ELEMENT length` beyond normal — §9 and a FindingClass meeting in one case)
 7. **lung cancer staging** — separate the **stage** (an `assessment`, with T, N, and M as `COMPONENT`s that are themselves assessments) from the **findings that drive it**: the primary mass (size, invasion → T), lymphadenopathy by station (→ N), malignant effusion and distant lesions (→ M). Each stage component is `INTERPRETED_FROM` specific finding bindings, never restating their values. Exercises the measurement/interpretation separation of [01 §4](./01-what-the-vocabulary-must-express.md) at scale, nested assessments, and the reified-binding targets of §9

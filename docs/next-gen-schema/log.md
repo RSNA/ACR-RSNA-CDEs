@@ -2,6 +2,12 @@
 
 Change history for the next-gen schema bundle, newest first. Decisions are recorded in [10](10-decision-record-2026-09-02.md); this log records what changed in the bundle and when.
 
+## 2026-09-09
+
+**Update** extending the correction below to every subtype: the six pleural effusion subtypes and the chronic, emphysematous, and xanthogranulomatous pyelonephritis nodes now assert their own scope, modality, region, subspecialty, sex, and age edges (10 C18), so their mats and hover cards show context again without any propagation. The four committed mats and trees regenerated. The owner's words recorded verbatim on 10 S13.
+
+**Correction** to subtype semantics and the mat renderer: `SUBTYPE_OF` no longer supplies scope or context from a parent, and no mat or hover card labels anything as inherited. Acute pyelonephritis now carries explicit scope, modality, region, subspecialty, sex, age, course, and etiology assertions, preserving the displayed context without implying OOP-style inheritance. Added focused regression coverage.
+
 ## 2026-09-04
 
 **Update** to 06: rewritten as a current-state handoff (start here, what exists, waiting on the owner, the queue in order, half-baked, decisions that belong to others, housekeeping); the dated narrative it carried is in this log.

@@ -4,7 +4,7 @@ title: Worked Examples, Acute Pyelonephritis, Pleural Effusion, and One Report
 description: Acute pyelonephritis and pleural effusion worked through as canonical graph files, plus one report drawn across observation and definition planes.
 tags: [next-gen-schema, examples, content, pyelonephritis, pleural-effusion, graph]
 status: draft
-generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1"], at: 2026-09-02 }
+generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1", "codex/gpt-5"], at: 2026-09-09 }
 sources:
   - id: record
     resource: /docs/next-gen-schema/10-decision-record-2026-09-02.md
@@ -36,7 +36,7 @@ sources:
 
 ## 1. The decisions these examples forced
 
-Recorded in [10](./10-decision-record-2026-09-02.md) with the owner's words: one taxonomy unrestricted by the finding or diagnosis label (S1, S2); no inherited element bindings (S3); confidence in the report plane for findings and diagnoses alike (S4); lesion, mass, and process as patterns applied at a location, not nodes, and not in the graph (S5 to S7); Grouping as a narrow node type (S8); no required elements (S9); and the rendering-time propagation of scope and context down subtypes (S13, a Claude default).
+Recorded in [10](./10-decision-record-2026-09-02.md) with the owner's words: one taxonomy unrestricted by the finding or diagnosis label (S1, S2); no propagation of element, scope, context, or other outgoing edges over `SUBTYPE_OF` (S3; S13 rejected); confidence in the report plane for findings and diagnoses alike (S4); lesion, mass, and process as patterns applied at a location, not nodes, and not in the graph (S5 to S7); Grouping as a narrow node type (S8); and no required elements (S9).
 
 ## 2. Acute pyelonephritis
 
@@ -64,7 +64,7 @@ All three specificity values of [07 §3.2](./07-relationship-family.md) occur in
 
 **The rest of the family.** `acute pyelonephritis MAY_CAUSE renal abscess`, typicality occasional, on the assumption that the causal pair takes typicality ([07 Q2](./07-relationship-family.md)). `renal abscess` is a Diagnosis and a `SUBTYPE_OF renal lesion`, the lesion pattern at the kidney (10 S6). `acute MAY_PROGRESS_TO chronic`, the identity-preserving case. Report pattern 1 of [02 Q4](./02-review-questions.md) stays legal: "pyelonephritis, left kidney" with no findings is a single Observation.
 
-**Scope and context propagate down the taxonomy.** `acute pyelonephritis` carries no `SCOPED_TO` or context edges of its own; its mat shows the kidney and the modalities in gray as inherited from `pyelonephritis`. This is a declared rendering rule for `SCOPED_TO` and the seven context edge types only, taken on 2026-09-02 so that scope and context are asserted once per family rather than on every subtype; it is not element inheritance, which remains excluded (10 S3). The graph stays explicit; the propagation is derived at render time.
+**Scope and context are explicit on each class.** `acute pyelonephritis` directly carries its kidney scope plus the modality, region, subspecialty, sex, age, time-course, and etiology edges its mat displays. Some values match `pyelonephritis`, but that agreement is expressed by separate assertions, not inheritance. The renderer never follows `SUBTYPE_OF` to supply a missing edge (10 S3; S13 rejected).
 
 **There are no required elements.** The `required` property that earlier drafts carried on `HAS_ELEMENT` edges was removed from the graph, the specs, and the renderers on 2026-09-02; presence is an ordinary attribute row.
 

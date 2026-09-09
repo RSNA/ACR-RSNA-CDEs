@@ -297,7 +297,7 @@ class Site:
         info = {}
         for nid in members:
             n = self.g.nodes[nid]
-            anat, inh = c.anatomy_str(nid)
+            anat, _ = c.anatomy_str(nid)
             rels = []
             for label, etype, direction in __import__("render_cards").CONTAINERS:
                 for e in self.g.edges:
@@ -307,7 +307,7 @@ class Site:
                     elif direction in ("in", "both") and e["to"] == nid and e["from"] in members: other = e["from"]
                     if other: rels.append({"label": label.lower(), "other": other, "props": c.edge_line(e)})
             ctx = {k: [c.name(x) for x in v[0]] for k, v in c.context(nid).items() if v[0]}
-            info[nid] = {"name": n["name"], "kind": c.kind(nid), "definition": n.get("definition", ""), "anatomy": anat + (f" (inherited from {c.name(inh)})" if inh else ""),
+            info[nid] = {"name": n["name"], "kind": c.kind(nid), "definition": n.get("definition", ""), "anatomy": anat,
                          "mappings": [c.code_str(*m) for m in c.mappings(nid)], "context": ctx, "rels": rels, "href": self.node_href(nid, rel)}
         js = """
 (function(){var INFO=%s;var panel=document.getElementById('treepanel');var svg=document.querySelector('.diagram svg');

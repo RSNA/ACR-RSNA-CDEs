@@ -4,7 +4,7 @@ title: The Finding and Diagnosis Relationship Family
 description: The proposed catalog of relationships between FindingClasses and Diagnoses, with definitions, prior art, the typicality and specificity properties on manifestation edges, the differential as a derived view, and the refinements deliberately deferred.
 tags: [next-gen-schema, relationships, diagnosis, edges, differential]
 status: draft
-generated: { by: ["human:talkasab", "claude-code/claude-opus-5"], at: 2026-09-01 }
+generated: { by: ["human:talkasab", "claude-code/claude-opus-5", "codex/gpt-5"], at: 2026-09-09 }
 sources:
   - id: exchange
     resource: /notes/review-exchange-2026-08-25-extract.md
@@ -46,7 +46,7 @@ Seven pairs and one escape hatch. Assertion direction is the left-hand name; too
 
 | Relationship (inverse) | From → To | Character | Meaning |
 |---|---|---|---|
-| `SUBTYPE_OF` (`HAS_SUBTYPE`) | F/D/G→F/D/G, either direction across the labels | transitive ⟨?⟩ ([00 Issue A](./00-current-understanding.md)) | taxonomy, more to less specific; written `rdfs:subClassOf` formally. One taxonomy over all three node types, unrestricted by the finding or diagnosis label; the earlier F→F, D→D restriction was withdrawn on 2026-09-02 ([10 S1](./10-decision-record-2026-09-02.md)) |
+| `SUBTYPE_OF` (`HAS_SUBTYPE`) | F/D/G→F/D/G, either direction across the labels | transitive ⟨?⟩ ([00 Issue A](./00-current-understanding.md)); no propagation of outgoing edges | taxonomy, more to less specific; written `rdfs:subClassOf` formally. One taxonomy over all three node types, unrestricted by the finding or diagnosis label; it never supplies a subtype's elements, scope, context, or other relationships ([10 S1, S3](./10-decision-record-2026-09-02.md)) |
 | `MAY_HAVE_COMPONENT` (`MAY_BE_COMPONENT_OF`) | F→F | compositional | the target can occur as a described sub-part with its own elements, and is genuinely optional in all cases; the gated case is the open conditionality question ([exchange §2](../../notes/review-exchange-2026-08-25-extract.md)) |
 | `MAY_CAUSE` (`MAY_BE_CAUSED_BY`) | F/D→F/D | causal | the source can produce the target as a distinct second entity |
 | `MAY_MANIFEST_AS` (`MAY_REPRESENT`) | D→F/D | evidential | the diagnosis can show itself as the target; the inverse is how a report reads, finding toward conclusion |

@@ -4,7 +4,7 @@ title: "Next-Generation CDE Schema: Current Understanding"
 description: Referenced baseline for the CDE schema redesign — scope, terms, the assumed grammar, what the committee has decided, requirements evidence, prior art, and open issues.
 tags: [next-gen-schema, cde, analysis]
 status: draft
-generated: { by: ["human:talkasab", "claude-code/claude-fable-5"], at: 2026-08-19 }
+generated: { by: ["human:talkasab", "claude-code/claude-fable-5", "codex/gpt-5"], at: 2026-09-09 }
 sources:
   - id: siim-minutes
     resource: /notes/siim-meeting-extract.md
@@ -258,7 +258,7 @@ Six topics were presented as "Current State / Proposing" pairs and discussed for
 
 **4. Location.** Promoted from ordinary property to anchor. A finding's body part binds to RadLex; RadLex's `has_part` / `has_regional_part` relations then *suggest* a valid location value space from which the author selects clinically applicable options (deck slide 16, worked through with thyroid gland RID7578). Spatial location — planes and axes relative to landmarks — separated as its own concern. SNOMED mapping assumed to be maintained at the RadLex level — **an assumption the 4.3 OWL does not bear out; see [05 §2](./05-radlex-baseline.md)**.
 
-**5. Relationships.** Explicit, typed, many-to-many edges: causal links, co-occurrence, subtypes, component-of, groupings. Two constraints recorded: subtypes are defined **independently, without automatic inheritance of attributes**, and cardinality/validation constraints are **out of scope** for the semantic schema.
+**5. Relationships.** Explicit, typed, many-to-many edges: causal links, co-occurrence, subtypes, component-of, groupings. Two constraints recorded: subtypes are defined **independently, and `is-a` never propagates their attributes, scope, context, or other outgoing edges**, and cardinality/validation constraints are **out of scope** for the semantic schema.
 
 **6. Metadata and governance.** Synonyms at multiple levels; entity type; clinical context descriptors; coding systems beyond the current four. Governance, versioning, provenance, approval, and AI-contribution records move **out of the semantic layer** into a separate event-sourced schema (deck slides 21–22; [first_ideas](../../notes/schema-recommendations-part2.md)).
 
@@ -350,7 +350,7 @@ The model is two shapes stacked. The **finding-class taxonomy and relationships*
 
 Ordered by dependency. Issues A and B constrain most of the rest.
 
-**Issue A — Does `is-a` carry inference?** The minutes state that subtypes inherit nothing. But the motivating use case for groupings is explicitly inferential: modelling "upper abdomen unremarkable" as `upper abdominal abnormality / presence: absent` and having an application "do a sweep for its ancestors being negative" ([02 Q3](./02-review-questions.md)). That is only sound if `is-a` is genuine transitive subsumption. Likely requires separating a strict, acyclic, inference-safe subsumption relation from looser associative relations. Note also the closed-world assumption: the negation sweep is valid only if the hierarchy beneath a class is complete *and* the radiologist actually assessed all of it — which may need to be a declared property of a class rather than an emergent one.
+**Issue A — What inference does `is-a` license?** One boundary is settled: `is-a` never propagates `HAS_ELEMENT`, `SCOPED_TO`, context, or any other outgoing edge (10 S3; S13 rejected). The remaining question is narrower. The motivating use case for groupings models "upper abdomen unremarkable" as `upper abdominal abnormality / presence: absent` and has an application "do a sweep for its ancestors being negative" ([02 Q3](./02-review-questions.md)). That is only sound if `is-a` is genuine transitive subsumption. Likely requires separating a strict, acyclic, inference-safe subsumption relation from looser associative relations. Note also the closed-world assumption: the negation sweep is valid only if the hierarchy beneath a class is complete *and* the radiologist actually assessed all of it — which may need to be a declared property of a class rather than an emergent one.
 
 **Issue B — Are finding classes classes or individuals?** As OWL classes, subsumption and reasoning work natively and we align with how SNOMED and RadLex model things, but governance metadata requires punning or annotation properties. As SKOS-style individuals, metadata is trivial but `is_a` becomes `skos:broader`, which has no inference semantics — surrendering exactly what Issue A wants. OWL 2 punning is the standard escape. To be decided deliberately.
 

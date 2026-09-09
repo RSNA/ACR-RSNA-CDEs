@@ -4,7 +4,7 @@ title: What the Vocabulary Must Express
 description: What the finding vocabulary has to be able to express — what a FindingClass is, anatomic scope guidance, the breadth of what is reported on, measurement versus interpretation, and what entity_type is recording.
 tags: [next-gen-schema, cde, ontology, analysis]
 status: draft
-generated: { by: ["human:talkasab", "claude-code/claude-fable-5"], at: 2026-08-19 }
+generated: { by: ["human:talkasab", "claude-code/claude-fable-5", "codex/gpt-5"], at: 2026-09-09 }
 sources:
   - id: companion
     resource: /docs/next-gen-schema/00-current-understanding.md
@@ -154,7 +154,7 @@ Since DataElements have life independent of FindingClasses, and the anatomy voca
 What this buys:
 
 - The structure-vs-property question (`common bile duct` with a `caliber` element, or `bile duct caliber` as a class?) dissolves — there is no class, and the paired-structure test passes trivially: renal length is `kidney (RID205) HAS_ELEMENT length`, observed on `left kidney (RID29663)`.
-- **Bindings inherit down the anatomy.** Bind `length` to the unsided `kidney` and the laterality triad gives it to both sides; bind `diameter` to the structure type `artery` once the is-a relation lands ([04](./04-anatomy-gaps.md)) and every artery has it. One binding covers hundreds of structures.
+- **Bindings can apply through an anatomy subtype without being copied.** Bind `length` to the unsided `kidney`; an observation on a left or right kidney satisfies that binding because the sided structure is a kidney. Likewise, a future binding on the structure type `artery` can apply when the observation's subject is an artery ([04](./04-anatomy-gaps.md)). `SUBTYPE_OF` does not create `HAS_ELEMENT` edges on those more specific nodes.
 - The abnormality stays a FindingClass: `bile duct dilation` is a `diagnosis`, `INTERPRETED_FROM` the caliber binding — the measurement/interpretation split of §4 made concrete.
 
 What it requires, to be taken to the committee and to IHE:

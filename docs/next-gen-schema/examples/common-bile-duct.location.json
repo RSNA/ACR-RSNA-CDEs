@@ -44,13 +44,6 @@
       ]
     }
   ],
-  "inherits_from": [
-    {
-      "name": "biliary tree",
-      "edge": "partOf",
-      "note": "bindings on the parent apply here unless overridden"
-    }
-  ],
   "scoped_classes": [
     {
       "name": "bile duct dilation",

@@ -13,6 +13,10 @@
 {"definition":"Chronic granulomatous destruction of the renal parenchyma, usually with an obstructing staghorn calculus.","id":"RDE2_000813","name":"xanthogranulomatous pyelonephritis","node":"Diagnosis","status":"proposed","status_date":"2026-09-02","synonyms":[{"term":"XGP","type":"abbreviation"}],"version":1}
 {"definition":"Any abnormality of the kidney. A negative-only node: reported as 'no renal abnormality' and never asserted in the positive; the closed-world negation sweep applies here.","id":"RDE2_000814","name":"renal abnormality","node":"Grouping","status":"proposed","version":1}
 {"edge":"AGE_APPLICABILITY","from":"RDE2_000800","to":"RDE2_001200"}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000801","to":"RDE2_001200"}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000811","to":"RDE2_001200"}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000812","to":"RDE2_001200"}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000813","to":"RDE2_001200"}
 {"edge":"HAS_ELEMENT","from":"RDE2_000800","to":"RDE2_000001"}
 {"edge":"HAS_ELEMENT","from":"RDE2_000801","to":"RDE2_000001"}
 {"edge":"HAS_ELEMENT","from":"RDE2_000802","to":"RDE2_000001"}
@@ -34,11 +38,24 @@
 {"edge":"HAS_ELEMENT","from":"RDE2_000813","to":"RDE2_000001"}
 {"edge":"HAS_ELEMENT","from":"RDE2_000814","to":"RDE2_000001"}
 {"edge":"HAS_ETIOLOGY","from":"RDE2_000800","to":"RDE2_001002"}
+{"edge":"HAS_ETIOLOGY","from":"RDE2_000801","to":"RDE2_001002"}
 {"edge":"HAS_ETIOLOGY","from":"RDE2_000809","to":"RDE2_001002"}
 {"edge":"INTERPRETED_FROM","from":"RDE2_000804","to":"RDE2_000830"}
 {"edge":"IN_REGION","from":"RDE2_000800","to":"RID56"}
+{"edge":"IN_REGION","from":"RDE2_000801","to":"RID56"}
+{"edge":"IN_REGION","from":"RDE2_000811","to":"RID56"}
+{"edge":"IN_REGION","from":"RDE2_000812","to":"RID56"}
+{"edge":"IN_REGION","from":"RDE2_000813","to":"RID56"}
 {"edge":"IN_SUBSPECIALTY","from":"RDE2_000800","to":"RID50608"}
 {"edge":"IN_SUBSPECIALTY","from":"RDE2_000800","to":"RID50614"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000801","to":"RID50608"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000801","to":"RID50614"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000811","to":"RID50608"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000811","to":"RID50614"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000812","to":"RID50608"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000812","to":"RID50614"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000813","to":"RID50608"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000813","to":"RID50614"}
 {"edge":"MAY_CAUSE","from":"RDE2_000801","id":"RDE2_000907","props":{"note":"assumes 07 Q2 answered yes: the causal pair takes typicality","typicality":"occasional"},"to":"RDE2_000809"}
 {"edge":"MAY_MANIFEST_AS","from":"RDE2_000801","id":"RDE2_000902","props":{"specificity":"highly_suggestive","typicality":"frequent"},"to":"RDE2_000802"}
 {"edge":"MAY_MANIFEST_AS","from":"RDE2_000801","id":"RDE2_000903","props":{"specificity":"suggestive","typicality":"frequent"},"to":"RDE2_000803"}
@@ -48,6 +65,7 @@
 {"edge":"MAY_PROGRESS_TO","from":"RDE2_000801","id":"RDE2_000908","to":"RDE2_000811"}
 {"edge":"OCCURS_WITH","from":"RDE2_000801","id":"RDE2_000909","props":{"note":"obstruction predisposes; an obstructed infected system is pyonephrosis, not modeled here"},"to":"RDE2_000808"}
 {"edge":"SCOPED_TO","from":"RDE2_000800","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000801","props":{"kind":"structure","strength":"required"},"to":"RID205"}
 {"edge":"SCOPED_TO","from":"RDE2_000802","props":{"kind":"structure","strength":"required"},"to":"RID205"}
 {"edge":"SCOPED_TO","from":"RDE2_000803","props":{"kind":"structure","strength":"required"},"to":"RID434"}
 {"edge":"SCOPED_TO","from":"RDE2_000804","props":{"kind":"structure","strength":"required"},"to":"RID205"}
@@ -56,13 +74,32 @@
 {"edge":"SCOPED_TO","from":"RDE2_000807","props":{"kind":"structure","strength":"required"},"to":"RID205"}
 {"edge":"SCOPED_TO","from":"RDE2_000808","props":{"kind":"structure","strength":"required"},"to":"RID205"}
 {"edge":"SCOPED_TO","from":"RDE2_000809","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000811","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000812","props":{"kind":"structure","strength":"required"},"to":"RID205"}
+{"edge":"SCOPED_TO","from":"RDE2_000813","props":{"kind":"structure","strength":"required"},"to":"RID205"}
 {"edge":"SCOPED_TO","from":"RDE2_000814","props":{"kind":"structure","strength":"required"},"to":"RID205"}
 {"edge":"SEEN_ON","from":"RDE2_000800","to":"RID10312"}
 {"edge":"SEEN_ON","from":"RDE2_000800","to":"RID10321"}
 {"edge":"SEEN_ON","from":"RDE2_000800","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000801","to":"RID10312"}
+{"edge":"SEEN_ON","from":"RDE2_000801","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000801","to":"RID10326"}
 {"edge":"SEEN_ON","from":"RDE2_000802","to":"RID10312"}
 {"edge":"SEEN_ON","from":"RDE2_000802","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000811","to":"RID10312"}
+{"edge":"SEEN_ON","from":"RDE2_000811","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000811","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000812","to":"RID10312"}
+{"edge":"SEEN_ON","from":"RDE2_000812","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000812","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000813","to":"RID10312"}
+{"edge":"SEEN_ON","from":"RDE2_000813","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000813","to":"RID10326"}
 {"edge":"SEX","from":"RDE2_000800","to":"RDE2_001101"}
+{"edge":"SEX","from":"RDE2_000801","to":"RDE2_001101"}
+{"edge":"SEX","from":"RDE2_000811","to":"RDE2_001101"}
+{"edge":"SEX","from":"RDE2_000812","to":"RDE2_001101"}
+{"edge":"SEX","from":"RDE2_000813","to":"RDE2_001101"}
 {"edge":"SUBTYPE_OF","from":"RDE2_000800","to":"RDE2_000814"}
 {"edge":"SUBTYPE_OF","from":"RDE2_000801","to":"RDE2_000800"}
 {"edge":"SUBTYPE_OF","from":"RDE2_000802","to":"RDE2_000814"}

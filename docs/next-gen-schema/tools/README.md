@@ -4,7 +4,7 @@ title: Tools, and How to Look at the Pictures
 description: Process and tooling only - what each script under tools/ does, the commands that regenerate and check the bundle, how to look up external codes for a new node, and how to rasterize or screenshot the pictures and verify hover on this machine.
 tags: [next-gen-schema, tooling, process, renderer, site, checker]
 status: draft
-generated: { by: "claude-code/claude-fable-5.1", at: 2026-09-04 }
+generated: { by: ["claude-code/claude-fable-5.1", "codex/gpt-5"], at: 2026-09-09 }
 sources:
   - id: graph-readme
     resource: /docs/next-gen-schema/graph/README.md
@@ -28,6 +28,7 @@ Process and tooling. Nothing here is a decision about the vocabulary or the pict
 | `render_report.py` | a `*.report.jsonl` file | one SVG | `python3 tools/render_report.py examples/pyelonephritis.report.jsonl > diagrams/report-pyelonephritis.svg` |
 | `render_neighborhood.py` | one interim spec | one SVG, the older object dossiers | `python3 tools/render_neighborhood.py examples/presence.element.json > diagrams/de-presence.svg` |
 | `build_site.py` | everything above plus every Markdown document in the bundle and `notes/` | `site/` (gitignored) | `uv run docs/next-gen-schema/tools/build_site.py` |
+| `test_render_cards.py` | the canonical graph and `render_cards.py` | nothing; verifies direct-only scope/context semantics | `uv run python docs/next-gen-schema/tools/test_render_cards.py -v` |
 | `../check_bundle.py` (one level up) | the whole bundle | a report; non-zero on error | `python3 docs/check_bundle.py` |
 
 Regenerate a committed diagram whenever a graph file or a view changes; the checker compares every committed SVG byte for byte with a fresh render and fails on drift. Run the checker before every commit.

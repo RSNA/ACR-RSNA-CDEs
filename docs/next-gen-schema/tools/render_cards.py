@@ -17,8 +17,8 @@ Rows are the card height (50 px) plus 16 px of clearance so the site layer has r
 relationship labels riding box borders above and below a card.
 
 Hover: every mini-card has a detail card revealed by CSS (`:has()`), so the SVG works alone in a
-browser and inline in HTML. Scope and context edges propagate down SUBTYPE_OF when a node has
-none of its own; the mat says so in gray. Deterministic output; byte-checked by the bundle checker.
+browser and inline in HTML. Scope and context come only from edges asserted directly on the node;
+SUBTYPE_OF does not propagate them. Deterministic output; byte-checked by the bundle checker.
 """
 import json, os, sys, html
 
@@ -92,26 +92,19 @@ class Cards:
         return sorted((e["from"] for e in self.g.in_edges(nid) if e["edge"] == "SUBTYPE_OF" and e["from"] in self.n),
                       key=lambda c: self.name(c).lower())
 
-    def own_or_inherited(self, nid, edge):
-        """Edges of a type on the node, or on the nearest ancestor that has any. Returns (edges, source_id)."""
-        seen, queue = set(), [nid]
-        while queue:
-            cur = queue.pop(0)
-            if cur in seen: continue
-            seen.add(cur)
-            es = [e for e in self.g.out_edges(cur) if e["edge"] == edge]
-            if es: return es, cur
-            queue.extend(self.parents(cur))
-        return [], None
+    def own(self, nid, edge):
+        """Edges of a type asserted directly on the node. Returns (edges, source_id)."""
+        es = [e for e in self.g.out_edges(nid) if e["edge"] == edge]
+        return es, (nid if es else None)
 
     def scope(self, nid):
-        es, src = self.own_or_inherited(nid, "SCOPED_TO")
+        es, src = self.own(nid, "SCOPED_TO")
         return [(e["to"], e.get("props", {})) for e in es], src
 
     def context(self, nid):
         out = {}
         for label, edge in CONTEXT:
-            es, src = self.own_or_inherited(nid, edge)
+            es, src = self.own(nid, edge)
             out[label] = ([e["to"] for e in es], src)
         return out
 
@@ -184,8 +177,8 @@ class Cards:
         lines = []   # (text, fs, fill, weight, mono)
         d = wrap(node.get("definition", ""), FS_S, w - 24, 4)
         for ln in d: lines.append((ln, FS_S, INK, None, False))
-        anat, inh = self.anatomy_str(nid)
-        if anat != "⌂ —": lines.append((anat + (f'  (inherited from {self.name(inh)})' if inh else ""), FS_S, "#78350f", None, False))
+        anat, _ = self.anatomy_str(nid)
+        if anat != "⌂ —": lines.append((anat, FS_S, "#78350f", None, False))
         syn = node.get("synonyms") or []
         if syn: lines.append(("synonyms: " + " · ".join(s["term"] for s in syn), FS_XS, MUTED, None, False))
         els = self.elements(nid)
@@ -242,10 +235,9 @@ class Cards:
                     + txt(W - PAD, 36, f'{self.kind(hub)} · {hub}', FS_S, MUTED, anchor="end", mono=True))
         y = 56
         # 2 anatomy line
-        anat, inh = self.anatomy_str(hub)
+        anat, _ = self.anatomy_str(hub)
         body.append(f'<rect x="0" y="{y}" width="{W}" height="28" fill="#fffbeb"/>'
-                    + txt(PAD + 4, y + 19, anat, FS_S, "#78350f")
-                    + (txt(W - PAD, y + 19, f'inherited from {self.name(inh)}', FS_XS, MUTED, anchor="end", italic=True) if inh else ""))
+                    + txt(PAD + 4, y + 19, anat, FS_S, "#78350f"))
         y += 28
         body.append(f'<line x1="0" y1="{y}" x2="{W}" y2="{y}" stroke="{RULE}"/>')
         # 3 text
@@ -333,21 +325,20 @@ class Cards:
         cells = []
         maxl = 1
         for i, (label, edge) in enumerate(CONTEXT):
-            cs, src = ctx[label]
+            cs, _ = ctx[label]
             lines = [self.concept_str(c) for c in cs] or ["—"]
             wrapped = []
             for ln in lines: wrapped.extend(wrap(ln, FS_S, cellw - 12, 2))
-            if src and src != hub: wrapped.append(f'(inherited from {self.name(src)})')
-            cells.append((label, wrapped, bool(src and src != hub)))
+            cells.append((label, wrapped))
             maxl = max(maxl, len(wrapped))
         rh = 26 + 16 * maxl
         body.append(f'<rect x="0" y="{y}" width="{W}" height="{rh}" fill="{SOFT}"/><line x1="0" y1="{y}" x2="{W}" y2="{y}" stroke="{a}" stroke-width="1.5"/>')
-        for i, (label, wrapped, inh_) in enumerate(cells):
+        for i, (label, wrapped) in enumerate(cells):
             cx = PAD + i * cellw
             if i: body.append(f'<line x1="{cx - 6:.1f}" y1="{y + 4}" x2="{cx - 6:.1f}" y2="{y + rh - 4}" stroke="{RULE}"/>')
             body.append(txt(cx, y + 17, label, FS_XS, MUTED, weight="700"))
             for j, ln in enumerate(wrapped):
-                body.append(txt(cx, y + 35 + 16 * j, ln, FS_S, GRAY if (ln == "—" or inh_) else INK, italic=ln.startswith("(inherited")))
+                body.append(txt(cx, y + 35 + 16 * j, ln, FS_S, GRAY if ln == "—" else INK))
         y += rh
         H = y + 2
         return self.svg(W, H, body, details, f'The {self.kind(hub).lower()} {node["name"]} as a mat: its attributes, and everything one relationship away as cards in labelled containers.', title)

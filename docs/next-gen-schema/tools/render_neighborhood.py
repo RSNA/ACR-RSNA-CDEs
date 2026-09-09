@@ -360,7 +360,7 @@ def render_element(spec):
     return fmt_svg_numbers("".join(out))
 
 def render_location(spec):
-    """AnatomicLocation dossier: descriptor elements bound to the structure, inherited bindings,
+    """AnatomicLocation dossier: descriptor elements bound directly to the structure,
     FindingClasses scoped here, mappings. The node is upstream (RadLex); the bindings are ours."""
     W, PAD, GUT = 1000, 28, 28
     IW = W - 2*PAD; HALF = (IW - GUT) / 2
@@ -381,17 +381,6 @@ def render_location(spec):
                 s, h = elem_card(xs[ci], ys[ci], HALF, e); frags.append(s); ys[ci] += h + 12
             return "".join(frags), max(ys) - cy0 - 12
         full_section(f'HAS_ELEMENT — descriptors of this structure · ×{len(els)} · an Observation whose subject is this location uses these', content)
-
-    inh = spec.get("inherits_from", [])
-    if inh:
-        def content(cy0):
-            frags, cx = [], PAD
-            for i in inh:
-                s, w, h = chip(cx, cy0, i["name"], f'{i["edge"]} · bindings inherited', "location"); frags.append(s)
-                frags.append(f'<text x="{cx+w+12}" y="{cy0+28}" font-size="10" fill="{MUTED}">{esc(i.get("note",""))}</text>')
-                cx += w + 12
-            return "".join(frags), 46
-        full_section("INHERITED BINDINGS — via partOf / is-a / laterality triad", content)
 
     sc = spec.get("scoped_classes", [])
     if sc:

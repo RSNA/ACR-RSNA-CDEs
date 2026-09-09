@@ -1,10 +1,10 @@
 ---
 type: Decision Record
-title: Decision Record, 2 and 3 September 2026
-description: Every decision taken while building the graph, the examples, the mat-and-tree pictures, and the report-plane example, sorted into structure, display, and content, with each one marked by provenance.
+title: Decision Record, 2–9 September 2026
+description: Decisions recorded while building and correcting the graph, examples, generated pictures, and report-plane example through 9 September 2026, sorted into structure, display, and content, with each one marked by provenance.
 tags: [next-gen-schema, decisions, provenance, structure, display, content]
 status: draft
-generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1"], at: 2026-09-03 }
+generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1", "codex/gpt-5"], at: 2026-09-09 }
 sources:
   - id: session
     resource: "https://claude.ai/code/session_0148zNHjv5iPYG6nH5V14DUD"
@@ -28,7 +28,7 @@ sources:
     title: The worked examples that apply the content decisions
 ---
 
-# Decision Record, 2 and 3 September 2026
+# Decision Record, 2–9 September 2026
 
 **Status:** Draft. This is the record of provenance; the current state of what was decided lives in [09](./09-mat-and-tree.md) for display, in [03](./03-draft-structures.md) and [07](./07-relationship-family.md) for structure, and in [08](./08-worked-examples.md) for content. When this record and those documents disagree, this record is the authority on *who decided*, and those documents are the authority on *what is current*.
 
@@ -50,7 +50,7 @@ Decisions are numbered by section: **S** structure, **D** display, **C** content
 |---|---|---|---|
 | S1 | `SUBTYPE_OF` is one taxonomy over finding, diagnosis, and grouping nodes, unrestricted by the finding or diagnosis label, in either direction. | **OWNER**: "there is absolutely NO QUESTION that a radiologist would say, 'empyema' is a sub-type of 'pleural effusion'." Then, on Claude's attempt to allow only diagnosis-under-finding: "I'm... dubious about the restriction on subtype not working from findingclass up to diagnosis. Truly, you don't seem to get how interchangably radiologists use these." | [07 §1, §2](./07-relationship-family.md) |
 | S2 | The test for subsumption is "can you say X without Y and mean something?" | **NOT OBJECTED**: Claude's proposal after S1. | [07 §2](./07-relationship-family.md) |
-| S3 | Subsumption implies nothing about element bindings. There is no inherited binding over `SUBTYPE_OF`; the anatomy inheritance of 03 §9 is a declared rule for the anatomy graph, not a property of is-a. | **OWNER**: "there is NO implied inheritance of element relationships. Where did THAT come from? This is ontology, not OOP." | [08](./08-worked-examples.md), [03 §9](./03-draft-structures.md) |
+| S3 | `SUBTYPE_OF` does not propagate any outgoing edge. A subtype receives no `HAS_ELEMENT`, `SCOPED_TO`, context, or other relationship from its parent; shared facts are asserted explicitly. (That subsumption may still be used to test applicability without copying edges, as a sided kidney satisfies an unsided scope, follows from S20 and is Claude's reading, not part of this ruling.) | **OWNER**: "there is NO implied inheritance of element relationships. Where did THAT come from? This is ontology, not OOP." Clarified 2026-09-09: "we don't intend ANY OOP-style inheritance from the IS-A relationship." | graph, `render_cards.py`, [08](./08-worked-examples.md), [09 §4](./09-mat-and-tree.md) |
 | S4 | Node types carry no "obligations". Confidence belongs to the report-plane assertion, for findings as much as diagnoses; the 01 §5 "must carry" column for diagnosis is struck. | **OWNER**: "'Obligations'? 'confidence and criteria on a diagnosis'?" and "confidence can EQUALLY apply to findings, not just diagnoses." | [01 §5](./01-what-the-vocabulary-must-express.md) |
 | S5 | Only a few generalities are clinically meaningful (lesion, mass, process, anatomic variant, post-operative finding, and a small number like them). "Nodules in general" is not. | **OWNER**: "IN GENERAL, talking about the class of 'nodules' is NOT clinically meaningful, and most of what you have here falls into that category." | [08](./08-worked-examples.md) |
 | S6 | Those generalities are patterns applied at a location, not nodes in the taxonomy. "Hepatic lesion" is a class; "lesion" is not. | **OWNER**: "I think they are PATTERNS that recur in the hierarchy, usually in location-based contexts." | [08](./08-worked-examples.md), [06](./06-next-steps.md) |
@@ -60,7 +60,7 @@ Decisions are numbered by section: **S** structure, **D** display, **C** content
 | S10 | Context metadata (sex specificity, age, modality, time course, etiology, region, subspecialty) is a distinct node class, not free-text metadata. | **OWNER**: "probably best as a different kind of node class, right?" (It already was `Concept`; the owner's question confirmed it.) | [03 §1](./03-draft-structures.md), `graph/concepts.jsonl` |
 | S11 | Modality, body region, and subspecialty concepts are RadLex nodes and carry RIDs. Etiology, sex, age, and time course get our own provisional codes now, as a lookup table, until official versions exist. | **OWNER**: "Modality, body region, and subspecialy are DEFINITELY in RadLex. Etiology, sex, age, course--can't we define our own codes for now, and document them until we make official versions? Might as well start the lookup table." | `graph/concepts.jsonl`, [graph README](graph/README.md) |
 | S12 | An anatomic location carries one id, its RID; a RadLex code is never shown alongside an anatomic location because the RID is the RadLex code. | **OWNER**: "Don't show both an anatomic location and a RadLex code for anything--the anatomic location code IS the RadLex code, essentially, and will be literally soon." | [09 §2.3](./09-mat-and-tree.md) |
-| S13 | `SCOPED_TO` and the seven context edge types propagate down `SUBTYPE_OF` at render time when a node has none of its own, shown as inherited. The graph stays explicit. | **CLAUDE DEFAULT**, taken during the build in answer to the owner's question "why no modality, region, sex etc on the acute pyelonephritis?" Claude recommended propagation; the owner did not respond to the recommendation. | `render_cards.py`, [09 §4](./09-mat-and-tree.md) |
+| ~~S13~~ | ~~`SCOPED_TO` and the seven context edge types propagate down `SUBTYPE_OF` at render time when a node has none of its own, shown as inherited.~~ Rejected: scope and context are direct assertions only. | **REJECTED BY OWNER** (2026-09-09): "the \"mat\" for acute pyelo has a bunch of properties that say, \"inherited from pyelonephritis\". First, we don't need to show that at all. Second, IT'S NOT TRUE--we don't intend ANY OOP-style inheritance from the IS-A relationship, and we should be making sure we reflect that. The mat should still show \"ultrasound\" etc. for acute pyelo, but NOT the idea that that edge is somehow \"inherited\"." Applied by the Codex agent to acute pyelonephritis, the renderer, and the documents; extended by Claude to every other subtype (C18). | `render_cards.py`, graph, [08](./08-worked-examples.md), [09 §4](./09-mat-and-tree.md) |
 | S14 | Non-imaging causes (heart failure, cirrhosis) are Diagnosis nodes with no elements, so that causal edges have targets. | **CLAUDE DEFAULT**, recorded in the build plan; the owner never answered the question. | [08 §3](./08-worked-examples.md) |
 | S15 | Causal edges may carry an `expected` property: hints about the caused entity's values given the cause. | **CLAUDE INVENTION**. The owner later ruled (D9) that only typicality and specificity appear on an edge in the picture; the property itself remains in the graph, unreviewed. | graph, [07](./07-relationship-family.md) open question |
 | S16 | Bindings that must be cited carry `RDE2_` ids like relationships do. | **CLAUDE DEFAULT**, resolving the open item in 06 §4. | [03 §2](./03-draft-structures.md), graph |
@@ -78,7 +78,7 @@ Decisions are numbered by section: **S** structure, **D** display, **C** content
 | S28 | The text-anchored report uses one `report` line, followed by Observation lines with quotes and half-open spans, then relation lines. | **CLAUDE DEFAULT** ([report-plane plan](../plans/2026-09-03-report-plane-example.md)). | [03 §5](./03-draft-structures.md), report example |
 | S29 | Negative-only Grouping nodes bind presence so that they can be reported absent. | **OWNER-derived** from: "let's expand the example, add a second sentence--'Right kidney is unremarkable', corresponding to a finding of renal abnormality with a presence attribute of absent." | graph, [08 §4](./08-worked-examples.md) |
 
-**Rejected by the owner** (recorded so they are not proposed again): a morphology "form" axis derived from name suffixes (focal, diffuse, collection, deposition, discontinuity), upper-level `lesion` / `mass` / `process` FindingClasses, a `Pattern` node type or annotation in the graph, "obligations" as a property of node types, and inherited element bindings.
+**Rejected by the owner** (recorded so they are not proposed again): a morphology "form" axis derived from name suffixes (focal, diffuse, collection, deposition, discontinuity), upper-level `lesion` / `mass` / `process` FindingClasses, a `Pattern` node type or annotation in the graph, "obligations" as a property of node types, and propagation of element, scope, context, or other outgoing edges over `SUBTYPE_OF`.
 
 ## D. Display: how the pictures look
 
@@ -143,6 +143,7 @@ Everything in this section that is not marked OWNER is Claude's clinical or term
 | C15 | Perinephric stranding is located in the left perirenal space. | **OWNER**: "Yes, perinephric stranding is in the LEFT perirenal space." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | report example |
 | C16 | All content values in the report-plane example are hypothetical. | **OWNER**: "Nah, no one thinks this is real yet--this is all understood as a hypothetical exercise to see how the framework works." ([report-plane plan](../plans/2026-09-03-report-plane-example.md)) | [08 §4](./08-worked-examples.md) |
 | C17 | The report example adds “Right kidney is unremarkable” as an absent renal-abnormality Observation. | **OWNER**: "let's expand the example, add a second sentence--'Right kidney is unremarkable', corresponding to a finding of renal abnormality with a presence attribute of absent." | report example, [08 §4](./08-worked-examples.md) |
+| C18 | After S13 was rejected, the six pleural effusion subtypes and the three remaining pyelonephritis subtypes were given their own `SCOPED_TO`, `SEEN_ON`, `IN_REGION`, `IN_SUBSPECIALTY`, `SEX`, and `AGE_APPLICABILITY` edges, copied from the values asserted on their parent. Time course and etiology were not copied, because they differ by subtype; those cells stay unset until reviewed. | **CLAUDE DEFAULT** for which edge types to copy; the values are the parent's (C11, unreviewed). | graph |
 
 ## Superseded material
 

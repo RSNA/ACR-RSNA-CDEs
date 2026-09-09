@@ -4,7 +4,7 @@ title: The Mat and the Tree
 description: The current display grammar for the vocabulary's two generated pictures - the mat (one context object, one hop out, cards in relationship containers, no wires) and the tree (an is-a outline of mini-cards) - with the card frame, containers, edge boxes, codes policy, density rules, hover and click layers, and the tooling that renders them.
 tags: [next-gen-schema, display, diagrams, mat, tree, cards, renderer]
 status: draft
-generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1"], at: 2026-09-03 }
+generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1", "codex/gpt-5"], at: 2026-09-09 }
 sources:
   - id: decisions
     resource: /docs/next-gen-schema/10-decision-record-2026-09-02.md
@@ -73,12 +73,12 @@ Every card of every kind has the same zones in the same places, like the printed
 ```
 
 1. **Title line.** Name at left; kind and own id at right. Base ids are shown for everything (D10).
-2. **Anatomy line.** The anatomic location the object is scoped to, as its RID with its preferred term, and the scope kind. An anatomic location carries one id, the RID; no RadLex code is shown beside it (S12). When the scope is inherited (§4) the line says so in gray.
+2. **Anatomy line.** The anatomic location the object is directly scoped to, as its RID with its preferred term, and the scope kind. An anatomic location carries one id, the RID; no RadLex code is shown beside it (S12). The line is empty when the object has no `SCOPED_TO` edge of its own (§4).
 3. **Text.** Definition, then synonyms, then any note.
 4. **Attributes.** A table on the context object only: element, its id, kind, values or quantity with units, range, and method, and the element's own codes beneath (D14, D12). Values are elliptical: the first few and an ellipsis (D14). Presence is an ordinary row (S9).
 5. **Containers.** §2.4.
 6. **Mappings.** External codes, last, never in the title (D13); each with its term (D11).
-7. **Stat row.** Seven fixed cells, always the bottom of the card: modality, region, subspecialty (D19), sex, age, course, etiology. Each value is the concept's preferred term with its id; "—" when unset; gray with "(inherited from …)" when propagated (§4) (D15).
+7. **Stat row.** Seven fixed cells, always the bottom of the card: modality, region, subspecialty (D19), sex, age, course, etiology. Each value is the concept's preferred term with its id; "—" when that edge type is unset on the object itself (§4) (D15).
 
 ### 2.4 Containers and edge boxes
 
@@ -103,15 +103,15 @@ Containment and containers replace edges. The mat has no wires and no arrowheads
 
 ### 2.6 Hover
 
-Every mini-card has a hover detail: a more detailed mini-card, not the full mat (D17). It carries the definition, the anatomy line (own or inherited), synonyms, the attribute names, up to six of the card's own connections to third parties with their typicality and specificity, the mappings with terms, and a one-line stat summary. The reveal is CSS inside the SVG, so it works when the SVG is opened alone in a browser and when it is inline in a page; it does not work when the SVG is placed as an image (as on GitHub), where the minimal face has to stand on its own (D16, D26).
+Every mini-card has a hover detail: a more detailed mini-card, not the full mat (D17). It carries the definition, any directly asserted anatomy line, synonyms, the attribute names, up to six of the card's own connections to third parties with their typicality and specificity, the mappings with terms, and a one-line stat summary. The reveal is CSS inside the SVG, so it works when the SVG is opened alone in a browser and when it is inline in a page; it does not work when the SVG is placed as an image (as on GitHub), where the minimal face has to stand on its own (D16, D26).
 
 ## 3. Codes
 
 Codes appear everywhere a node appears, and a code is never shown without its preferred term (D11). They go about one level down: the class and the element carry codes; the element's values do not appear with codes on the mat (D12). Close matches are marked "(close)". Anatomic locations show their RID and nothing else (S12).
 
-## 4. Propagation of scope and context
+## 4. Scope and context are explicit
 
-When a node has no `SCOPED_TO` edge or none of a context edge type, the renderer walks up `SUBTYPE_OF` to the nearest ancestor that has one and shows those values in gray as "inherited from" that ancestor. The graph itself stays explicit; nothing is stored. This is a rendering rule for scope and the seven context edge types only. It is not element inheritance, which does not exist (S3). This rule is a Claude default the owner has not reviewed (S13).
+The renderer reads `SCOPED_TO` and each of the seven context edge types only from the object being drawn. A missing edge renders as unset; it never triggers a walk up `SUBTYPE_OF`. When a subtype needs the same scope, modality, region, subspecialty, sex, age, course, or etiology as its parent, those edges are asserted explicitly on the subtype. `SUBTYPE_OF` is classificatory and does not copy or imply any outgoing edge—not `HAS_ELEMENT`, scope, context, or anything else (S3; S13 rejected).
 
 ## 5. Density
 

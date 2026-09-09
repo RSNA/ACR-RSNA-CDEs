@@ -159,6 +159,10 @@ if gcheck.returncode:
     for line in gcheck.stdout.decode("utf-8", errors="replace").splitlines():
         if line.startswith(("ERROR", "NOT CANONICAL")): err(f"graph: {line}")
     if not gcheck.stdout.strip(): err(f"graph check failed: {gcheck.stderr.decode('utf-8', errors='replace')[:200]}")
+cards_test = subprocess.run([sys.executable, os.path.join(base, "tools/test_render_cards.py")], capture_output=True)
+if cards_test.returncode:
+    detail = cards_test.stderr.decode("utf-8", errors="replace").strip().splitlines()
+    err("card renderer semantic tests failed: " + " | ".join(detail[-8:]))
 for spec, (tool, svg) in spec_map.items():
     sp, sv = os.path.join(base, spec), os.path.join(base, svg)
     if not os.path.exists(sp): err(f"missing spec {spec}"); continue

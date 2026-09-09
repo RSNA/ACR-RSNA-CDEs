@@ -26,6 +26,12 @@
 {"definition":"Enhancing, thickened visceral and parietal pleura separated by fluid.","entity_type":"finding","id":"RDE2_000533","name":"split pleura sign","node":"FindingClass","status":"proposed","version":1}
 {"definition":"Pleural thickening with a nodular contour.","entity_type":"finding","id":"RDE2_000534","name":"nodular pleural thickening","node":"FindingClass","status":"proposed","version":1}
 {"edge":"AGE_APPLICABILITY","from":"RDE2_000502","to":"RDE2_001200"}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000510","to":"RDE2_001200"}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000511","to":"RDE2_001200"}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000512","to":"RDE2_001200"}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000513","to":"RDE2_001200"}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000514","to":"RDE2_001200"}
+{"edge":"AGE_APPLICABILITY","from":"RDE2_000515","to":"RDE2_001200"}
 {"edge":"HAS_ELEMENT","from":"RDE2_000502","to":"RDE2_000001"}
 {"edge":"HAS_ELEMENT","from":"RDE2_000502","to":"RDE2_000002"}
 {"edge":"HAS_ELEMENT","from":"RDE2_000502","props":{"note":"amount"},"to":"RDE2_000013"}
@@ -52,7 +58,19 @@
 {"edge":"HAS_ETIOLOGY","from":"RDE2_000513","to":"RDE2_001004"}
 {"edge":"HAS_ETIOLOGY","from":"RDE2_000515","to":"RDE2_001002"}
 {"edge":"IN_REGION","from":"RDE2_000502","to":"RID1243"}
+{"edge":"IN_REGION","from":"RDE2_000510","to":"RID1243"}
+{"edge":"IN_REGION","from":"RDE2_000511","to":"RID1243"}
+{"edge":"IN_REGION","from":"RDE2_000512","to":"RID1243"}
+{"edge":"IN_REGION","from":"RDE2_000513","to":"RID1243"}
+{"edge":"IN_REGION","from":"RDE2_000514","to":"RID1243"}
+{"edge":"IN_REGION","from":"RDE2_000515","to":"RID1243"}
 {"edge":"IN_SUBSPECIALTY","from":"RDE2_000502","to":"RID50611"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000510","to":"RID50611"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000511","to":"RID50611"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000512","to":"RID50611"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000513","to":"RID50611"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000514","to":"RID50611"}
+{"edge":"IN_SUBSPECIALTY","from":"RDE2_000515","to":"RID50611"}
 {"edge":"MAY_CAUSE","from":"RDE2_000502","id":"RDE2_000917","props":{"typicality":"frequent"},"to":"RDE2_000530"}
 {"edge":"MAY_CAUSE","from":"RDE2_000502","id":"RDE2_000918","props":{"note":"large effusions","typicality":"occasional"},"to":"RDE2_000531"}
 {"edge":"MAY_CAUSE","from":"RDE2_000520","id":"RDE2_000911","props":{"expected":{"fluid attenuation":"simple","location":"bilateral, right greater than left"},"typicality":"frequent"},"to":"RDE2_000502"}
@@ -68,6 +86,12 @@
 {"edge":"MAY_PROGRESS_TO","from":"RDE2_000515","id":"RDE2_000923","to":"RDE2_000510"}
 {"edge":"OCCURS_WITH","from":"RDE2_000502","id":"RDE2_000919","to":"RDE2_000532"}
 {"edge":"SCOPED_TO","from":"RDE2_000502","props":{"kind":"structure","strength":"required"},"to":"RID1363"}
+{"edge":"SCOPED_TO","from":"RDE2_000510","props":{"kind":"structure","strength":"required"},"to":"RID1363"}
+{"edge":"SCOPED_TO","from":"RDE2_000511","props":{"kind":"structure","strength":"required"},"to":"RID1363"}
+{"edge":"SCOPED_TO","from":"RDE2_000512","props":{"kind":"structure","strength":"required"},"to":"RID1363"}
+{"edge":"SCOPED_TO","from":"RDE2_000513","props":{"kind":"structure","strength":"required"},"to":"RID1363"}
+{"edge":"SCOPED_TO","from":"RDE2_000514","props":{"kind":"structure","strength":"required"},"to":"RID1363"}
+{"edge":"SCOPED_TO","from":"RDE2_000515","props":{"kind":"structure","strength":"required"},"to":"RID1363"}
 {"edge":"SCOPED_TO","from":"RDE2_000516","props":{"kind":"structure","strength":"required"},"to":"RID1362"}
 {"edge":"SCOPED_TO","from":"RDE2_000532","props":{"kind":"structure","strength":"required"},"to":"RID1362"}
 {"edge":"SCOPED_TO","from":"RDE2_000533","props":{"kind":"structure","strength":"required"},"to":"RID1362"}
@@ -75,7 +99,31 @@
 {"edge":"SEEN_ON","from":"RDE2_000502","to":"RID10321"}
 {"edge":"SEEN_ON","from":"RDE2_000502","to":"RID10326"}
 {"edge":"SEEN_ON","from":"RDE2_000502","to":"RID10345"}
+{"edge":"SEEN_ON","from":"RDE2_000510","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000510","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000510","to":"RID10345"}
+{"edge":"SEEN_ON","from":"RDE2_000511","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000511","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000511","to":"RID10345"}
+{"edge":"SEEN_ON","from":"RDE2_000512","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000512","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000512","to":"RID10345"}
+{"edge":"SEEN_ON","from":"RDE2_000513","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000513","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000513","to":"RID10345"}
+{"edge":"SEEN_ON","from":"RDE2_000514","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000514","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000514","to":"RID10345"}
+{"edge":"SEEN_ON","from":"RDE2_000515","to":"RID10321"}
+{"edge":"SEEN_ON","from":"RDE2_000515","to":"RID10326"}
+{"edge":"SEEN_ON","from":"RDE2_000515","to":"RID10345"}
 {"edge":"SEX","from":"RDE2_000502","to":"RDE2_001101"}
+{"edge":"SEX","from":"RDE2_000510","to":"RDE2_001101"}
+{"edge":"SEX","from":"RDE2_000511","to":"RDE2_001101"}
+{"edge":"SEX","from":"RDE2_000512","to":"RDE2_001101"}
+{"edge":"SEX","from":"RDE2_000513","to":"RDE2_001101"}
+{"edge":"SEX","from":"RDE2_000514","to":"RDE2_001101"}
+{"edge":"SEX","from":"RDE2_000515","to":"RDE2_001101"}
 {"edge":"SUBTYPE_OF","from":"RDE2_000502","to":"RDE2_000516"}
 {"edge":"SUBTYPE_OF","from":"RDE2_000510","to":"RDE2_000502"}
 {"edge":"SUBTYPE_OF","from":"RDE2_000511","to":"RDE2_000502"}

@@ -4,7 +4,7 @@ title: The Canonical Graph
 description: The canonical JSON Lines form of the vocabulary - files, line shapes, ordering rules, identifier blocks, and the commands that validate, normalize, and dump it.
 tags: [next-gen-schema, graph, canonical-form, reference]
 status: draft
-generated: { by: "claude-code/claude-fable-5.1", at: 2026-09-02 }
+generated: { by: ["claude-code/claude-fable-5.1", "codex/gpt-5"], at: 2026-09-09 }
 ---
 
 # The canonical graph
@@ -33,6 +33,8 @@ The six interim specs under [`../examples/`](../examples/) are converted into gr
 A node: `{"node": "<Type>", "id": "...", "name": "...", ...scalars}`. Types: `FindingClass` (with `entity_type`), `Diagnosis`, `Grouping`, `DataElement`, `Value`, `AnatomicLocation`, `Concept` (with `scheme`), `RelationshipType`. Node properties are scalars or lists of scalars; `synonyms` is a list of `{term, type}`.
 
 An edge: `{"edge": "<TYPE>", "from": "<id>", "to": "<id>", "id": "<optional reified id>", "props": {...}}`. Every edge type must be declared as a `RelationshipType` node, which records its inverse, symmetry, formal name, domain and range, and the properties it may carry. `exactMatch` and `closeMatch` target an external code written `SYSTEM:code` and carry the source term in `props.display`. `INTERPRETED_FROM` targets a binding, that is the `id` of a `HAS_ELEMENT` edge.
+
+Every edge is explicit. In particular, `SUBTYPE_OF` does not copy or imply `HAS_ELEMENT`, `SCOPED_TO`, context, or any other outgoing edge on the subtype. Repeat a relationship on a subtype when it is also true there; consumers may use subsumption for applicability checks without materializing copied edges.
 
 ## Order
 

@@ -89,9 +89,9 @@ Modality, body region, and subspecialty are RadLex concepts and get their RIDs, 
 
 The earlier requirement that labelled relationship edges be drawn on the tree was tried by both agents and withdrawn on review. Neither result worked for the owner. Arrowheads, if used, must be aligned with the line they terminate; the earlier renderer's markers sat at an angle to their curves and that is unacceptable. **[owner: "the arrow heads aren't aligned with the arrow lines"]**
 
-## 3.1 Propagation of scope and context
+## 3.1 Scope and context are explicit
 
-**[default, taken during the build]** `SCOPED_TO` and the seven context edge types propagate down `SUBTYPE_OF` at render time when a node has none of its own, shown in gray with "inherited from" naming the ancestor. The graph stays explicit. This is not element inheritance, which remains excluded. Reversible by asserting the edges on each subtype and deleting the rule.
+**[owner correction, 2026-09-09]** `SUBTYPE_OF` records taxonomic membership only. It does not propagate `SCOPED_TO`, the seven context edge types, `HAS_ELEMENT`, or any other outgoing edge. A mat shows scope and context only when those edges are asserted directly on its context object. Acute pyelonephritis therefore carries its own explicit scope and context assertions. This correction replaces the earlier build-time default recorded here.
 
 ## 3.2 Density
 
