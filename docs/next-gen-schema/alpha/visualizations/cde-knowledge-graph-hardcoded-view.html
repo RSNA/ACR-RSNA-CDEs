@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CDE knowledge graph skeleton</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F0F3F2; --surface:#FFFFFF; --quiet:#F7F9F8;
+  --ink:#152220; --muted:#5B6A67; --faint:#8B9996;
+  --rule:#DAE0DE; --hair:#E8EDEB;
+  --finding:#0E7C66; --diagnosis:#7B3FA0; --assessment:#C2571A;
+  --element:#2A5CA8; --measurement:#B0305F; --anatomy:#7A6420;
+  --concept:#4A5F5C; --value:#4C7A9B; --open:#B0761E;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+  --serif:"Newsreader",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;border:none;background:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--finding);outline-offset:2px;border-radius:3px}
+
+.bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 22px;background:#0039A6;color:#fff}
+.bar h1{margin:0;font-family:var(--serif);font-size:23px;font-weight:500;letter-spacing:-.01em;
+  color:#fff;line-height:1;position:relative;top:2px}
+.bar .spacer{margin-left:auto}
+.brand{display:flex;align-items:flex-end;gap:14px}
+.brand .logo{display:flex;align-items:flex-end;line-height:0}
+.brand .acrmark{height:26px;width:auto;display:block}
+.mainnav{display:flex;gap:2px;margin-left:14px}
+.mainnav button{font-size:13.5px;color:rgba(255,255,255,.85);padding:5px 11px;border-radius:3px}
+.mainnav button:hover{background:rgba(255,255,255,.14);color:#fff}
+.mainnav button[aria-current="true"]{color:#fff;background:rgba(255,255,255,.16);box-shadow:inset 0 -2px 0 #fff}
+.searchbox{display:flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.42);border-radius:3px;
+  padding:3px 9px;background:rgba(255,255,255,.12);min-width:190px}
+.searchbox:focus-within{background:#fff;border-color:#fff}
+.searchbox .mag{color:rgba(255,255,255,.75);font-size:15px;line-height:1}
+.searchbox input{border:none;background:transparent;outline:none;font:inherit;font-size:13px;width:100%;padding:3px 0;color:#fff}
+.searchbox input::placeholder{color:rgba(255,255,255,.7)}
+.searchbox:focus-within .mag{color:var(--faint)}
+.searchbox:focus-within input{color:var(--ink)}
+.panel .searchbox{border-color:var(--rule);background:var(--quiet)}
+.panel .searchbox .mag{color:var(--faint)}
+.panel .searchbox input{color:var(--ink)}
+.panel .searchbox input::placeholder{color:var(--faint)}
+
+.panel{max-width:1400px;margin:0 auto;padding:22px 22px 48px}
+.panel h2{font-family:var(--serif);font-weight:400;font-size:24px;margin:0 0 4px}
+.panel .sub{font-size:13px;color:var(--muted);margin:0 0 16px}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+  border:1px solid var(--rule);border-radius:12px;padding:4px 11px;color:var(--muted);background:var(--surface)}
+.filters button:hover{border-color:#BFCAC7;color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.browsewrap{max-width:820px}
+.results{display:grid;grid-template-columns:minmax(0,1fr);gap:6px}
+.pathgroup{margin:0 0 14px 10px;padding-left:12px;border-left:2px solid var(--hair)}
+.pathcrumb{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px;margin:0 0 7px;line-height:1.35}
+.pathcrumb .sepc{color:#B7C2BF;font-size:12px}
+.pathcrumb .step{font-size:12px;color:var(--muted);padding:0}
+.pathcrumb .step:hover{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+.pathcrumb .laststep{font-size:12.5px;color:var(--anatomy);font-weight:500;padding:0}
+.pathcrumb .laststep:hover{text-decoration:underline;text-underline-offset:2px}
+.pager{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+  font-size:12.5px;color:var(--muted)}
+.pager.top{margin-bottom:10px;padding-bottom:9px;border-bottom:1px solid var(--rule)}
+.pager.bottom{margin-top:12px;padding-top:9px;border-top:1px solid var(--rule)}
+.pager .count b{color:var(--ink);font-weight:500}
+.pagenav{display:flex;align-items:center;gap:7px}
+.pagebtn{border:1px solid var(--rule);border-radius:3px;padding:4px 11px;font-size:12.5px;background:var(--surface)}
+.pagebtn:hover:not(:disabled){background:var(--quiet);border-color:#C4CECB}
+.pagebtn:disabled{color:#C2CBC8;cursor:default;border-color:var(--hair)}
+.pagesize{font:inherit;font-size:12.5px;border:1px solid var(--rule);border-radius:3px;
+  padding:4px 8px;background:var(--surface);color:var(--ink)}
+.result{display:flex;align-items:baseline;gap:10px;text-align:left;width:100%;min-width:0;background:var(--surface);
+  border:1px solid var(--hair);border-left:3px solid var(--type);border-radius:3px;padding:9px 12px}
+.result:hover{border-color:#C4CECB;background:#FDFEFD}
+.result .tag{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--type);flex:none;width:88px}
+.result .body{flex:1;min-width:0}
+.result .nm{font-family:var(--serif);font-size:16px;line-height:1.2;overflow:hidden;text-overflow:ellipsis}
+.result .sn{font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result .recmeta{display:flex;align-items:center;gap:8px;flex:none;font-family:var(--mono);font-size:10px;white-space:nowrap}
+.result .rid{color:var(--muted)}
+.result .rv{color:var(--faint)}
+.result .ru{color:var(--faint)}
+.result .rs{letter-spacing:.07em;text-transform:uppercase;border-radius:2px;padding:0 5px;font-size:9px}
+.result .rs.published{color:#0E7C66;border:1px solid #B9D6CD;background:#F1F8F5}
+.result .rs.proposed{color:#B0761E;border:1px solid #E2C99A;background:#FDF7EC}
+.result .rs.draft{color:#5B6A67;border:1px solid var(--hair);background:var(--quiet)}
+.result .rs.retired{color:#8B5C5C;border:1px solid #DFC4C4;background:#FBF3F3}
+.noresult{font-size:13px;color:var(--faint);border:1px dashed var(--rule);border-radius:3px;padding:12px;background:var(--quiet)}
+.result .anat{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--anatomy);border:1px solid #E3DFC9;border-radius:2px;padding:0 5px;margin-left:7px;white-space:nowrap}
+.panelbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.panelbar .searchbox{min-width:230px}
+.sortgroup{display:flex;border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.sortgroup button{font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;
+  padding:5px 10px;color:var(--muted);background:var(--surface)}
+.sortgroup button+button{border-left:1px solid var(--rule)}
+.sortgroup button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.grouphd{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);
+  margin:16px 0 6px;display:flex;align-items:center;gap:8px}
+.grouphd::after{content:"";flex:1;height:1px;background:var(--rule)}
+.grouphd:first-child{margin-top:0}
+.orient{display:flex;border:1px solid rgba(255,255,255,.5);border-radius:3px;overflow:hidden}
+.orient button{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 11px;color:rgba(255,255,255,.88);background:transparent}
+.orient button+button{border-left:1px solid rgba(255,255,255,.5)}
+.orient button:hover{background:rgba(255,255,255,.14)}
+.orient button[aria-pressed="true"]{background:#fff;color:#0039A6;font-weight:600}
+
+
+.stage{display:grid;gap:0 12px;align-items:start;padding:24px 22px 56px;max-width:1400px;margin:0 auto}
+body.land .stage{grid-template-columns:minmax(190px,1fr) 34px minmax(340px,1.5fr) 34px minmax(250px,1.15fr)}
+body.port .stage{grid-template-columns:1fr;gap:10px 0}
+.sep{display:flex;align-items:center;justify-content:center;color:#C6D0CD;user-select:none}
+body.land .sep span{font-size:30px;line-height:1;color:#AFBCB8}
+body.port .sep{padding:2px 0}
+body.port .sep span{font-size:24px;line-height:1;color:#AFBCB8}
+
+.side{display:flex;flex-direction:column;gap:24px;min-width:0}
+body.land .side{padding-top:54px}
+body.port .side{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));align-items:start}
+.colhead{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  font-weight:500;color:#3E4E4B;display:flex;align-items:center;gap:8px}
+body.land .side.left .colhead{justify-content:flex-end;order:-1}
+body.land .side.right .colhead{justify-content:flex-start;order:-1}
+body.port .side .colhead{grid-column:1/-1;justify-content:center}
+body.port .side.left .colhead{order:99}
+body.port .side.right .colhead{order:-1}
+
+.grouplabel{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  font-weight:600;color:var(--ink);margin:0 0 9px;display:flex;align-items:center;gap:8px}
+.grouplabel::after{content:"";flex:1;height:2px;background:#C9D3D0;border-radius:1px}
+.groupsub{font-size:11.5px;line-height:1.4;color:var(--muted);margin:-4px 0 7px}
+.reach{display:flex;align-items:baseline;gap:7px;margin:0 0 9px;font-size:11.5px;
+  line-height:1.45;color:var(--muted)}
+.reach .kindtag{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--anatomy);border:1px solid #DCD2AE;border-radius:2px;padding:0 5px;flex:none}
+.reach .rt b{color:var(--ink);font-weight:500}
+.reachfn{font-family:var(--mono);font-size:9.5px;color:#A6B2AF;margin:-5px 0 9px 0}
+.groupfn{font-family:var(--mono);font-size:9.5px;color:#A6B2AF;margin-top:7px}
+.focusrow{display:flex;flex-direction:column;min-width:0}
+.focusrow>.focus{flex:1 1 auto;min-width:0}
+.vlink{display:flex;align-items:center;justify-content:center;flex:none}
+.vlink .ar{font-size:20px;line-height:1;color:#AFBCB8}
+body.land .vlink{padding:8px 0}
+body.port .focusrow{flex-direction:row;align-items:stretch;gap:0}
+body.port .focusrow>.focus{flex:1 1 58%}
+body.port .focusrow>.anatcard{flex:1 1 42%;align-self:flex-start}
+body.port .vlink{padding:0 10px;align-items:flex-start;padding-top:34px}
+.anatcard{background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--anatomy);
+  border-radius:3px;padding:14px 18px 13px;margin-top:0;box-shadow:0 2px 10px rgba(18,40,36,.05)}
+.anatcard .hd{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  font-weight:600;color:var(--anatomy);margin-bottom:3px}
+.anatcard .sub{font-size:11.5px;color:var(--muted);margin-bottom:12px}
+.anatcard .sub b{color:var(--ink);font-weight:600}
+.anatcard .scopeblock{margin-bottom:14px}
+.anatcard .inheritnote{font-size:11.5px;line-height:1.55;color:var(--muted);margin:0 0 12px}
+.anatcard .inheritnote b{color:var(--ink);font-weight:500}
+.anatcard dd .who{display:inline-flex;align-items:baseline;gap:6px;border:1px solid var(--hair);
+  background:var(--surface);border-radius:2px;padding:2px 9px;font-size:12.5px}
+.anatcard dd .who:hover{border-color:#C4CECB}
+.anatcard dd .who .k{font-family:var(--mono);font-size:9px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--chiptype)}
+.anatcard .orsub{font-size:12px;color:var(--muted);margin-left:8px}
+.anatcard .anatref{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px;margin:0 0 8px 2px}
+.anatcard .scope{position:relative;border:1px solid var(--hair);border-radius:3px;background:var(--quiet);
+  padding:11px 13px}
+.anatcard .seclabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;color:var(--ink);margin:0 0 9px;display:flex;align-items:center;gap:8px}
+.anatcard .seclabel::after{content:"";flex:1;height:2px;background:#C9D3D0;border-radius:1px}
+.anatcard .seclabel.sec2{margin-top:16px;padding-top:14px;border-top:1px solid #E2E8E6}
+.anatcard .scopex{position:absolute;top:6px;right:8px;color:#B9C3C0;font-size:15px;line-height:1;padding:2px 4px}
+.anatcard .scopex:hover{color:var(--ink)}
+.anatcard .crumb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;
+  line-height:1.35;margin:0 0 7px 2px}
+.anatcard .crumb .sepc{color:#AEBAB7;font-size:14px;line-height:1.3}
+.anatcard .crumb .up{font-size:13px;line-height:1.35;color:var(--muted);padding:0}
+.anatcard .crumb .up:hover{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+.anatcard .crumb .here{font-family:var(--serif);font-size:21px;line-height:1.3;color:var(--ink);padding:0}
+.anatcard .crumb .here:hover{text-decoration:underline;text-underline-offset:3px}
+.anatcard dl{display:grid;grid-template-columns:max-content 1fr;gap:8px 16px;margin:0;align-items:baseline}
+.anatcard dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--faint);line-height:1.5;white-space:nowrap}
+.anatcard dd{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
+.anatcard dd b{color:var(--ink);font-weight:500}
+.anatcard .codechip{display:inline-flex;align-items:baseline;gap:6px;border:1px solid var(--hair);
+  background:var(--surface);border-radius:2px;padding:1px 8px;font-size:12px;line-height:1.5;margin-right:8px}
+.anatcard .codechip:hover{border-color:#C4CECB}
+.anatcard .codechip b{font-weight:500;color:var(--ink)}
+.anatcard .codechip code{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.anatcard .mapnote{font-size:12px;color:var(--muted)}
+.anatcard .fn{color:var(--anatomy);font-weight:600;vertical-align:super;font-size:8px;margin-left:1px}
+.anatcard .anatnote{margin-top:10px;text-align:right;font-size:10.5px;line-height:1.45;color:var(--faint)}
+
+.tile{background:var(--surface);border:1px solid var(--hair);border-left:3px solid var(--type,var(--rule));border-radius:3px;margin-bottom:6px;overflow:hidden}
+.tilehead{width:100%;display:flex;align-items:baseline;gap:8px;padding:7px 10px;text-align:left}
+.tilehead:hover{background:var(--quiet)}
+.tilehead .tag{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--type);flex:none}
+.tilehead .nm{font-family:var(--serif);font-size:15.5px;line-height:1.2;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.port .tilehead{flex-wrap:wrap;row-gap:3px}
+body.port .tilehead .nm{flex:1 1 100%;order:2;white-space:normal;overflow:visible}
+body.port .tilehead .tag{order:1}
+body.port .tilehead .ct{order:3;flex:0 0 auto}
+body.port .tilehead .anattag,body.port .tilehead .usetag,body.port .tilehead .ctxnote{order:4}
+body.port .tilehead .cv{order:5;margin-left:auto}
+.tilehead .ct{font-family:var(--mono);font-size:10px;color:var(--faint);white-space:nowrap;flex:none}
+.modbar{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:0 0 12px}
+.modbar .lbl{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);margin-right:5px}
+.modbar label{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--rule);
+  border-radius:12px;padding:3px 10px;cursor:pointer;background:var(--surface)}
+.modbar label:hover{border-color:#BFCAC7;color:var(--ink)}
+.modbar label.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.modbar input{appearance:none;width:7px;height:7px;border-radius:50%;border:1px solid currentColor;margin:0}
+.modbar label.on input{background:#fff;border-color:#fff}
+.modnote{font-size:11px;line-height:1.5;color:var(--open);border:1px dashed #E2C99A;
+  border-radius:2px;padding:6px 11px;margin:0 0 12px;width:100%;box-sizing:border-box}
+.field .modnote{margin:7px 0 0}
+.prov{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.prov b{font-weight:500;color:var(--ink)}
+.bind{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7}
+.bind b{font-weight:500;color:var(--ink)}
+.bind .pri{color:var(--anatomy);border:1px solid #DCD2AE;border-radius:2px;padding:0 4px;font-size:9px;
+  letter-spacing:.07em;text-transform:uppercase;margin-left:5px}
+.anattag{font-family:var(--mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--anatomy);border:1px solid #E3DFC9;border-radius:2px;padding:0 5px;white-space:nowrap;flex:none}
+.usetag{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--assessment);border:1px solid #E8CDB4;border-radius:2px;padding:0 5px;white-space:nowrap}
+.tilehead .cv{color:#98A5A2;font-size:11px;flex:none;line-height:1}
+.tile.ctx{border-color:#7FB3A5;border-left-width:5px;box-shadow:0 0 0 3px rgba(14,124,102,.16)}
+.tile.ctx .tilehead{background:#E6F2EE}
+.tile.ctx .tilehead:hover{background:#DDEDE7}
+.tile.ctx .tilebody{background:#F4F9F7}
+.ctxrow{display:flex;justify-content:center;padding:6px 10px 0;background:#E6F2EE}
+.ctxnote{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  color:#fff;background:var(--finding);border:1px solid var(--finding);border-radius:2px;
+  padding:1px 6px;white-space:nowrap;display:inline-block}
+.tile.ctx .ctxrow+.tilehead{padding-top:5px}
+.tile.ctx .ctxrow{background:#E6F2EE}
+.tilebody{display:none;padding:0 11px 11px 11px;border-top:1px solid var(--hair)}
+.tile.open .tilebody{display:block}
+.tilebody p{margin:9px 0 8px;font-size:12.5px;color:var(--muted)}
+.rel{margin:9px 0 0;font-size:12.5px;line-height:1.45;color:var(--muted);background:var(--quiet);border:1px solid var(--hair);border-radius:3px;padding:6px 9px}
+.rel b{font-weight:500;color:var(--ink)}
+.rel em{font-style:normal;color:var(--type);font-weight:500}
+.rel .self{color:var(--faint)}
+.rel .relk{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase}
+.rel .edgecode{display:block;font-family:var(--mono);font-size:9.5px;color:#B6C1BE;letter-spacing:.06em;margin-bottom:4px}
+.open-row{display:flex;justify-content:flex-end;margin-top:12px}
+.open-btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  border:1px solid var(--type,var(--ink));border-radius:2px;padding:8px 14px;
+  background:var(--type,var(--ink));color:#fff;font-weight:500}
+.open-btn:hover{filter:brightness(1.12)}
+
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font-size:11.5px;color:var(--muted);background:var(--quiet);border:1px solid var(--hair);border-radius:10px;padding:1px 8px}
+button.chiplink{cursor:pointer;font-family:inherit;line-height:1.5}
+button.chiplink:hover{border-color:var(--value);color:var(--ink);background:#fff}
+.extra{font-family:var(--mono);font-size:10px;color:var(--faint);padding-left:2px}
+.moretoggle{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);border:1px dashed var(--rule);border-radius:2px;padding:5px 10px;
+  width:100%;text-align:left;background:var(--quiet)}
+.moretoggle:hover{color:var(--ink);border-color:#C6D0CD}
+.flag{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--open);border:1px dashed #E2C99A;border-radius:2px;padding:1px 6px}
+
+.val{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--hair);
+  border-left:3px solid var(--value);border-radius:3px;padding:8px 11px;margin-bottom:6px}
+.val:hover{border-color:#C4CECB;background:#FDFEFD}
+.val .vn{font-family:var(--serif);font-size:15px;line-height:1.2}
+.vfn{color:var(--open);font-weight:600;margin-left:3px}
+.val .vd{font-size:12.5px;color:var(--muted);margin-top:3px}
+.val .vm{font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:5px}
+.val .vempty{font-size:12px;color:#BCC5C2;margin-top:3px}
+
+.ctxband{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 8px;
+  background:var(--quiet);border:1px solid var(--hair);border-left:4px solid var(--fromtype,var(--rule));
+  border-radius:3px;padding:8px 12px}
+.ctxband .arrow{color:var(--fromtype);font-size:14px;line-height:1}
+.trailwrap{margin-bottom:8px}
+.trailtog{font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--faint);padding:3px 0 0;display:flex;align-items:center;gap:6px}
+.trailtog:hover{color:var(--ink)}
+.trailtog .cv{font-size:8px}
+.trailtog .ct{color:#B6C1BE}
+.ctxband{margin-bottom:0;padding:4px 9px;gap:6px}
+.ctxband .arrow{font-size:12px}
+.ctxband .who{padding:1px 8px;font-size:12.5px}
+.ctxverb{font-size:10.5px;color:var(--faint);margin:0;line-height:1.3}
+.ctxband .who{display:inline-flex;align-items:baseline;gap:6px;border:1px solid var(--hair);
+  background:var(--surface);border-radius:2px;padding:2px 9px;font-size:13px}
+.ctxband .who:hover{border-color:#C4CECB}
+.ctxband .who .k{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--chiptype)}
+.focustype{font-family:var(--mono);font-size:15px;letter-spacing:.2em;font-weight:500;text-transform:uppercase;color:var(--type);margin:0 0 8px;display:flex;align-items:center;gap:9px}
+.focustype::after{content:"";flex:1;height:2px;background:var(--type);opacity:.22}
+.focus{background:var(--surface);border:1px solid var(--rule);border-top:4px solid var(--type);border-radius:3px;padding:20px 24px 18px;box-shadow:0 3px 18px rgba(18,40,36,.07)}
+.focus h2{font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.08;letter-spacing:-.015em;margin:0}
+.fields{margin-top:16px;border-top:1px solid var(--hair)}
+.field{display:grid;grid-template-columns:100px 1fr;gap:14px;padding:9px 0;border-bottom:1px solid var(--hair)}
+.field dt{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  font-weight:500;color:#4A5A57;padding-top:3px}
+.field dd{margin:0;min-width:0}
+.opt{color:#C2CBC8}
+.opennotes{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+.opennotes .flag{margin-top:0;white-space:normal;line-height:1.5;text-transform:none;letter-spacing:.02em;font-size:11px}
+.syn{display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-width:0}
+.syn .s{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;background:var(--quiet);border:1px solid var(--hair);border-radius:2px;padding:1px 4px 1px 7px}
+.syn .s small{font-family:var(--mono);font-size:9px;letter-spacing:.05em;color:var(--concept);
+  border:1px solid #D3DBD9;border-radius:2px;padding:0 4px;margin-left:2px}
+.syn .s .x{color:#B9C3C0;font-size:13px;line-height:1;padding:0 2px}
+.syn .s .x:hover{color:var(--ink)}
+.linkrow{display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-width:0}
+.tlink{display:inline-flex;align-items:center;gap:2px;border:1px solid var(--hair);background:var(--quiet);border-radius:2px;font-size:12.5px}
+.tlink:hover{border-color:#C4CECB;background:#fff}
+.tlink .tlabel{padding:2px 4px 2px 8px;text-align:left}
+.tlink .tlabel:hover{text-decoration:underline;text-underline-offset:2px}
+.tlink code{font-family:var(--mono);font-size:10px;color:var(--faint)}
+.sysbox{font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;color:var(--muted);
+  border:1px solid var(--hair);background:#fff;border-radius:2px;padding:1px 5px;white-space:nowrap}
+.sysbox b{font-weight:600;color:var(--ink)}
+.bind .mtch,.tlabel .mtch{font-family:var(--mono);font-size:9px;letter-spacing:.05em;color:var(--concept);
+  border:1px solid #D3DBD9;border-radius:2px;padding:0 4px;margin-left:2px}
+.tlink .mtch{font-family:var(--mono);font-size:9px;letter-spacing:.05em;color:var(--concept);
+  border:1px solid #D3DBD9;border-radius:2px;padding:0 4px;margin-left:2px}
+.tlink .x{color:#B9C3C0;font-size:13px;line-height:1;padding:2px 6px 2px 2px}
+.tlink .x:hover{color:var(--ink)}
+.addrow{margin-top:6px}
+.deffield{display:flex;align-items:flex-start;gap:10px}
+.deffield .deftext{flex:1;min-width:0}
+.deffield .miniadd{flex:none}
+.miniadd{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  border:1px dashed var(--rule);border-radius:2px;padding:3px 8px;background:transparent}
+.miniadd:hover{color:var(--ink);border-color:#C6D0CD}
+.map{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.field .prov{font-size:12.5px;color:var(--muted);display:block;margin-bottom:5px}
+.field .prov b{color:var(--ink);font-weight:500}
+.stamp{font-family:var(--mono);font-size:11px;color:var(--faint);display:inline-flex;align-items:baseline;gap:7px}
+.empty{font-size:12.5px;color:var(--faint);border:1px dashed var(--rule);border-radius:3px;padding:7px 10px;background:var(--quiet)}
+.add{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--rule);border-radius:2px;padding:6px 10px;width:100%;text-align:left;background:var(--quiet);margin-top:7px}
+.add:hover{color:var(--ink);border-color:#C6D0CD}
+.legend{max-width:1400px;margin:0 auto;padding:0 22px 44px;font-family:var(--mono);font-size:10.5px;color:var(--faint);display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.legend b{font-family:var(--mono);font-weight:500;color:var(--ink);margin-left:2px}
+@keyframes slideOutLeft {from{opacity:1;transform:translateX(0)}   to{opacity:0;transform:translateX(-42px)}}
+@keyframes slideOutRight{from{opacity:1;transform:translateX(0)}   to{opacity:0;transform:translateX(42px)}}
+@keyframes slideInRight {from{opacity:0;transform:translateX(56px)} to{opacity:1;transform:translateX(0)}}
+@keyframes slideInLeft  {from{opacity:0;transform:translateX(-56px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideOutUp   {from{opacity:1;transform:translateY(0)}   to{opacity:0;transform:translateY(-28px)}}
+@keyframes slideOutDown {from{opacity:1;transform:translateY(0)}   to{opacity:0;transform:translateY(28px)}}
+@keyframes slideInDown  {from{opacity:0;transform:translateY(38px)} to{opacity:1;transform:translateY(0)}}
+@keyframes slideInUp    {from{opacity:0;transform:translateY(-38px)}to{opacity:1;transform:translateY(0)}}
+@keyframes focusIn{from{opacity:0;transform:scale(.99)}to{opacity:1;transform:none}}
+
+.stage{will-change:transform,opacity}
+body.land .stage.out-fwd  #left,body.land .stage.out-fwd  #mid,body.land .stage.out-fwd  #right,
+body.land .stage.out-fwd  .sep{animation:slideOutLeft  .26s cubic-bezier(.4,0,.7,.2) both}
+body.land .stage.out-back #left,body.land .stage.out-back #mid,body.land .stage.out-back #right,
+body.land .stage.out-back .sep{animation:slideOutRight .26s cubic-bezier(.4,0,.7,.2) both}
+body.land .stage.in-fwd   #left,body.land .stage.in-fwd   #mid,body.land .stage.in-fwd   #right,
+body.land .stage.in-fwd   .sep{animation:slideInRight  .50s cubic-bezier(.16,.75,.3,1) both}
+body.land .stage.in-back  #left,body.land .stage.in-back  #mid,body.land .stage.in-back  #right,
+body.land .stage.in-back  .sep{animation:slideInLeft   .50s cubic-bezier(.16,.75,.3,1) both}
+
+body.port .stage.out-fwd  #left,body.port .stage.out-fwd  #mid,body.port .stage.out-fwd  #right,
+body.port .stage.out-fwd  .sep{animation:slideOutUp   .24s cubic-bezier(.4,0,.7,.2) both}
+body.port .stage.out-back #left,body.port .stage.out-back #mid,body.port .stage.out-back #right,
+body.port .stage.out-back .sep{animation:slideOutDown .24s cubic-bezier(.4,0,.7,.2) both}
+body.port .stage.in-fwd   #left,body.port .stage.in-fwd   #mid,body.port .stage.in-fwd   #right,
+body.port .stage.in-fwd   .sep{animation:slideInDown   .46s cubic-bezier(.16,.75,.3,1) both}
+body.port .stage.in-back  #left,body.port .stage.in-back  #mid,body.port .stage.in-back  #right,
+body.port .stage.in-back  .sep{animation:slideInUp     .46s cubic-bezier(.16,.75,.3,1) both}
+
+.stage.in-fwd #mid,.stage.in-back #mid{animation-delay:0s}
+.stage.in-fwd .sep,.stage.in-back .sep{animation-delay:.05s}
+.stage.in-fwd #left,.stage.in-back #left,
+.stage.in-fwd #right,.stage.in-back #right{animation-delay:.09s}
+.stage.out-fwd #left,.stage.out-back #left,
+.stage.out-fwd #right,.stage.out-back #right{animation-delay:0s}
+.stage.out-fwd #mid,.stage.out-back #mid{animation-delay:.05s}
+
+.panel{animation:focusIn .34s cubic-bezier(.16,.75,.3,1) both}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body class="land">
+
+<div class="bar">
+  <div class="brand">
+    <span class="logo" aria-hidden="true">
+      <svg class="acrmark" version="1.1" id="acrLogo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 347.7 40.8" style="enable-background:new 0 0 347.7 40.8;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
+<g>
+	<g>
+		<g>
+			<g>
+				<g>
+					<g>
+						<path class="st0" d="M151.3,37.1c-1.7-1.2-2.3-2.6-3.3-4.8c-0.8-1.7-13.2-31.6-13.2-31.6h-3.5c-0.5,1.2-5.2,13.9-7.9,20.2
+							c-0.9,2.1-2.6,6.1-5.3,11.7c-1.1,2.3-2.5,3.7-3.6,4.2V8.2c0,0-0.1-2.5,1.5-3.8c1.5-1.3,4.5-1.2,4.5-1.2l0-2.5l-15,0v2.5
+							c0,0,3.4-0.1,4.7,1.2c1.3,1.4,1.2,3.8,1.2,3.8l0,19.2L92.3,0.7H78.8v2.5c2.8,0,5.6,0.7,5.6,4.5v25.3c0,0,0.1,2.7-1,3.5
+							c-1.6,1.3-4.6,1.2-4.6,1.2l0,2.5h15.1l0-2.5c0,0-3.7,0.1-5.5-1.4c-1.2-1-1.1-3.4-1.1-3.4V10l22.5,30.2h17.3v-2.5
+							c0,0-3.8,0.1-4.9-0.4c-0.6-0.3-0.9-0.7-1.1-1.2c-0.1-0.3-0.1-0.8,0-1.5c0.5-2.6,2.7-7.4,2.7-7.4h12.1c0,0,2.3,5.3,3.1,7.3
+							c0.7,1.9,0.3,2.8-0.9,3.1c-1,0.2-4.1,0.2-4.1,0.2v2.5h20v-2.5C154,37.7,152.5,37.8,151.3,37.1z M124.9,24.3l4.9-11.9l5,11.9
+							H124.9z"/>
+						<path class="st0" d="M68.5,16.6c-2.5-0.7-9-2.7-11.3-5c-2.3-2.3-0.8-6.1,0.7-7.5c4.6-4.1,12.8-1.4,16.3,10.6h2.1V0.7h-1.9
+							c0,0-1.3,2-2,2.5c-0.3,0.2-1.6-0.4-2.2-0.7C52-7.5,39.7,15.8,55.1,22.9c3.3,1.5,5.3,2.3,9.2,3.4c6.6,2,7.2,7,5,9.7
+							c-3.5,4.3-14.2,5.5-19.6-10.3h-2.6l0,10.9l0,0l0,0c0,0-1.1-0.7-2-1.4c-3.5-3-9.9-12.3-11.2-14.2l0,0c10.7-2,11.8-11.8,6.9-17
+							l-6.9,6.1c0.1,1.3,0,2.7-0.5,4.3c-1.2,4.1-5.3,4.9-7.8,4.9c-0.8,0-1.8-0.1-1.9-0.1c0,0,0,0,0,0v0l-9,8l0,13h9V21.8l0,0
+							c5.1,6.8,9.6,13.4,12.9,18.3h10.5v0H50c0,0,0.6-0.8,1.3-1.5c0.8-0.9,2-0.3,2.6,0c2.9,1.4,5.6,2,8.9,2.2
+							C80.8,41.5,84.5,21.2,68.5,16.6z"/>
+					</g>
+				</g>
+				<g>
+					<g>
+						<path class="st0" d="M147.9,0.2c2,0,3.7,1.6,3.7,3.7c0,2.1-1.7,3.7-3.7,3.7c-2,0-3.7-1.6-3.7-3.7
+							C144.2,1.8,145.9,0.2,147.9,0.2z M147.9,7c1.7,0,3-1.4,3-3.2c0-1.8-1.3-3.1-3-3.1c-1.7,0-3,1.4-3,3.1
+							C144.9,5.7,146.2,7,147.9,7z M146.5,1.7h1.7c1,0,1.5,0.4,1.5,1.2c0,0.8-0.5,1.1-1.1,1.2l1.2,1.9H149l-1.2-1.8h-0.7V6h-0.7V1.7
+							z M147.2,3.7h0.7c0.6,0,1.1,0,1.1-0.7c0-0.6-0.5-0.7-1-0.7h-0.9V3.7z"/>
+					</g>
+				</g>
+			</g>
+			<g>
+				<g>
+					<g>
+						<polyline class="st0" points="14.7,27.2 14.7,27.2 14.7,40.2 0,40.2 14.7,27.2 						"/>
+					</g>
+				</g>
+			</g>
+		</g>
+		<g>
+			<path class="st0" d="M23.7,6.4c0-2.5,3.5-3.3,5.2-3.1c1.1,0.1,3,1.3,4.2,3.7l5.4-4.8c-1.6-0.9-3.4-1.5-5.6-1.5
+				c-8.6,0-23.4,0-23.4,0v2.5c0,0,0.5,0,1.1,0c1,0.1,2.4,0.2,3.3,1.2c0.4,0.4,0.9,1.4,0.9,2.8c0,1.3,0,9,0,16l9-8L23.7,6.4z"/>
+		</g>
+	</g>
+</g>
+<g>
+	<path class="st0" d="M280.8,7.7v7.6l9.3-1.5V10c0-7.5-2.4-9.4-9.9-9.4h-23.8c-7.5,0-9.9,1.9-9.9,9.4v21c0,7.5,2.4,9.4,9.9,9.4h23.8
+		c7.5,0,9.9-1.9,9.9-9.4v-4.7l-9.3-1.9V33h-25V7.7H280.8L280.8,7.7z"/>
+	<path class="st0" d="M293.6,40.5h9.1V25.4h8.8l16.1,15.1h13.3l-18.4-15.1h5.3c6.1,0,9-2.2,9-7.7V8.3c0-5.6-2.9-7.7-9-7.7h-34.2
+		V40.5L293.6,40.5z M323.6,7.5c2.9,0,4.2,0.5,4.2,3.2v4.8c0,2.6-1.3,3.2-4.2,3.2h-20.9V7.5H323.6L323.6,7.5z"/>
+	<polygon class="st0" points="236.9,40 245.7,40 224,0.6 219.6,0.6 215.2,0.6 193.4,40 202.2,40 204.5,35.9 228.1,35.9 225.4,30.2 
+		207.7,30.2 219.6,8.4 	"/>
+	<g>
+		<path class="st0" d="M343.3,0.5c2.4,0,4.4,2,4.4,4.5c0,2.5-1.9,4.5-4.4,4.5c-2.4,0-4.4-2-4.4-4.5C338.9,2.4,340.8,0.5,343.3,0.5
+			L343.3,0.5z M343.3,1.1c-2,0-3.6,1.7-3.6,3.8c0,2.1,1.6,3.8,3.6,3.8c2,0,3.6-1.7,3.6-3.8C346.9,2.8,345.3,1.1,343.3,1.1L343.3,1.1
+			z M342.5,7.5h-0.8v-5c0.4-0.1,0.8-0.1,1.4-0.1c0.8,0,1.2,0.2,1.5,0.4c0.3,0.2,0.5,0.6,0.5,1c0,0.7-0.4,1.1-1,1.2v0
+			c0.4,0.1,0.7,0.5,0.8,1.2c0.1,0.8,0.2,1.1,0.3,1.2h-0.8c-0.1-0.2-0.2-0.6-0.3-1.3c-0.1-0.6-0.4-0.9-1.1-0.9h-0.6V7.5z M342.5,4.8
+			h0.6c0.7,0,1.2-0.2,1.2-0.9c0-0.4-0.3-0.9-1.2-0.9c-0.3,0-0.4,0-0.6,0V4.8z"/>
+	</g>
+</g>
+<rect x="174.5" class="st0" width="1.8" height="40.5"/>
+</svg>
+    </span>
+    <h1>Next Generation CDEs</h1>
+  </div>
+  <nav class="mainnav" id="mainnav" aria-label="Sections">
+    <button data-view="browse">Browse</button> <small>* syntehtic data to demonstrate mechanism, not clinically validated</small>
+  </nav>
+  <div class="spacer"></div>
+  <div class="searchbox">
+    <span class="mag" aria-hidden="true">⌕</span>
+    <input id="q" type="search" placeholder="Search" aria-label="Search the repository" autocomplete="off">
+  </div>
+  <div class="orient" role="group" aria-label="Layout">
+    <button id="bl" aria-pressed="true">Landscape</button>
+    <button id="bp" aria-pressed="false">Portrait</button>
+  </div>
+</div>
+
+
+</div>
+
+<section class="panel" id="panel" hidden></section>
+
+<main class="stage" id="stage">
+  <div class="side left" id="left"></div>
+  <div class="sep" id="s1"><span>↔</span></div>
+  <div id="mid"></div>
+  <div class="sep" id="s2"><span>↔</span></div>
+  <div class="side right" id="right"></div>
+</main>
+
+<div class="legend">
+  <span><i style="background:#7B3FA0"></i>Diagnosis <b>DX</b></span>
+  <span><i style="background:#0E7C66"></i>FindingClass <b>FC</b></span>
+  <span><i style="background:#2A5CA8"></i>Data Element <b>DE</b></span>
+  <span><i style="background:#4C7A9B"></i>Value <b>V</b></span>
+  <span><i style="background:#B0305F"></i>Measurement <b>MS</b></span>
+  <span><i style="background:#C2571A"></i>Assessment <b>AS</b></span>
+  <span><i style="background:#7A6420"></i>Anatomy <b>AL</b></span>
+  <span><i style="background:#4A5F5C"></i>Terminology mapping</span>
+</div>
+
+<script>
+const C={finding:'var(--finding)',diagnosis:'var(--diagnosis)',assessment:'var(--assessment)',
+         element:'var(--element)',measurement:'var(--measurement)',anatomy:'var(--anatomy)',concept:'var(--concept)',value:'var(--value)'};
+const LABEL={finding:'FindingClass',diagnosis:'Diagnosis',assessment:'Assessment',element:'Data Element',
+             measurement:'Measurement',anatomy:'Anatomy',concept:'Terminology',value:'Value'};
+
+const N={
+ pulmonary_nodule:{type:'finding',name:'pulmonary nodule',id:'FC-000001',version:3,status:'proposed',date:'2026-08-19',
+  definition:'A rounded or oval opacity within the lung parenchyma.',
+  synonyms:[['lung nodule','synonym'],['SPN','abbreviation'],['pulmonary node','deprecated']],
+  scope:[{loc:'lung',kind:'specific',strength:'required'}], maps:['radlex_pn','snomed_pn'],
+  mods:['CT','MR','XR'],
+  left:[{label:'What it may mean',edge:'MAY_REPRESENT',phrase:'may represent',subj:'focus',
+         items:['lung_cancer','infectious_granulomas','pulmonary_hamartoma']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',
+          items:['presence','attenuation','margin','size','long_axis','nodule_volume','change_from_prior'],add:'Add more attributes'},
+         {label:'How it is assessed',edge:'ASSESSED_BY',phrase:'is scored by',subj:'focus',
+          items:['fleischner','lung_rads'],add:'Add another scoring or assessment',
+          open:'Lung-RADS pairs each diameter threshold with a volume threshold. Whether those are alternative measurements or one criterion in two encodings is unresolved'},
+         {label:'Parts it may have',edge:'MAY_HAVE_COMPONENT',phrase:'may include',subj:'focus',
+          items:['solid_component'],add:'Add another part',open:'Component vs subtype not settled'}]},
+
+
+ lung_cancer:{type:'diagnosis',name:'lung cancer',id:'DX-000001',version:2,status:'proposed',date:'2026-08-21',
+  definition:'Primary malignant neoplasm arising from lung tissue.',
+  synonyms:[['bronchogenic carcinoma','synonym']],
+  scope:[{loc:'lung',kind:'region',strength:'required'}], scopeOpen:'Diagnosis scope granularity is open', maps:['radlex_lung_cancer','snomed_lc'],
+  left:[],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',items:['presence'],add:'Add more attributes'},
+         {label:'Findings that support this diagnosis',edge:'MAY_BE_REPRESENTED_BY',phrase:'may be represented by',subj:'focus',
+          items:['pulmonary_nodule','mediastinal_lymphadenopathy','pleural_effusion','atelectasis'],add:'Add another supporting finding'}]},
+
+ infectious_granulomas:{type:'diagnosis',name:'infectious granuloma',id:'DX-000002',version:1,
+  status:'draft',date:'2026-08-27',
+  definition:'A relatively small nodular inflammatory lesion containing grouped mononuclear phagocytes, caused by infectious and noninfectious agents.',
+  synonyms:[],scope:[{loc:'lung',kind:'region',strength:'expected'}],maps:['radlex_granuloma'],
+  left:[],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',items:['presence'],add:'Add more attributes'},
+         {label:'Findings that support this diagnosis',edge:'MAY_BE_REPRESENTED_BY',phrase:'may be represented by',subj:'focus',
+          items:['pulmonary_nodule','mediastinal_lymphadenopathy'],add:'Add another supporting finding'}]},
+
+ pulmonary_hamartoma:{type:'diagnosis',name:'pulmonary hamartoma',id:'DX-000003',version:1,
+  status:'draft',date:'2026-08-27',
+  definition:'A focal malformation resembling a neoplasm, composed of an overgrowth of mature cells and tissues that normally occur in the affected area.',
+  synonyms:[],scope:[{loc:'lung',kind:'region',strength:'expected'}],maps:['radlex_hamartoma'],
+  left:[],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',items:['presence'],add:'Add more attributes'},
+         {label:'Findings that support this diagnosis',edge:'MAY_BE_REPRESENTED_BY',phrase:'may be represented by',subj:'focus',
+          items:['pulmonary_nodule'],add:'Add another supporting finding'}]},
+
+ lung_rads:{type:'assessment',name:'Lung-RADS category',id:'AS-000001',version:2,status:'proposed',date:'2026-08-22',
+  definition:'ACR categorization applied to lung cancer screening CT.',
+  synonyms:[['Lung-RADS','abbreviation']],scope:[],maps:['radlex_lungrads'],
+  authority:'American College of Radiology',scheme:'2022',
+  useTag:'screening',useOpen:'Which scheme applies is still being worked out',
+  mods:['CT'],
+  left:[{usage:true,label:'What it scores',edge:'ASSESSED_BY',phrase:'is scored by',subj:'other',items:['pulmonary_nodule']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',items:['lr_category'],
+          add:'Add more attributes',open:'Assessment as its own node type is untested'}]},
+
+ fleischner:{type:'assessment',name:'Fleischner recommendation',id:'AS-000002',version:1,status:'proposed',date:'2026-08-22',
+  definition:'Follow-up recommendation for incidentally detected pulmonary nodules.',
+  synonyms:[],scope:[],maps:[],authority:'Fleischner Society',scheme:'2017',
+  openNotes:['The scheme itself has no terminology code. Its individual recommendations are coded in SNOMED CT'],
+  useTag:'incidental',useOpen:'Which scheme applies is still being worked out',
+  mods:['CT'],
+  left:[{usage:true,label:'What it scores',edge:'ASSESSED_BY',phrase:'is scored by',subj:'other',items:['pulmonary_nodule']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',
+          items:['fleischner_recommendation'],add:'Add more attributes',
+          open:'Assessment as its own node type is untested'}]},
+
+ fleischner_recommendation:{type:'element',name:'Fleischner follow-up recommendation',id:'DE-000001',
+  version:1,status:'draft',date:'2026-08-22',
+  definition:'Recommended follow-up for an incidentally detected pulmonary nodule.',
+  synonyms:[],scope:[],maps:[],uses:1,
+  values:[{name:'no follow-up needed',
+           mappings:[['SNOMEDCT','1204657004','Monitoring of pulmonary nodule not indicated']]},
+          {name:'monitor every 3 to 6 months',
+           mappings:[['SNOMEDCT','1204653000','Monitoring of pulmonary nodule every 3 to 6 months']]},
+          {name:'monitor every 6 to 12 months',
+           mappings:[['SNOMEDCT','1204654006','Monitoring of pulmonary nodule every 6 to 12 months']]},
+          {name:'monitor every 12 to 24 months',
+           mappings:[['SNOMEDCT','1204655007','Monitoring of pulmonary nodule every 12 to 24 months']]},
+          {name:'monitor annually',
+           mappings:[['SNOMEDCT','1204656008','Monitoring of pulmonary nodule every 12 months']]},
+          {name:'escalate to PET-CT',
+           mappings:[['SNOMEDCT','1204658009','Positron emission tomography computed tomography of pulmonary nodule indicated']]},
+          {name:'escalate to tissue biopsy',
+           mappings:[['SNOMEDCT','1204659001','Biopsy of pulmonary nodule indicated']]}],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['fleischner']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+
+ solid_component:{type:'finding',name:'solid component',id:'FC-000002',version:1,status:'draft',date:'2026-08-19',
+  definition:'The solid portion of a part-solid nodule.',synonyms:[],scope:[{loc:'lung',kind:'specific',strength:'required'}],maps:[],
+  left:[{label:'What it is part of',edge:'MAY_HAVE_COMPONENT',phrase:'may include',subj:'other',items:['pulmonary_nodule']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',
+          items:['margin','solid_position','size'],add:'Add more attributes'}]},
+
+ presence:{type:'element',name:'presence',id:'DE-000002',version:4,status:'published',date:'2026-04-02',
+  definition:'Expresses whether a finding can be categorized as present or absent based on the available data, with standardized uncertainty handling.',synonyms:[],maps:[],uses:214,
+  values:[{name:'present',definition:'Finding can be confidently categorized as present based on the data presented to the interpreter.',
+           mappings:[['RADLEX','RID28472','present'],['SNOMEDCT','52101004','present']]},
+          {name:'absent',definition:'Finding can be confidently categorized as absent based on the data presented to the interpreter.',
+           mappings:[['RADLEX','RID28473','absent'],['SNOMEDCT','2667000','absent']]},
+          {name:'indeterminate',definition:'Cannot conclusively establish or define; assessment performed but was not conclusive.',
+           mappings:[['RADLEX','RID39110','indeterminate']]},
+          {name:'unknown',definition:'Not known; assessment not performed.',
+           mappings:[['RADLEX','RID5655','unknown']]}],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',
+         items:['pulmonary_nodule','thyroid_nodule','pleural_effusion','consolidation','ground_glass_opacity','atelectasis','mediastinal_lymphadenopathy','lung_cancer','pneumonia','pulmonary_edema','infectious_granulomas','pulmonary_hamartoma','thyroid_cancer'],extra:'and 201 more'}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+
+ attenuation:{type:'element',name:'composition',id:'DE-000003',version:2,status:'proposed',date:'2026-08-19',
+  definition:'Attenuation class of the nodule on CT, per Fleischner usage.',
+  synonyms:[['attenuation','synonym'],['density','synonym']],
+  scope:[{loc:'lung',kind:'specific',strength:'expected'}],maps:['radlex_composition'],uses:1,
+  values:[{name:'solid',definition:'Homogeneous soft-tissue attenuation that obscures the underlying lung parenchyma.',
+           mappings:[['RADLEX','RID50151','solid pulmonary nodule']]},
+          {name:'part-solid',definition:'Both ground-glass and solid components.',
+           mappings:[['RADLEX','RID50152','part-solid pulmonary nodule']]},
+          {name:'ground-glass',definition:'Hazy increased attenuation that does not obscure vessels or bronchial walls.',
+           mappings:[['RADLEX','RID50153','non-solid pulmonary nodule']]}],
+  mods:['CT'],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['pulmonary_nodule']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+
+ margin:{type:'element',name:'margin',id:'DE-000004',version:2,status:'published',date:'2026-05-14',
+  definition:"Character of the nodule's interface with surrounding lung.",synonyms:[],
+  scope:[{loc:'lung',kind:'specific',strength:'expected'}],maps:['radlex_margin'],uses:4,
+  values:[{name:'smooth',definition:'Well-defined, regular interface.',
+           mappings:[['RADLEX','RID5912','smooth']]},
+          {name:'lobulated',definition:'Undulating contour from uneven growth.',
+           mappings:[['RADLEX','RID5711','lobulated margin']]},
+          {name:'spiculated',definition:'Linear strands radiating into the parenchyma; suspicious.',
+           mappings:[['RADLEX','RID34284','spiculated']]},
+          {name:'ill-defined',definition:'Margins cannot be clearly traced.',
+           mappings:[['RADLEX','RID45667','moderately ill-defined margin','closeMatch']]}],
+  mods:['CT','MR'],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['pulmonary_nodule','solid_component'],extra:'and 2 more'}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+
+ solid_position:{type:'element',name:'position within nodule',id:'DE-000005',version:1,status:'draft',date:'2026-08-19',
+  definition:'Position of the solid component within the parent nodule.',synonyms:[],maps:[],uses:1,
+  values:[{name:'central'},{name:'eccentric'}],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['solid_component']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+
+ size:{type:'measurement',name:'mean diameter',id:'MS-000001',version:3,status:'published',date:'2026-01-15',
+  definition:'Mean of the long and short axis diameters.',synonyms:[['average diameter','synonym']],
+  maps:['radlex_avg_diameter'],uses:88,
+  units:['mm','cm'],predefined:true,
+  left:[{usage:true,label:'Where it is used',edge:'HAS_MEASUREMENT',phrase:'measures',subj:'other',
+         items:['pulmonary_nodule','solid_component'],extra:'and 86 more'}],
+  right:[]},
+
+ lr_category:{type:'element',name:'Lung-RADS category',id:'DE-000006',version:1,status:'proposed',date:'2026-08-22',
+  definition:'Assessment category assigned on screening chest CT.',synonyms:[],scope:[],maps:[],uses:1,
+  values:[{name:'Lung-RADS 0',definition:'Incomplete. Comparison to prior chest CT or additional lung cancer screening CT imaging.',
+           mappings:[['RADLEX','RID50135','Lung-RADS 0']]},
+          {name:'Lung-RADS 1',definition:'Negative. No nodules or clearly benign nodules.',
+           mappings:[['RADLEX','RID50136','Lung-RADS 1']]},
+          {name:'Lung-RADS 2',definition:'Benign, based on imaging features or indolent behavior.',
+           mappings:[['RADLEX','RID50137','Lung-RADS 2']]},
+          {name:'Lung-RADS 3',definition:'Probably benign, based on imaging features or behavior.',
+           mappings:[['RADLEX','RID50138','Lung-RADS 3']]},
+          {name:'Lung-RADS 4A',definition:'Suspicious.',
+           mappings:[['RADLEX','RID50139','Lung-RADS 4A']]},
+          {name:'Lung-RADS 4B',definition:'Very suspicious.',
+           mappings:[['RADLEX','RID50140','Lung-RADS 4B']]},
+          {name:'Lung-RADS 4X',definition:'Very suspicious. Category 3 or 4 nodules with additional features or imaging findings that increase suspicion for lung cancer.',
+           mappings:[['RADLEX','RID50141','Lung-RADS 4X']],
+           openNotes:['Reported on its own, so a single value still carries it. What is missing is that this can only follow a category 3 or 4 assessment, and that the category it escalated from is not recoverable. Conditional applicability between values has no representation here']},
+          {name:'Lung-RADS S',definition:'Significant or potentially significant. Modifier that may be added to category 0 through 4 for clinically significant findings unrelated to lung cancer.',
+           mappings:[['RADLEX','RID50710','Lung-RADS S']],
+           openNotes:['A modifier rather than a category. It accompanies whatever category was assigned, so a report reads 2S or 4BS. A value that co-occurs with another value has no representation here']}],
+  openNotes:['Lung-RADS 4X is reported on its own, so a single value still carries it. What is missing is that 4X can only follow a category 3 or 4 assessment, and that the category it escalated from is not recoverable. Conditional applicability between values has no representation here',
+             'Lung-RADS S is a modifier rather than a category. It accompanies whatever category was assigned, so a report reads 2S or 4BS. A value that co-occurs with another value has no representation here'],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['lung_rads']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+
+ lung:{type:'anatomy',name:'lung',id:'AL-000001',version:2,status:'published',date:'2025-11-04',
+  definition:'Either of the pair of organs occupying the cavity of the thorax that effect the aeration of the blood.',synonyms:[],maps:['radlex_lung'],
+  source:'imported',primarySystem:'RADLEX',uses:132,
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',
+         items:['pulmonary_nodule','solid_component','atelectasis','lung_cancer','pneumonia','pulmonary_edema',
+                'infectious_granulomas','pulmonary_hamartoma'],extra:'and 124 more'},
+        {label:'Is part of',edge:'PART_OF',phrase:'is part of',subj:'focus',items:['thorax']}],
+  right:[{label:'Parts of this',edge:'PART_OF',phrase:'is part of',subj:'other',
+          items:['lung_parenchyma'],add:'Add a part'}]},
+
+ thyroid_gland:{type:'anatomy',name:'thyroid gland',id:'AL-000002',version:1,status:'published',date:'2025-11-04',
+  definition:'Endocrine gland in the anterior neck.',synonyms:[],maps:['radlex_thyroid'],
+  source:'imported',primarySystem:'RADLEX',uses:19,
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',
+         items:['thyroid_nodule','thyroid_cancer'],extra:'and 17 more'},
+        {label:'Is part of',edge:'PART_OF',phrase:'is part of',subj:'focus',items:['infrahyoid_neck']}],
+  right:[]},
+
+ infrahyoid_neck:{type:'anatomy',name:'infrahyoid neck',id:'AL-000003',version:1,status:'published',date:'2026-02-10',
+  definition:'The portion of the neck below the hyoid bone.',synonyms:[],
+  maps:['radlex_infrahyoid_neck'],source:'imported',primarySystem:'RADLEX',
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',items:[]},
+        {label:'Is part of',edge:'PART_OF',phrase:'is part of',subj:'focus',items:['neck']}],
+  right:[{label:'Parts of this',edge:'PART_OF',phrase:'is part of',subj:'other',
+          items:['thyroid_gland'],add:'Add a part'}]},
+
+ neck:{type:'anatomy',name:'neck',id:'AL-000011',version:1,status:'published',date:'2026-02-10',
+  definition:'The region between the head and the thorax.',synonyms:[],
+  maps:['radlex_neck'],source:'imported',primarySystem:'RADLEX',
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',items:[]}],
+  right:[{label:'Parts of this',edge:'PART_OF',phrase:'is part of',subj:'other',
+          items:['infrahyoid_neck'],add:'Add a part'}]},
+
+ snomed_tn:{type:'concept',name:'Thyroid nodule (disorder)',id:'237495005',system:'SNOMEDCT',match:'exactMatch',
+  definition:'SNOMED CT concept for thyroid nodule.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['thyroid_nodule']}],right:[]},
+ radlex_lungrads:{type:'concept',name:'Lung-RADS assessment',id:'RID50134',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for Lung-RADS assessment.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['lung_rads']}],right:[]},
+ radlex_tirads:{type:'concept',name:'TI-RADS assessment',id:'RID50503',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for TI-RADS assessment.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['tirads']}],right:[]},
+
+ radlex_lymphadenopathy:{type:'concept',name:'lymphadenopathy',id:'RID3798',system:'RADLEX',match:'broadMatch',
+  sourceVersion:'4.3',definition:'RadLex concept for lymphadenopathy.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['mediastinal_lymphadenopathy']}],right:[]},
+
+ radlex_avg_diameter:{type:'concept',name:'average diameter',id:'RID50155',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',definition:'RadLex concept for average diameter.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['size']}],right:[]},
+ radlex_diameter:{type:'concept',name:'diameter',id:'RID13432',system:'RADLEX',match:'broadMatch',
+  sourceVersion:'4.3',definition:'RadLex concept for diameter.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['short_axis','size_3axes']}],right:[]},
+
+ radlex_hamartoma:{type:'concept',name:'hamartoma',id:'RID4335',system:'RADLEX',match:'broadMatch',
+  sourceVersion:'4.3',definition:'RadLex concept for hamartoma.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['pulmonary_hamartoma']}],right:[]},
+ radlex_granuloma:{type:'concept',name:'granuloma',id:'RID3953',system:'RADLEX',match:'broadMatch',
+  sourceVersion:'4.3',definition:'A relatively small nodular inflammatory lesion containing grouped mononuclear phagocytes, caused by infectious and noninfectious agents.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['infectious_granulomas']}],right:[]},
+ radlex_distribution:{type:'concept',name:'distribution pattern',id:'RID5958',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',definition:'RadLex concept for distribution pattern.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['distribution']}],right:[]},
+
+ radlex_ggo:{type:'concept',name:'ground-glass opacity',id:'RID28531',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',definition:'RadLex concept for ground-glass opacity.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['ground_glass_opacity']}],right:[]},
+ radlex_atelectasis:{type:'concept',name:'atelectasis',id:'RID28493',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',definition:'RadLex concept for atelectasis.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['atelectasis']}],right:[]},
+ radlex_consolidation:{type:'concept',name:'consolidation',id:'RID43255',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',definition:'RadLex concept for consolidation.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['consolidation']}],right:[]},
+ radlex_tn:{type:'concept',name:'thyroid nodule',id:'RID50509',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',definition:'RadLex concept for thyroid nodule.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['thyroid_nodule']}],right:[]},
+
+
+ radlex_para_aortic_ln:{type:'concept',name:'para-aortic thoracic lymph node',id:'RID28935',system:'RADLEX',
+  match:'exactMatch',sourceVersion:'4.3',primary:true,
+  definition:'RadLex concept for para-aortic thoracic lymph node.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['para_aortic_thoracic_lymph_node']}],right:[]},
+
+ radlex_mediastinum:{type:'concept',name:'mediastinum',id:'RID1384',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for mediastinum.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['mediastinum']}],right:[]},
+ radlex_mediastinal_ln:{type:'concept',name:'mediastinal lymph node',id:'RID28891',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for mediastinal lymph node.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['mediastinal_lymph_node']}],right:[]},
+ radlex_lymph_node:{type:'concept',name:'lymph node',id:'RID13296',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for lymph node.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['lymph_node']}],right:[]},
+
+ radlex_thorax:{type:'concept',name:'thorax',id:'RID1243',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for thorax.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['thorax']}],right:[]},
+ radlex_neck:{type:'concept',name:'neck',id:'RID7488',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for neck.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['neck']}],right:[]},
+
+ radlex_infrahyoid_neck:{type:'concept',name:'infrahyoid neck',id:'RID7576',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for infrahyoid neck.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['infrahyoid_neck']}],right:[]},
+
+ radlex_pleural_effusion:{type:'concept',name:'pleural effusion',id:'RID34539',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for pleural effusion.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['pleural_effusion']}],right:[]},
+ radlex_pneumonia:{type:'concept',name:'pneumonia',id:'RID5350',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for pneumonia.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['pneumonia']}],right:[]},
+ radlex_lung_cancer:{type:'concept',name:'lung cancer',id:'RID45686',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for lung cancer.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['lung_cancer']}],right:[]},
+ radlex_pulmonary_edema:{type:'concept',name:'pulmonary edema',id:'RID4866',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for pulmonary edema.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['pulmonary_edema']}],right:[]},
+
+ radlex_margin:{type:'concept',name:'margin characteristic',id:'RID5706',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for margin characteristic.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['margin']}],right:[]},
+ radlex_echogenicity:{type:'concept',name:'echogenicity characteristic',id:'RID6045',system:'RADLEX',
+  match:'exactMatch',sourceVersion:'4.3',primary:true,
+  definition:'RadLex concept for echogenicity characteristic.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['echogenicity']}],right:[]},
+
+ radlex_composition:{type:'concept',name:'composition',id:'RID39409',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for composition.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['attenuation']}],right:[]},
+
+ radlex_pleural_space:{type:'concept',name:'pleural space',id:'RID1363',system:'RADLEX',match:'exactMatch',
+  sourceVersion:'4.3',primary:true,definition:'RadLex concept for pleural space.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['pleural_space']}],right:[]},
+ radlex_parenchyma:{type:'concept',name:'parenchyma',id:'RID5978',system:'RADLEX',match:'broadMatch',
+  sourceVersion:'4.3',primary:true,
+  definition:'Organ component constituted by specialized tissues which are organized into acini, lobules, segments, and lobes, or corticomedullary units and supported by stroma.',
+  synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['lung_parenchyma']}],right:[]},
+
+ radlex_thyroid:{type:'concept',name:'thyroid gland',id:'RID7578',system:'RADLEX',match:'exactMatch',sourceVersion:'4.3',primary:true,
+  definition:'RadLex concept for thyroid gland.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['thyroid_gland']}],right:[]},
+
+
+
+
+ thorax:{type:'anatomy',name:'thorax',id:'AL-000004',version:1,status:'published',date:'2026-02-10',
+  definition:'The chest, bounded by the rib cage and diaphragm.',synonyms:[],
+  maps:['radlex_thorax'],source:'imported',primarySystem:'RADLEX',
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',items:[]}],
+  right:[{label:'Parts of this',edge:'PART_OF',phrase:'is part of',subj:'other',
+          items:['lung','pleural_space','mediastinum'],add:'Add a part'}]},
+
+ lung_parenchyma:{type:'anatomy',name:'lung parenchyma',id:'AL-000005',version:1,status:'proposed',date:'2026-02-10',
+  definition:'The functional tissue of the lung, excluding airways and vessels.',synonyms:[],
+  maps:['radlex_parenchyma'],source:'local',sourceStatus:'pending_request',request:'RADLEX-1187',
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',
+         items:['consolidation','ground_glass_opacity']},
+        {label:'Is part of',edge:'PART_OF',phrase:'is part of',subj:'focus',items:['lung']}],
+  right:[]},
+
+ pleural_space:{type:'anatomy',name:'pleural space',id:'AL-000006',version:1,status:'published',date:'2026-02-10',
+  definition:'The potential space between the visceral and parietal pleura.',synonyms:[],
+  maps:['radlex_pleural_space'],source:'imported',primarySystem:'RADLEX',
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',items:['pleural_effusion']},
+        {label:'Is part of',edge:'PART_OF',phrase:'is part of',subj:'focus',items:['thorax']}],
+  right:[]},
+
+ mediastinum:{type:'anatomy',name:'mediastinum',id:'AL-000007',version:1,status:'published',date:'2026-02-10',
+  definition:'The central compartment of the thorax between the lungs.',synonyms:[],
+  maps:['radlex_mediastinum'],source:'imported',primarySystem:'RADLEX',
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',
+         items:['mediastinal_lymphadenopathy']},
+        {label:'Is part of',edge:'PART_OF',phrase:'is part of',subj:'focus',items:['thorax']}],
+  right:[{label:'Parts of this',edge:'PART_OF',phrase:'is part of',subj:'other',
+          items:['mediastinal_lymph_node'],add:'Add a part'}]},
+
+ lymph_node:{type:'anatomy',name:'lymph node',id:'AL-000008',version:1,status:'published',date:'2026-02-10',
+  definition:'A class of structures of the lymphatic system, distributed throughout the body.',synonyms:[],
+  maps:['radlex_lymph_node'],source:'imported',primarySystem:'RADLEX',
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',items:[]}],
+  right:[{label:'Kinds of this',edge:'IS_A',phrase:'is a',subj:'other',
+          items:['mediastinal_lymph_node','para_aortic_thoracic_lymph_node'],add:'Add a kind'}]},
+
+ para_aortic_thoracic_lymph_node:{type:'anatomy',name:'para-aortic thoracic lymph node',id:'AL-000009',
+  version:1,status:'published',date:'2026-02-10',
+  definition:'A thoracic lymph node adjacent to the aorta.',synonyms:[],
+  maps:['radlex_para_aortic_ln'],source:'imported',primarySystem:'RADLEX',
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',items:[]},
+        {label:'Is a',edge:'IS_A',phrase:'is a',subj:'focus',items:['lymph_node']}],
+  right:[]},
+
+ mediastinal_lymph_node:{type:'anatomy',name:'mediastinal lymph node',id:'AL-000010',version:1,
+  status:'published',date:'2026-02-10',
+  definition:'A lymph node within the mediastinum.',synonyms:[],
+  maps:['radlex_mediastinal_ln'],source:'imported',primarySystem:'RADLEX',
+  left:[{usage:true,label:'What occurs here',edge:'SCOPED_TO',phrase:'occurs in',subj:'other',items:['short_axis']},
+        {label:'Is part of',edge:'PART_OF',phrase:'is part of',subj:'focus',items:['mediastinum']},
+        {label:'Is a',edge:'IS_A',phrase:'is a',subj:'focus',items:['lymph_node']}],
+  right:[]},
+
+ pleural_effusion:{type:'finding',name:'pleural effusion',id:'FC-000003',version:2,status:'proposed',date:'2026-08-27',
+  definition:'Accumulation of fluid within the pleural space.',
+  synonyms:[['effusion','synonym']],scope:[{loc:'pleural_space',kind:'specific',strength:'required'}],maps:['radlex_pleural_effusion'],
+  mods:['CT','XR','US','MR'],
+  left:[{label:'What it may mean',edge:'MAY_REPRESENT',phrase:'may represent',subj:'focus',
+         items:['lung_cancer','pneumonia','pulmonary_edema']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',
+          items:['presence','effusion_volume','change_from_prior'],add:'Add more attributes'},
+         {label:'Often occurs with',edge:'OCCURS_WITH',phrase:'often occurs with',subj:'focus',items:['atelectasis','consolidation','mediastinal_lymphadenopathy'],add:'Add an association'}]},
+
+ consolidation:{type:'finding',name:'consolidation',id:'FC-000004',version:1,status:'proposed',date:'2026-08-27',
+  definition:'Replacement of alveolar air by fluid, cells, or other material, obscuring the underlying vessels.',
+  synonyms:[['airspace opacity','synonym']],
+  scope:[{loc:'lung_parenchyma',kind:'specific',strength:'required'}],maps:['radlex_consolidation'],mods:['CT','XR'],
+  left:[{label:'What it may mean',edge:'MAY_REPRESENT',phrase:'may represent',subj:'focus',items:['pneumonia']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',
+          items:['presence','distribution'],add:'Add more attributes'},
+         {label:'Often occurs with',edge:'OCCURS_WITH',phrase:'often occurs with',subj:'focus',items:['pleural_effusion'],add:'Add an association'}]},
+
+ ground_glass_opacity:{type:'finding',name:'ground-glass opacity',id:'FC-000005',version:1,status:'proposed',date:'2026-08-27',
+  definition:'Hazy increased attenuation that does not obscure the underlying vessels.',
+  synonyms:[['GGO','abbreviation']],
+  scope:[{loc:'lung_parenchyma',kind:'specific',strength:'required'}],maps:['radlex_ggo'],mods:['CT'],
+  left:[{label:'What it may mean',edge:'MAY_REPRESENT',phrase:'may represent',subj:'focus',
+         items:['pneumonia','pulmonary_edema']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',
+          items:['presence','distribution'],add:'Add more attributes'}]},
+
+ atelectasis:{type:'finding',name:'atelectasis',id:'FC-000006',version:1,status:'draft',date:'2026-08-27',
+  definition:'Incomplete expansion or collapse of lung tissue.',synonyms:[['collapse','synonym']],
+  scope:[{loc:'lung',kind:'region',strength:'required'}],maps:['radlex_atelectasis'],mods:['CT','XR'],
+  left:[{label:'What it may mean',edge:'MAY_REPRESENT',phrase:'may represent',subj:'focus',
+         items:['lung_cancer','infectious_granulomas','pulmonary_hamartoma']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',
+          items:['presence','distribution'],add:'Add more attributes'},
+         {label:'Often occurs with',edge:'OCCURS_WITH',phrase:'often occurs with',subj:'focus',items:['pleural_effusion'],add:'Add an association'}]},
+
+ mediastinal_lymphadenopathy:{type:'finding',name:'mediastinal lymphadenopathy',id:'FC-000007',version:1,
+  status:'draft',date:'2026-08-27',
+  definition:'Enlargement of one or more mediastinal lymph nodes.',synonyms:[['adenopathy','synonym']],
+  scope:[{loc:'mediastinum',kind:'specific',strength:'required'}],
+  maps:['radlex_lymphadenopathy'],mods:['CT','MR','PET'],
+  left:[{label:'What it may mean',edge:'MAY_REPRESENT',phrase:'may represent',subj:'focus',
+         items:['lung_cancer','infectious_granulomas']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',
+          items:['presence','short_axis','change_from_prior'],add:'Add more attributes'},
+         {label:'Often occurs with',edge:'OCCURS_WITH',phrase:'often occurs with',subj:'focus',items:['pleural_effusion'],add:'Add an association'}]},
+
+ pneumonia:{type:'diagnosis',name:'pneumonia',id:'DX-000004',version:1,status:'proposed',date:'2026-08-27',
+  definition:'Infection of the lung parenchyma, usually bacterial or viral, producing airspace opacity.',synonyms:[],scope:[{loc:'lung',kind:'region',strength:'required'}],maps:['radlex_pneumonia'],
+  left:[],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',items:['presence'],add:'Add more attributes'},
+         {label:'Findings that support this diagnosis',edge:'MAY_BE_REPRESENTED_BY',phrase:'may be represented by',subj:'focus',
+          items:['consolidation','ground_glass_opacity','pleural_effusion'],add:'Add another supporting finding'}]},
+
+ pulmonary_edema:{type:'diagnosis',name:'pulmonary edema',id:'DX-000005',version:1,status:'draft',date:'2026-08-27',
+  definition:'Accumulation of fluid in the lung, most often from raised left atrial pressure.',synonyms:[],scope:[{loc:'lung',kind:'region',strength:'required'}],maps:['radlex_pulmonary_edema'],
+  left:[],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',items:['presence'],add:'Add more attributes'},
+         {label:'Findings that support this diagnosis',edge:'MAY_BE_REPRESENTED_BY',phrase:'may be represented by',subj:'focus',
+          items:['ground_glass_opacity','pleural_effusion'],add:'Add another supporting finding'}]},
+
+ effusion_volume:{type:'element',name:'effusion volume',id:'DE-000007',version:1,status:'draft',date:'2026-08-27',
+  definition:'Approximate volume of fluid, described qualitatively.',synonyms:[],maps:[],uses:1,
+  valuesOpen:'Draft values, pending clinical review',
+  values:[{name:'small',mappings:[['RADLEX','RID5774','small']]},
+          {name:'moderate',mappings:[['RADLEX','RID5672','moderate']]},
+          {name:'large',mappings:[['RADLEX','RID5778','large']]}],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['pleural_effusion']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+ change_from_prior:{type:'element',name:'change from prior',id:'DE-000015',version:2,
+  status:'published',date:'2026-05-20',
+  definition:'How the finding compares with the most recent prior study.',
+  synonyms:[['interval change','synonym']],maps:[],uses:64,
+  values:[{name:'no priors available',definition:'No prior study was available for comparison.'},
+          {name:'unchanged over 6 months',definition:'Stable compared with a prior obtained within the last 6 months.'},
+          {name:'unchanged over 12 months',definition:'Stable compared with a prior obtained within the last 12 months.'},
+          {name:'unchanged over 24 months',definition:'Stable compared with a prior obtained within the last 24 months.'},
+          {name:'larger than prior',definition:'Increased in size compared with the prior study.'},
+          {name:'smaller than prior',definition:'Decreased in size compared with the prior study.'}],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',
+         items:['pulmonary_nodule','thyroid_nodule','pleural_effusion','mediastinal_lymphadenopathy'],
+         extra:'and 60 more'}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+
+ distribution:{type:'element',name:'distribution',id:'DE-000008',version:2,status:'published',date:'2026-06-03',
+  definition:'How widely the finding is spread through the affected structure.',synonyms:[],maps:['radlex_distribution'],uses:3,
+  values:[{name:'focal',definition:'Limited to a small area or volume.',
+           mappings:[['RADLEX','RID5702','focal']]},
+          {name:'multifocal',definition:'Multiple foci distinct from neighboring tissues.',
+           mappings:[['RADLEX','RID5703','multifocal']]},
+          {name:'diffuse',definition:'Not localized, distributed over multiple areas.',
+           mappings:[['RADLEX','RID5701','diffuse']]}],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',
+         items:['consolidation','ground_glass_opacity','atelectasis']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+
+ thyroid_nodule:{type:'finding',name:'thyroid nodule',id:'FC-000008',version:2,status:'proposed',date:'2026-08-20',
+  definition:'A discrete lesion within the thyroid gland, radiologically distinct from the surrounding parenchyma.',
+  synonyms:[],
+  scope:[{loc:'thyroid_gland',kind:'specific',strength:'required'}], maps:['radlex_tn','snomed_tn'],
+  mods:['US','CT','MR','PET'],
+  left:[{label:'What it may mean',edge:'MAY_REPRESENT',phrase:'may represent',subj:'focus',items:['thyroid_cancer']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',
+          items:['presence','composition','echogenicity','shape','margin_thyroid','echogenic_foci','size_3axes','change_from_prior'],
+          add:'Add more attributes'},
+         {label:'How it is assessed',edge:'ASSESSED_BY',phrase:'is scored by',subj:'focus',
+          items:['tirads'],add:'Add another scoring or assessment'}]},
+ thyroid_cancer:{type:'diagnosis',name:'thyroid cancer',id:'DX-000006',version:1,status:'draft',date:'2026-08-20',
+  definition:'Malignant neoplasm arising from thyroid tissue.',synonyms:[],scope:[{loc:'thyroid_gland',kind:'region',strength:'required'}],maps:[],
+  left:[],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',items:['presence'],add:'Add more attributes'},
+         {label:'Findings that support this diagnosis',edge:'MAY_BE_REPRESENTED_BY',phrase:'may be represented by',subj:'focus',
+          items:['thyroid_nodule'],add:'Add another supporting finding'}]},
+ tirads:{type:'assessment',name:'TI-RADS category',id:'AS-000003',version:1,status:'draft',date:'2026-08-20',
+  definition:'ACR categorization applied to thyroid nodules on ultrasound.',
+  synonyms:[['TI-RADS','abbreviation']],scope:[],maps:['radlex_tirads'],
+  authority:'American College of Radiology',scheme:'2017',
+  mods:['US'],
+  left:[{usage:true,label:'What it scores',edge:'ASSESSED_BY',phrase:'is scored by',subj:'other',items:['thyroid_nodule']}],
+  right:[{label:'How it is described',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'focus',items:['tirads_category'],
+          add:'Add more attributes',open:'Assessment as its own node type is untested'}]},
+ tirads_category:{type:'element',name:'TI-RADS category',id:'DE-000009',version:1,status:'draft',date:'2026-08-20',
+  definition:'Assessment category assigned to a thyroid nodule on ultrasound.',
+  synonyms:[],scope:[],maps:[],uses:1,mods:['US'],
+  values:[{name:'TR1',definition:'Benign.',mappings:[['RADLEX','RID50504','TR1']]},
+          {name:'TR2',definition:'Not suspicious.',mappings:[['RADLEX','RID50505','TR2']]},
+          {name:'TR3',definition:'Mildly suspicious.',mappings:[['RADLEX','RID50506','TR3']]},
+          {name:'TR4',definition:'Moderately suspicious.',mappings:[['RADLEX','RID50507','TR4']]},
+          {name:'TR5',definition:'Highly suspicious.',mappings:[['RADLEX','RID50508','TR5']]}],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['tirads']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+ margin_thyroid:{type:'element',name:'margin',id:'DE-000010',version:1,status:'proposed',date:'2026-08-20',
+  definition:'Nodule border (ACR TI-RADS). Note: ill-defined scores benign; lobulated or irregular scores suspicious.',
+  synonyms:[],scope:[{loc:'thyroid_gland',kind:'specific',strength:'expected'}],maps:[],uses:1,
+  values:[{name:'smooth',definition:'Well-defined, regular border.'},
+          {name:'ill-defined',definition:'Border cannot be clearly traced, scores 0, not suspicious.'},
+          {name:'lobulated or irregular',definition:'Protrusions or jagged edges, suspicious.'},
+          {name:'extra-thyroidal extension',definition:'Obvious invasion of adjacent soft tissue or vessels.'}],
+  mods:['US'],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['thyroid_nodule']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+ composition:{type:'element',name:'composition',id:'DE-000011',version:1,status:'proposed',date:'2026-08-20',
+  definition:'Internal composition on ultrasound (ACR TI-RADS).',synonyms:[],scope:[{loc:'thyroid_gland',kind:'specific',strength:'expected'}],maps:[],uses:1,
+  values:[{name:'cystic or almost completely cystic',definition:'Fluid-filled; no or negligible solid component.'},
+          {name:'spongiform',definition:'Composed predominantly of small cystic spaces.'},
+          {name:'mixed cystic and solid',definition:'Both cystic and solid components.'},
+          {name:'solid or almost completely solid',definition:'Soft tissue with no or negligible cystic component.'}],
+  mods:['US'],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['thyroid_nodule']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+ echogenicity:{type:'element',name:'echogenicity',id:'DE-000012',version:1,status:'proposed',date:'2026-08-20',
+  definition:'Echogenicity of the solid component relative to thyroid parenchyma (ACR TI-RADS).',
+  synonyms:[],scope:[{loc:'thyroid_gland',kind:'specific',strength:'expected'}],
+  maps:['radlex_echogenicity'],uses:1,
+  values:[{name:'anechoic',definition:'No internal echoes, applies to cystic nodules.',
+           mappings:[['RADLEX','RID34360','anechoic']]},
+          {name:'hyperechoic or isoechoic',definition:'Brighter than or equal to surrounding parenchyma.',
+           mappings:[['RADLEX','RID6048','hyperechoic','narrowMatch'],
+                     ['RADLEX','RID6047','isoechoic','narrowMatch']]},
+          {name:'hypoechoic',definition:'Darker than surrounding parenchyma.',
+           mappings:[['RADLEX','RID6046','hypoechoic']]},
+          {name:'very hypoechoic',definition:'Darker than the strap muscles.',
+           mappings:[['RADLEX','RID49881','very hypoechoic']]}],
+  mods:['US'],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['thyroid_nodule']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+ shape:{type:'element',name:'shape',id:'DE-000013',version:1,status:'proposed',date:'2026-08-20',
+  definition:'Shape on the transverse image (ACR TI-RADS).',synonyms:[],scope:[{loc:'thyroid_gland',kind:'specific',strength:'expected'}],maps:[],uses:1,
+  values:[{name:'wider-than-tall',definition:'Anteroposterior diameter less than or equal to transverse.'},
+          {name:'taller-than-wide',definition:'Anteroposterior diameter greater than transverse; strong malignancy predictor.'}],
+  mods:['US'],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['thyroid_nodule']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+ echogenic_foci:{type:'element',name:'echogenic foci',id:'DE-000014',version:1,status:'draft',date:'2026-08-20',
+  definition:'Echogenic foci within the nodule (ACR TI-RADS); values may co-occur and score additively.',
+  synonyms:[],scope:[{loc:'thyroid_gland',kind:'specific',strength:'expected'}],maps:[],uses:1,
+  values:[{name:'none or large comet-tail artifacts',definition:'No foci, or large comet-tail artifacts in cystic components (benign).'},
+          {name:'macrocalcifications',definition:'Coarse calcifications with shadowing.'},
+          {name:'peripheral calcifications',definition:'Rim calcification along the nodule edge.'},
+          {name:'punctate echogenic foci',definition:'Small echogenic foci without shadowing; may be microcalcification or inspissated colloid.'}],
+  mods:['US'],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_DATA_ELEMENT',phrase:'records',subj:'other',items:['thyroid_nodule']}],
+  right:[{label:'Values',edge:'HAS_VALUE',vals:true,add:'Add another value'}]},
+ long_axis:{type:'measurement',name:'longest diameter',id:'MS-000004',version:1,
+  status:'published',date:'2026-01-15',
+  definition:'The greatest diameter of the lesion in any plane.',
+  synonyms:[['long axis','synonym']],maps:['radlex_diameter'],uses:41,units:['mm','cm'],predefined:true,
+  left:[{usage:true,label:'Where it is used',edge:'HAS_MEASUREMENT',phrase:'measures',subj:'other',
+         items:['pulmonary_nodule'],extra:'and 40 more'}],
+  right:[]},
+
+ nodule_volume:{type:'measurement',name:'volume',id:'MS-000005',version:1,
+  status:'proposed',date:'2026-08-19',
+  definition:'Volume of the lesion, derived from segmentation.',
+  synonyms:[],maps:[],uses:3,units:['mm3','cm3'],predefined:true,
+  openNotes:['Volume obtained by segmentation and volume calculated from diameters are not the same measurement. Whether they are one object or two is not yet defined'],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_MEASUREMENT',phrase:'measures',subj:'other',
+         items:['pulmonary_nodule'],extra:'and 2 more'}],
+  right:[]},
+
+ short_axis:{type:'measurement',name:'short axis diameter',id:'MS-000002',version:2,
+  status:'published',date:'2026-01-15',
+  definition:'The shorter of the two orthogonal diameters in the transverse plane.',
+  synonyms:[],scope:[{loc:'mediastinal_lymph_node',kind:'specific',strength:'required'}],
+  maps:['radlex_diameter'],uses:7,units:['mm','cm'],predefined:true,
+  left:[{usage:true,label:'Where it is used',edge:'HAS_MEASUREMENT',phrase:'measures',subj:'other',
+         items:['mediastinal_lymphadenopathy'],extra:'and 6 more'}],
+  right:[]},
+
+ size_3axes:{type:'measurement',name:'size (3 axes)',id:'MS-000003',version:2,status:'published',date:'2026-01-15',
+  definition:'Three orthogonal diameters of the lesion.',synonyms:[],maps:['radlex_diameter'],uses:12,
+  openNotes:['Represented here as one measurement holding three values. How composite measurements are structured is not yet defined',
+             'Largest dimension and volume are calculated from these axes. How a derived measurement is expressed is not yet defined'],
+  units:['mm','cm'],predefined:true,
+  mods:['US','CT','MR'],
+  left:[{usage:true,label:'Where it is used',edge:'HAS_MEASUREMENT',phrase:'measures',subj:'other',
+         items:['thyroid_nodule'],extra:'and 11 more'}],
+  right:[]},
+ radlex_pn:{type:'concept',name:'pulmonary nodule',id:'RID50149',system:'RADLEX',match:'exactMatch',sourceVersion:'4.3',
+  definition:'RadLex concept for pulmonary nodule.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['pulmonary_nodule']}],right:[]},
+ snomed_pn:{type:'concept',name:'Solitary nodule of lung (finding)',id:'427359005',system:'SNOMEDCT',match:'narrowMatch',sourceVersion:'US Edition 2026-03-22',
+  definition:'SNOMED CT concept for a solitary pulmonary nodule.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['pulmonary_nodule']}],right:[]},
+ snomed_lc:{type:'concept',name:'Malignant tumor of lung',id:'363358000',system:'SNOMEDCT',match:'exactMatch',
+  definition:'SNOMED CT concept for malignant lung tumour.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['lung_cancer']}],right:[]},
+ radlex_lung:{type:'concept',name:'lung',id:'RID1301',system:'RADLEX',match:'exactMatch',sourceVersion:'4.3',primary:true,
+  definition:'RadLex concept for lung.',synonyms:[],
+  left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',subj:'other',items:['lung']}],right:[]}
+};
+
+
+/* every value is its own object with its own identity */
+let VSEQ=0;
+Object.keys(N).forEach(ek=>{
+  const e=N[ek];
+  if(!e.values)return;
+  e.values.forEach((v,i)=>{
+    const key='v:'+ek+':'+i;
+    v.key=key;
+    N[key]={type:'value',name:v.name,id:'V-'+String(++VSEQ).padStart(6,'0'),version:e.version,status:e.status,date:e.date,
+      definition:v.definition||'',synonyms:v.synonyms||[],rawMaps:v.mappings||[],
+      openNotes:v.openNotes||null,flagged:!!v.openNotes,
+      left:[{label:'Value of',edge:'HAS_VALUE',phrase:'has value',subj:'other',items:[ek]}],
+      right:[]};
+  });
+});
+
+/* every terminology code cited by a value becomes a concept, so mappings
+   behave the same wherever they appear                                        */
+(function(){
+  const byCode={};
+  Object.keys(N).forEach(k=>{
+    const n=N[k];
+    if(n.type==='concept'&&n.system)byCode[n.system+'|'+n.id]=k;
+  });
+  Object.keys(N).forEach(k=>{
+    const n=N[k];
+    (n.rawMaps||[]).forEach(m=>{
+      const code=m[0]+'|'+m[1];
+      let ck=byCode[code];
+      if(!ck){
+        ck='c:'+m[0].toLowerCase()+':'+m[1];
+        byCode[code]=ck;
+        N[ck]={type:'concept',name:m[2],id:m[1],system:m[0],sourceVersion:null,
+          definition:m[0]==='RADLEX'?'RadLex concept for '+m[2]+'.':'SNOMED CT concept for '+m[2]+'.',
+          synonyms:[],
+          left:[{usage:true,label:'What maps here',edge:'MAPPED_TO',phrase:'maps to',
+                 subj:'other',items:[]}],
+          right:[]};
+      }
+      m[4]=ck;
+      const users=N[ck].left[0].items;
+      if(!users.includes(k))users.push(k);
+    });
+  });
+})();
+
+let hist=['pulmonary_nodule'], ptr=0, openTiles=new Set(), closedTiles=new Set(), shownAll=new Set();
+let trailCollapsed=false;
+let pendingDir=null;
+
+/* which way did we travel? into detail, or back up the chain */
+function directionTo(key){
+  const n=N[focusKey()];
+  const inGroups=gs=>(gs||[]).some(g=>{
+    if(g.vals)return (n.values||[]).some(v=>v.key===key);
+    return (g.items||[]).includes(key);
+  });
+  if(inGroups(n.right))return 'fwd';
+  if(inGroups(n.left))return 'back';
+  return 'fwd';
+}
+
+const OUT_MS=250;
+let animating=false;
+
+function playTransition(){
+  if(!pendingDir)return;
+  const st=document.getElementById('stage');
+  st.classList.remove('out-fwd','out-back','in-fwd','in-back');
+  void st.offsetWidth;
+  st.classList.add(pendingDir==='fwd'?'in-fwd':'in-back');
+  pendingDir=null;
+}
+
+/* leave, swap, arrive */
+function navigate(dir,apply){
+  const st=document.getElementById('stage');
+  if(view!=='object'||animating){apply();pendingDir=dir;render();return}
+  animating=true;
+  st.classList.remove('in-fwd','in-back','out-fwd','out-back');
+  void st.offsetWidth;
+  st.classList.add(dir==='fwd'?'out-fwd':'out-back');
+  setTimeout(()=>{
+    apply();pendingDir=dir;render();
+    window.scrollTo({top:0,behavior:'smooth'});
+    animating=false;
+  },OUT_MS);
+}
+
+const ALLMODS='__all__';
+let selMod=null;                         // current modality filter for the focused object
+function modsFor(k){return N[k].mods||null}
+function resetMod(){const m=modsFor(focusKey());selMod=m&&m.length?m[0]:null}
+function visibleUnder(k){                // does this object apply under the selected modality?
+  if(!selMod||selMod===ALLMODS)return true;
+  const m=modsFor(k);
+  return !m||m.includes(selMod);         // no declaration means it applies everywhere
+}
+const focusKey=()=>hist[ptr];
+const cameFrom=()=>ptr>0?hist[ptr-1]:null;
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!==undefined)e.innerHTML=h;return e};
+const portrait=()=>document.body.classList.contains('port');
+
+function edgeFor(otherKey,g){
+  if(N[otherKey]&&N[otherKey].type==='measurement'&&g.edge==='HAS_DATA_ELEMENT')
+    return {edge:'HAS_MEASUREMENT',phrase:g.subj==='other'?'measures':'is measured by'};
+  return {edge:g.edge,phrase:g.phrase};
+}
+
+function sentence(otherKey,g){
+  const f=N[focusKey()],o=N[otherKey];
+  const e=edgeFor(otherKey,g);
+  // name the type on each side so a same-named pair still reads unambiguously
+  const part=(k,self)=>`<span class="relk" style="color:${C[N[k].type]}">${LABEL[N[k].type]}</span> `
+    +(self?`<span class="self">${N[k].name}</span>`:`<b>${N[k].name}</b>`);
+  const A=g.subj==='other'?part(otherKey,false):part(focusKey(),true);
+  const B=g.subj==='other'?part(focusKey(),true):part(otherKey,false);
+  return `<div class="rel"><span class="edgecode">${e.edge}</span>${A} <em>${e.phrase}</em> ${B}</div>`;
+}
+
+/* an assessment's categories live on its element; surface them in the preview */
+function assessmentValues(key){
+  const n=N[key];
+  if(n.type!=='assessment')return null;
+  const out=[];
+  (n.right||[]).forEach(g=>(g.items||[]).forEach(k=>{
+    if(N[k]&&N[k].values)N[k].values.forEach(v=>out.push(v));
+  }));
+  return out;
+}
+
+function tile(key,g,isCtx){
+  const n=N[key],id=g.edge+':'+key;
+  const auto=isCtx;
+  const isOpen=openTiles.has(id)||(auto&&!closedTiles.has(id));
+  const t=el('div','tile'+(isOpen?' open':'')+(isCtx?' ctx':''));
+  t.style.setProperty('--type',C[n.type]);
+  const h=el('button','tilehead');
+  h.setAttribute('aria-expanded',isOpen);
+  h.appendChild(el('span','tag',LABEL[n.type]));
+  h.appendChild(el('span','nm',n.name));
+  let meta=[];
+  if(n.values)meta.push(n.values.length+' values');
+  else if(n.type==='assessment'){const av=assessmentValues(key);if(av&&av.length)meta.push(av.length+' categories')}
+  if(n.units)meta.push(n.units.join(', '));
+  if(meta.length)h.appendChild(el('span','ct',meta.join(' · ')));
+
+  if(n.scope&&n.scope.length){
+    n.scope.forEach(x=>{
+      const sk=typeof x==='string'?x:x.loc;
+      if(N[sk])h.appendChild(el('span','anattag',N[sk].name));
+    });
+  }
+  if(n.useTag)h.appendChild(el('span','usetag',n.useTag));
+  h.appendChild(el('span','cv',isOpen?'▲':'▼'));
+  h.onclick=()=>{if(isOpen){openTiles.delete(id);closedTiles.add(id)}else{openTiles.add(id);closedTiles.delete(id)}render()};
+  if(isCtx){
+    const cn=el('div','ctxrow');
+    cn.appendChild(el('span','ctxnote','viewing from'));
+    t.appendChild(cn);
+  }
+  t.appendChild(h);
+  const bd=el('div','tilebody');
+  bd.innerHTML=sentence(key,g);
+  bd.appendChild(el('p',null,n.definition));
+  const vs=n.values||assessmentValues(key);
+  if(vs&&vs.length){
+    const ch=el('div','chips');
+    vs.forEach(v=>{
+      if(!v.key){ch.appendChild(el('span','chip',v.name));return}
+      const b=el('button','chip chiplink');
+      b.textContent=v.name+(v.openNotes?' *':'');
+      b.onclick=e=>{e.stopPropagation();goVia(key,v.key)};
+      ch.appendChild(b);
+    });
+    bd.appendChild(ch);
+  }
+  else if(n.type==='assessment')bd.appendChild(el('div','vempty','No categories defined yet'));
+  const ob=el('button','open-btn','Open '+n.name);
+  ob.onclick=()=>go(key);
+  const orow=el('div','open-row');orow.appendChild(ob);bd.appendChild(orow);
+  t.appendChild(bd);return t;
+}
+
+function valueCards(vals){
+  const w=el('div');
+  vals.forEach(v=>{
+    const c=el('button','val');
+    if(v.key)c.onclick=()=>go(v.key);
+    const vn=el('div','vn',v.name);
+    if(v.openNotes)vn.appendChild(el('span','vfn','*'));
+    c.appendChild(vn);
+    c.appendChild(v.definition?el('div','vd',v.definition):el('div','vempty','No definition yet'));
+    c.appendChild(el('div','vm',v.mappings&&v.mappings.length?v.mappings.map(m=>m[0]+' '+m[1]+(m[3]?' · '+m[3]:'')).join(' · '):'Not mapped'));
+    w.appendChild(c);
+  });
+  return w;
+}
+
+function group(g,side){
+  const n=N[focusKey()],w=el('div');
+  const DYN={
+    'How it is described':`How ${n.name} is described`,
+    'Parts of this':`Parts of ${n.name}`,
+    'Kinds of this':`Kinds of ${n.name}`,
+    'Is part of':`${n.name} is part of`,
+    'Is a':`${n.name} is a`,
+    'Parts it may have':`Components ${n.name} may have`,
+    'Often occurs with':`What ${n.name} is often seen with`,
+    'How it is assessed':`How ${n.name} is assessed`,
+    'What it may mean':`What ${n.name} may mean`
+  };
+  if(g.label)w.appendChild(el('div','grouplabel',DYN[g.label]||g.label));
+  const SUBS={
+    'How it is described':`Attributes associated directly with ${n.name}`,
+    'How it is assessed':'Established protocols for classifying, grading, and managing medical findings',
+    'What it may mean':`Diagnoses that may be represented by ${n.name}. Together these are its differential considerations`,
+    'Findings that support this diagnosis':'Findings that may be used to describe or support this diagnosis',
+    'Parts of this':'Anatomic locations that carry associations with this anatomy',
+    'Kinds of this':'Anatomic locations that carry associations with this anatomy',
+    'Often occurs with':'Seen together often enough to be worth noting. Says nothing about cause or sequence',
+    'Also used through subregions':`Not scoped to ${n.name} directly, but to a subregion of it. Reached by walking PART_OF`,
+    'Also used through kinds':`Not scoped to ${n.name} directly, but to a kind of it. Reached by walking IS_A`,
+    'Is part of':'Anatomic locations that contain this anatomy',
+    'Is a':'Anatomic classes this anatomy belongs to'
+  };
+  if(SUBS[g.label])w.appendChild(el('div','groupsub',SUBS[g.label]));
+  const REACH={
+    'Parts of this':['region',`A search for <b>${n.name}</b> also returns findings placed in these subregions, and in anything beneath them.*`,
+                     '* kind: region, walks PART_OF'],
+    'Is part of':   ['region',`A search for any of these regions, or anything above them, also returns findings placed in <b>${n.name}</b>.*`,
+                     '* kind: region, walks PART_OF'],
+    'Kinds of this':['class',`A search for <b>${n.name}</b> also returns findings placed in these kinds, and in anything beneath them.*`,
+                     '* kind: class, walks IS_A'],
+    'Is a':         ['class',`A search for any of these classes, or anything above them, also returns findings placed in <b>${n.name}</b>.*`,
+                     '* kind: class, walks IS_A']
+  };
+  const FOOT={'Often occurs with':'* Not listed in order of strength or frequency'};
+  const rc=REACH[g.label];
+  if(rc){
+    const r=el('div','reach');
+    r.appendChild(el('span','kindtag',rc[0]));
+    r.appendChild(el('span','rt',rc[1]));
+    w.appendChild(r);
+    w.appendChild(el('div','reachfn',rc[2]));
+  }
+  if(g.headerOnly)return w;
+  if(g.vals){w.appendChild(valueCards(n.values||[]));
+    if(n.valuesOpen)w.appendChild(el('span','flag',n.valuesOpen))}
+  else if(g.items&&g.items.length){
+    let shown=side==='right'?g.items.filter(visibleUnder):g.items;
+    // measurements read last among the descriptors
+    if(g.edge==='HAS_DATA_ELEMENT')
+      shown=shown.slice().sort((a,b)=>(N[a].type==='measurement')-(N[b].type==='measurement'));
+    const hidden=g.items.length-shown.length;
+    const from=cameFrom();
+    let extra=0;
+    if(g.max&&!shownAll.has(g.label)&&shown.length>g.max){
+      extra=shown.length-g.max; shown=shown.slice(0,g.max);
+    }
+    shown.forEach(k=>w.appendChild(tile(k,g,side==='left'&&k===from)));
+    if(extra){
+      const more=el('button','moretoggle',extra+' more');
+      more.onclick=()=>{shownAll.add(g.label);render()};
+      w.appendChild(more);
+    } else if(g.max&&shownAll.has(g.label)&&g.items.length>g.max){
+      const less=el('button','moretoggle','Show fewer');
+      less.onclick=()=>{shownAll.delete(g.label);render()};
+      w.appendChild(less);
+    }
+    if(!shown.length)w.appendChild(el('div','empty','Nothing applies under '+selMod));
+    else if(hidden)w.appendChild(el('div','extra',hidden+(hidden===1?' item does':' items do')+' not apply under '+selMod));
+    if(g.extra)w.appendChild(el('div','extra',g.extra));
+  } else w.appendChild(el('div','empty','Nothing yet'));
+  if(g.open)w.appendChild(el('span','flag',g.open));
+  if(g.add&&side==='right')w.appendChild(el('button','add','+ '+g.add));
+  if(FOOT[g.label]&&g.items&&g.items.length)w.appendChild(el('div','groupfn',FOOT[g.label]));
+  return w;
+}
+
+function field(l,node,optional){
+  const d=el('div','field');
+  d.appendChild(el('dt',null,l));
+  const dd=el('dd');
+  if(node)dd.appendChild(node);
+  else dd.innerHTML=`<span class="opt">${optional||'Not set'}</span>`;
+  d.appendChild(dd);return d;
+}
+function txt(h){return el('span',null,h)}
+
+function linkChip(key,withSystem){
+  const n=N[key],wrap=el('span','tlink');
+  const b=el('button','tlabel');
+  b.innerHTML=(withSystem&&n.system?`<span class="sysbox"><b>${n.system}</b> ${n.id}</span> `:`<span class="sysbox">${n.id}</span> `)
+    +`${n.name}`+(withSystem&&n.match?` <span class="mtch">${n.match}</span>`:'');
+  b.onclick=()=>go(key);
+  wrap.appendChild(b);
+  wrap.appendChild(el('button','x','×'));
+  return wrap;
+}
+const conceptLink=k=>linkChip(k,true);
+
+/* put the add control on its own row once a list has more than one entry */
+function withAdd(row,count,label){
+  const w=el('div');
+  w.appendChild(row);
+  const r=el('div','addrow');
+  r.appendChild(el('button','miniadd','+ '+label));
+  w.appendChild(r);
+  return w;
+}
+
+/* a referenced definition is read in the context of whatever pointed at it, and
+   that nests: a value sits inside its element, which sits inside its finding.
+   A Diagnosis is a root, so it is never shown in someone else's context.        */
+function connected(fromKey,key){
+  const f=N[fromKey];
+  if(!f)return false;
+  const inGroups=gs=>(gs||[]).some(g=>{
+    if(g.vals)return (f.values||[]).some(v=>v.key===key);
+    return (g.items||[]).includes(key);
+  });
+  if(inGroups(f.right)||inGroups(f.left))return true;
+  if((f.scope||[]).some(x=>(typeof x==='string'?x:x.loc)===key))return true;
+  if((f.maps||[]).includes(key))return true;
+  if((f.values||[]).some(v=>v.key===key))return true;
+  if((f.rawMaps||[]).some(m=>m[4]===key))return true;
+  return false;
+}
+
+function qualifies(key,fromKey){
+  if(!connected(fromKey,key))return false;
+  const n=N[key],f=N[fromKey];
+  if(!f||n.type==='diagnosis')return false;
+  if(['element','measurement','assessment','value','anatomy','concept'].includes(n.type))return true;
+  return n.type==='finding'&&f.type==='diagnosis';
+}
+
+function chip(key){
+  const t=N[key],c=el('button','who');
+  c.style.setProperty('--chiptype',C[t.type]);
+  c.appendChild(el('span','k',LABEL[t.type]));
+  c.appendChild(el('span',null,t.name));
+  c.onclick=()=>go(key);
+  return c;
+}
+
+function bandLine(key,depth,verb){
+  const b=el('div','ctxband');
+  b.style.setProperty('--fromtype',C[N[key].type]);
+  b.style.marginLeft=(depth*16)+'px';
+  b.appendChild(el('span','arrow','\u21b3'));
+  b.appendChild(chip(key));
+  return b;
+}
+function verbLine(depth){
+  const v=el('div','ctxverb');
+  v.style.marginLeft=(depth*16+18)+'px';
+  v.textContent='references';
+  return v;
+}
+
+const MAX_BANDS=4;
+function contextBands(){
+  const chain=[];
+  for(let j=ptr;j>0&&chain.length<MAX_BANDS;j--){
+    if(!qualifies(hist[j],hist[j-1]))break;
+    chain.push(hist[j]);
+  }
+  if(!chain.length)return [];
+  chain.push(hist[ptr-chain.length]);      // the object the chain started from
+  chain.reverse();
+  const out=[];
+  chain.forEach((k,i)=>{
+    out.push(bandLine(k,i));
+    if(i<chain.length-1)out.push(verbLine(i));
+  });
+  return out;
+}
+
+function renderFocus(){
+  const n=N[focusKey()],wrap=el('div');
+  wrap.style.setProperty('--type',C[n.type]);
+  const bands=contextBands();
+  if(bands.length){
+    const tw=el('div','trailwrap'+(trailCollapsed?' folded':''));
+    const tog=el('button','trailtog');
+    tog.innerHTML=trailCollapsed
+      ? `<span class="cv">\u25bc</span> Show how you got here <span class="ct">${bands.filter(b=>b.className==='ctxband').length} steps</span>`
+      : `<span class="cv">\u25b2</span> Hide path`;
+    tog.onclick=()=>{trailCollapsed=!trailCollapsed;render()};
+    if(!trailCollapsed)bands.forEach(b=>tw.appendChild(b));
+    tw.appendChild(tog);
+    wrap.appendChild(tw);
+  }
+  wrap.appendChild(el('div','focustype',LABEL[n.type]));
+  const f=el('div','focus');
+  f.style.setProperty('--type',C[n.type]);
+  if(n.mods&&n.mods.length){
+    const bar=el('div','modbar');
+    bar.appendChild(el('span','lbl','Modality'));
+    const opts=n.mods.concat([ALLMODS]);
+    opts.forEach(m=>{
+      const lab=el('label',selMod===m?'on':'');
+      const r=document.createElement('input');
+      r.type='radio';r.name='modality';r.checked=selMod===m;
+      r.onchange=()=>{selMod=m;render()};
+      lab.appendChild(r);
+      lab.appendChild(el('span',null,m===ALLMODS?'All modalities':m));
+      bar.appendChild(lab);
+    });
+    f.appendChild(bar);
+    f.appendChild(el('div','modnote','Modality mechanism not fully defined. Proposed as a filter for what applies under a given modality.'));
+  }
+  const h2=el('h2',null,n.name);
+  if(n.flagged)h2.appendChild(el('span','vfn','*'));
+  f.appendChild(h2);
+  const dl=el('dl','fields');
+
+  const defRow=el('div','deffield');
+  defRow.appendChild(el('span','deftext',n.definition||'<span class="opt">Describe what this is</span>'));
+  defRow.appendChild(el('button','miniadd','Edit'));
+  dl.appendChild(field('Definition',defRow));
+
+  const synRow=el('div','syn');
+  (n.synonyms||[]).forEach(s=>{
+    const sp=el('span','s');
+    sp.appendChild(txt(s[0]));
+    sp.appendChild(el('small',null,s[1]));
+    sp.appendChild(el('button','x','×'));
+    synRow.appendChild(sp);
+  });
+  dl.appendChild(field('Synonyms',withAdd(synRow,(n.synonyms||[]).length,'Add synonym')));
+
+  if(n.type==='value'){
+    const mr=el('div','linkrow');
+    (n.rawMaps||[]).forEach(m=>{
+      const sp=el('span','tlink');
+      const lab=el('button','tlabel');
+      lab.innerHTML=`<span class="sysbox"><b>${m[0]}</b> ${m[1]}</span> ${m[2]}`
+        +` <span class="mtch">${m[3]||'exactMatch'}</span>`;
+      if(m[4]&&N[m[4]])lab.onclick=()=>go(m[4]);
+      sp.appendChild(lab);
+      sp.appendChild(el('button','x','×'));
+      mr.appendChild(sp);
+    });
+    dl.appendChild(field('Mappings',withAdd(mr,(n.rawMaps||[]).length,'Add mapping')));
+  }
+  if(n.maps){
+    const mapRow=el('div','linkrow');
+    n.maps.forEach(k=>mapRow.appendChild(conceptLink(k)));
+    dl.appendChild(field('Mappings',withAdd(mapRow,n.maps.length,'Add mapping')));
+  }
+
+  if(n.mods&&n.type!=='finding'&&n.type!=='diagnosis'){
+    const mr=el('div','linkrow');
+    n.mods.forEach(m=>{
+      const w2=el('span','tlink');
+      w2.appendChild(el('span','tlabel',m));
+      w2.appendChild(el('button','x','\u00d7'));
+      mr.appendChild(w2);
+    });
+    const mblock=withAdd(mr,n.mods.length,'Add modality');
+    mblock.appendChild(el('div','modnote','Modality mechanism not fully defined. Proposed as a filter for what applies under a given modality.'));
+    dl.appendChild(field('Modalities',mblock));
+  }
+  if(n.type==='anatomy'){
+    const pr=el('div','linkrow');
+    const relc=(n.maps||[]).map(mk=>N[mk]).filter(Boolean)[0];
+    pr.appendChild(el('span','prov',n.source==='imported'
+      ? '<b>Imported</b>. Concept and hierarchy loaded from '+(n.primarySystem||'RADLEX')
+        +(relc&&relc.sourceVersion?' '+relc.sourceVersion:'')
+      : '<b>Held locally</b>. Not named by the source terminology'
+        +(n.sourceStatus==='pending_request'&&n.request?'. Request '+n.request+' open'
+          :n.sourceStatus==='local_only'?'. Expected to stay local':'. No request filed')));
+    if(n.source==='local')pr.appendChild(el('span','flag','Not named by the source terminology'));
+    dl.appendChild(field('Source',pr));
+  }
+  if(n.units)dl.appendChild(field('UCUM Units',txt(`<span class="map">${n.units.join(' · ')}</span>`)));
+  if(n.authority)dl.appendChild(field('Issued by',txt(`${n.authority} · scheme ${n.scheme}`)));
+  if(n.useTag){
+    const ur=el('div','linkrow');
+    ur.appendChild(el('span','usetag',n.useTag));
+    if(n.useOpen)ur.appendChild(el('span','flag',n.useOpen));
+    dl.appendChild(field('Applies when',ur));
+  }
+  if(n.system)dl.appendChild(field('System',txt(
+    `<span class="bind"><span class="sysbox"><b>${n.system}</b> ${n.id}</span>`
+    +(n.sourceVersion?' release '+n.sourceVersion:'')+'</span>')));
+  if(n.predefined)dl.appendChild(field('Source',txt(`<span class="map">Standard measurement · conventions controlled by committee</span>`)));
+  if(!n.system)dl.appendChild(field('Record',txt(
+    `<span class="stamp"><span class="sysbox">${n.id}</span> v${n.version} · ${n.status} · ${n.date}</span>`)));
+  if(n.openNotes&&n.openNotes.length){
+    const on=el('div','opennotes');
+    n.openNotes.forEach(t=>on.appendChild(el('div','flag',t)));
+    dl.appendChild(field('Open questions',on));
+  }
+
+  f.appendChild(dl);
+  const frow=el('div','focusrow');
+  frow.appendChild(f);
+  wrap.appendChild(frow);
+
+  const SCOPED_TYPES=['finding','diagnosis','element','measurement','assessment','value'];
+  const scopeEntries=(n.scope&&n.scope.length)?n.scope:null;
+  let inheritedFrom=null, inheritedLoc=null;
+  if(!scopeEntries&&SCOPED_TYPES.includes(n.type)){
+    for(let j=ptr-1;j>=0;j--){
+      const anc=N[hist[j]];
+      if(anc&&anc.scope&&anc.scope.length){
+        inheritedFrom=hist[j];
+        const first=anc.scope[0];
+        inheritedLoc=typeof first==='string'?first:first.loc;
+        break;
+      }
+    }
+  }
+  if(SCOPED_TYPES.includes(n.type)){
+    // what may narrow depends on the kind of object; a diagnosis draws on several
+    // regions at once, so no narrowing rule is stated for it
+    const NARROWS={finding:'attributes',assessment:'attributes',element:'values'};
+    const narrows=NARROWS[n.type];
+    const KIND={
+      specific:(f,k)=>`The context in which <b>${f}</b> is defined here is scoped to <b>${k}</b>.`
+        +(narrows?` Its ${narrows} are generally expected to have same scope or be further narrowed to any anatomy that is a part of ${k} (soft enforcement).`:''),
+      region:  (f,k)=>`The context in which <b>${f}</b> is defined here is scoped to <b>${k}</b>.`
+        +(narrows?` Its ${narrows} are expected to be further scoped to any anatomy contained by ${k} (soft enforcement).`:''),
+      class:   (f,k)=>`The context in which <b>${f}</b> is defined here is scoped to <b>${k}</b>.`
+        +(narrows?` Its ${narrows} are expected to be further scoped to any anatomy classified under ${k} (soft enforcement).`:'')
+    };
+    const STRENGTH={
+      required:['Required','The defined concept is expected to be sited here'],
+      expected:['Expected','This concept as described here siting elsewhere is unusual'],
+      unconstrained:['Unconstrained','No expectation is stated']
+    };
+    const parentsBy=(k,edge,word)=>{
+      const out=[];
+      ((N[k]||{}).left||[]).forEach(g=>{
+        if(g.edge===edge&&g.subj==='focus')(g.items||[]).forEach(x=>out.push([x,word]));
+      });
+      return out;
+    };
+    const chainBy=(k,edge,word)=>{              // one line upward, nearest parent first
+      const line=[];let cur=k,guard=0;
+      while(guard++<6){
+        const ps=parentsBy(cur,edge,word); if(!ps.length)break;
+        line.unshift(ps[0]); cur=ps[0][0];
+      }
+      return line;
+    };
+    const sayChain=(startName,chain)=>{
+      const steps=[];
+      for(let q=chain.length-1;q>=0;q--){
+        const [pk,rel]=chain[q];
+        const parent=N[pk]?N[pk].name:pk;
+        steps.push(q===chain.length-1
+          ? `<b>${startName}</b> ${rel} <b>${parent}</b>`
+          : `${rel} <b>${parent}</b>`);
+      }
+      return steps.join(', which is ');
+    };
+
+
+    const ac=el('div','anatcard');
+    ac.appendChild(el('div','hd','Anatomic scope'));
+    ac.appendChild(el('div','sub','The anatomic context in which <b>'+n.name+'</b> is defined here, anchored to the anatomy hierarchy.'));
+    if(!scopeEntries){
+      ac.appendChild(el('div','inheritnote',
+        'None. Not every object needs an anatomic reference. Where one applies, it can be narrowed by whatever references this object, if applicable.'));
+      if(inheritedFrom&&N[inheritedLoc]){
+        const l2=N[inheritedLoc];
+        const dl3=el('dl');
+        dl3.appendChild(el('dt',null,'Referenced by'));
+        const d1=el('dd'); d1.appendChild(chip(inheritedFrom)); dl3.appendChild(d1);
+        dl3.appendChild(el('dt',null,'Within'));
+        const d2=el('dd');
+        d2.appendChild(chip(inheritedLoc));
+        d2.appendChild(el('span','orsub','or a subregion of it'));
+        dl3.appendChild(d2);
+        ac.appendChild(dl3);
+      }
+      const ar0=el('div','addrow');
+      ar0.appendChild(el('button','miniadd','+ Add anatomic reference'));
+      ac.appendChild(ar0);
+    }
+
+    (scopeEntries||[]).forEach(x=>{
+      const k=typeof x==='string'?x:x.loc, loc=N[k];
+      if(!loc)return;
+      const block=el('div','scopeblock');
+      const box=el('div','scope');
+      const rm=el('button','scopex','\u00d7');
+      rm.setAttribute('aria-label','Remove this anatomic reference');
+      box.appendChild(rm);
+
+      const partChain=chainBy(k,'PART_OF','is part of');
+      const classChain=chainBy(k,'IS_A','is a');
+      const chain=partChain.length?partChain:classChain;
+      const crumb=el('div','crumb');
+      chain.forEach(([pk])=>{
+        const up=el('button','up',N[pk]?N[pk].name:pk);
+        up.onclick=()=>go(pk);
+        crumb.appendChild(up);
+        crumb.appendChild(el('span','sepc','\u203a'));
+      });
+      const here=el('button','here',loc.name);
+      here.onclick=()=>go(k);
+      crumb.appendChild(here);
+      block.appendChild(crumb);
+
+      const bound=(loc.maps||[]).map(mk=>N[mk]).filter(Boolean)[0];
+      const ref=el('div','anatref');
+      if(bound){
+        const codechip=el('button','codechip');
+        codechip.innerHTML=`<b>${bound.system}</b> <code>${bound.id}</code>`;
+        codechip.onclick=()=>go((loc.maps||[]).filter(mk=>N[mk])[0]);
+        ref.appendChild(codechip);
+        ref.appendChild(el('span','mapnote',
+          bound.name+' \u00b7 '+bound.match+(bound.sourceVersion?' \u00b7 '+bound.system+' '+bound.sourceVersion:'')
+          +(bound.primary?' \u00b7 primary':'')));
+      } else {
+        ref.appendChild(el('span','mapnote','Not bound to a terminology'));
+      }
+      block.appendChild(ref);
+
+      // what the scope edge claims
+      box.appendChild(el('div','seclabel','How this scope is matched'));
+      const dlA=el('dl');
+      const kd=KIND[x.kind], st=STRENGTH[x.strength];
+      if(kd){dlA.appendChild(el('dt',null,'Match'));
+             dlA.appendChild(el('dd',null,kd(n.name,loc.name)))}
+      if(st){dlA.appendChild(el('dt',null,'Strength'));
+             dlA.appendChild(el('dd',null,'<b>'+st[0]+'</b>. '+st[1]))}
+      box.appendChild(dlA);
+      box.appendChild(el('div','flag',
+        'Strength is proposed to govern where the defined object is sited. '
+        +'Whether a given scope is genuinely required is a case by case judgement. Mechanism not fully defined.'));
+
+      // facts about the location itself
+      box.appendChild(el('div','seclabel sec2','About '+loc.name));
+      const dl2=el('dl');
+      if(partChain.length){
+        dl2.appendChild(el('dt',null,'Contained in'));
+        dl2.appendChild(el('dd',null,sayChain(loc.name,partChain)));
+      }
+      if(classChain.length){
+        dl2.appendChild(el('dt',null,'Classified as'));
+        dl2.appendChild(el('dd',null,sayChain(loc.name,classChain)));
+      }
+      dl2.appendChild(el('dt',null,'Source<span class="fn">*</span>'));
+      if(loc.source==='imported'){
+        dl2.appendChild(el('dd',null,
+          '<b>Imported</b>. Concept and hierarchy loaded from '+(loc.primarySystem||'RADLEX')
+          +(bound&&bound.sourceVersion?' '+bound.sourceVersion:'')));
+      } else {
+        let t='<b>Held locally</b>. Not named by the source terminology';
+        t+= loc.sourceStatus==='pending_request'&&loc.request ? '. Request '+loc.request+' open'
+          : loc.sourceStatus==='local_only' ? '. Expected to stay local'
+          : '. No request filed';
+        dl2.appendChild(el('dd',null,t));
+      }
+      box.appendChild(dl2);
+      block.appendChild(box);
+      ac.appendChild(block);
+    });
+
+    if(scopeEntries){
+      const ar=el('div','addrow');
+      ar.appendChild(el('button','miniadd','+ Add anatomic reference'));
+      ac.appendChild(ar);
+    }
+    if(scopeEntries)ac.appendChild(el('div','anatnote',
+      '* Missing concepts can be added locally on a provisional basis while a change request is pending with RadLex.'));
+    if(n.scopeOpen)ac.appendChild(el('span','flag',n.scopeOpen));
+    const vl=el('div','vlink');
+    vl.appendChild(el('div','ar',portrait()?'\u2194':'\u2195'));
+    frow.appendChild(vl);
+    frow.appendChild(ac);
+  }
+  return wrap;
+}
+
+/* ---------- views: object | search | browse | author | review ---------- */
+let view='browse', query='', filter='finding', browseQuery='', sort='name', asc=true, statusFilter='all',
+    pageSize=25, pageStart=0;
+const TYPES=['diagnosis','finding','element','measurement','assessment','anatomy','concept'];
+const FILTERS=['diagnosis','finding','element','measurement'];
+
+function setView(v){
+  view=v;
+  document.querySelectorAll('#mainnav button').forEach(b=>
+    b.setAttribute('aria-current', b.dataset.view===v));
+  render();
+}
+
+function matches(k){
+  const n=N[k];
+  if(n.type==='value')return false;
+  if(statusFilter!=='all'&&n.status!==statusFilter)return false;
+  if(filter!=='all'&&n.type!==filter)return false;
+  if(!query)return true;
+  const q=query.toLowerCase();
+  const syn=(n.synonyms||[]).map(x=>x[0]).join(' ');
+  return (n.name+' '+(n.definition||'')+' '+syn+' '+n.id).toLowerCase().includes(q);
+}
+
+function resultRow(k){
+  const n=N[k],b=el('button','result');
+  b.style.setProperty('--type',C[n.type]);
+  b.appendChild(el('span','tag',LABEL[n.type]));
+  const body=el('div','body');
+  const nm=el('div','nm');
+  nm.appendChild(el('span',null,n.name));
+  if(n.scope&&n.scope.length)
+    n.scope.forEach(x=>{const sk=typeof x==='string'?x:x.loc;if(N[sk])nm.appendChild(el('span','anat',N[sk].name))});
+  body.appendChild(nm);
+  body.appendChild(el('div','sn',n.definition||''));
+  b.appendChild(body);
+  const rec=el('div','recmeta');
+  if(n.id)rec.appendChild(el('span','rid',n.id));
+  if(n.version)rec.appendChild(el('span','rv','v'+n.version));
+  if(n.status)rec.appendChild(el('span','rs '+n.status,n.status));
+  if(n.uses>1)rec.appendChild(el('span','ru','used in '+n.uses));
+  b.appendChild(rec);
+  b.onclick=()=>{hist=[k];ptr=0;openTiles.clear();closedTiles.clear();shownAll.clear();trailCollapsed=false;resetMod();setView('object')};
+  return b;
+}
+
+function renderPanel(){
+  const p=document.getElementById('panel');
+  p.innerHTML='';p.hidden=false;
+  document.getElementById('stage').hidden=true;
+
+  const searching = view==='search';
+  p.appendChild(el('h2',null,searching?'Search':'Browse repository'));
+  if(searching)p.appendChild(el('p','sub',
+    query?`Results for “${query}”`:'Type to search across the repository.'));
+
+  if(!searching){
+    const bar=el('div','panelbar');
+    const sb=el('div','searchbox');
+    sb.appendChild(el('span','mag','⌕'));
+    const bi=document.createElement('input');
+    bi.type='search';bi.placeholder='Narrow this list';bi.value=browseQuery;
+    bi.setAttribute('aria-label','Narrow the browse list');
+    bi.addEventListener('input',()=>{browseQuery=bi.value.trim();pageStart=0;render();
+      const again=document.querySelector('.panelbar input');if(again){again.focus();
+        again.setSelectionRange(again.value.length,again.value.length)}});
+    sb.appendChild(bi);bar.appendChild(sb);
+    const sg=el('div','sortgroup');
+    const sm=(val,label)=>{const b=el('button',null,label);
+      b.setAttribute('aria-pressed',sort===val);b.onclick=()=>{sort=val;pageStart=0;render()};return b};
+    sg.appendChild(sm('name','Alphabetical'));
+    sg.appendChild(sm('type','By type'));
+    bar.appendChild(sg);
+    const dg=el('div','sortgroup');
+    const dm=(val,label)=>{const b=el('button',null,label);
+      b.setAttribute('aria-pressed',asc===val);b.onclick=()=>{asc=val;pageStart=0;render()};return b};
+    dg.appendChild(dm(true,'A \u2192 Z'));
+    dg.appendChild(dm(false,'Z \u2192 A'));
+    bar.appendChild(dg);
+    const st=el('div','sortgroup');
+    const sf=(val,label)=>{const b=el('button',null,label);
+      b.setAttribute('aria-pressed',statusFilter===val);
+      b.onclick=()=>{statusFilter=val;pageStart=0;render()};return b};
+    st.appendChild(sf('all','Any status'));
+    st.appendChild(sf('draft','Draft'));
+    st.appendChild(sf('proposed','Proposed'));
+    st.appendChild(sf('published','Published'));
+    st.appendChild(sf('retired','Retired'));
+    bar.appendChild(st);
+    p.appendChild(bar);
+  }
+
+  const f=el('div','filters');
+  const mk=(val,label)=>{const b=el('button',null,label);
+    b.setAttribute('aria-pressed',filter===val);
+    b.onclick=()=>{filter=val;pageStart=0;render()};return b};
+  FILTERS.forEach(t=>f.appendChild(mk(t,LABEL[t])));
+  f.appendChild(mk('all','All'));
+  p.appendChild(f);
+
+  let keys=Object.keys(N).filter(matches);
+  if(!searching&&browseQuery){
+    const bq=browseQuery.toLowerCase();
+    keys=keys.filter(k=>(N[k].name+' '+(N[k].definition||'')).toLowerCase().includes(bq));
+  }
+  if(!keys.length){p.appendChild(el('div','noresult','Nothing matches that yet.'));return}
+
+  const byName=(a,b)=>(asc?1:-1)*N[a].name.localeCompare(N[b].name);
+  const total=keys.length;
+  if(pageStart>=total)pageStart=0;
+  const stop=Math.min(pageStart+pageSize,total);
+
+  const pager=(where)=>{
+    const row=el('div','pager '+where);
+    row.appendChild(el('span','count',
+      `Displaying <b>${pageStart+1}</b> to <b>${stop}</b> of <b>${total}</b>`));
+    const nav=el('div','pagenav');
+    const prev=el('button','pagebtn','\u2039 Previous');
+    prev.disabled=pageStart===0;
+    prev.onclick=()=>{pageStart=Math.max(0,pageStart-pageSize);render()};
+    const next=el('button','pagebtn','Next \u203a');
+    next.disabled=stop>=total;
+    next.onclick=()=>{pageStart=stop;render()};
+    nav.appendChild(prev);nav.appendChild(next);
+    if(where==='top'){
+      const sel=document.createElement('select');
+      sel.className='pagesize';
+      sel.setAttribute('aria-label','Results per page');
+      [10,25,50,100].forEach(v=>{
+        const o=document.createElement('option');
+        o.value=v;o.textContent=v+' per page';
+        if(v===pageSize)o.selected=true;
+        sel.appendChild(o);
+      });
+      sel.onchange=()=>{pageSize=+sel.value;pageStart=0;render()};
+      nav.appendChild(sel);
+    }
+    row.appendChild(nav);
+    return row;
+  };
+
+  const bw=el('div','browsewrap');
+  p.appendChild(bw);
+  bw.appendChild(pager('top'));
+
+  if(searching||sort==='name'){
+    const page=keys.sort(byName).slice(pageStart,stop);
+    const list=el('div','results');
+    page.forEach(k=>list.appendChild(resultRow(k)));
+    bw.appendChild(list);
+  } else {
+    // group headings run alphabetically too, and flip with the direction toggle
+    const page=keys.sort((a,b)=>{
+      const ti=(asc?1:-1)*LABEL[N[a].type].localeCompare(LABEL[N[b].type]);
+      return ti||byName(a,b);
+    }).slice(pageStart,stop);
+    let last=null;
+    let list=null;
+    page.forEach(k=>{
+      if(N[k].type!==last){
+        last=N[k].type;
+        bw.appendChild(el('div','grouphd',LABEL[last]));
+        list=el('div','results');bw.appendChild(list);
+      }
+      list.appendChild(resultRow(k));
+    });
+  }
+
+  bw.appendChild(pager('bottom'));
+}
+
+/* everything scoped to a location beneath this one, the result of the region
+   and class searches described on the right                                   */
+function descendantsOf(key,edge){
+  const out=[],seen=new Set();
+  const walk=(k,path)=>{
+    ((N[k]||{}).right||[]).forEach(g=>{
+      if(g.edge===edge&&g.subj==='other')
+        (g.items||[]).forEach(c=>{
+          if(seen.has(c))return;
+          seen.add(c);
+          const p=path.concat(c);
+          out.push([c,p]);
+          walk(c,p);
+        });
+    });
+  };
+  walk(key,[key]);
+  return out;
+}
+
+function indirectByPath(key,edge){
+  const direct=new Set();
+  ((N[key]||{}).left||[]).forEach(g=>{
+    if(g.usage&&g.edge==='SCOPED_TO')(g.items||[]).forEach(x=>direct.add(x));
+  });
+  const paths=[],seen=new Set();
+  descendantsOf(key,edge).forEach(([d,route])=>{
+    const users=[];
+    ((N[d]||{}).left||[]).forEach(g=>{
+      if(g.usage&&g.edge==='SCOPED_TO')(g.items||[]).forEach(x=>{
+        if(!direct.has(x)&&!seen.has(x)){seen.add(x);users.push(x)}
+      });
+    });
+    if(users.length)paths.push([d,users,route]);
+  });
+  return paths;
+}
+
+function render(){
+  if(view!=='object'){renderPanel();return}
+  document.getElementById('panel').hidden=true;
+  document.getElementById('stage').hidden=false;
+  const n=N[focusKey()];
+  const L=document.getElementById('left'),M=document.getElementById('mid'),R=document.getElementById('right');
+  L.innerHTML='';M.innerHTML='';R.innerHTML='';
+  L.appendChild(el('div','colhead','Wider context'));
+  const from=cameFrom();
+  const isUp=g=>(g.edge==='PART_OF'||g.edge==='IS_A')&&g.subj==='focus';
+  const upGroups=(n.left||[]).filter(isUp);
+  (n.left||[]).filter(g=>!isUp(g)).forEach(g=>{
+    if(g.usage){
+      const t=LABEL[n.type];
+      if(from&&g.items.includes(from)){
+        L.appendChild(group(Object.assign({},g,{label:t+' used by',items:[from],extra:null}),'left'));
+        const rest=g.items.filter(k=>k!==from);
+        L.appendChild(group(Object.assign({},g,{label:'Other uses of this '+t,items:rest}),'left'));
+      } else {
+        L.appendChild(group(Object.assign({},g,{label:t+' used by'}),'left'));
+      }
+      // and everything reached by walking the hierarchy beneath this location
+      if(g.edge==='SCOPED_TO'&&n.type==='anatomy'){
+        [['PART_OF','Also used through subregions'],['IS_A','Also used through kinds']].forEach(([e,lab])=>{
+          const paths=indirectByPath(focusKey(),e);
+          if(!paths.length)return;
+          L.appendChild(group({label:lab,headerOnly:true},'left'));
+          paths.forEach(([d,users,route])=>{
+            const box=el('div','pathgroup');
+            const rc=el('div','pathcrumb');
+            route.forEach((step,ix)=>{
+              if(ix)rc.appendChild(el('span','sepc','\u203a'));
+              const b=el('button',ix===route.length-1?'laststep':'step',N[step].name);
+              b.onclick=()=>go(step);
+              rc.appendChild(b);
+            });
+            box.appendChild(rc);
+            box.appendChild(group({label:null,edge:'SCOPED_TO',
+              phrase:'occurs in',subj:'other',items:users,max:10},'left'));
+            L.appendChild(box);
+          });
+        });
+      }
+      return;
+    }
+    L.appendChild(group(g,'left'));
+  });
+  if(!(n.left||[]).filter(g=>!isUp(g)).length)L.appendChild(el('div','empty','No content'));
+  M.appendChild(renderFocus());
+  R.appendChild(el('div','colhead','Detail'));
+  upGroups.forEach(g=>R.appendChild(group(g,'right')));
+  (n.right||[]).forEach(g=>R.appendChild(group(g,'right')));
+  if(!upGroups.length&&!(n.right||[]).length)R.appendChild(el('div','empty','Nothing yet'));
+
+  document.getElementById('s1').firstChild.textContent=portrait()?'↕':'↔';
+  document.getElementById('s2').firstChild.textContent=portrait()?'↕':'↔';
+  requestAnimationFrame(centreSeps);
+  playTransition();
+}
+
+function centreSeps(){
+  const mid=document.getElementById('mid'),card=mid.querySelector('.focus');
+  const s1=document.getElementById('s1'),s2=document.getElementById('s2');
+  if(portrait()||!card){[s1,s2].forEach(s=>{s.style.height='';s.style.paddingTop=''});return}
+  const midTop=mid.getBoundingClientRect().top,r=card.getBoundingClientRect();
+  const centre=(r.top+r.height/2)-midTop;
+  [s1,s2].forEach(s=>{s.style.paddingTop='0px';s.style.height=(centre*2)+'px'});
+}
+
+/* open a value from a tile: step through its element so the chain reads in full */
+function goVia(midKey,leafKey){
+  if(focusKey()!==midKey){
+    hist=hist.slice(0,ptr+1);hist.push(midKey);ptr=hist.length-1;
+  }
+  go(leafKey);
+}
+
+function go(key){
+  if(key===focusKey())return;
+  navigate(directionTo(key),()=>{
+    hist=hist.slice(0,ptr+1);hist.push(key);ptr=hist.length-1;
+    openTiles.clear();closedTiles.clear();shownAll.clear();trailCollapsed=false;resetMod();
+  });
+}
+
+function setOrient(m){
+  document.body.classList.toggle('land',m==='land');
+  document.body.classList.toggle('port',m==='port');
+  document.getElementById('bl').setAttribute('aria-pressed',m==='land');
+  document.getElementById('bp').setAttribute('aria-pressed',m==='port');
+  render();
+}
+document.getElementById('bl').onclick=()=>setOrient('land');
+document.getElementById('bp').onclick=()=>setOrient('port');
+window.addEventListener('resize',centreSeps);
+
+document.querySelectorAll('#mainnav button').forEach(b=>{
+  b.onclick=()=>{ if(b.dataset.view==='browse'){query='';document.getElementById('q').value=''} setView(b.dataset.view) };
+});
+const qEl=document.getElementById('q');
+qEl.addEventListener('input',()=>{
+  query=qEl.value.trim();pageStart=0;
+  if(query){ if(view!=='search'){view='search';document.querySelectorAll('#mainnav button').forEach(b=>b.setAttribute('aria-current',false))} render(); }
+  else if(view==='search'){ setView('object') }
+});
+
+resetMod();
+setView('browse');
+setOrient(window.innerWidth<920?'port':'land');
+</script>
+</body>
+</html>

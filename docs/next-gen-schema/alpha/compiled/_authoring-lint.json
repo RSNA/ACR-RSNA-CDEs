@@ -1,0 +1,43 @@
+{
+ "rules": [
+  {
+   "rule": "no-single-value-narrowing",
+   "says": "A narrow list never reduces an element to one value. An element every user answers the same way is not recording an observation, it is restating the class definition, and belongs in the definition instead."
+  },
+  {
+   "rule": "location-anchored",
+   "says": "A FindingClass says where it is, unless it is reached only through HAS_COMPONENT and takes its location from the whole that contains it. It does so either with its own SCOPED_TO, or by inheriting one from a parent. A class with neither describes a shape without saying where, which is a topic rather than a finding."
+  },
+  {
+   "rule": "presence-in-disguise",
+   "says": "An element whose values are only present and absent is a finding wearing an element's clothes. The thing being asserted belongs in the graph as a FindingClass or a Diagnosis, and its presence is then carried by the presence element every finding already has."
+  },
+  {
+   "rule": "narrowing-applies",
+   "says": "A narrow list names an element the class actually carries. Narrowing an element the class does not apply is dead configuration that reads as a constraint."
+  },
+  {
+   "rule": "no-duplicate-value-sets",
+   "says": "Two elements must not carry identical value sets. If they do, they are one element under two names, or one of them was split without the split producing any difference."
+  },
+  {
+   "rule": "element-scope-agrees",
+   "says": "An element or measurement that carries its own anatomic scope is only attached to a class whose scope is the same location or below it. Attaching thyroid margin to a renal cyst, or renal length to a pulmonary nodule, is not caught by anything else. A class may sit BELOW the scope: carotid stenosis at the internal carotid artery may use a measurement scoped to artery. CAVEAT: a measurement may also be defined against a landmark in another anatomic context, as NASCET divides by the diameter of the distal internal carotid rather than the segment being measured. That is not worked out and this rule assumes one scope is the whole story."
+  },
+  {
+   "rule": "no-ancestor-overlap",
+   "says": "A diagnosis does not point at both a class and one of its ancestors. The subtype inherits the ancestor edge, so it would carry two claims at once, and if their strengths differ nothing says which applies. Point at the level where the claim actually holds: all the subtypes, or the parent, not both."
+  },
+  {
+   "rule": "occurs-with-same-type",
+   "says": "OCCURS_WITH relates two findings or two diagnoses. Between a diagnosis and a finding a more specific edge already exists (MAY_MANIFEST_AS or MAY_CAUSE), so reaching for co-occurrence there is declining to say which."
+  },
+  {
+   "rule": "anchor-verdict",
+   "says": "Every node records an anchor verdict: anchored, post_coordinated, unanchored_requestable or out_of_primary_scope."
+  }
+ ],
+ "findings": [],
+ "clean": true,
+ "note": "Authoring checks. Advisory: none is enforced by a reasoner and none constrains what an author may write."
+}

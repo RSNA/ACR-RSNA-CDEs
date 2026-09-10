@@ -1,0 +1,732 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:cde="https://radelement.org/ng/"
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/A1_NoduleInRightUpperLobe">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE A1 [EXPECT SUBCLASS of an existing class - yellow row in SubClass Of, moves in the tree when the dropdown is set to Inferred]: a nodule in the right upper lobe</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The differentia for PulmonaryNodule is scope to lung. The right upper lobe reaches lung by two partOf steps, so this fires only if the property chain scopedToRegion o partOf is working. This is decision-register item 3 made testable. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="Ncc1bc7b98652412b80bb4f822cd9e7ea"/>
+    <cde:designNote>[Group A] expect: subsumed by PulmonaryNodule. The differentia for PulmonaryNodule is scope to lung. The right upper lobe reaches lung by two partOf steps, so this fires only if the property chain scopedToRegion o partOf is working. This is decision-register item 3 made testable.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N47b3f7c43f73419683cd8a64ffd88838">
+    <rdf:first rdf:resource="https://radelement.org/ng/FindingClass"/>
+    <rdf:rest rdf:nodeID="Nf61c4c1ecb5f482aa88f1945f31954fb"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N5d0f4dc0a62f47a3926675e075d324d7">
+    <rdf:first rdf:nodeID="N0f4be67e34854978be86671b27f530eb"/>
+    <rdf:rest rdf:nodeID="Nfcf1c5eed43240be988d65af1bd79a40"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N661a18c92af24e3cab927b9a1bea9432">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/scopedToRegion"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/anatomy/RID1301"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N3e38cbcaf2df49c498042beb9a5fda87">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="Ndf8091f3a1874311ae40026e224ce9f8"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/B4_FindingThatIsAlsoADiagnosis">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE B4 [EXPECT INCONSISTENT - turns red under owl:Nothing]: something that is both a FindingClass and a Diagnosis</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The node types are declared disjoint. This is what stops a named cyst drifting between the two layers, which 02-modeling-case-cyst.md raises as an open question. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="Nba6aab708e67422e868d91831bffdd9d"/>
+    <cde:designNote>[Group B] expect: unsatisfiable. The node types are declared disjoint. This is what stops a named cyst drifting between the two layers, which 02-modeling-case-cyst.md raises as an open question.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nab2b107e266c43a6aeed5b7ddf401352">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAcuity"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000330_Acute"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2a920b96c45c4ab69fa780b396b49dff">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Nfb4b47525f314b54a4127c5822f05981"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N8bec83833dc44ff0ab0ce212f57516f7">
+    <rdf:first rdf:nodeID="N6981e70f214b4bcf8ae420938bc9a4bc"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ncda27923cc97421995ba5cdc7a822769">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N6cd4d68b22f446fd89ca88d44c079908"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N75f268dbc0f8432aadc2625cb73f40ac">
+    <rdf:first rdf:nodeID="Nb23771d20c8846ac883a4757a50e28e3"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0bd60704b188456481266f7e614559f4">
+    <rdf:first rdf:nodeID="N3206a500d5b94bc8a9fb36f47d6621fd"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/C1_NoduleProgressingToMass">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE C1 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: a nodule with a mayProgressTo edge to a mass</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The edge as a plain relation between two individuals is fine. Nothing is contradicted, because the nodule and the mass are two different individuals. This is the edge read as sequence only, and at that reading it carries no identity claim and no more force than an annotation. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="Ncdedd96791294cb3a80e9d0fbe6dd837"/>
+    <cde:designNote>[Group C] expect: SATISFIABLE. The edge as a plain relation between two individuals is fine. Nothing is contradicted, because the nodule and the mass are two different individuals. This is the edge read as sequence only, and at that reading it carries no identity claim and no more force than an annotation.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N72dd5e989b2944ed91a5e2c17252880f">
+    <rdf:first rdf:resource="https://radelement.org/ng/V_000332_Healing"/>
+    <rdf:rest rdf:nodeID="Nf8fd1bcc0c9a41f5b6fc7d525771a817"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nc4226c6af70e445b8be25a5517c2f252">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N5836eb22cba940baa8a730e2c7c08c0a"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N7df69b89375448f888154d1da69648db">
+    <rdf:first rdf:nodeID="N44df4421ec5c49a4b9d99e5b01c021d8"/>
+    <rdf:rest rdf:nodeID="N7fc8482ff10f4a98b9f64123edb805e8"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nb97b1f937b434077a56a5457b8f87bbb">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="N8bec83833dc44ff0ab0ce212f57516f7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6f16ac64412e44919e03b22d971a3990">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasCalcification"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000032_Popcorn"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N5836eb22cba940baa8a730e2c7c08c0a">
+    <rdf:first rdf:resource="https://radelement.org/ng/FindingClass"/>
+    <rdf:rest rdf:nodeID="N9d351d8b655a48cca8a154549303902e"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/E8_PartSolidWithItsSolidComponent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE E8 [EXPECT EQUIVALENT to an existing class - yellow row in Equivalent To, does NOT move in the tree]: a part-solid nodule whose component is solid</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The resolution B1 rules out on one entity. A report saying 'part-solid nodule with a 4 mm solid component' states both values, and they are consistent because they sit on two entities: the nodule is part-solid, its component is solid. Attenuation is functional and its values are disjoint, so this only works because hasComponent supplies the second entity. Read together with B1: one entity cannot hold both, two can, and the component edge is what makes them two. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N54576884d4e644eab1d9a37965a5a1f1"/>
+    <cde:designNote>[Group E] expect: SATISFIABLE. The resolution B1 rules out on one entity. A report saying 'part-solid nodule with a 4 mm solid component' states both values, and they are consistent because they sit on two entities: the nodule is part-solid, its component is solid. Attenuation is functional and its values are disjoint, so this only works because hasComponent supplies the second entity. Read together with B1: one entity cannot hold both, two can, and the component edge is what makes them two.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na770720e354b46c19ed234276ebe2aa1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/scopedToRegion"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/anatomy/RID205"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/B1_SolidAndPartSolid">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE B1 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a nodule that is both solid and part-solid</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. Value disjointness. Without it, a single-select element is single-select only by convention. Note this bites through someValuesFrom because the value classes are disjoint, not because of any cardinality axiom. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="Nd38c3ded00ac4d13a2f8b60bdb89e032"/>
+    <cde:designNote>[Group B] expect: unsatisfiable. Value disjointness. Without it, a single-select element is single-select only by convention. Note this bites through someValuesFrom because the value classes are disjoint, not because of any cardinality axiom.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/E9_BothValuesStatedResolveToTheSubtype">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE E9 [EXPECT EQUIVALENT to an existing class - yellow row in Equivalent To, does NOT move in the tree]: a pulmonary nodule with part-solid attenuation and a solid component</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The full path. Asserted at the parent class with both attenuation values present, one on the nodule and one on its component. It must stay satisfiable AND classify into the part-solid subtype. E8 shows the two values coexist; this shows the coexistence does not block the classification that A3 performs. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N657d38cca5094678b8a62920a68bcb4c"/>
+    <cde:designNote>[Group E] expect: subsumed by PartSolidPulmonaryNodule. The full path. Asserted at the parent class with both attenuation values present, one on the nodule and one on its component. It must stay satisfiable AND classify into the part-solid subtype. E8 shows the two values coexist; this shows the coexistence does not block the classification that A3 performs.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/A5_NoduleInThyroidLobe">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE A5 [EXPECT SUBCLASS of an existing class - yellow row in SubClass Of, moves in the tree when the dropdown is set to Inferred]: a nodule in the left lobe of the thyroid gland</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. Same mechanism in a second organ, to check the pattern is not lung-specific. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N74799b1f3d5e4ffcb0791a37c6d6f461"/>
+    <cde:designNote>[Group A] expect: subsumed by ThyroidNodule. Same mechanism in a second organ, to check the pattern is not lung-specific.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nfc61692891474d839efe9f68a89c89c4">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasCalcification"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000030_None"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/E5_MultiSelectAllowsTwoValues">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE E5 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: a pulmonary nodule with popcorn and punctate calcification</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The counterpart to B1. Calcification is deliberately multi-select, so two patterns co-occurring must remain satisfiable. If this goes red, something has declared the element functional and a lesion can no longer carry two calcification patterns. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="Nb65712cd7c654d78ad1a383afc16296d"/>
+    <cde:designNote>[Group E] expect: SATISFIABLE. The counterpart to B1. Calcification is deliberately multi-select, so two patterns co-occurring must remain satisfiable. If this goes red, something has declared the element functional and a lesion can no longer carry two calcification patterns.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N46818905208842d2854ddd2752295663">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/scopedToRegion"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/anatomy/RID1303"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N310527fa43ee41b1872307305be147be">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:unionOf rdf:nodeID="N69a415d7c04241be82cda750f414c453"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na4aca271295d4c66a4f742d4c73341e9">
+    <rdf:first rdf:nodeID="Na4624eb2ec7a4361b3c541c93fb0bd13"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2f7f845e982a491d8d88d1d117f76bd1">
+    <rdf:first rdf:nodeID="N661a18c92af24e3cab927b9a1bea9432"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/A4_NoduleInLocalSubpleuralRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE A4 [EXPECT SUBCLASS of an existing class - yellow row in SubClass Of, moves in the tree when the dropdown is set to Inferred]: a nodule in the locally coined subpleural region</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The scope path runs through two locally authored partOf edges before it reaches imported RadLex structure. Tests that local gap-fill edges participate in closure. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N87c5b48550c24ba08b4fcdb79d4b7b8e"/>
+    <cde:designNote>[Group A] expect: subsumed by PulmonaryNodule. The scope path runs through two locally authored partOf edges before it reaches imported RadLex structure. Tests that local gap-fill edges participate in closure.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nba6aab708e67422e868d91831bffdd9d">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N11a0ee4a02fd4d38a6c9f23780cb897f"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N44df4421ec5c49a4b9d99e5b01c021d8">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAtelectasisMechanism"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000410_Compressive"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Necfaf16eb9e4453793a8215e0f27a78f">
+    <rdf:first rdf:resource="https://radelement.org/ng/SimpleRenalCyst"/>
+    <rdf:rest rdf:nodeID="N28abc6985c6f4a5d8ae5b23375c4fee1"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na4624eb2ec7a4361b3c541c93fb0bd13">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasComponent"/>
+    <owl:someValuesFrom rdf:nodeID="N09a71552e40e4bb2879562a8543cf568"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N82b405a76432449c94499a1fa43f98a1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAcuity"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000334_Chronic"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nb2818e34d79c4f15916797f67ead912d">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/scopedToRegion"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/anatomy/RID1316"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/E4_ScopedToLung">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE E4 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: a finding scoped to the lung</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The other half of E3. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N1b5bfd5f16e84a2fb37e710a79699a5d"/>
+    <cde:designNote>[Group E] expect: SATISFIABLE, and should subsume E3. The other half of E3.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1e0be53a10b544c5803399ae7dea6b12">
+    <rdf:first rdf:resource="https://radelement.org/ng/ThyroidNodule"/>
+    <rdf:rest rdf:nodeID="N62151decb84a474ba4c9018778617ec5"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/A3_PartSolidByAttenuation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE A3 [EXPECT EQUIVALENT to an existing class - yellow row in Equivalent To, does NOT move in the tree]: a pulmonary nodule whose attenuation is part-solid</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The condition-versus-subtype case. The subtype is defined, so nobody authors it twice and the component requirement attaches to it automatically. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="Ne2c8b8eb54bb42478b623df98662e2b4"/>
+    <cde:designNote>[Group A] expect: subsumed by PartSolidPulmonaryNodule. The condition-versus-subtype case. The subtype is defined, so nobody authors it twice and the component requirement attaches to it automatically.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6981e70f214b4bcf8ae420938bc9a4bc">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/scopedToRegion"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/anatomy/AL_L0002"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/A2_NoduleInSuperiorSegmentRLL">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE A2 [EXPECT SUBCLASS of an existing class - yellow row in SubClass Of, moves in the tree when the dropdown is set to Inferred]: a nodule in the superior segment of the right lower lobe</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. Three partOf steps: segment -&gt; lower lobe -&gt; right lung, then one subsumption step right lung -&gt; lung. The mixed chain named in classifier-placement-considerations.md. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N82d41440b9814a8b8caead57bdc38d8c"/>
+    <cde:designNote>[Group A] expect: subsumed by PulmonaryNodule. Three partOf steps: segment -&gt; lower lobe -&gt; right lung, then one subsumption step right lung -&gt; lung. The mixed chain named in classifier-placement-considerations.md.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N82d41440b9814a8b8caead57bdc38d8c">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N302b9d15842d40ae8a1e76a3f38ec0dc"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne0623e8614974054a2ba24f83d8e173a">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasCalcification"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000033_Punctate"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N15bbbbce8bdc4a5794b45193211917e6">
+    <rdf:first rdf:nodeID="N11db17d0c69a499789593a10c5f98aa8"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6f87f82ff7074478a68b9b914e0a2c39">
+    <rdf:first rdf:nodeID="N09be63c441c6405ab4cbc30059b5f3a5"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne2c8b8eb54bb42478b623df98662e2b4">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N2be45fea7adb441eb70466e850a84309"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N87c5b48550c24ba08b4fcdb79d4b7b8e">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Nb97b1f937b434077a56a5457b8f87bbb"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6cd4d68b22f446fd89ca88d44c079908">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="N750ed64d48bd479582a29c6cc9e4a372"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/A6_CystWithMuralNodule">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE A6 [EXPECT SUBCLASS of an existing class - yellow row in SubClass Of, moves in the tree when the dropdown is set to Inferred]: a cyst with a mural nodule component</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The second conditional-relationship case, and it fires in the opposite direction from the part-solid one. Nothing here asserts a composition value. The chain is: a mural nodule is necessarily componentOf some ComplexCyst, componentOf is functional, so the cyst holding it IS that complex cyst. This is the case 03-conditional-relationships.md asks for under its TODO. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N1742093976884eb98d981fadea866840"/>
+    <cde:designNote>[Group A] expect: subsumed by ComplexRenalCyst. The second conditional-relationship case, and it fires in the opposite direction from the part-solid one. Nothing here asserts a composition value. The chain is: a mural nodule is necessarily componentOf some ComplexCyst, componentOf is functional, so the cyst holding it IS that complex cyst. This is the case 03-conditional-relationships.md asks for under its TODO.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nb1b27d1557fa40379fed882c4748bf3d">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasComponent"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/MuralNodule"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/E1_ScopeDoesNotTravelAlongContainedIn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE E1 [EXPECT UNRELATED to its pair - neither equivalent nor a subclass of it]: a finding scoped to the kidney</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. Deliberate negative. The kidney reaches the abdomen only through Contained_In, and scope congruence chases partOf alone, so this must NOT classify under a class scoped to the abdomen. If the two ever merge, containedIn has leaked into the partOf family and a scope claim can travel along a location link. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="Nc4226c6af70e445b8be25a5517c2f252"/>
+    <cde:designNote>[Group E] expect: NOT subsumed by E2, which is expected to stay separate. Deliberate negative. The kidney reaches the abdomen only through Contained_In, and scope congruence chases partOf alone, so this must NOT classify under a class scoped to the abdomen. If the two ever merge, containedIn has leaked into the partOf family and a scope claim can travel along a location link.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2be45fea7adb441eb70466e850a84309">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="Nebb62a47010e421fbb0ccc7ec7dd4faa"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nfeeb543f87c34eec81b9695e5add00c2">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/scopedToRegion"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/anatomy/RID7579"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/radcde-probes">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <owl:imports rdf:resource="https://radelement.org/ng/radcde-alpha"/>
+    <dcterms:title>RadElement next-gen alpha: probes</dcterms:title>
+    <rdfs:comment>Deliberate test cases. Run a reasoner over this module. Group A probes should classify under something informative. Group B probes should go red. A Group B probe that stays white means the constraint it tests is not being enforced.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2d84a1fd5d64441e9b00828b5f168e13">
+    <rdf:first rdf:nodeID="N164c7ea2628447f8b46d0a08af674bc4"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na709bdbf1e8c450fb43d325a2b35904a">
+    <rdf:first rdf:resource="https://radelement.org/ng/SolidComponentOfPartSolidNodule"/>
+    <rdf:rest rdf:nodeID="Na29819c82cd94170a0747a63c3d4262f"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/C3_ProgressionWithinOneClass">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE C3 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: a cyst that may progress to a cyst</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The shape that actually works: progression within one class, where what changes is the value of an attribute rather than the class. RadLex models acute and chronic this way, as children of temporal descriptor RID5716, and carries no 'acute hemorrhage' or 'chronic hemorrhage' concept at all. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N4598878757544c398918661e2d99df08"/>
+    <cde:designNote>[Group C] expect: SATISFIABLE. The shape that actually works: progression within one class, where what changes is the value of an attribute rather than the class. RadLex models acute and chronic this way, as children of temporal descriptor RID5716, and carries no 'acute hemorrhage' or 'chronic hemorrhage' concept at all.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/B5_ThyroidNoduleInLung">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE B5 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: a thyroid nodule located in the lung</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. Deliberate negative control. scopedToRegion is not functional and lung and thyroid are not declared disjoint, so nothing rules this out. It shows what the model does NOT check, which matters for the strength property: strength declares how binding a scope claim is, and no OWL axiom currently carries it. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N9872efa0d06e436181238a2459000a86"/>
+    <cde:designNote>[Group B] expect: SATISFIABLE - this one is expected to stay white. Deliberate negative control. scopedToRegion is not functional and lung and thyroid are not declared disjoint, so nothing rules this out. It shows what the model does NOT check, which matters for the strength property: strength declares how binding a scope claim is, and no OWL axiom currently carries it.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N61a105581236406394347e931f4c993f">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N47b3f7c43f73419683cd8a64ffd88838"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nb23771d20c8846ac883a4757a50e28e3">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAcuity"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000333_Healed"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N9dc7e8ea9b5c4811a93687cb6974d62e">
+    <rdf:first rdf:resource="https://radelement.org/ng/RenalCyst"/>
+    <rdf:rest rdf:nodeID="N781b522df47f4efab0758bd1ae04a26d"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/B3_RibFractureWithChronicAcuity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE B3 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a rib fracture reported as chronic</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. PulmonaryNodule narrows margin to smooth, lobulated, irregular, spiculated. Narrowing at the point of use is an allValuesFrom axiom rather than an edge property, so a reasoner enforces it. This is the FHIR-profile behaviour named in 02-data-element.md, made checkable. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="Na4a1aeafc3ff402d9a8c408ab5c151cc"/>
+    <cde:designNote>[Group B] expect: unsatisfiable. PulmonaryNodule narrows margin to smooth, lobulated, irregular, spiculated. Narrowing at the point of use is an allValuesFrom axiom rather than an edge property, so a reasoner enforces it. This is the FHIR-profile behaviour named in 02-data-element.md, made checkable.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/E3_ScopeTravelsAlongLocalGapFill">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE E3 [EXPECT SUBCLASS of an existing class - yellow row in SubClass Of, moves in the tree when the dropdown is set to Inferred]: a finding scoped to the lung parenchyma</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. RadLex gives lung parenchyma exactly one edge, IS_A parenchyma, and never connects it to the lung. A local gap-fill partOf edge supplies that. If this stops classifying under E4, the gap-fill has been lost and everything scoped to lung parenchyma has quietly detached from the lung. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N61a105581236406394347e931f4c993f"/>
+    <cde:designNote>[Group E] expect: subsumed by E4. RadLex gives lung parenchyma exactly one edge, IS_A parenchyma, and never connects it to the lung. A local gap-fill partOf edge supplies that. If this stops classifying under E4, the gap-fill has been lost and everything scoped to lung parenchyma has quietly detached from the lung.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N3206a500d5b94bc8a9fb36f47d6621fd">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/mayProgressTo"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/PulmonaryMass"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4dc49cf9f7164f5c85c9a529d9e6d66c">
+    <rdf:first rdf:nodeID="Ne0623e8614974054a2ba24f83d8e173a"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2f17a0526fff403eb00e9038e041f71c">
+    <rdf:first rdf:resource="https://radelement.org/ng/V_000335_IndeterminateAge"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nff48d896e3fa471aa9b319e0eaeb1bcb">
+    <rdf:first rdf:nodeID="Ned5a85cb352744f9b580513533d041c6"/>
+    <rdf:rest rdf:nodeID="Nebdd524901594a72acedf332084cff97"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/B2_NoduleThatIsAMass">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE B2 [EXPECT INCONSISTENT - turns red under owl:Nothing]: something that is both a nodule and a mass</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The 30 mm boundary is carried as disjointness, not as a size condition. See DECISIONS.md D-07 for why the criterion itself is an annotation. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N8ac07dfff364471ba3a51f729d844dcd"/>
+    <cde:designNote>[Group B] expect: unsatisfiable. The 30 mm boundary is carried as disjointness, not as a size condition. See DECISIONS.md D-07 for why the criterion itself is an annotation.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne1d230430b9f4b1189fae9f57516927a">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="N0bd60704b188456481266f7e614559f4"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N7fc8482ff10f4a98b9f64123edb805e8">
+    <rdf:first rdf:nodeID="Nad8c08aecf8e4b2ebe2ec2774ba9d3e3"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nad8c08aecf8e4b2ebe2ec2774ba9d3e3">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAtelectasisMorphology"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000420_Rounded"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N09be63c441c6405ab4cbc30059b5f3a5">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/scopedToRegion"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/anatomy/RID1301"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf72c6fb69ebb461d83cf211699dfacaa">
+    <rdf:first rdf:nodeID="Nab2b107e266c43a6aeed5b7ddf401352"/>
+    <rdf:rest rdf:nodeID="N75f268dbc0f8432aadc2625cb73f40ac"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/E2_ScopedToAbdomen">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE E2 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: a finding scoped to the abdomen</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The other half of E1. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N10335f05e5604ab586d871e1aec13ebc"/>
+    <cde:designNote>[Group E] expect: SATISFIABLE, and must not subsume E1. The other half of E1.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N69a415d7c04241be82cda750f414c453">
+    <rdf:first rdf:resource="https://radelement.org/ng/V_000330_Acute"/>
+    <rdf:rest rdf:nodeID="N72dd5e989b2944ed91a5e2c17252880f"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N7381cd0529f9445bb3f2821242b1e66b">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Na684207aacd74a0ba6215e2874437edf"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N861013792b924f9b93e7aa697b3658fb">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasComponent"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/MuralNodule"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N657d38cca5094678b8a62920a68bcb4c">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N77d7e8f51f66485cbc2ebee17eade73a"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nce7e82c69d9c45b8b3cd49a4511c8338">
+    <rdf:first rdf:resource="https://radelement.org/ng/RibFracture"/>
+    <rdf:rest rdf:nodeID="N5d0f4dc0a62f47a3926675e075d324d7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nebb62a47010e421fbb0ccc7ec7dd4faa">
+    <rdf:first rdf:nodeID="Nf6865b4168f341ac8c98beb7b90701c4"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6dd8b2cde53643f2a9db367df7e3baf7">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="N1f083ec3e00f4438a086513f02671835"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na0f8708b3fa04e03bc7012e44dd26b8d">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Nab9f5943c01c41fbb49abeb1f76124f4"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/C2_IdentityPreservingProgression">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE C2 [EXPECT INCONSISTENT - turns red under owl:Nothing]: one entity that is both the earlier and the later state</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. This is what 'identity-preserving' means in a model with no time: the same individual instantiates both endpoints. It is probe B2 under another name. Progression edges characteristically join disjoint classes (acute/chronic, infarct/encephalomalacia), so this is not special to nodule and mass. It is what the edge costs whenever it is inference-bearing. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="Ncda27923cc97421995ba5cdc7a822769"/>
+    <cde:designNote>[Group C] expect: unsatisfiable. This is what 'identity-preserving' means in a model with no time: the same individual instantiates both endpoints. It is probe B2 under another name. Progression edges characteristically join disjoint classes (acute/chronic, infarct/encephalomalacia), so this is not special to nodule and mass. It is what the edge costs whenever it is inference-bearing.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1892aa504edf42f3a943fd4146e8747c">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAttenuation"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000010_Solid"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1b5bfd5f16e84a2fb37e710a79699a5d">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N7adb94a408ed4b9eaf1ff0c332a63e8c"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/E10_NoCalcificationPlusAPattern">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE E10 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a nodule with no calcification and popcorn calcification</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. Calcification is multi-select, so value disjointness alone does not stop none being asserted alongside a pattern: two different fillers are permitted. The none value carries its own allValuesFrom restriction to close that, and this probe is what proves it. Read against E5, which asserts two real patterns together and must stay satisfiable. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N2a920b96c45c4ab69fa780b396b49dff"/>
+    <cde:designNote>[Group E] expect: unsatisfiable. Calcification is multi-select, so value disjointness alone does not stop none being asserted alongside a pattern: two different fillers are permitted. The none value carries its own allValuesFrom restriction to close that, and this probe is what proves it. Read against E5, which asserts two real patterns together and must stay satisfiable.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ncdedd96791294cb3a80e9d0fbe6dd837">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Ne1d230430b9f4b1189fae9f57516927a"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N164c7ea2628447f8b46d0a08af674bc4">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAttenuation"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000011_PartSolid"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N8ac07dfff364471ba3a51f729d844dcd">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N4efaf8f00a1b40b1b19edbe97f6b7d3c"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N42e805a33f484b37b4fee765e04a0a2c">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Necfaf16eb9e4453793a8215e0f27a78f"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/B6_SimpleCystWithMuralNodule">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE B6 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a simple cyst with a mural nodule</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The conditional actually bites. SimpleCyst fixes composition to cystic; the mural nodule forces the same cyst to be a ComplexCyst, whose composition is mixed cystic and solid. hasComposition is functional (D-02) and the two values are disjoint, so the contradiction surfaces. Note this needed three separate decisions to work: functional componentOf, functional hasComposition, and disjoint values. Remove any one and this probe goes white. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N42e805a33f484b37b4fee765e04a0a2c"/>
+    <cde:designNote>[Group B] expect: unsatisfiable. The conditional actually bites. SimpleCyst fixes composition to cystic; the mural nodule forces the same cyst to be a ComplexCyst, whose composition is mixed cystic and solid. hasComposition is functional (D-02) and the two values are disjoint, so the contradiction surfaces. Note this needed three separate decisions to work: functional componentOf, functional hasComposition, and disjoint values. Remove any one and this probe goes white.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N11db17d0c69a499789593a10c5f98aa8">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/mayProgressTo"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/RenalCyst"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/D1_FindingClassWithNoAnatomicAnchor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE D1 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: a finding class with no anatomic anchor</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The lint rules that replace inheritance are not axioms. Nothing here is contradictory, and no reasoner will object to a class with no location, no pattern applied, or an element authored twice. Those checks live in scripts/spec.py lint() and run at authoring time, which is exactly what the pattern decision commits to: consistency by generation and linting rather than by inheritance. D1 staying white is the point. Knowing where a constraint cannot live is the difference between a rule and a hope. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <rdfs:subClassOf rdf:nodeID="N0832409278b048cc9151268f450d6be0"/>
+    <cde:designNote>[Group D] expect: SATISFIABLE - expected to stay white. The lint rules that replace inheritance are not axioms. Nothing here is contradictory, and no reasoner will object to a class with no location, no pattern applied, or an element authored twice. Those checks live in scripts/spec.py lint() and run at authoring time, which is exactly what the pattern decision commits to: consistency by generation and linting rather than by inheritance. D1 staying white is the point. Knowing where a constraint cannot live is the difference between a rule and a hope.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na29819c82cd94170a0747a63c3d4262f">
+    <rdf:first rdf:nodeID="Nfe7633003c1645d3a8e5ea9f7c6cbb60"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/E6_SingleSelectOnAcuity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE E6 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a rib fracture that is both acute and healed</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. Acuity is single-select. Disjoint values alone would not catch this, because two different fillers are possible; it is caught because the property is declared functional. Removing either the disjointness or the functional declaration turns this white. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="N02fa097d13544ee4808d073468f64134"/>
+    <cde:designNote>[Group E] expect: unsatisfiable. Acuity is single-select. Disjoint values alone would not catch this, because two different fillers are possible; it is caught because the property is declared functional. Removing either the disjointness or the functional declaration turns this white.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N09a71552e40e4bb2879562a8543cf568">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Na709bdbf1e8c450fb43d325a2b35904a"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N750ed64d48bd479582a29c6cc9e4a372">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryMass"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1f083ec3e00f4438a086513f02671835">
+    <rdf:first rdf:nodeID="N01ff488a10a54610a31644d1b1c7fe68"/>
+    <rdf:rest rdf:nodeID="N2d84a1fd5d64441e9b00828b5f168e13"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4efaf8f00a1b40b1b19edbe97f6b7d3c">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="N25ea7db8c67349fdacc4de65001bee30"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N02fa097d13544ee4808d073468f64134">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Naf695dd9293349f181dbbb98a73c18b7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ned5a85cb352744f9b580513533d041c6">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAttenuation"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000011_PartSolid"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://radelement.org/ng/probe/E7_AtelectasisAxesAreIndependent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PROBE E7 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: compressive atelectasis with a rounded morphology</rdfs:label>
+    <rdfs:comment>Deliberate test case, not part of the vocabulary. The restructure that replaced five atelectasis subtypes with two elements rests on the axes being independent: a rounded atelectasis is characteristically compressive. If this ever goes red the two have been made to partition one another, and the subtype question reopens. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree.</rdfs:comment>
+    <owl:equivalentClass rdf:nodeID="Na0f8708b3fa04e03bc7012e44dd26b8d"/>
+    <cde:designNote>[Group E] expect: SATISFIABLE. The restructure that replaced five atelectasis subtypes with two elements rests on the axes being independent: a rounded atelectasis is characteristically compressive. If this ever goes red the two have been made to partition one another, and the subtype question reopens.</cde:designNote>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N9872efa0d06e436181238a2459000a86">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N313c9012b03044d68f0ff736e65cb289"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N9b5fdc6a3cd54e78a1e0b2aa0ee60a2b">
+    <rdf:first rdf:nodeID="N1892aa504edf42f3a943fd4146e8747c"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0f4be67e34854978be86671b27f530eb">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAcuity"/>
+    <owl:allValuesFrom rdf:nodeID="N310527fa43ee41b1872307305be147be"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ndf8091f3a1874311ae40026e224ce9f8">
+    <rdf:first rdf:nodeID="N7bb4101e3d5545d084ffb3c58ef57aff"/>
+    <rdf:rest rdf:nodeID="N4dc49cf9f7164f5c85c9a529d9e6d66c"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N86e35f76d14549d286c5112ba8043424">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="N28724a599f3547b0a3ed802b8aeb31cc"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N9d351d8b655a48cca8a154549303902e">
+    <rdf:first rdf:nodeID="Na770720e354b46c19ed234276ebe2aa1"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nab9f5943c01c41fbb49abeb1f76124f4">
+    <rdf:first rdf:resource="https://radelement.org/ng/Atelectasis"/>
+    <rdf:rest rdf:nodeID="N7df69b89375448f888154d1da69648db"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N511b65cdab734642af8f6ce847610c10">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/scopedToRegion"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/anatomy/RID56"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N313c9012b03044d68f0ff736e65cb289">
+    <rdf:first rdf:resource="https://radelement.org/ng/ThyroidNodule"/>
+    <rdf:rest rdf:nodeID="N6f87f82ff7074478a68b9b914e0a2c39"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nfe7633003c1645d3a8e5ea9f7c6cbb60">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAttenuation"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000010_Solid"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N781b522df47f4efab0758bd1ae04a26d">
+    <rdf:first rdf:nodeID="N861013792b924f9b93e7aa697b3658fb"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nfcf1c5eed43240be988d65af1bd79a40">
+    <rdf:first rdf:nodeID="N82b405a76432449c94499a1fa43f98a1"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nd38c3ded00ac4d13a2f8b60bdb89e032">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N6dd8b2cde53643f2a9db367df7e3baf7"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N42a6160d25674afd87a54933b738c3be">
+    <rdf:first rdf:resource="https://radelement.org/ng/RenalCyst"/>
+    <rdf:rest rdf:nodeID="N15bbbbce8bdc4a5794b45193211917e6"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N7bb4101e3d5545d084ffb3c58ef57aff">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasCalcification"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000032_Popcorn"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N11a0ee4a02fd4d38a6c9f23780cb897f">
+    <rdf:first rdf:resource="https://radelement.org/ng/FindingClass"/>
+    <rdf:rest rdf:nodeID="Nb6ebe4238fbd445c96323694e8e51ff3"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf61c4c1ecb5f482aa88f1945f31954fb">
+    <rdf:first rdf:nodeID="Nc3569564154041a3b478ef6b300af33f"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N25ea7db8c67349fdacc4de65001bee30">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryMass"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nfb4b47525f314b54a4127c5822f05981">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="N01918153c3534038aceeea589b5c9185"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N62151decb84a474ba4c9018778617ec5">
+    <rdf:first rdf:nodeID="Nfeeb543f87c34eec81b9695e5add00c2"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf8fd1bcc0c9a41f5b6fc7d525771a817">
+    <rdf:first rdf:resource="https://radelement.org/ng/V_000333_Healed"/>
+    <rdf:rest rdf:nodeID="N2f17a0526fff403eb00e9038e041f71c"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf6865b4168f341ac8c98beb7b90701c4">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAttenuation"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000011_PartSolid"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N28abc6985c6f4a5d8ae5b23375c4fee1">
+    <rdf:first rdf:nodeID="Nb1b27d1557fa40379fed882c4748bf3d"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Naf695dd9293349f181dbbb98a73c18b7">
+    <rdf:first rdf:resource="https://radelement.org/ng/RibFracture"/>
+    <rdf:rest rdf:nodeID="Nf72c6fb69ebb461d83cf211699dfacaa"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ncc1bc7b98652412b80bb4f822cd9e7ea">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N86e35f76d14549d286c5112ba8043424"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nc3569564154041a3b478ef6b300af33f">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/scopedToRegion"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/anatomy/RID35739"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N7adb94a408ed4b9eaf1ff0c332a63e8c">
+    <rdf:first rdf:resource="https://radelement.org/ng/FindingClass"/>
+    <rdf:rest rdf:nodeID="N2f7f845e982a491d8d88d1d117f76bd1"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0832409278b048cc9151268f450d6be0">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N93a193c07b7442878cc6b25e4a921835"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4b55029a0b4941dfbfc40b04b638dbdf">
+    <rdf:first rdf:nodeID="N6f16ac64412e44919e03b22d971a3990"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N93a193c07b7442878cc6b25e4a921835">
+    <rdf:first rdf:resource="https://radelement.org/ng/FindingClass"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nb65712cd7c654d78ad1a383afc16296d">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N3e38cbcaf2df49c498042beb9a5fda87"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0e1bf3ba6bdc4cc286a3600d7d676895">
+    <rdf:first rdf:nodeID="Nb2818e34d79c4f15916797f67ead912d"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nd14f972706694373bd876f15616559e1">
+    <rdf:first rdf:resource="https://radelement.org/ng/FindingClass"/>
+    <rdf:rest rdf:nodeID="Nef83ee1b40fb4e849e0a1da789ed8b29"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nebdd524901594a72acedf332084cff97">
+    <rdf:first rdf:nodeID="N0a786f16e46647c1b066641267f0a0e1"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N01ff488a10a54610a31644d1b1c7fe68">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasAttenuation"/>
+    <owl:someValuesFrom rdf:resource="https://radelement.org/ng/V_000010_Solid"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N4598878757544c398918661e2d99df08">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N42a6160d25674afd87a54933b738c3be"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N10335f05e5604ab586d871e1aec13ebc">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Nd14f972706694373bd876f15616559e1"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0372f8b276fa4e2bb461a78ca2c0174c">
+    <rdf:first rdf:resource="https://radelement.org/ng/PartSolidPulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="Na4aca271295d4c66a4f742d4c73341e9"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N01918153c3534038aceeea589b5c9185">
+    <rdf:first rdf:nodeID="Nfc61692891474d839efe9f68a89c89c4"/>
+    <rdf:rest rdf:nodeID="N4b55029a0b4941dfbfc40b04b638dbdf"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N54576884d4e644eab1d9a37965a5a1f1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N0372f8b276fa4e2bb461a78ca2c0174c"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N77d7e8f51f66485cbc2ebee17eade73a">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="Nff48d896e3fa471aa9b319e0eaeb1bcb"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nb6ebe4238fbd445c96323694e8e51ff3">
+    <rdf:first rdf:resource="https://radelement.org/ng/Diagnosis"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nef83ee1b40fb4e849e0a1da789ed8b29">
+    <rdf:first rdf:nodeID="N511b65cdab734642af8f6ce847610c10"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0a786f16e46647c1b066641267f0a0e1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="https://radelement.org/ng/hasComponent"/>
+    <owl:someValuesFrom rdf:nodeID="N7381cd0529f9445bb3f2821242b1e66b"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na684207aacd74a0ba6215e2874437edf">
+    <rdf:first rdf:resource="https://radelement.org/ng/SolidComponentOfPartSolidNodule"/>
+    <rdf:rest rdf:nodeID="N9b5fdc6a3cd54e78a1e0b2aa0ee60a2b"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N74799b1f3d5e4ffcb0791a37c6d6f461">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N1e0be53a10b544c5803399ae7dea6b12"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Na4a1aeafc3ff402d9a8c408ab5c151cc">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="Nce7e82c69d9c45b8b3cd49a4511c8338"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1742093976884eb98d981fadea866840">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <owl:intersectionOf rdf:nodeID="N9dc7e8ea9b5c4811a93687cb6974d62e"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N28724a599f3547b0a3ed802b8aeb31cc">
+    <rdf:first rdf:nodeID="N46818905208842d2854ddd2752295663"/>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N302b9d15842d40ae8a1e76a3f38ec0dc">
+    <rdf:first rdf:resource="https://radelement.org/ng/PulmonaryNodule"/>
+    <rdf:rest rdf:nodeID="N0e1bf3ba6bdc4cc286a3600d7d676895"/>
+  </rdf:Description>
+</rdf:RDF>

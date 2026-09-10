@@ -1,0 +1,667 @@
+{
+ "finding_id": "FC-000015",
+ "name": "complex renal cyst",
+ "definition": "A renal cyst whose contents are not uniformly fluid.",
+ "subtype_of": "FC-000004",
+ "defined_concept": true,
+ "bindings": [],
+ "synonyms": [],
+ "anatomic_scope": [
+  {
+   "location": "AL-000014",
+   "kind": "region",
+   "strength": "required",
+   "source": "local",
+   "name": "kidney"
+  }
+ ],
+ "seen_on": [
+  "CT",
+  "MR",
+  "US",
+  "XR"
+ ],
+ "subspecialty": [
+  "AB"
+ ],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000015",
+   "name": "interval change",
+   "definition": "The relationship of the finding to the same finding on a prior comparable examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000140",
+     "name": "new",
+     "definition": "Not present on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000141",
+     "name": "unchanged",
+     "definition": "Without appreciable difference from the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000142",
+     "name": "increased",
+     "definition": "Larger or more numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000143",
+     "name": "decreased",
+     "definition": "Smaller or less numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000144",
+     "name": "no prior available",
+     "definition": "No comparable prior examination was available.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000008",
+   "name": "wall character",
+   "definition": "The thickness and regularity of the wall bounding a fluid-filled structure.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": "FC-000004",
+   "permitted_values": [
+    {
+     "value_id": "V-000070",
+     "name": "imperceptible",
+     "definition": "No discernible wall.",
+     "rank": 1,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000071",
+     "name": "thin",
+     "definition": "A discernible but hairline wall.",
+     "rank": 2,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000072",
+     "name": "thickened",
+     "definition": "A wall of measurable thickness.",
+     "rank": 3,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000073",
+     "name": "enhancing",
+     "definition": "A wall demonstrating contrast uptake.",
+     "rank": 4,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000006",
+   "name": "composition",
+   "definition": "The internal make-up of the lesion in terms of solid and fluid content.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": "FC-000004",
+   "permitted_values": [
+    {
+     "value_id": "V-000050",
+     "name": "cystic",
+     "definition": "Entirely fluid.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5739",
+       "source_label": "cystic",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000051",
+     "name": "predominantly cystic",
+     "definition": "Mostly fluid with a minority solid component.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID49879",
+       "source_label": "predominantly cystic",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000052",
+     "name": "mixed cystic and solid",
+     "definition": "Substantial fluid and solid components.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID50517",
+       "source_label": "mixed cystic and solid",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000053",
+     "name": "solid",
+     "definition": "Entirely soft tissue.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5741",
+       "source_label": "solid",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000031",
+   "name": "laterality",
+   "definition": "Which side of a paired structure the finding involves.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": "FC-000004",
+   "permitted_values": [
+    {
+     "value_id": "V-000300",
+     "name": "left",
+     "definition": "The patient's left.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5824",
+       "source_label": "left",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000301",
+     "name": "right",
+     "definition": "The patient's right.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5825",
+       "source_label": "right",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000302",
+     "name": "bilateral",
+     "definition": "Both sides.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5771",
+       "source_label": "bilateral",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000303",
+     "name": "midline",
+     "definition": "Neither side; on the midline.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5826",
+       "source_label": "midline",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000004",
+   "name": "calcification",
+   "definition": "The presence and pattern of calcium within the lesion.",
+   "select_cardinality": "multi",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000030",
+     "name": "none",
+     "definition": "No calcification is identified.",
+     "rank": null,
+     "exclusive": true,
+     "exclusive_note": "selecting this excludes every other value of this element",
+     "bindings": []
+    },
+    {
+     "value_id": "V-000031",
+     "name": "central",
+     "definition": "Calcification occupies the centre of the lesion.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000032",
+     "name": "popcorn",
+     "definition": "Coarse, clustered, chondroid calcification.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000033",
+     "name": "punctate",
+     "definition": "Small discrete foci of calcification.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000034",
+     "name": "coarse",
+     "definition": "Dense, chunky calcification without a specific pattern.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000035",
+     "name": "peripheral / rim",
+     "definition": "Calcification at the margin of the lesion.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  }
+ ],
+ "measurements": [
+  {
+   "measurement_id": "MS-000001",
+   "name": "long-axis diameter",
+   "definition": "The greatest diameter of the lesion on the plane showing its maximal dimension.",
+   "quantity_kind": "length",
+   "permitted_units": [
+    "mm",
+    "cm"
+   ],
+   "method": "Greatest diameter on a single plane, measured on the sequence or window in which the lesion is best seen.",
+   "inherited_from": "FC-000004",
+   "components": []
+  },
+  {
+   "measurement_id": "MS-000006",
+   "name": "lesion count",
+   "definition": "The number of discrete lesions of this class identified.",
+   "quantity_kind": "count",
+   "permitted_units": [
+    "1"
+   ],
+   "method": "Count of discrete lesions; 'innumerable' is recorded as unbounded rather than as a number.",
+   "inherited_from": "FC-000004",
+   "components": []
+  },
+  {
+   "measurement_id": "MS-000007",
+   "name": "wall thickness",
+   "definition": "The greatest thickness of the wall bounding a fluid-filled or cavitated structure.",
+   "quantity_kind": "length",
+   "permitted_units": [
+    "mm"
+   ],
+   "method": "Greatest thickness measured perpendicular to the wall.",
+   "inherited_from": "FC-000004",
+   "components": []
+  }
+ ],
+ "assessment_schemes": [
+  {
+   "scheme_id": "AS-000004",
+   "name": "Bosniak classification",
+   "issuing_authority": "Originating author; ACR-referenced",
+   "scheme_version": "2019",
+   "scope": "observation",
+   "categories": [
+    {
+     "name": "Bosniak I",
+     "rank": 1
+    },
+    {
+     "name": "Bosniak II",
+     "rank": 2
+    },
+    {
+     "name": "Bosniak IIF",
+     "rank": 3
+    },
+    {
+     "name": "Bosniak III",
+     "rank": 4
+    },
+    {
+     "name": "Bosniak IV",
+     "rank": 5
+    }
+   ]
+  }
+ ],
+ "components": [],
+ "may_represent": [
+  "DX-000023"
+ ],
+ "may_be_caused_by": [],
+ "occurs_with": [],
+ "component_of": null,
+ "component": false,
+ "fixed_values": [
+  {
+   "value_id": "V-000052",
+   "element": "hasComposition",
+   "defining": true
+  }
+ ],
+ "anchor_verdict": "post_coordinated",
+ "anchor_base": {
+  "system": "RADLEX",
+  "code": "RID3890",
+  "label": "cyst"
+ },
+ "anchor_modifiers": [
+  {
+   "system": "RADLEX",
+   "code": "RID205",
+   "label": "kidney"
+  }
+ ],
+ "change_request": null,
+ "source_definition": null,
+ "concept_source": null,
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-10",
+  "published": null,
+  "last_modified": "2026-09-10",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ },
+ "source": "local",
+ "source_status": "unrequested"
+}

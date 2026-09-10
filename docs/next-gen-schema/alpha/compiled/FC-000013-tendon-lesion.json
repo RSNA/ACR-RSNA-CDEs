@@ -1,0 +1,267 @@
+{
+ "finding_id": "FC-000013",
+ "name": "tendon lesion",
+ "definition": "A lesion involving a tendon.",
+ "subtype_of": null,
+ "defined_concept": false,
+ "bindings": [],
+ "synonyms": [],
+ "anatomic_scope": [
+  {
+   "location": "AL-000062",
+   "kind": "class",
+   "strength": "required",
+   "source": "local",
+   "name": "tendon"
+  }
+ ],
+ "seen_on": [
+  "CT",
+  "MR",
+  "US",
+  "XR"
+ ],
+ "subspecialty": [],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000015",
+   "name": "interval change",
+   "definition": "The relationship of the finding to the same finding on a prior comparable examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000140",
+     "name": "new",
+     "definition": "Not present on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000141",
+     "name": "unchanged",
+     "definition": "Without appreciable difference from the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000142",
+     "name": "increased",
+     "definition": "Larger or more numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000143",
+     "name": "decreased",
+     "definition": "Smaller or less numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000144",
+     "name": "no prior available",
+     "definition": "No comparable prior examination was available.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  }
+ ],
+ "measurements": [
+  {
+   "measurement_id": "MS-000001",
+   "name": "long-axis diameter",
+   "definition": "The greatest diameter of the lesion on the plane showing its maximal dimension.",
+   "quantity_kind": "length",
+   "permitted_units": [
+    "mm",
+    "cm"
+   ],
+   "method": "Greatest diameter on a single plane, measured on the sequence or window in which the lesion is best seen.",
+   "inherited_from": null,
+   "components": []
+  },
+  {
+   "measurement_id": "MS-000006",
+   "name": "lesion count",
+   "definition": "The number of discrete lesions of this class identified.",
+   "quantity_kind": "count",
+   "permitted_units": [
+    "1"
+   ],
+   "method": "Count of discrete lesions; 'innumerable' is recorded as unbounded rather than as a number.",
+   "inherited_from": null,
+   "components": []
+  }
+ ],
+ "assessment_schemes": [],
+ "components": [],
+ "may_represent": [],
+ "may_be_caused_by": [],
+ "occurs_with": [],
+ "component_of": null,
+ "component": false,
+ "fixed_values": [],
+ "anchor_verdict": "post_coordinated",
+ "anchor_base": {
+  "system": "RADLEX",
+  "code": "RID38780",
+  "label": "lesion"
+ },
+ "anchor_modifiers": [
+  {
+   "system": "RADLEX",
+   "code": "RID6067",
+   "label": "tendon"
+  }
+ ],
+ "change_request": null,
+ "source_definition": null,
+ "concept_source": null,
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-10",
+  "published": null,
+  "last_modified": "2026-09-10",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ },
+ "source": "local",
+ "source_status": "unrequested"
+}

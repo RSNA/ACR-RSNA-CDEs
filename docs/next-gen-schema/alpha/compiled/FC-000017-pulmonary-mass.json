@@ -1,0 +1,612 @@
+{
+ "finding_id": "FC-000017",
+ "name": "pulmonary mass",
+ "definition": "A space-occupying lesion of the lung exceeding 30 mm.",
+ "subtype_of": null,
+ "defined_concept": false,
+ "bindings": [],
+ "synonyms": [],
+ "anatomic_scope": [
+  {
+   "location": "AL-000033",
+   "kind": "region",
+   "strength": "required",
+   "source": "local",
+   "name": "lung"
+  }
+ ],
+ "seen_on": [
+  "CT",
+  "MR",
+  "US",
+  "XR"
+ ],
+ "subspecialty": [
+  "CH"
+ ],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000015",
+   "name": "interval change",
+   "definition": "The relationship of the finding to the same finding on a prior comparable examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000140",
+     "name": "new",
+     "definition": "Not present on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000141",
+     "name": "unchanged",
+     "definition": "Without appreciable difference from the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000142",
+     "name": "increased",
+     "definition": "Larger or more numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000143",
+     "name": "decreased",
+     "definition": "Smaller or less numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000144",
+     "name": "no prior available",
+     "definition": "No comparable prior examination was available.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000039",
+   "name": "pulmonary margin",
+   "definition": "The character of the interface between a pulmonary lesion and the surrounding lung.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000380",
+     "name": "smooth",
+     "definition": "The interface is even and uninterrupted.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5714",
+       "source_label": "smooth",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000381",
+     "name": "lobulated",
+     "definition": "The interface undulates with rounded protrusions.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5711",
+       "source_label": "lobulated",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000382",
+     "name": "irregular",
+     "definition": "The interface is uneven without a dominant pattern.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5715",
+       "source_label": "irregular",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000383",
+     "name": "spiculated",
+     "definition": "Radiating linear projections extend from the interface.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5713",
+       "source_label": "spiculated",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000013",
+   "name": "distribution",
+   "definition": "The spatial pattern of a multifocal finding across the organ or region.",
+   "select_cardinality": "single",
+   "narrowed": true,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000120",
+     "name": "solitary",
+     "definition": "A single lesion.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000121",
+     "name": "scattered",
+     "definition": "Several lesions without a discernible pattern.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000122",
+     "name": "clustered",
+     "definition": "Lesions grouped in one part of the organ.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000004",
+   "name": "calcification",
+   "definition": "The presence and pattern of calcium within the lesion.",
+   "select_cardinality": "multi",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000030",
+     "name": "none",
+     "definition": "No calcification is identified.",
+     "rank": null,
+     "exclusive": true,
+     "exclusive_note": "selecting this excludes every other value of this element",
+     "bindings": []
+    },
+    {
+     "value_id": "V-000031",
+     "name": "central",
+     "definition": "Calcification occupies the centre of the lesion.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000032",
+     "name": "popcorn",
+     "definition": "Coarse, clustered, chondroid calcification.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000033",
+     "name": "punctate",
+     "definition": "Small discrete foci of calcification.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000034",
+     "name": "coarse",
+     "definition": "Dense, chunky calcification without a specific pattern.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000035",
+     "name": "peripheral / rim",
+     "definition": "Calcification at the margin of the lesion.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000031",
+   "name": "laterality",
+   "definition": "Which side of a paired structure the finding involves.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000300",
+     "name": "left",
+     "definition": "The patient's left.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5824",
+       "source_label": "left",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000301",
+     "name": "right",
+     "definition": "The patient's right.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5825",
+       "source_label": "right",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000302",
+     "name": "bilateral",
+     "definition": "Both sides.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5771",
+       "source_label": "bilateral",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000303",
+     "name": "midline",
+     "definition": "Neither side; on the midline.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5826",
+       "source_label": "midline",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "measurements": [
+  {
+   "measurement_id": "MS-000001",
+   "name": "long-axis diameter",
+   "definition": "The greatest diameter of the lesion on the plane showing its maximal dimension.",
+   "quantity_kind": "length",
+   "permitted_units": [
+    "mm",
+    "cm"
+   ],
+   "method": "Greatest diameter on a single plane, measured on the sequence or window in which the lesion is best seen.",
+   "inherited_from": null,
+   "components": []
+  },
+  {
+   "measurement_id": "MS-000006",
+   "name": "lesion count",
+   "definition": "The number of discrete lesions of this class identified.",
+   "quantity_kind": "count",
+   "permitted_units": [
+    "1"
+   ],
+   "method": "Count of discrete lesions; 'innumerable' is recorded as unbounded rather than as a number.",
+   "inherited_from": null,
+   "components": []
+  }
+ ],
+ "assessment_schemes": [],
+ "components": [],
+ "may_represent": [
+  "DX-000004"
+ ],
+ "may_be_caused_by": [],
+ "occurs_with": [],
+ "component_of": null,
+ "component": false,
+ "fixed_values": [],
+ "anchor_verdict": "post_coordinated",
+ "anchor_base": {
+  "system": "RADLEX",
+  "code": "RID3874",
+  "label": "mass"
+ },
+ "anchor_modifiers": [
+  {
+   "system": "RADLEX",
+   "code": "RID1301",
+   "label": "lung"
+  }
+ ],
+ "change_request": null,
+ "source_definition": null,
+ "concept_source": null,
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-10",
+  "published": null,
+  "last_modified": "2026-09-10",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ },
+ "source": "local",
+ "source_status": "unrequested"
+}

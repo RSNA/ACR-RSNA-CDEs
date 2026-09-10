@@ -1,0 +1,513 @@
+{
+ "finding_id": "FC-000029",
+ "name": "acute infarct",
+ "definition": "Recent ischaemic tissue death, with restricted diffusion and loss of grey-white differentiation.",
+ "subtype_of": null,
+ "defined_concept": false,
+ "bindings": [],
+ "synonyms": [],
+ "anatomic_scope": [
+  {
+   "location": "AL-000066",
+   "kind": "region",
+   "strength": "required",
+   "source": "local",
+   "name": "brain"
+  }
+ ],
+ "seen_on": [
+  "CT",
+  "MR",
+  "US",
+  "XR"
+ ],
+ "subspecialty": [
+  "NR"
+ ],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000015",
+   "name": "interval change",
+   "definition": "The relationship of the finding to the same finding on a prior comparable examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000140",
+     "name": "new",
+     "definition": "Not present on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000141",
+     "name": "unchanged",
+     "definition": "Without appreciable difference from the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000142",
+     "name": "increased",
+     "definition": "Larger or more numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000143",
+     "name": "decreased",
+     "definition": "Smaller or less numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000144",
+     "name": "no prior available",
+     "definition": "No comparable prior examination was available.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000031",
+   "name": "laterality",
+   "definition": "Which side of a paired structure the finding involves.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000300",
+     "name": "left",
+     "definition": "The patient's left.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5824",
+       "source_label": "left",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000301",
+     "name": "right",
+     "definition": "The patient's right.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5825",
+       "source_label": "right",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000302",
+     "name": "bilateral",
+     "definition": "Both sides.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5771",
+       "source_label": "bilateral",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000303",
+     "name": "midline",
+     "definition": "Neither side; on the midline.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5826",
+       "source_label": "midline",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000037",
+   "name": "vascular territory",
+   "definition": "Which arterial supply the infarct conforms to. A territorial infarct implicates the named artery; a watershed pattern implicates global hypoperfusion instead.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000360",
+     "name": "anterior cerebral artery",
+     "definition": "Parasagittal frontal and medial parietal.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID648",
+       "source_label": "anterior cerebral artery",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000361",
+     "name": "middle cerebral artery",
+     "definition": "Lateral frontal, temporal and parietal. The commonest territory.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID665",
+       "source_label": "middle cerebral artery",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000362",
+     "name": "posterior cerebral artery",
+     "definition": "Occipital and medial temporal.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID804",
+       "source_label": "posterior cerebral artery",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000363",
+     "name": "posterior circulation",
+     "definition": "Brainstem and cerebellum, from the vertebrobasilar supply. Local: RadLex has the basilar and vertebral arteries but no concept for the territory they supply.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000364",
+     "name": "watershed",
+     "definition": "Between two territories. Implies hypoperfusion rather than occlusion of one vessel.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID6408",
+       "source_label": "watershed",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000365",
+     "name": "non-territorial",
+     "definition": "Conforming to no arterial territory. Argues against arterial infarction.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  }
+ ],
+ "measurements": [],
+ "assessment_schemes": [],
+ "components": [],
+ "may_represent": [
+  "DX-000024"
+ ],
+ "may_be_caused_by": [],
+ "occurs_with": [],
+ "component_of": null,
+ "component": false,
+ "fixed_values": [],
+ "anchor_verdict": "post_coordinated",
+ "anchor_base": {
+  "system": "RADLEX",
+  "code": "RID5172",
+  "label": "infarction"
+ },
+ "anchor_modifiers": [
+  {
+   "system": "RADLEX",
+   "code": "RID5718",
+   "label": "acute"
+  }
+ ],
+ "change_request": null,
+ "source_definition": null,
+ "concept_source": null,
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-10",
+  "published": null,
+  "last_modified": "2026-09-10",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ },
+ "source": "local",
+ "source_status": "unrequested"
+}

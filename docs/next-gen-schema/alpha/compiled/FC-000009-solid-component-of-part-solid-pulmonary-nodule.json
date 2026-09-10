@@ -1,0 +1,215 @@
+{
+ "finding_id": "FC-000009",
+ "name": "solid component of part-solid pulmonary nodule",
+ "definition": "The solid portion of a part-solid pulmonary nodule.",
+ "subtype_of": null,
+ "defined_concept": false,
+ "bindings": [
+  {
+   "system": "RADLEX",
+   "code": "RID50154",
+   "source_label": "solid component of part-solid pulmonary nodule",
+   "match": "exactMatch",
+   "source_version": "4.3",
+   "version": {
+    "number": 1,
+    "status": "published",
+    "created": "2026-09-10",
+    "published": null,
+    "last_modified": "2026-09-10",
+    "contributors": [
+     {
+      "id": "PERSON-000001",
+      "role": "author",
+      "via": "alpha-generator"
+     }
+    ]
+   },
+   "primary": true
+  }
+ ],
+ "synonyms": [],
+ "anatomic_scope": [],
+ "seen_on": [
+  "CT"
+ ],
+ "subspecialty": [],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-10",
+        "published": null,
+        "last_modified": "2026-09-10",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "measurements": [
+  {
+   "measurement_id": "MS-000004",
+   "name": "solid component diameter",
+   "definition": "The greatest diameter of the solid component of a part-solid nodule.",
+   "quantity_kind": "length",
+   "permitted_units": [
+    "mm",
+    "cm"
+   ],
+   "method": "Greatest diameter of the solid component, lung windows.",
+   "inherited_from": null,
+   "components": []
+  }
+ ],
+ "assessment_schemes": [],
+ "components": [],
+ "may_represent": [],
+ "may_be_caused_by": [],
+ "occurs_with": [],
+ "component_of": "FC-000007",
+ "component": true,
+ "fixed_values": [
+  {
+   "value_id": "V-000010",
+   "element": "hasAttenuation",
+   "defining": false
+  }
+ ],
+ "anchor_verdict": "anchored",
+ "anchor_base": null,
+ "anchor_modifiers": [],
+ "change_request": null,
+ "source_definition": null,
+ "concept_source": "Cancer Care Ontario",
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-10",
+  "published": null,
+  "last_modified": "2026-09-10",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ }
+}

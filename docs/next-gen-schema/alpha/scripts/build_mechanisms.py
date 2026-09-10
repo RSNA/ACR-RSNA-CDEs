@@ -1,0 +1,573 @@
+# -*- coding: utf-8 -*-
+"""
+Generates MECHANISMS.md: what each mechanism does and why it is there.
+
+One row per mechanism. No decision numbers, no cross-references, no history.
+If a mechanism is contested or unfinished, that is stated in its own entry
+rather than pointing somewhere else.
+"""
+import json, collections, datetime
+import spec
+
+OUT = "/mnt/user-data/outputs/radcde-alpha"
+
+# (mechanism, what it does, why it is this way, status)
+MECHANISMS = [
+
+    # ---- identity and anchoring -------------------------------------------
+    ("Anchor verdict: how a concept binds to RadLex",
+     "Every finding and diagnosis records how it relates to RadLex: one concept exists "
+     "(`anchored`), the term decomposes into concepts that exist (`post_coordinated`), it "
+     "is absent but a radiologist reports it (`unanchored_requestable`), or its nature puts "
+     "it outside a radiology lexicon (`out_of_primary_scope`).",
+     "RadLex is shallowly pre-coordinated and deeply post-coordinated. A check that looks "
+     "only for one matching concept reports gaps that are not there and files change "
+     "requests for terms already expressible. The fourth verdict stops clinical syndromes "
+     "bloating the lexicon.",
+     "applied"),
+
+    ("Criteria for requesting a new RadLex term",
+     "Four things are tried before asking the source for a new concept: does one already "
+     "exist; does the term decompose into concepts that all exist; is the distinguishing "
+     "feature already carried by an edge in the graph; and does the term belong in a "
+     "radiology lexicon at all. A request is filed only when all four fail.",
+     "Asking for everything bloats the source. Tested against fourteen candidates in this "
+     "build, ten did not warrant a request: eight decompose, one was already carried "
+     "structurally, and one belongs to SNOMED. Mural nodule is the clearest case — it is a "
+     "nodule, and the mural part is already said by COMPONENT_OF, so asking for the "
+     "pre-coordinated term would duplicate what the graph states.",
+     "applied"),
+
+    ("Binding to several terminologies, with one primary",
+     "A node may bind to several terminologies. Exactly one binding is primary and only "
+     "that one's hierarchy is imported. Each binding records system, code, the source's own "
+     "label, the SKOS match strength and the release it was resolved against.",
+     "RadLex is the primary anchor, especially for anatomy. SNOMED CT covers clinical terms "
+     "RadLex should not be asked to carry. Storing the source label lets a re-import detect "
+     "that an upstream concept was relabelled under us.",
+     "applied"),
+
+    ("Terms RadLex discourages are not treated as synonyms",
+     "Terms the source explicitly discourages are imported as `unsanctionedTerm`, never as "
+     "`skos:altLabel`, and are excluded from duplicate detection.",
+     "In RadLex, `Unsanctioned_Term`, `Acronym` and `Misspelling_of_term` are all "
+     "subproperties of `Synonym`. Read naively, a search for 'nodule' matches 'mass' "
+     "through a term RadLex explicitly rejects.",
+     "applied"),
+
+    ("Duplicate detection searches RadLex synonyms, not only labels",
+     "A candidate concept is checked against preferred labels and synonym fields, filtered "
+     "to English, before a local node is minted.",
+     "Of RadLex's English synonym terms, 99% match no preferred label anywhere. Two "
+     "first-order concepts in this build were reachable only by synonym: renal cell "
+     "carcinoma is labelled 'renal adenocarcinoma', intrapulmonary lymph node is labelled "
+     "'pulmonary lymph node'.",
+     "applied"),
+
+    ("Terminology codes verified against the source at build time",
+     "Every code the model uses is checked against the label the source gives it. A code that "
+     "does not resolve, or whose label is unrelated to what the model calls it, fails the "
+     "build.",
+     "A code is opaque. Nothing about RID3554 says whether it means what the line claims, so a "
+     "wrong one reads as correct and survives review indefinitely. This is a pipeline step "
+     "rather than anything the graph asserts, and it is listed here because a binding is only "
+     "worth what the check behind it is worth.",
+     "applied"),
+
+    ("Authoring patterns are topic checklists, not element bundles",
+     "A pattern lists the TOPICS a kind of finding is usually described by. It names no "
+     "DataElement, inserts nothing, and appears in no artifact. An author sees the topics as a "
+     "checklist and then decides, per finding, whether an existing element genuinely fits or a "
+     "new one is needed. Reuse is never forced.",
+     "The two carotid stenosis classes are the case that settles it. They share a name and "
+     "share nothing else: the internal carotid takes five NASCET diameter-ratio bands and two "
+     "competing percentage methods, the external carotid takes two bands read from velocity, "
+     "because the vessel is small and tortuous and a diameter ratio is unreliable there. "
+     "Different element, different measurements, different modality. A pattern that inserted "
+     "the stenosis machinery into everything called a stenosis would have put NASCET "
+     "percentages on a vessel nobody measures that way. "
+     "A pattern must not hold element ids and splice them into the classes that apply it. That "
+     "forces a shared element onto classes it does not suit, and the only way to make one fit "
+     "is to widen it: a single margin element reaching nine values across three societies, so "
+     "that a tendon lesion can be reported as having extra-thyroidal extension. Published "
+     "elements must not move to accommodate new findings. Discoverability is the useful part "
+     "and is anatomy-aware: an author scoping to the lung should be shown lung-scoped "
+     "distribution elements, not ones whose values come from another organ.",
+     "applied"),
+
+    ("Laterality is authored, not derived",
+     "The base pattern supplies presence and interval change to every finding. Laterality is "
+     "an ordinary element that a class declares if the finding can be sided. 37 of 45 classes "
+     "declare it; the rest do not.",
+     "RadLex has no laterality property. None of its 49 object properties concerns sidedness "
+     "and there is no side annotation, so it cannot be read off. It cannot be derived either, "
+     "and two routes were tested. Member_Of a named set catches the adrenal glands and the "
+     "carotid arteries, and also fires on the liver and the kidney through 'set of viscera of "
+     "abdomen' and 'set of solid abdominal organs', which are groupings rather than pairs. "
+     "Lateralised subclasses catch the lung, kidney and adrenal gland, and miss the rib "
+     "entirely and the thyroid, which has left and right lobes rather than left and right "
+     "glands. Combined, the two would call the liver paired and the rib unsided. So whether a "
+     "finding can be sided is decided when the class is authored. Expect this question to "
+     "return; the answer is not that nobody looked.",
+     "applied"),
+
+    ("Scope refinement, declared as a kind and compiled to a list",
+     "A class states where it is and, where the location can be narrowed, WHICH KIND of "
+     "anatomy may narrow it: a pulmonary nodule is in the lung and may be refined to any lobe "
+     "of lung. The permitted concepts are derived from that one declaration by walking the "
+     "anatomy, never authored. The OWL keeps it as a constraint a reasoner can check; the "
+     "compiled shape carries the derived list so a vendor holding only that file has a closed "
+     "set, the same as any element's permitted values.",
+     "Free refinement below the scope is too permissive: everything under lung includes the "
+     "secondary pulmonary lobule, and a nodule scoped there is congruent and meaningless. A "
+     "hand-authored list is too rigid and goes stale. Declaring the kind is neither. "
+     "Both the sided and the unsided forms are permitted, because a report says upper lobe of "
+     "the right lung, or the right upper lobe, or just the upper lobe, and all three have to "
+     "resolve. The cost is accepted knowingly: two records can encode one thing differently, "
+     "as RID1303 alone or as RID34695 with laterality right, and anyone comparing them "
+     "normalises. Deriving one from the other would be the same conversion refused between "
+     "NASCET and ECST. Where a report supports it, the most specific concept is preferred, and "
+     "that is a preference stated here rather than a field repeated in every shape. "
+     "The OWL carries no constraint because the obvious one does not bite: allValuesFrom the "
+     "kind is violated only if the wrong target is disjoint from it, and no anatomy class in "
+     "this build is declared disjoint from any other. RadLex does not declare it and walking "
+     "the imported hierarchy to assert sibling disjointness is ontology maintenance this "
+     "alpha is not taking on. The axiom was written, found to catch nothing, and removed "
+     "rather than left looking like a guard.",
+     "applied, not reasoner-enforced"),
+
+    ("Every finding is anatomically anchored",
+     "A FindingClass carries a scope, or it is a component reached only through "
+     "`HAS_COMPONENT`, or it is a subtype. A class with none of these is a pattern that "
+     "escaped into the graph, and the linter says so.",
+     "'Hepatic lesion' is a class; 'lesion' is not. Location is what turns a shape into "
+     "something reportable. Enforced for now and not yet disproved: no finding has appeared "
+     "that a radiologist reports without a location. A counterexample would not simply relax "
+     "the rule, it would suggest a node type this model does not have, since something "
+     "reportable and placeless is not a FindingClass as defined here.",
+     "applied, no counterexample yet"),
+
+    ("Authoring checks: advisory lint, not schema",
+     "Six advisory rules, none enforced by a reasoner and none constraining what an author may "
+     "write. The sharpest is that an element is never narrowed to a single value.",
+     "An element every user answers the same way is not recording an observation, it is "
+     "restating the class definition. Four elements were removed on that test: volume change, "
+     "content type, parenchymal pattern and clinical significance. Each looked like a shared "
+     "element and was a definition in disguise.",
+     "applied"),
+
+    ("When a subtype earns its place",
+     "Two tests. First, something in the model must distinguish a subtype from its siblings: a "
+     "defining element value, a different scope, a required component, or its own elements. If "
+     "the only difference is the label, it is a value on an element rather than a class. "
+     "Second, subtypes partition on exactly one axis; a second axis becomes an element.",
+     "Applied case by case before it was written down, and the cases agree. Pulmonary nodule "
+     "subtypes are separated by a defining attenuation value, and part-solid gains a component. "
+     "Renal cyst subtypes by a composition value. Haemorrhage compartments by scope, each to a "
+     "different space. Atelectasis had five subtypes separated by NOTHING: identical scope to "
+     "lung, identical elements, no defining value, distinguishable only by name. They also "
+     "mixed two axes, morphology and mechanism, which co-occur, so neither could partition the "
+     "other. Replaced by one class carrying both as elements. "
+     "NEEDS A RADIOLOGIST: whether obstructive atelectasis behaves differently enough to earn "
+     "classhood after all, since it implies an obstructing lesion and that is a causal edge no "
+     "other mechanism carries; and whether the two axes are genuinely independent or some "
+     "combinations cannot occur.",
+     "needs confirmation"),
+
+    ("Defined classes: subtypes a reasoner computes",
+     "A class whose conditions are necessary and sufficient is computed by a reasoner rather "
+     "than authored. A part-solid nodule is a pulmonary nodule whose attenuation is "
+     "part-solid, and nothing about it is written twice.",
+     "The alternative was either a condition on an edge that consumers must evaluate, or a "
+     "subtype maintained by hand alongside its siblings. A defined class is neither: one "
+     "axiom, and inheritance does the rest.",
+     "applied"),
+
+    ("Component relationships, asserted in either direction",
+     "`HAS_COMPONENT` says the whole must have this part. `COMPONENT_OF` says this part "
+     "belongs only to that whole and says nothing about whether the whole has one.",
+     "A part-solid nodule has a solid component by definition. A complex cyst does not have "
+     "a mural nodule by definition, but a mural nodule only occurs in one. Both are real "
+     "and they need opposite axioms.",
+     "applied"),
+
+    ("Edges are addressable objects with their own identity",
+     "Every authored edge carries an id and a version block, so a relationship can change, "
+     "be cited in a change request, or be retired without either endpoint changing. "
+     "Imported anatomy relations are excluded because re-import regenerates them.",
+     "An edge that can only be described cannot be governed.",
+     "applied"),
+
+    # ---- anatomy ----------------------------------------------------------
+    ("Two anatomy traversals: mereology and location, kept apart",
+     "`partOf` is transitive and inference-bearing, used for scope congruence. "
+     "`containedIn` is separate and used only to derive the body region.",
+     "A kidney is not part of the abdomen, it is located in it. Merging them would let a "
+     "scope check chase location links into nonsense. Keeping them apart also means the "
+     "body region needs no authored edge: it is computed from the scope target.",
+     "applied"),
+
+    ("RadLex partonomy senses imported as subproperties of one partOf",
+     "`Part_Of`, `Regional_Part_Of` and `Constitutional_Part_Of` are imported as three "
+     "subproperties of one `partOf`, so traversal happens over the parent and each sense "
+     "stays visible on the edge. Where a pair is asserted under both a specific sense and "
+     "the generic one, the specific is kept.",
+     "The alternative was one edge with a sense property, which loses traversal, or three "
+     "unrelated edges, which loses the shared walk.",
+     "applied"),
+
+    ("Anatomy imported as an extract, regenerated on each RadLex release",
+     "Only the concepts the authored layer uses are imported, plus enough hierarchy above "
+     "each to place them. The anatomy module is regenerated by re-import and contains "
+     "nothing authored except gap-fill.",
+     "Keeps the maintenance surface bounded and makes the imported/authored boundary "
+     "structural rather than a convention.",
+     "applied"),
+
+    ("Local gap-fill for relationships RadLex does not assert",
+     "Where an imported concept exists but a relationship does not, the relationship is "
+     "authored locally with a change request reference, and removed on the release that "
+     "carries it.",
+     "RadLex has no upward relation for the adrenal gland and does not connect lung "
+     "parenchyma to the lung. Without gap-fill, anything scoped there derives no body "
+     "region and fails scope checks in a way that looks like a model bug.",
+     "applied"),
+
+    ("Laterality pre-coordinated with an axis",
+     "Scope points at the sided concept the source names; a side axis is carried alongside "
+     "so the unsided form is reachable without composing anything.",
+     "RadLex already pre-coordinates 'left clavicle'. Consumers that want structure plus a "
+     "separate side field read the axis; consumers that want the concept read the concept.",
+     "applied"),
+
+    # ---- semantics --------------------------------------------------------
+    ("When acuity is a value and when it is a class",
+     "Acuity is an ELEMENT where it changes only what the finding looks like, and separate "
+     "CLASSES where it changes which findings the diagnosis reaches. Intracranial haemorrhage "
+     "takes an acuity element: acute and chronic blood are the same collection at different "
+     "densities, and nothing else about the finding changes. Acute and chronic pyelonephritis "
+     "are two classes: the acute picture is a striated nephrogram with perinephric stranding "
+     "and an enlarged kidney, the chronic picture is cortical scarring, and they share none of "
+     "it.",
+     "One class with an acuity value cannot vary its manifestation edges, so it would assert "
+     "that chronic pyelonephritis manifests as a striated nephrogram. There is also no "
+     "unqualified parent for pyelonephritis: a radiologist always chooses a side because the "
+     "two look completely different, and an ambiguous diagnosis would be unhelpful to the "
+     "treating physician. The unqualified term exists for billing, not for reporting.",
+     "applied"),
+
+    ("Diagnosis scope does not govern its manifestations",
+     "A diagnosis carries the anatomic seat of the disease. Its manifestations may sit "
+     "anywhere, and no rule requires them to agree. Pyelonephritis is scoped to the kidney and "
+     "manifests as perinephric fat stranding, which is in the perirenal space. Lung cancer is "
+     "scoped to the lung and manifests as mediastinal lymphadenopathy.",
+     "Widening a diagnosis scope to cover everything it can produce would scope lung cancer to "
+     "the whole body and say nothing. The scope answers where the disease is; the manifestation "
+     "edges answer where it can be seen. Those are different questions, nothing enforces "
+     "agreement between them, and nothing should.",
+     "applied"),
+    ("Evidential and causal edges are separate",
+     "`MAY_MANIFEST_AS` says a diagnosis can show itself as a finding. `MAY_CAUSE` says "
+     "something produces a second entity. Neither is inference-bearing.",
+     "Pneumonia does not show itself as a pleural effusion; it produces one. Running the "
+     "two together lets an author assert production by writing evidence.",
+     "applied"),
+
+    ("Typicality and specificity on an evidential edge",
+     "`typicality` reads forward: how often the diagnosis shows this finding. `specificity` "
+     "reads backward: how much seeing the finding narrows the differential.",
+     "The two are independent. A striated nephrogram and perinephric stranding are equally "
+     "frequent in pyelonephritis, but stranding also occurs in obstruction, trauma and "
+     "infarct, so it narrows far less.",
+     "specificity unvalidated"),
+
+    ("Obligate typicality instead of subtyping",
+     "Where a diagnosis cannot occur without a finding, the edge carries "
+     "`typicality: obligate` rather than making the diagnosis a subtype of the finding.",
+     "'Empyema without effusion' is not a meaningful sentence, but empyema is still a "
+     "conclusion and an effusion is still an observation. Subtyping across the two would "
+     "collapse the distinction the node types exist to draw.",
+     "applied"),
+
+    ("Etiology as a deliberately coarse causal target",
+     "`HAS_ETIOLOGY` points at ten broad kinds of cause.",
+     "Gives causal edges somewhere to land without starting a causal taxonomy, which is a "
+     "different project.",
+     "deliberately coarse"),
+
+    ("Scope kind: which relation a congruence check walks",
+     "`SCOPED_TO` carries a kind that says which relation a congruence check walks: "
+     "`specific` walks subsumption, `region` walks containment, `class` walks taxonomy.",
+     "Tendons share no container, so a tendon lesion cannot be scoped by containment. "
+     "Organs do, so a pulmonary nodule can. One edge with a kind covers both.",
+     "applied"),
+
+    ("Scope strength: how binding the location claim is",
+     "`required`, `expected` or `unconstrained`, recorded on the scope edge.",
+     "Declares how binding the claim is, so a consumer can tell a definitional scope from a "
+     "usual one. Nothing enforces it yet.",
+     "declared, unenforced"),
+
+    # ---- data -------------------------------------------------------------
+    ("Single-select and multi-select declared on the element",
+     "Single-select elements are declared functional; multi-select ones are not.",
+     "Disjoint values alone do not make an element single-select: nothing stops two "
+     "different fillers. No case in the corpus shows the same element single-select on one "
+     "finding and multi-select on another, so cardinality is intrinsic to the element.",
+     "applied"),
+
+    ("Narrowing a value list at the point of use is advisory",
+     "A finding may restrict an element to a subset of its values. In the alpha this emits "
+     "as an annotation and a lint rule, not as an axiom.",
+     "A hard stop does not always fit the language, and anatomy narrowing in particular is "
+     "guidance because a diagnosis draws on several regions at once. A probe carries the "
+     "hard form so the value of enforcing it accumulates without the alpha paying for it.",
+     "soft on purpose"),
+
+    ("Ordered value lists: rank on all values or none",
+     "`rank` appears on every value of an element or on none.",
+     "Partial ranking is worse than none: a consumer cannot tell an unranked value from one "
+     "someone forgot to rank.",
+     "applied"),
+
+    ("Measurement is its own node, because the method is the content",
+     "A quantitative attribute is a Measurement carrying quantity kind, permitted units and "
+     "the method by which it is taken. It is not a DataElement with a numeric range.",
+     "The method is the content. Mean diameter measured on lung windows by the Fleischner "
+     "convention is a different measurement from one taken any other way, and a range "
+     "cannot say so.",
+     "applied"),
+
+    ("The graph records what was said, and derives nothing",
+     "Where a finding can be reported two ways, both are carried and neither is computed from "
+     "the other. Carotid stenosis takes an ordinal band and a percentage, and takes NASCET and "
+     "ECST percentages separately. A report saying moderate gives the band and no number; one "
+     "saying 55 percent gives the number and no band; one saying both gives both.",
+     "Converting would be inventing. NASCET and ECST are different numbers from the same "
+     "image, roughly 70 against 85 percent, so a consumer reading one as the other is wrong by "
+     "a management threshold. Deriving a band from a number would also assert a convention the "
+     "report may not have used. The band definitions state which convention they carry so a "
+     "reader knows what the word meant, and that is documentation, not a computation rule.",
+     "applied"),
+
+    ("How a measurement is scoped, and when it is split",
+     "A measurement carries anatomic scope when its METHOD only holds at that anatomy, and "
+     "carries none when the method is general. Greatest pole-to-pole length is a kidney "
+     "method, so that measurement is renal length scoped to the kidney. Greatest diameter on "
+     "a single plane holds anywhere, so long-axis diameter is unscoped and reused freely. "
+     "Nine of thirteen are unscoped.",
+     "A measurement IS its method, so a generic parent with no method would carry no content, "
+     "and one with several methods would not say which applied. There is therefore no shared "
+     "parent and no subtype hierarchy: an organ needing a length gets its own measurement with "
+     "its own method, and quantity_kind already groups every length for anyone who wants the "
+     "set. The scope is what makes `measurement-scope-agrees` meaningful, since attaching a "
+     "kidney method to a lung finding is then catchable. The rule allows a class scoped at or "
+     "below the measurement, so carotid stenosis at the internal carotid artery may use "
+     "luminal caliber scoped to artery.",
+     "applied"),
+
+    ("Measurements carry their own scope",
+     "A descriptor of a normal structure is a Measurement scoped to a location, with no "
+     "owning finding.",
+     "The alternative was letting elements hang off anatomy nodes, which makes the entire "
+     "descriptor set of a structure depend on a concept we do not govern.",
+     "applied"),
+
+    ("Values are owned by one element, never shared",
+     "Each element owns its values; exactly one element points at each.",
+     "Most repeated value labels are homonyms rather than duplicates. 'Solid' attenuation "
+     "means the nodule obscures the parenchyma; 'solid' composition means it is soft "
+     "tissue. Sharing would collapse a real distinction. Where meaning is genuinely stable "
+     "the reuse belongs at the element, not the value.",
+     "applied"),
+
+    # ---- extraction -------------------------------------------------------
+    ("No instances: claims are made by probes, not worked examples",
+     "The model carries no worked observations. Claims about what it can represent are made by "
+     "class-level probes, which state a construction and check what a reasoner concludes from "
+     "it, and invent no report text.",
+     "An instance pairing a real sentence with a representation chosen here proves nothing: "
+     "whoever writes the representation also decides the answer, and any field they supply "
+     "beyond what the sentence states renders identically to one that was derived or checked. "
+     "Instance-level validation needs data authored elsewhere, by a radiologist or by something "
+     "that reads text. Until then the probes carry the claims, since a probe states a "
+     "construction and lets the reasoner return the verdict.",
+     "applied"),
+
+    ("Unresolved mentions: report text that resolves to no class",
+     "Report text that names something finding-shaped but does not resolve to a class is "
+     "recorded as an `UnresolvedMention` (`UM-*`), which is not a FindingClass and is "
+     "declared disjoint from one.",
+     "With no abstract classes there is nowhere to put an unlocalised nodule, and that is "
+     "correct: it is not a finding yet. Recording it keeps underspecification countable "
+     "without putting a vague code in the output that an extractor could stop at.",
+     "applied"),
+
+    ("Scope resolution: why a mention carries no location",
+     "Four values say why a mention carries no location: the source stated one, stated an "
+     "unresolvable one, stated none, or extraction missed it.",
+     "Without it, a report that said nothing and a pipeline that failed produce identical "
+     "output, and neither coding rate nor localisation rate can be measured.",
+     "scope only; measurement, laterality and presence still need it"),
+
+    ("Compiled shapes: the flat form vendors read",
+     "Each finding is emitted as one flat shape with references resolved and patterns "
+     "applied, so a consumer evaluates nothing.",
+     "The definition graph is for authoring and governance. A vendor should read one "
+     "concrete shape, not a general shape plus conditions.",
+     "applied"),
+]
+
+# mechanisms considered and not adopted
+NOT_ADOPTED = [
+    ("Grouping node",
+     "A node asserted only in the negative, so that 'no renal abnormality' has something to "
+     "point at. Never used positively.",
+     "Unresolved rather than rejected. Negating a named finding already works, with presence "
+     "absent on the finding itself; what has no answer is negating a category, where nothing is "
+     "named to carry the value. What would need settling: whether one "
+     "negative node per organ scales, and how remainder negation works, since 'no other "
+     "significant adenopathy' needs a scope over what was examined rather than a node to "
+     "point at."),
+    ("IN_REGION edge",
+     "Coarse body region authored alongside the scope edge.",
+     "Redundant: the region is derived by walking containment upward from the scope target. "
+     "An authored region can also contradict the scope with nothing to adjudicate."),
+    ("MAY_PROGRESS_TO",
+     "Identity-preserving evolution: the same entity in a later state.",
+     "The distinction is real, but identity preservation is not expressible without time, "
+     "and progression pairs are characteristically disjoint. Declared and unused; three "
+     "probes show what it would and would not buy."),
+    ("INTERPRETED_FROM",
+     "Relates an interpretation to what it was read from.",
+     "Meaning shifts depending on how many things it points at and which are present."),
+    ("Diagnosis as a subtype of a finding",
+     "Empyema as a kind of pleural effusion.",
+     "Collapses the observation and conclusion layers. Obligate typicality says the same "
+     "thing without it."),
+    ("Size as a defining condition",
+     "Nodule and mass separated by a measured threshold.",
+     "Class membership would follow a measured value, so a lesion followed over time would "
+     "change class silently with no author present. The threshold is recorded as prose on "
+     "the organ-specific pair where the evidence for it actually is."),
+    ("Requiredness on elements",
+     "Marking some elements mandatory.",
+     "No case needs it. Absence of a value is already carried by the presence element."),
+    ("Demographic and temporal applicability",
+     "Sex, age range and time course as edges.",
+     "Deferred. Nothing in the current content needs them."),
+]
+
+GAPS = [
+    ("The subject of a statement",
+     "One lesion, several, a cluster, innumerable. The model can describe a finding and "
+     "cannot say how many there are or that an attribute applies to all of them.",
+     "This is the largest gap and it is upstream of three others: negation, remainder "
+     "negation and bilaterality all turn on what the statement is about."),
+    ("Negation beyond a named finding",
+     "'No renal abnormality' names no finding, so nothing carries a presence value. 'No other "
+     "significant adenopathy' is a claim about everything examined and not mentioned.",
+     "Negating a named finding is handled: presence absent. These two are not. The second needs "
+     "a scope over what was looked at, which no node or element can carry."),
+    ("Certainty",
+     "'Compatible with', 'concerning for', 'cannot exclude' are not carried.",
+     "Undecided. Needs a mechanism if it belongs in the vocabulary."),
+
+    ("Extra-thyroidal extension filed under margin",
+     "ACR TI-RADS scores it in the margin category, so the thyroid margin element carries it. "
+     "It is a claim about invasion of adjacent tissue rather than about the interface.",
+     "Matching the scheme keeps scoring straightforward and puts a behaviour claim on a "
+     "morphology axis. NEEDS A RADIOLOGIST: whether to follow the scheme here or move it to an "
+     "actsOn edge and reconstruct the score."),
+
+    ("Measurements that reference a landmark elsewhere",
+     "A measurement may be defined against a landmark outside the anatomy it is taken at. "
+     "NASCET divides the residual lumen at the stenosis by the diameter of the normal distal "
+     "internal carotid, which is a different segment. The model carries one scope per "
+     "measurement and cannot say the denominator sits somewhere else.",
+     "Not worked out. The scope mechanism assumes a measurement belongs at one place, and a "
+     "landmark reference is a second place in a different role. Expressing it would need a new "
+     "edge rather than another scope, since a second SCOPED_TO would read as the measurement "
+     "being taken at both. `element-scope-agrees` is written as though one scope is the whole "
+     "story, and would need revisiting."),
+
+    ("Procedure reference",
+     "Nothing represents a procedure, so a finding attributable to one cannot say which, and "
+     "there is nothing against which to judge whether an appearance is expected.",
+     "Post-procedural findings are common in reports and none is expressible."),
+    ("Decomposing a pre-coordinated anchor",
+     "Scope points at the concept the source names. Where that concept is pre-coordinated, as "
+     "'left lung' or 'upper lobe of right lung' are, there is no way to ask for the structure "
+     "and the modifier separately.",
+     "A consumer wanting structure plus a side field, rather than the concept as named, has "
+     "nothing to read. The same applies to any pre-coordinated axis the source builds in, not "
+     "only laterality. `anchor_base` and `anchor_modifiers` decompose an anchor we compose "
+     "ourselves; they say nothing about one the source arrived with."),
+
+    ("Inheritance is all or nothing",
+     "A subtype carries everything its parent declares. It can add and it can narrow, but it "
+     "cannot decline. `collection shape` sits correctly on intracranial haemorrhage, where a "
+     "radiologist describing an undifferentiated extra-axial collection does call it biconvex "
+     "or crescentic, and all five compartment subtypes inherit it. So epidural haematoma offers "
+     "four shapes when it can only be biconvex.",
+     "The fix would be letting a subtype suppress an inherited element, which is rejected: "
+     "there is no principled test for when suppression is right, so it becomes a per-class "
+     "exception with a rule attached. One odd case does not justify it. NEEDS A RADIOLOGIST: "
+     "whether offering the full shape list on a named compartment is harmless or misleading."),
+
+    ("Comparison to a named prior",
+     "Interval change is coarse and carries no reference to which study was compared.",
+     ""),
+]
+
+
+def main():
+    g = json.load(open(f"{OUT}/graph/definition-graph.json"))
+    L = []
+    w = L.append
+    w("# Mechanisms")
+    w("")
+    w("What each mechanism does and why it is there. One entry each, no history.")
+    w("")
+    w("Status **applied** means the mechanism is in the model and in use. It does not mean")
+    w("anyone outside this work has agreed with it.")
+    w("")
+    w(f"Generated {datetime.date.today().isoformat()} by `scripts/build_mechanisms.py`.")
+    w("`SHAPE.md` is the schema; `README.md` is how to run it.")
+    w("")
+    w("---")
+    w("")
+    w("## In the model")
+    w("")
+    w("| Mechanism | What it does | Why | Status |")
+    w("|---|---|---|---|")
+    for nm, does, why, st in MECHANISMS:
+        w(f"| **{nm}** | {does} | {why} | {st} |")
+    w("")
+    w("## Considered, not adopted")
+    w("")
+    w("| Mechanism | Would be | Why not |")
+    w("|---|---|---|")
+    for nm, would, why in NOT_ADOPTED:
+        w(f"| **{nm}** | {would} | {why} |")
+    w("")
+    w("## Gaps")
+    w("")
+    w("Things a radiologist can say that the model cannot hold.")
+    w("")
+    w("| Gap | What is missing | Note |")
+    w("|---|---|---|")
+    for nm, what, note in GAPS:
+        w(f"| **{nm}** | {what} | {note or '—'} |")
+    w("")
+    w("---")
+    w("")
+    w("Clinical content is provisional. Ordinal scales were assembled from report language "
+      "rather than a society standard.")
+    open(f"{OUT}/MECHANISMS.md", "w").write("\n".join(L) + "\n")
+    print(f"MECHANISMS.md: {len(L)} lines | {len(MECHANISMS)} mechanisms, "
+          f"{len(NOT_ADOPTED)} not adopted, {len(GAPS)} gaps")
+
+
+if __name__ == "__main__":
+    main()
