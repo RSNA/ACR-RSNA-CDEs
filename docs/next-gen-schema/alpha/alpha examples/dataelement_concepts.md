@@ -92,7 +92,7 @@ DataElements extracted from `alpha-turtle.ttl`. DataElements are attributes that
 
 | Diagnosis | FindingClass |
 | --- | --- |
-|  | - pulmonary nodule<br/>- solid component of part-solid pulmonary nodule |
+|  | - pulmonary nodule |
 
 ---
 

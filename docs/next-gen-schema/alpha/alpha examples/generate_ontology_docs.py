@@ -163,6 +163,107 @@ class OntologyDocs:
                 result.append((prop, filler))
         return result
 
+    def restrictions_in_expression(self, expression, seen=None):
+        """
+        Recursively return OWL restrictions contained in a class expression.
+
+        This is used for defined classes whose necessary-and-sufficient
+        restrictions sit inside owl:equivalentClass / owl:intersectionOf.
+
+        owl:unionOf is intentionally not flattened because its members are
+        alternatives, not simultaneously applicable constraints.
+        """
+        if seen is None:
+            seen = set()
+
+        if expression in seen:
+            return []
+
+        seen.add(expression)
+
+        if (expression, RDF.type, OWL.Restriction) in self.g:
+            prop = self.g.value(expression, OWL.onProperty)
+            filler = (
+                self.g.value(expression, OWL.someValuesFrom)
+                or self.g.value(expression, OWL.allValuesFrom)
+                or self.g.value(expression, OWL.hasValue)
+            )
+            if prop is not None and filler is not None:
+                return [(prop, filler)]
+            return []
+
+        result = []
+        intersection = self.g.value(expression, OWL.intersectionOf)
+        if intersection is not None:
+            for member in self.rdf_list(intersection):
+                result.extend(self.restrictions_in_expression(member, seen))
+
+        return result
+
+    def defining_restrictions(self, cls) -> list[tuple[URIRef, object]]:
+        """
+        Restrictions participating in owl:equivalentClass definitions.
+
+        These are necessary-and-sufficient defining constraints.
+        """
+        result = []
+        for expression in self.g.objects(cls, OWL.equivalentClass):
+            result.extend(self.restrictions_in_expression(expression))
+
+        output = []
+        seen = set()
+        for item in result:
+            if item not in seen:
+                seen.add(item)
+                output.append(item)
+        return output
+
+    def all_restrictions_with_semantics(self, cls):
+        """
+        Return (property, filler, defining) tuples.
+
+        defining=False: rdfs:subClassOf restriction, necessary only.
+        defining=True: owl:equivalentClass restriction, necessary and sufficient.
+        """
+        result = [(p, o, False) for p, o in self.restrictions(cls)]
+        result.extend((p, o, True) for p, o in self.defining_restrictions(cls))
+
+        output = []
+        seen = set()
+        for item in result:
+            if item not in seen:
+                seen.add(item)
+                output.append(item)
+        return output
+
+    def data_element_ranges(self, prop):
+        return [
+            r for r in self.g.objects(prop, RDFS.range)
+            if isinstance(r, URIRef)
+        ]
+
+    def is_fixed_data_element_value(self, prop, target) -> bool:
+        """
+        True when a DataElement restriction fixes the element to a concrete
+        permitted value rather than exposing its value domain.
+
+        Example:
+          hasAttenuation some AttenuationValue  -> authorable DataElement
+          hasAttenuation some V_000010_Solid   -> fixed value constraint
+        """
+        if not isinstance(target, URIRef):
+            return False
+
+        ranges = self.data_element_ranges(prop)
+
+        for value_range in ranges:
+            if target == value_range:
+                return False
+            if self.subclass_of(target, value_range):
+                return True
+
+        return False
+
     # ---------- Scope handling ----------
 
     def direct_scopes(self, cls):
@@ -390,6 +491,7 @@ class OntologyDocs:
             "",
             f"Diagnosis relationships extracted from `{self.turtle_path.name}`. "
             "When scope is inherited rather than directly asserted, the nearest ancestor providing that scope is identified. "
+            "Fixed DataElement values are shown separately as HAS_VALUE_CONSTRAINT, with defining versus necessary semantics preserved. "
             "Absent relationships are omitted.",
             "",
         ]
@@ -415,11 +517,34 @@ class OntologyDocs:
                                 lines.append(f"  - `{skind}`: {self.label(anatomy)}{suffix}")
                     lines.append("")
 
-            de_vals = [(p, o) for p, o in r if self.prop_is_subproperty(p, CDE.hasDataElement)]
+            de_vals = [
+                (p, o)
+                for p, o in r
+                if self.prop_is_subproperty(p, CDE.hasDataElement)
+                and not self.is_fixed_data_element_value(p, o)
+            ]
             if de_vals:
                 lines += ["#### HAS_DATA_ELEMENT (attributes associated directly with it)", ""]
                 for prop, _ in sorted(de_vals, key=lambda x: self.label(x[0]).lower()):
                     lines.append(f"- **{self.label(prop)}**")
+                lines.append("")
+
+            value_constraints = [
+                (p, o, defining)
+                for p, o, defining in self.all_restrictions_with_semantics(dx)
+                if self.prop_is_subproperty(p, CDE.hasDataElement)
+                and self.is_fixed_data_element_value(p, o)
+            ]
+            if value_constraints:
+                lines += ["#### HAS_VALUE_CONSTRAINT", ""]
+                for prop, value, defining in sorted(
+                    value_constraints,
+                    key=lambda x: (self.label(x[0]).lower(), self.label(x[1]).lower()),
+                ):
+                    semantics = "defining" if defining else "necessary"
+                    lines.append(
+                        f"- **{self.label(prop)} = {self.label(value)}** ({semantics})"
+                    )
                 lines.append("")
 
             if idx != len(self.diagnoses) - 1:
@@ -577,11 +702,34 @@ class OntologyDocs:
                     arr.append(prefix + f"- **{self.label(target)}**")
                 arr.append(blank)
 
-            de_vals = [(p, o) for p, o in r if self.prop_is_subproperty(p, CDE.hasDataElement)]
+            de_vals = [
+                (p, o)
+                for p, o in r
+                if self.prop_is_subproperty(p, CDE.hasDataElement)
+                and not self.is_fixed_data_element_value(p, o)
+            ]
             if de_vals:
                 arr += [prefix + "#### HAS_DATA_ELEMENT (attributes associated directly with it)", blank]
                 for prop, _ in sorted(de_vals, key=lambda x: self.label(x[0]).lower()):
                     arr.append(prefix + f"- **{self.label(prop)}**")
+                arr.append(blank)
+
+            value_constraints = [
+                (p, o, defining)
+                for p, o, defining in self.all_restrictions_with_semantics(fc)
+                if self.prop_is_subproperty(p, CDE.hasDataElement)
+                and self.is_fixed_data_element_value(p, o)
+            ]
+            if value_constraints:
+                arr += [prefix + "#### HAS_VALUE_CONSTRAINT", blank]
+                for prop, value, defining in sorted(
+                    value_constraints,
+                    key=lambda x: (self.label(x[0]).lower(), self.label(x[1]).lower()),
+                ):
+                    semantics = "defining" if defining else "necessary"
+                    arr.append(
+                        prefix + f"- **{self.label(prop)} = {self.label(value)}** ({semantics})"
+                    )
                 arr.append(blank)
 
             seen_on = [o for p, o in r if p == CDE.seenOn]
@@ -626,6 +774,7 @@ class OntologyDocs:
             "Diagnosis connections include relationships asserted from Diagnosis to FindingClass, with subtype inheritance identified where applicable. "
             "`OCCURS_WITH` is expanded in both directions when the ontology declares it symmetric. "
             "`AVAILABLE_LOCATION_REFINEMENTS` uses a conservative authoring-oriented ontology walk and does not treat arbitrary anatomical containment as a valid location option. "
+            "Fixed DataElement values are shown separately as `HAS_VALUE_CONSTRAINT`; restrictions from `owl:equivalentClass` are marked defining and restrictions from `rdfs:subClassOf` are marked necessary. "
             "Absent relationships are omitted.",
             "",
         ]
@@ -696,17 +845,39 @@ class OntologyDocs:
 
 
     def data_element_usage(self):
+        """
+        Return authorable DataElement usage only.
+
+        Fixed value restrictions are constraints, not offered elements, so they
+        are intentionally excluded from USED_BY.
+
+        Example:
+          PulmonaryNodule -> hasAttenuation some AttenuationValue
+              counts as attenuation usage
+
+          SolidPulmonaryNodule -> hasAttenuation some Solid
+              does not count as attenuation usage; it is a defining constraint
+
+          SolidComponentOfPartSolidNodule -> hasAttenuation some Solid
+              does not count as attenuation usage; it is a necessary constraint
+        """
         dx = defaultdict(set)
         fc = defaultdict(set)
 
         for owner in self.diagnoses:
-            for prop, _ in self.restrictions(owner):
-                if prop in self.data_element_props:
+            for prop, target, _ in self.all_restrictions_with_semantics(owner):
+                if (
+                    prop in self.data_element_props
+                    and not self.is_fixed_data_element_value(prop, target)
+                ):
                     dx[prop].add(owner)
 
         for owner in self.finding_classes:
-            for prop, _ in self.restrictions(owner):
-                if prop in self.data_element_props:
+            for prop, target, _ in self.all_restrictions_with_semantics(owner):
+                if (
+                    prop in self.data_element_props
+                    and not self.is_fixed_data_element_value(prop, target)
+                ):
                     fc[prop].add(owner)
 
         return dx, fc
@@ -725,8 +896,9 @@ class OntologyDocs:
             "# DataElement Concepts",
             "",
             f"DataElements extracted from `{self.turtle_path.name}`. DataElements are attributes that describe a FindingClass or Diagnosis. "
-            "Each section shows the allowed values defined by the ontology and where the DataElement is used. "
-            "Scope is shown if a DataElement itself is explicitly scoped in the ontology.",
+            "Each section shows the allowed values defined by the ontology and where the DataElement is available as an authorable attribute. "
+            "Fixed class value constraints are not counted as `USED_BY`. "
+            "Scope is shown if a DataElement itself is explicitly or logically scoped in the ontology.",
             "",
         ]
 

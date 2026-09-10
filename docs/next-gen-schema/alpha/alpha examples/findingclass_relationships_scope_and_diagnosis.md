@@ -940,6 +940,10 @@ FindingClass relationships extracted from `alpha-turtle.ttl`. FindingClasses are
 > - **interval change**
 > - **presence**
 >
+> #### HAS_VALUE_CONSTRAINT
+>
+> - **attenuation = non-solid** (defining)
+>
 > #### SEEN_ON (modality)
 >
 > - **Computed Tomography**
@@ -975,6 +979,10 @@ FindingClass relationships extracted from `alpha-turtle.ttl`. FindingClasses are
 >
 > - **interval change**
 > - **presence**
+>
+> #### HAS_VALUE_CONSTRAINT
+>
+> - **attenuation = part-solid** (defining)
 >
 > #### SEEN_ON (modality)
 >
@@ -1014,6 +1022,10 @@ FindingClass relationships extracted from `alpha-turtle.ttl`. FindingClasses are
 >
 > - **interval change**
 > - **presence**
+>
+> #### HAS_VALUE_CONSTRAINT
+>
+> - **attenuation = solid** (defining)
 >
 > #### SEEN_ON (modality)
 >
@@ -1106,6 +1118,10 @@ FindingClass relationships extracted from `alpha-turtle.ttl`. FindingClasses are
 > - **interval change**
 > - **presence**
 >
+> #### HAS_VALUE_CONSTRAINT
+>
+> - **composition = mixed cystic and solid** (defining)
+>
 > #### SEEN_ON (modality)
 >
 > - **Computed Tomography**
@@ -1124,6 +1140,10 @@ FindingClass relationships extracted from `alpha-turtle.ttl`. FindingClasses are
 >
 > - **interval change**
 > - **presence**
+>
+> #### HAS_VALUE_CONSTRAINT
+>
+> - **composition = cystic** (defining)
 >
 > #### SEEN_ON (modality)
 >
@@ -1271,8 +1291,11 @@ FindingClass relationships extracted from `alpha-turtle.ttl`. FindingClasses are
 
 #### HAS_DATA_ELEMENT (attributes associated directly with it)
 
-- **attenuation**
 - **presence**
+
+#### HAS_VALUE_CONSTRAINT
+
+- **attenuation = solid** (necessary)
 
 #### SEEN_ON (modality)
 
