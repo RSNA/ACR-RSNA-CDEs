@@ -483,6 +483,11 @@ EDGE_STYLES = {
         "width": 2.5,
         "dashes": False
     },
+    "HAS_VALUE_CONSTRAINT": {
+        "color": "#F39C12",
+        "width": 2.3,
+        "dashes": False
+    },
     "ALLOWS_VALUE": {
         "color": "#F1C40F",
         "width": 1.5,
@@ -648,35 +653,101 @@ def get_allowed_values(value_domain):
     return values
 
 
-# ============================================================
-# 9. OWL restrictions
-# ============================================================
+def restriction_target(restriction):
+    """
+    Return the filler/value used by an OWL restriction.
 
-print("Extracting OWL restrictions...")
-
-for host, _, restriction in g.triples((None, RDFS.subClassOf, None)):
-
-    if not isinstance(restriction, BNode):
-        continue
-
-    if (restriction, RDF.type, OWL.Restriction) not in g:
-        continue
-
-    prop = g.value(restriction, OWL.onProperty)
-
-    if prop is None:
-        continue
-
-    target = (
+    Supports the restriction forms used by this ontology:
+      - owl:someValuesFrom
+      - owl:allValuesFrom
+      - owl:hasValue
+    """
+    return (
         g.value(restriction, OWL.someValuesFrom)
         or g.value(restriction, OWL.allValuesFrom)
         or g.value(restriction, OWL.hasValue)
     )
 
-    if target is None:
-        continue
 
-    prop_name = clean_name(prop)
+def restrictions_in_expression(expression, seen=None):
+    """
+    Recursively yield OWL restrictions contained in a class expression.
+
+    This is required for defined classes whose restrictions sit inside
+    owl:equivalentClass / owl:intersectionOf rather than directly under
+    rdfs:subClassOf.
+
+    Example:
+
+        SolidPulmonaryNodule
+            owl:equivalentClass [
+                owl:intersectionOf (
+                    PulmonaryNodule
+                    [
+                        a owl:Restriction ;
+                        owl:onProperty hasAttenuation ;
+                        owl:someValuesFrom Solid
+                    ]
+                )
+            ] .
+
+    The helper deliberately follows intersection expressions, but does not
+    flatten owl:unionOf. A union describes alternatives and must not be
+    interpreted as a set of simultaneously applicable constraints.
+    """
+    if seen is None:
+        seen = set()
+
+    if expression in seen:
+        return
+
+    seen.add(expression)
+
+    if (expression, RDF.type, OWL.Restriction) in g:
+        yield expression
+        return
+
+    intersection_list = g.value(expression, OWL.intersectionOf)
+
+    if intersection_list:
+        for member in get_rdf_list_members(intersection_list):
+            yield from restrictions_in_expression(member, seen)
+
+
+def process_owl_restriction(host, restriction, defining=False):
+    """
+    Materialize one OWL restriction into the conceptual graph.
+
+    `defining=False` means the restriction came from rdfs:subClassOf and is
+    necessary only.
+
+    `defining=True` means the restriction came from owl:equivalentClass and
+    participates in a necessary-and-sufficient class definition.
+
+    DataElement restrictions are handled specially:
+
+      host -> HAS_DATA_ELEMENT -> DataElement
+
+    when the filler is the DataElement's value domain, versus:
+
+      host -> HAS_VALUE_CONSTRAINT -> fixed Value
+
+    when the filler is a concrete Value.
+
+    This prevents a fixed class-defining value such as
+    `hasAttenuation some solid` from being displayed as though attenuation
+    were an authorable element on that class.
+    """
+    prop = g.value(restriction, OWL.onProperty)
+
+    if prop is None:
+        return
+
+    target = restriction_target(restriction)
+
+    if target is None:
+        return
+
     prop_type = get_node_type(prop)
 
     register_node(host)
@@ -684,34 +755,35 @@ for host, _, restriction in g.triples((None, RDFS.subClassOf, None)):
     # --------------------------------------------------------
     # DataElement restriction
     # --------------------------------------------------------
-    #
-    # Example:
-    #
-    #   Cyst
-    #      hasWallCharacter some WallCharacterValue
-    #
-    # Visualize:
-    #
-    #   Cyst -> HAS_DATA_ELEMENT -> wall character
-    #
-    # Do NOT visualize WallCharacterValue.
-    #
     if prop_type == "DataElement":
         register_node(prop, "DataElement")
 
+        # A concrete Value filler is a fixed value constraint, not an
+        # offered/authorable DataElement.
+        if infer_node_type(target) == "Value":
+            register_node(target, "Value")
+
+            add_edge(
+                host,
+                target,
+                "HAS_VALUE_CONSTRAINT",
+                "HAS_VALUE_CONSTRAINT"
+            )
+            return
+
+        # A value-domain filler means the class carries the DataElement
+        # without fixing it to one concrete value.
         add_edge(
             host,
             prop,
             "HAS_DATA_ELEMENT",
             "HAS_DATA_ELEMENT"
         )
-
-        continue
+        return
 
     # --------------------------------------------------------
     # Measurements
     # --------------------------------------------------------
-
     if prop == CDE.hasMeasurement:
         add_edge(
             host,
@@ -719,7 +791,7 @@ for host, _, restriction in g.triples((None, RDFS.subClassOf, None)):
             "HAS_MEASUREMENT",
             "HAS_MEASUREMENT"
         )
-        continue
+        return
 
     if prop in {
         CDE.derivedFromMeasurement,
@@ -731,30 +803,28 @@ for host, _, restriction in g.triples((None, RDFS.subClassOf, None)):
             edge_label_from_property(prop),
             "HAS_MEASUREMENT"
         )
-        continue
+        return
 
     # --------------------------------------------------------
     # Anatomy / scope
     # --------------------------------------------------------
-
-    if (
-        prop == CDE.scopedTo
-        or prop == CDE.scopedToClass
-        or prop == CDE.scopedToRegion
-        or prop == CDE.scopedToSpecific
-    ):
+    if prop in {
+        CDE.scopedTo,
+        CDE.scopedToClass,
+        CDE.scopedToRegion,
+        CDE.scopedToSpecific
+    }:
         add_edge(
             host,
             target,
             edge_label_from_property(prop),
             "SCOPED_TO"
         )
-        continue
+        return
 
     # --------------------------------------------------------
     # Components
     # --------------------------------------------------------
-
     if prop in {
         CDE.hasComponent,
         CDE.componentOf
@@ -765,12 +835,11 @@ for host, _, restriction in g.triples((None, RDFS.subClassOf, None)):
             edge_label_from_property(prop),
             "HAS_COMPONENT"
         )
-        continue
+        return
 
     # --------------------------------------------------------
     # Diagnosis / clinical relationships
     # --------------------------------------------------------
-
     if prop in {
         CDE.mayManifestAs,
         CDE.mayCause,
@@ -793,12 +862,11 @@ for host, _, restriction in g.triples((None, RDFS.subClassOf, None)):
             edge_label,
             edge_category
         )
-        continue
+        return
 
     # --------------------------------------------------------
     # Anatomical containment / partonomy
     # --------------------------------------------------------
-
     if prop in {
         CDE.generalPartOf,
         CDE.regionalPartOf,
@@ -811,25 +879,65 @@ for host, _, restriction in g.triples((None, RDFS.subClassOf, None)):
             edge_label_from_property(prop),
             "PART_OF"
         )
-        continue
+        return
 
     # --------------------------------------------------------
     # All other meaningful restrictions
     # --------------------------------------------------------
-    #
-    # Examples may include:
-    #   assessedBy
-    #   seenOn
-    #   inSubspecialty
-    #
-    # Structural/hidden targets are automatically skipped.
-    #
     add_edge(
         host,
         target,
         edge_label_from_property(prop),
         "GENERIC"
     )
+
+
+# ============================================================
+# 9. OWL restrictions
+# ============================================================
+
+print("Extracting OWL restrictions...")
+
+# Necessary restrictions attached through rdfs:subClassOf.
+for host, _, restriction in g.triples((None, RDFS.subClassOf, None)):
+    if not isinstance(restriction, BNode):
+        continue
+
+    if (restriction, RDF.type, OWL.Restriction) not in g:
+        continue
+
+    process_owl_restriction(
+        host,
+        restriction,
+        defining=False
+    )
+
+
+# Necessary-and-sufficient restrictions contained in defined classes.
+#
+# These commonly appear as:
+#
+#   owl:equivalentClass [
+#       owl:intersectionOf (
+#           ParentClass
+#           [ a owl:Restriction ; ... ]
+#       )
+#   ]
+#
+# They must be traversed recursively rather than treated as a direct
+# equivalentClass -> Restriction edge.
+print("Extracting owl:equivalentClass defining restrictions...")
+
+for host, _, expression in g.triples((None, OWL.equivalentClass, None)):
+    if is_hidden(host):
+        continue
+
+    for restriction in restrictions_in_expression(expression):
+        process_owl_restriction(
+            host,
+            restriction,
+            defining=True
+        )
 
 
 # ============================================================
@@ -2050,6 +2158,20 @@ body {
                             associatedDataElements.push(
                                 neighbor
                             );
+                            return;
+                        }
+
+                        if (
+                            (
+                                nodeTypeOf(neighbor) ===
+                                    "FindingClass" ||
+                                nodeTypeOf(neighbor) ===
+                                    "Diagnosis"
+                            ) &&
+                            normalizedLabel(edge) ===
+                                "HAS_VALUE_CONSTRAINT"
+                        ) {
+                            includeEdge(result, edge);
                         }
                     }
                 );
@@ -2162,6 +2284,15 @@ body {
                             findingDataElements.push(
                                 neighbor
                             );
+                            return;
+                        }
+
+                        if (
+                            neighborType === "Value" &&
+                            normalizedLabel(edge) ===
+                                "HAS_VALUE_CONSTRAINT"
+                        ) {
+                            includeEdge(result, edge);
                             return;
                         }
 
@@ -2369,6 +2500,15 @@ body {
                             diagnosisDataElements.push(
                                 neighbor
                             );
+                            return;
+                        }
+
+                        if (
+                            neighborType === "Value" &&
+                            normalizedLabel(edge) ===
+                                "HAS_VALUE_CONSTRAINT"
+                        ) {
+                            includeEdge(result, edge);
                             return;
                         }
 
