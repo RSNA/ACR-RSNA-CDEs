@@ -18,6 +18,7 @@ print("Parsing ontology...")
 g.parse(file_path, format="turtle")
 
 CDE = Namespace("https://radelement.org/ng/")
+SKOS = Namespace("http://www.w3.org/2004/02/skos/core#")
 g.bind("cde", CDE)
 
 print(f"Loaded {len(g):,} triples")
@@ -441,10 +442,17 @@ def register_node(node, node_type=None):
     label = clean_name(node)
     short_id = compact_id(node)
 
+    definition = g.value(node, SKOS.definition)
+    definition_text = (
+        str(definition).strip()
+        if definition is not None and str(definition).strip()
+        else "Not provided"
+    )
+
     title = (
         f"{label}\n"
         f"Type: {node_type}\n"
-        f"{node}"
+        f"Definition: {definition_text}"
     )
 
     net.add_node(
@@ -2512,6 +2520,19 @@ body {
                             return;
                         }
 
+                        var edgeLabel =
+                            normalizedLabel(edge);
+
+                        if (
+                            edgeLabel === "SCOPED_TO" ||
+                            edgeLabel === "SCOPED_TO_CLASS" ||
+                            edgeLabel === "SCOPED_TO_REGION" ||
+                            edgeLabel === "SCOPED_TO_SPECIFIC"
+                        ) {
+                            includeEdge(result, edge);
+                            return;
+                        }
+
                     }
                 );
 
@@ -3154,7 +3175,7 @@ body {
             applyFocus(entry.id);
             network.selectNodes([entry.id], false);
             setTimeout(function () {
-                network.focus(entry.id, {scale:1.15, animation:{duration:600, easingFunction:"easeInOutQuad"}});
+                network.focus(entry.id, {scale:0.32, animation:{duration:600, easingFunction:"easeInOutQuad"}});
             }, 0);
         }
 
@@ -3381,7 +3402,7 @@ body {
                 network.focus(
                     nodeId,
                     {
-                        scale: 1.15,
+                        scale: 0.32,
                         animation: {
                             duration: 450,
                             easingFunction:

@@ -17,6 +17,8 @@ in the same directory as this script.
 
 from __future__ import annotations
 
+import re
+
 import argparse
 from collections import defaultdict, deque
 from pathlib import Path
@@ -332,71 +334,369 @@ class OntologyDocs:
                 return node
         return None
 
-    def regional_archetypes(self):
-        names = [
-            "organ region",
-            "organ segment",
-            "anatomical lobe",
-            "segment of brain",
-            "region of vascular tree",
-        ]
-        return [n for n in (self.find_by_label(x) for x in names) if n is not None]
-
-    def is_regional_anatomy(self, node):
-        text = self.label(node).lower()
-
-        if any(self.subclass_of(node, archetype) for archetype in self.regional_archetypes()):
-            return True
-
-        if any(p == CDE.regionalPartOf for p, _ in self.restrictions(node)):
-            return True
-
-        # Covers ontology concepts modeled under generic component classes while
-        # still clearly representing regional/lobar/segmental localization.
-        regional_terms = (
-            " lobe", "lobe of ", "segment of ", "segmental ",
-            "left ", "right ", "upper pole", "lower pole",
-        )
-        return any(term in text for term in regional_terms)
-
-    def valid_location_refinements(self, root):
+    def resolved_refinement_kind(self, cls):
         """
-        Conservative authoring-oriented location refinement.
+        Return the refinementKind annotation that licenses location narrowing.
 
-        Include:
-          * named subclass specializations
-          * explicit regionalPartOf children
-          * generalPartOf children only when the child itself is modeled as
-            regional, lobar, or segmental anatomy
+        refinementKind is inherited through the named FindingClass hierarchy so
+        a subtype can use the same permitted location refinements as its parent.
 
-        Do not treat arbitrary mereological descendants as valid authoring
-        locations. This intentionally excludes structures such as parenchyma or
-        generic organ components solely because they are part of the scoped organ.
+        If no refinementKind is declared on the class or an ancestor, location
+        refinements are not generated. Anatomical descendants of a scope are not
+        automatically valid authoring locations.
         """
-        seen = {root}
-        q = deque([root])
-        results = set()
+        direct = self.g.value(cls, CDE.refinementKind)
+        if direct is not None:
+            return str(direct), cls
+
+        visited = {cls}
+        q = deque([cls])
 
         while q:
             cur = q.popleft()
+            for parent in self.named_parents(cur):
+                if parent in visited:
+                    continue
+                visited.add(parent)
 
-            subclass_children = {
-                c for c in self.g.subjects(RDFS.subClassOf, cur)
-                if isinstance(c, URIRef)
-            }
-            regional_children = self.restriction_children(cur, CDE.regionalPartOf)
-            general_children = {
-                c for c in self.restriction_children(cur, CDE.generalPartOf)
-                if self.is_regional_anatomy(c)
-            }
+                if parent in self.finding_classes:
+                    value = self.g.value(parent, CDE.refinementKind)
+                    if value is not None:
+                        return str(value), parent
 
-            for child in subclass_children | regional_children | general_children:
-                if child not in seen:
+                q.append(parent)
+
+        return None, None
+
+    def refinement_kind_class(self, refinement_text):
+        """
+        Resolve the anatomy kind named by cde:refinementKind.
+
+        Current alpha annotations follow the form:
+          RID1301 may be narrowed to any lobe of lung.
+          RID88 may be narrowed to any zone of adrenal gland.
+        """
+        if not refinement_text:
+            return None
+
+        match = re.search(
+            r"may\s+be\s+narrowed\s+to\s+any\s+(.+?)(?:\.\s|\.$|$)",
+            refinement_text,
+            flags=re.IGNORECASE,
+        )
+        if not match:
+            return None
+
+        kind_label = match.group(1).strip()
+        return self.local_anatomy_by_label(kind_label) or self.find_by_label(kind_label)
+
+    def named_subclass_descendants(self, root):
+        """Return named descendants reached only through rdfs:subClassOf."""
+        descendants = set()
+        q = deque([root])
+        seen = {root}
+
+        while q:
+            cur = q.popleft()
+            for child in self.g.subjects(RDFS.subClassOf, cur):
+                if not isinstance(child, URIRef) or child in seen:
+                    continue
+                seen.add(child)
+                descendants.add(child)
+                q.append(child)
+
+        return descendants
+
+    def direct_named_subclasses(self, root):
+        return {
+            child
+            for child in self.g.subjects(RDFS.subClassOf, root)
+            if isinstance(child, URIRef)
+        }
+
+    def direct_part_children(self, parent, prop):
+        return self.restriction_children(parent, prop)
+
+    def terminal_named_subclasses(self, root):
+        descendants = self.named_subclass_descendants(root)
+        return {
+            node
+            for node in descendants
+            if not any(
+                isinstance(child, URIRef) and child in descendants
+                for child in self.g.subjects(RDFS.subClassOf, node)
+            )
+        }
+
+    def scope_roots_for_finding(self, cls):
+        """
+        Return the scoped anatomy roots available to this FindingClass,
+        including inherited scope.
+        """
+        roots = []
+        for scope_prop, anatomy, _ in self.resolved_scopes(cls):
+            if scope_prop in (CDE.scopedToRegion, CDE.scopedToSpecific, CDE.scopedToClass):
+                roots.append(anatomy)
+        return roots
+
+    def local_anatomy_by_label(self, label):
+        """
+        Resolve the locally modeled anatomy node deterministically.
+
+        The Turtle can contain both the external RadLex URI and the local
+        next-gen anatomy URI with the same rdfs:label. Scope may point to the
+        external URI while refinement structure is authored on the local URI.
+        Traversal must therefore use the local anatomy node, not whichever
+        duplicate-label resource happens to be returned first.
+        """
+        wanted = label.strip().lower()
+        candidates = [
+            node
+            for node in self.g.subjects(RDFS.label, None)
+            if isinstance(node, URIRef)
+            and self.label(node).strip().lower() == wanted
+        ]
+
+        local = [
+            node
+            for node in candidates
+            if str(node).startswith("https://radelement.org/ng/anatomy/")
+        ]
+        if local:
+            return sorted(local, key=str)[0]
+
+        return sorted(candidates, key=str)[0] if candidates else None
+
+    def scope_has_label(self, cls, label):
+        wanted = label.strip().lower()
+        return any(
+            self.label(anatomy).strip().lower() == wanted
+            for _, anatomy, _ in self.resolved_scopes(cls)
+        )
+
+    def subclasses_of_named_class(self, node, class_label):
+        target = self.local_anatomy_by_label(class_label) or self.find_by_label(class_label)
+        return target is not None and self.subclass_of(node, target)
+
+    def _refine_lung_scope(self, cls):
+        """
+        Explicit location interpretation for any FindingClass scoped to lung.
+
+        This is scope-specific, not FindingClass-specific. Atelectasis,
+        pulmonary mass, pulmonary nodule, and pulmonary nodule subtypes all
+        share the same lung-location anatomy unless a future class explicitly
+        defines a narrower authoring rule.
+
+        Included paths:
+          1. direct named subclasses of lung: left lung, right lung
+          2. concrete lobes under the named "lobe of lung" taxonomy
+          3. deeper generalPartOf children of concrete lobes only when they are
+             modeled as lobular organ components
+
+        Excluded:
+          arbitrary generalPartOf children of lung such as lung parenchyma,
+          lung periphery, small lung component, and secondary pulmonary lobule.
+        """
+        lung = self.local_anatomy_by_label("lung")
+        if lung is None or not self.scope_has_label(cls, "lung"):
+            return set(), ["lung rule rejected: FindingClass is not scoped to lung"]
+
+        result = set()
+        audit = []
+
+        laterality_nodes = self.direct_named_subclasses(lung)
+        result |= laterality_nodes
+        for node in sorted(laterality_nodes, key=lambda x: self.label(x).lower()):
+            audit.append(
+                f"{self.label(node)}: direct named subclass of scoped anatomy lung"
+            )
+
+        lobe_kind = self.local_anatomy_by_label("lobe of lung")
+        if lobe_kind is not None:
+            lobes = self.terminal_named_subclasses(lobe_kind)
+            result |= lobes
+            for node in sorted(lobes, key=lambda x: self.label(x).lower()):
+                audit.append(
+                    f"{self.label(node)}: terminal named subclass of lobe of lung"
+                )
+
+            q = deque(lobes)
+            seen = set(lobes)
+            while q:
+                parent = q.popleft()
+                for child in self.direct_part_children(parent, CDE.generalPartOf):
+                    if child in seen:
+                        continue
                     seen.add(child)
-                    results.add(child)
-                    q.append(child)
+                    if self.subclasses_of_named_class(child, "lobular organ component"):
+                        result.add(child)
+                        q.append(child)
+                        audit.append(
+                            f"{self.label(child)}: generalPartOf {self.label(parent)} "
+                            "and subclass of lobular organ component"
+                        )
 
-        return results
+        return result, audit
+
+    def _refine_thyroid_scope(self, cls):
+        """
+        Explicit thyroid-gland location interpretation.
+
+        The current anatomy models:
+          left lobe of thyroid gland  regionalPartOf thyroid gland
+          right lobe of thyroid gland regionalPartOf thyroid gland
+          isthmus of thyroid gland    generalPartOf thyroid gland
+
+        Those three are useful authoring locations for a thyroid nodule, so both
+        direct regionalPartOf and direct generalPartOf children are admitted.
+        No deeper traversal is performed.
+        """
+        thyroid = self.local_anatomy_by_label("thyroid gland")
+        if thyroid is None or not self.scope_has_label(cls, "thyroid gland"):
+            return set(), ["thyroid rule rejected: FindingClass is not scoped to thyroid gland"]
+
+        regional = self.direct_part_children(thyroid, CDE.regionalPartOf)
+        general = self.direct_part_children(thyroid, CDE.generalPartOf)
+        result = regional | general
+
+        audit = []
+        for node in sorted(regional, key=lambda x: self.label(x).lower()):
+            audit.append(
+                f"{self.label(node)}: direct regionalPartOf child of thyroid gland"
+            )
+        for node in sorted(general, key=lambda x: self.label(x).lower()):
+            audit.append(
+                f"{self.label(node)}: direct generalPartOf child of thyroid gland"
+            )
+        return result, audit
+
+    def _refine_adrenal_scope(self, cls):
+        """
+        Explicit adrenal-gland interpretation.
+
+        The FindingClass carries refinementKind pointing to "zone of adrenal
+        gland". That annotation is used here to choose the correct anatomy path.
+        The current permitted candidates are direct generalPartOf children of
+        that zone concept.
+        """
+        if not self.scope_has_label(cls, "adrenal gland"):
+            return set(), ["adrenal rule rejected: FindingClass is not scoped to adrenal gland"]
+
+        text, _ = self.resolved_refinement_kind(cls)
+        kind = self.refinement_kind_class(text) if text else None
+        if kind is None or self.label(kind).strip().lower() != "zone of adrenal gland":
+            return set(), ["adrenal rule rejected: expected refinementKind zone of adrenal gland"]
+
+        result = self.direct_part_children(kind, CDE.generalPartOf)
+        audit = [
+            f"{self.label(node)}: direct generalPartOf child of refinementKind zone of adrenal gland"
+            for node in sorted(result, key=lambda x: self.label(x).lower())
+        ]
+        return result, audit
+
+    def _refine_cerebral_ventricle_scope(self, cls):
+        """
+        Explicit ventricular interpretation.
+
+        A FindingClass scopedToSpecific cerebral ventricle may narrow to the
+        terminal named subclasses beneath cerebral ventricle.
+        """
+        root = self.local_anatomy_by_label("cerebral ventricle")
+        if root is None or not self.scope_has_label(cls, "cerebral ventricle"):
+            return set(), ["ventricle rule rejected: FindingClass is not scoped to cerebral ventricle"]
+
+        result = self.terminal_named_subclasses(root)
+        audit = [
+            f"{self.label(node)}: terminal named subclass of cerebral ventricle"
+            for node in sorted(result, key=lambda x: self.label(x).lower())
+        ]
+        return result, audit
+
+    def _refine_mediastinal_lymph_node_scope(self, cls):
+        """
+        Explicit mediastinal lymph-node interpretation.
+
+        scopedToClass mediastinal lymph node permits narrowing through the named
+        subclass taxonomy. Terminal descendants are retained.
+        """
+        root = self.local_anatomy_by_label("mediastinal lymph node")
+        if root is None or not self.scope_has_label(cls, "mediastinal lymph node"):
+            return set(), ["mediastinal lymph-node rule rejected: scope mismatch"]
+
+        result = self.terminal_named_subclasses(root)
+        audit = [
+            f"{self.label(node)}: terminal named subclass of mediastinal lymph node"
+            for node in sorted(result, key=lambda x: self.label(x).lower())
+        ]
+        return result, audit
+
+    def permitted_location_refinements(self, cls):
+        """
+        Return (refinements, source, audit).
+
+        The generator interprets known anatomy paths explicitly. It does not
+        freely walk every descendant of the scoped anatomy.
+
+        refinementKind is one signal, not the sole gate. Some valid authoring
+        refinements are encoded directly by the anatomy relationships beneath a
+        scoped organ even when the FindingClass has no refinementKind annotation.
+
+        Current explicit path conditions:
+          lung                  -> laterality, lobes, modeled lobular components
+          thyroid gland         -> direct regional/general parts
+          adrenal gland         -> refinementKind "zone of adrenal gland"
+          cerebral ventricle    -> terminal named subclasses
+          mediastinal lymph node-> terminal named subclasses
+          brain                 -> deliberately no automatic refinement
+
+        Unknown scope paths produce no refinements rather than a guessed set.
+        """
+        scope_labels = {
+            self.label(anatomy).strip().lower()
+            for _, anatomy, _ in self.resolved_scopes(cls)
+        }
+
+        refinement_text, refinement_source = self.resolved_refinement_kind(cls)
+        source = refinement_source if refinement_source is not None else cls
+
+        if "lung" in scope_labels:
+            refinements, audit = self._refine_lung_scope(cls)
+            if refinement_text:
+                audit.insert(
+                    0,
+                    f"refinementKind present: {refinement_text}"
+                )
+            return refinements, source, audit
+
+        if "thyroid gland" in scope_labels:
+            refinements, audit = self._refine_thyroid_scope(cls)
+            return refinements, source, audit
+
+        if "adrenal gland" in scope_labels:
+            refinements, audit = self._refine_adrenal_scope(cls)
+            return refinements, source, audit
+
+        if "cerebral ventricle" in scope_labels:
+            refinements, audit = self._refine_cerebral_ventricle_scope(cls)
+            return refinements, source, audit
+
+        if "mediastinal lymph node" in scope_labels:
+            refinements, audit = self._refine_mediastinal_lymph_node_scope(cls)
+            return refinements, source, audit
+
+        if "brain" in scope_labels:
+            return set(), source, [
+                "brain scope intentionally has no automatic refinement rule; "
+                "regionalPartOf descendants such as prosencephalon are not "
+                "treated as authoring locations without a more specific condition"
+            ]
+
+        if refinement_text:
+            return set(), source, [
+                f"unhandled refinementKind: {refinement_text}"
+            ]
+
+        return set(), None, []
 
     # ---------- Value lists ----------
 
@@ -662,9 +962,7 @@ class OntologyDocs:
                 suffix = f" (inferred from {self.label(source)})" if source else ""
                 arr += [prefix + f"**{kind}:** {self.label(anatomy)}{suffix}", blank]
 
-            refinements = set()
-            for _, anatomy, _ in scopes:
-                refinements |= self.valid_location_refinements(anatomy)
+            refinements, refinement_source, refinement_audit = self.permitted_location_refinements(fc)
 
             if refinements:
                 arr += [prefix + "#### AVAILABLE_LOCATION_REFINEMENTS", blank]
@@ -773,7 +1071,7 @@ class OntologyDocs:
             "FindingClasses are grouped by their ontology subtype hierarchy. "
             "Diagnosis connections include relationships asserted from Diagnosis to FindingClass, with subtype inheritance identified where applicable. "
             "`OCCURS_WITH` is expanded in both directions when the ontology declares it symmetric. "
-            "`AVAILABLE_LOCATION_REFINEMENTS` uses a conservative authoring-oriented ontology walk and does not treat arbitrary anatomical containment as a valid location option. "
+            "`AVAILABLE_LOCATION_REFINEMENTS` is generated by explicit anatomy-path conditions. `scopedTo*` establishes the applicable anatomy, while `refinementKind` can select or further qualify a path but is not treated as the only source of valid refinements. There is no unrestricted descendant walk; each supported anatomy path defines which relationships and depths are accepted."
             "Fixed DataElement values are shown separately as `HAS_VALUE_CONSTRAINT`; restrictions from `owl:equivalentClass` are marked defining and restrictions from `rdfs:subClassOf` are marked necessary. "
             "Absent relationships are omitted.",
             "",
@@ -992,6 +1290,25 @@ def main():
     print(f"FindingClasses: {len(docs.finding_classes)}")
     print(f"Diagnoses: {len(docs.diagnoses)}")
     print(f"DataElements: {len(docs.data_element_props)}")
+
+    print("\nRefinement interpretation audit:")
+    any_refinement = False
+    for fc in sorted(docs.finding_classes, key=lambda x: docs.label(x).lower()):
+        refinements, source, audit = docs.permitted_location_refinements(fc)
+        if source is None:
+            continue
+        any_refinement = True
+        source_label = docs.label(source)
+        inherited = "" if source == fc else f" (inherited from {source_label})"
+        print(f"  {docs.label(fc)}{inherited}:")
+        if refinements:
+            for item in audit:
+                print(f"    - {item}")
+        else:
+            for item in audit or ["no permitted refinements derived"]:
+                print(f"    - WARNING: {item}")
+    if not any_refinement:
+        print("  none")
     print()
     print("Generated:")
     print(f"  {finding_path.name}")
