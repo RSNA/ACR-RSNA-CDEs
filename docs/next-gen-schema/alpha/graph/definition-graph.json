@@ -14610,8 +14610,7 @@
    "from": "DE-000004",
    "to": "V-000030",
    "props": {
-    "exclusive": true,
-    "exclusive_note": "selecting this excludes every other value of this element"
+    "exclusive": true
    },
    "version": {
     "number": 1,
@@ -17968,9 +17967,7 @@
    "edge": "SUBTYPE_OF",
    "from": "FC-000006",
    "to": "FC-000005",
-   "props": {
-    "inheritance": "strict"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -18149,9 +18146,7 @@
    "edge": "SUBTYPE_OF",
    "from": "FC-000007",
    "to": "FC-000005",
-   "props": {
-    "inheritance": "strict"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -18305,10 +18300,7 @@
    "edge": "HAS_COMPONENT",
    "from": "FC-000007",
    "to": "FC-000009",
-   "props": {
-    "strength": "required",
-    "direction": "required_on_whole"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -18355,9 +18347,7 @@
    "edge": "SUBTYPE_OF",
    "from": "FC-000008",
    "to": "FC-000005",
-   "props": {
-    "inheritance": "strict"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -18602,9 +18592,7 @@
    "edge": "COMPONENT_OF",
    "from": "FC-000009",
    "to": "FC-000007",
-   "props": {
-    "direction": "necessary_on_component"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -20711,9 +20699,7 @@
    "edge": "SUBTYPE_OF",
    "from": "FC-000016",
    "to": "FC-000004",
-   "props": {
-    "inheritance": "strict"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -20892,9 +20878,7 @@
    "edge": "SUBTYPE_OF",
    "from": "FC-000015",
    "to": "FC-000004",
-   "props": {
-    "inheritance": "strict"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -21183,9 +21167,7 @@
    "edge": "COMPONENT_OF",
    "from": "FC-000014",
    "to": "FC-000015",
-   "props": {
-    "direction": "necessary_on_component"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -21427,9 +21409,7 @@
    "edge": "OCCURS_WITH",
    "from": "FC-000021",
    "to": "FC-000006B",
-   "props": {
-    "symmetric": true
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -21451,9 +21431,7 @@
    "edge": "OCCURS_WITH",
    "from": "FC-000021",
    "to": "FC-000024",
-   "props": {
-    "symmetric": true
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -21475,9 +21453,7 @@
    "edge": "OCCURS_WITH",
    "from": "FC-000021",
    "to": "FC-000025",
-   "props": {
-    "symmetric": true
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -21499,9 +21475,7 @@
    "edge": "OCCURS_WITH",
    "from": "FC-000021",
    "to": "FC-000012",
-   "props": {
-    "symmetric": true
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -22038,9 +22012,7 @@
    "edge": "SUBTYPE_OF",
    "from": "FC-000043",
    "to": "FC-000023",
-   "props": {
-    "inheritance": "strict"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -22245,9 +22217,7 @@
    "edge": "SUBTYPE_OF",
    "from": "FC-000044",
    "to": "FC-000023",
-   "props": {
-    "inheritance": "strict"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -22452,9 +22422,7 @@
    "edge": "SUBTYPE_OF",
    "from": "FC-000045",
    "to": "FC-000023",
-   "props": {
-    "inheritance": "strict"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -22659,9 +22627,7 @@
    "edge": "SUBTYPE_OF",
    "from": "FC-000046",
    "to": "FC-000023",
-   "props": {
-    "inheritance": "strict"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -22869,9 +22835,7 @@
    "edge": "SUBTYPE_OF",
    "from": "FC-000047",
    "to": "FC-000023",
-   "props": {
-    "inheritance": "strict"
-   },
+   "props": {},
    "version": {
     "number": 1,
     "status": "proposed",
@@ -27810,9 +27774,7 @@
    "to": "FC-000006",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -27906,9 +27868,7 @@
    "to": "FC-000006",
    "props": {
     "typicality": "very_frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28002,9 +27962,7 @@
    "to": "FC-000006",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28076,9 +28034,7 @@
    "to": "FC-000006",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28103,9 +28059,7 @@
    "to": "FC-000007",
    "props": {
     "typicality": "frequent",
-    "specificity": "highly_suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "highly_suggestive"
    },
    "version": {
     "number": 1,
@@ -28130,9 +28084,7 @@
    "to": "FC-000008",
    "props": {
     "typicality": "occasional",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28157,9 +28109,7 @@
    "to": "FC-000017",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28184,9 +28134,7 @@
    "to": "FC-000012",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28211,9 +28159,7 @@
    "to": "FC-000006B",
    "props": {
     "typicality": "occasional",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28331,9 +28277,7 @@
    "to": "FC-000021",
    "props": {
     "typicality": "obligate",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28427,9 +28371,7 @@
    "to": "FC-000021",
    "props": {
     "typicality": "obligate",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28545,9 +28487,7 @@
    "to": "FC-000021",
    "props": {
     "typicality": "obligate",
-    "specificity": "highly_suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "highly_suggestive"
    },
    "version": {
     "number": 1,
@@ -28663,9 +28603,7 @@
    "to": "FC-000021",
    "props": {
     "typicality": "obligate",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28781,9 +28719,7 @@
    "to": "FC-000022",
    "props": {
     "typicality": "obligate",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -28808,9 +28744,7 @@
    "to": "FC-000039",
    "props": {
     "typicality": "frequent",
-    "specificity": "highly_suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "highly_suggestive"
    },
    "version": {
     "number": 1,
@@ -28835,9 +28769,7 @@
    "to": "FC-000006B",
    "props": {
     "typicality": "occasional",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -29023,9 +28955,7 @@
    "to": "FC-000024",
    "props": {
     "typicality": "very_frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -29050,9 +28980,7 @@
    "to": "FC-000025",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -29170,9 +29098,7 @@
    "to": "FC-000025",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -29197,9 +29123,7 @@
    "to": "FC-000024",
    "props": {
     "typicality": "occasional",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -29407,9 +29331,7 @@
    "to": "FC-000021",
    "props": {
     "typicality": "obligate",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -29549,9 +29471,7 @@
    "to": "FC-000036",
    "props": {
     "typicality": "obligate",
-    "specificity": "pathognomonic",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "pathognomonic"
    },
    "version": {
     "number": 1,
@@ -29669,9 +29589,7 @@
    "to": "FC-000026",
    "props": {
     "typicality": "frequent",
-    "specificity": "highly_suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "highly_suggestive"
    },
    "version": {
     "number": 1,
@@ -29696,9 +29614,7 @@
    "to": "FC-000027",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -29723,9 +29639,7 @@
    "to": "FC-000032",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -29841,9 +29755,7 @@
    "to": "FC-000033",
    "props": {
     "typicality": "very_frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -29937,9 +29849,7 @@
    "to": "FC-000019",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -29964,9 +29874,7 @@
    "to": "FC-000015",
    "props": {
     "typicality": "occasional",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -30060,9 +29968,7 @@
    "to": "FC-000018",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -30178,9 +30084,7 @@
    "to": "FC-000011",
    "props": {
     "typicality": "very_frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -30274,9 +30178,7 @@
    "to": "FC-000005",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -30301,9 +30203,7 @@
    "to": "FC-000018",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -30328,9 +30228,7 @@
    "to": "FC-000012",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -30355,9 +30253,7 @@
    "to": "FC-000011",
    "props": {
     "typicality": "occasional",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -30426,9 +30322,7 @@
    "to": "FC-000012",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -30522,9 +30416,7 @@
    "to": "FC-000029",
    "props": {
     "typicality": "obligate",
-    "specificity": "pathognomonic",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "pathognomonic"
    },
    "version": {
     "number": 1,
@@ -30666,9 +30558,7 @@
    "to": "FC-000028",
    "props": {
     "typicality": "obligate",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,
@@ -30693,9 +30583,7 @@
    "to": "FC-000030",
    "props": {
     "typicality": "frequent",
-    "specificity": "suggestive",
-    "reading": "evidential",
-    "inference_bearing": false
+    "specificity": "suggestive"
    },
    "version": {
     "number": 1,

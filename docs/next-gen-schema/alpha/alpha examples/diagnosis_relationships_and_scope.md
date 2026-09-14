@@ -1,6 +1,8 @@
 # Diagnosis Relationships and Scope
 
-Diagnosis relationships extracted from the canonical `definition-graph.json`. When scope is inherited rather than directly asserted, the nearest ancestor providing that scope is identified. Absent relationships are omitted.
+- Diagnosis relationships and scope extracted from the canonical `definition-graph.json`. 
+- Only explicitly asserted scope relationships are shown. 
+- Absent relationships are omitted.
 
 ## acute pyelonephritis
 

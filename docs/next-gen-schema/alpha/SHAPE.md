@@ -100,25 +100,25 @@ edge is permitted to take.
 | Edge | Signature | n | Properties | Alternative term |
 |---|---|---:|---|---|
 | **ASSESSED_BY** | `Diagnosis`→`AssessmentScheme`<br>`FindingClass`→`AssessmentScheme` | 5 | — | ASSESSES (inverse) |
-| **COMPONENT_OF** | `FindingClass`→`FindingClass` | 2 | `direction` | MAY_BE_COMPONENT_OF |
+| **COMPONENT_OF** | `FindingClass`→`FindingClass` | 2 | — | MAY_BE_COMPONENT_OF |
 | **DERIVED_FROM_MEASUREMENT** | `Measurement`→`Measurement` | 2 | — | — |
 | **HAS_ANATOMIC_REFINEMENT_RULE** | `FindingClass`→`AnatomicRefinementRule` | 1 | — | — |
-| **HAS_COMPONENT** | `FindingClass`→`FindingClass` | 1 | `direction`, `strength` | MAY_HAVE_COMPONENT |
+| **HAS_COMPONENT** | `FindingClass`→`FindingClass` | 1 | — | MAY_HAVE_COMPONENT |
 | **HAS_DATA_ELEMENT** | `Diagnosis`→`DataElement`<br>`FindingClass`→`DataElement` | 170 | `modality`, `narrow`, `note` | HAS_ELEMENT |
 | **HAS_ETIOLOGY** | `Diagnosis`→`Etiology` | 25 | — | — |
 | **HAS_MEASUREMENT** | `FindingClass`→`Measurement` | 41 | — | — |
 | **HAS_MEASUREMENT_COMPONENT** | `Measurement`→`Measurement` | 2 | — | — |
-| **HAS_VALUE** | `DataElement`→`Value` | 155 | `exclusive`, `exclusive_note`, `rank` | member |
+| **HAS_VALUE** | `DataElement`→`Value` | 155 | `exclusive`, `rank` | member |
 | **HAS_VALUE_CONSTRAINT** | `FindingClass`→`Value` | 9 | `defining`, `element`, `note` | — |
 | **IN_SUBSPECIALTY** | `FindingClass`→`Subspecialty` | 32 | — | — |
 | **MAY_CAUSE** | `Diagnosis`→`Diagnosis`<br>`Diagnosis`→`FindingClass` | 10 | `typicality` | MAY_BE_CAUSED_BY (inverse) |
-| **MAY_MANIFEST_AS** | `Diagnosis`→`FindingClass` | 38 | `inference_bearing`, `reading`, `specificity`, `typicality` | MAY_REPRESENT (inverse) |
+| **MAY_MANIFEST_AS** | `Diagnosis`→`FindingClass` | 38 | `specificity`, `typicality` | MAY_REPRESENT (inverse) |
 | **MAY_PROGRESS_TO** | `Diagnosis`→`Diagnosis` | 1 | — | MAY_PROGRESS_FROM (inverse) |
-| **OCCURS_WITH** | `FindingClass`→`FindingClass` | 4 | `symmetric` | — |
+| **OCCURS_WITH** | `FindingClass`→`FindingClass` | 4 | — | — |
 | **REFINES_SCOPE** | `AnatomicRefinementRule`→`AnatomicLocation` | 1 | — | — |
 | **SCOPED_TO** | `DataElement`→`AnatomicLocation`<br>`Diagnosis`→`AnatomicLocation`<br>`FindingClass`→`AnatomicLocation`<br>`Measurement`→`AnatomicLocation` | 71 | `kind`, `strength` | IN_REGION |
 | **SEEN_ON** | `DataElement`→`Modality`<br>`FindingClass`→`Modality` | 177 | — | — |
-| **SUBTYPE_OF** | `FindingClass`→`FindingClass` | 10 | `inheritance` | HAS_SUBTYPE (inverse) |
+| **SUBTYPE_OF** | `FindingClass`→`FindingClass` | 10 | — | HAS_SUBTYPE (inverse) |
 | **TARGET_TAXONOMY_ROOT** | `AnatomicRefinementRule`→`AnatomicLocation` | 1 | `include_descendants`, `include_root` | — |
 
 - **ASSESSED_BY** — A standardized scheme applies to the source.
@@ -136,7 +136,7 @@ edge is permitted to take.
 - **MAY_CAUSE** — Causal. The source produces the target as a distinct second entity.
 - **MAY_MANIFEST_AS** — Evidential. The diagnosis can show itself as the target.
 - **MAY_PROGRESS_TO** — Temporal. Authored progression from one Diagnosis to another.
-- **OCCURS_WITH** — Symmetric, between two findings or two diagnoses. Seen together; asserts nothing about cause or sequence. Stored once; a consumer must read the flag to traverse it backwards.
+- **OCCURS_WITH** — Symmetric, between two findings or two diagnoses. Seen together; asserts nothing about cause or sequence. Stored once; consumers traverse the predicate in both directions.
 - **REFINES_SCOPE** — Identifies which authored scope entry a refinement rule narrows.
 - **SCOPED_TO** — Anatomic scope. `kind` records an authored scope category and does not select a RadLex predicate or traversal.
 - **SEEN_ON** — The imaging techniques a finding is seen on.
@@ -163,27 +163,21 @@ When the model uses a fixed constraint, that element is omitted from the class's
 
 ### Edge properties
 
-| Property | Meaning |
-|---|---|
-| `defining` | True where the edge is a necessary and sufficient condition. |
-| `direction` | required_on_whole or necessary_on_component. Which way a conditional runs. |
-| `element` | Which DataElement a fixed value belongs to. |
-| `exclusive` |  |
-| `exclusive_note` |  |
-| `include_descendants` | Whether native taxonomy descendants are eligible targets. |
-| `include_root` | Whether a taxonomy root itself is an eligible target. |
-| `inference_bearing` | False where software must not draw conclusions from the edge. |
-| `inheritance` | strict. A subtype carries everything its parent carries. |
-| `kind` | specific, region or class. Records the authored scope category; it does not select a native RadLex predicate or traversal policy. |
-| `modality` | Restricts an element to some of the modalities the finding is seen on. |
-| `narrow` | The subset of values permitted here. Advisory in alpha. |
-| `note` |  |
-| `rank` | Position in an ordered value list. On every value of an element or on none. |
-| `reading` | evidential or inferential. What kind of claim the edge makes. |
-| `specificity` | suggestive, highly_suggestive, pathognomonic. Reads backward: how much seeing it narrows the differential. |
-| `strength` | required, expected or unconstrained. How binding the claim is. |
-| `symmetric` | True where the edge asserts the same thing both ways. |
-| `typicality` | occasional, frequent, very_frequent, obligate. Reads forward: how often the source shows the target. |
+| Property | Meaning                                                                                                                            |
+|---|------------------------------------------------------------------------------------------------------------------------------------|
+| `defining` | True where a HAS_VALUE_CONSTRAINT participates in a necessary-and-sufficient class definition.                                     |
+| `element` | Identifies which DataElement a HAS_VALUE_CONSTRAINT fixes.                                                                         |
+| `exclusive` | True where selecting this value excludes every sibling value of the same multi-select DataElement.                                 |
+| `include_descendants` | Whether native taxonomy descendants are eligible targets.                                                                          |
+| `include_root` | Whether a taxonomy root itself is an eligible target.                                                                              |
+| `kind` | specific, region, or class. Records the authored scope category. It does not select a native RadLex predicate or traversal policy. |
+| `modality` | Restricts a DataElement attachment to some of the modalities on which the finding is seen.                                         |
+| `narrow` | The subset of values permitted for that DataElement in this context. Advisory in alpha.                                            |
+| `note` | Human-readable annotation for a relationship where additional context is needed. It has no formal semantic effect.                 |
+| `rank` | Position in an ordered value list. Should be present on every value of an element or on none.                                      |
+| `specificity` | suggestive, highly_suggestive, pathognomonic. Reads backward: how much seeing the target narrows the differential toward the source.                        |
+| `strength` | required, expected, or unconstrained. How binding an authored SCOPED_TO claim is.                                                                     |
+| `typicality` | occasional, frequent, very_frequent, obligate. Reads forward: how often the source shows or produces the target.                               |
 
 758 of 758 edges carry an id and a version block, so a relationship can
 change without either endpoint changing. Native RadLex anatomy relations are not copied

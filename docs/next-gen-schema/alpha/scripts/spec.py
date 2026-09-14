@@ -909,7 +909,7 @@ FINDING_CLASSES = [
          parent='PulmonaryNodule',
          defined=True,
          differentia=[('hasAttenuation', 'V-000011')],
-         components=[('SolidComponentOfPartSolidNodule', 'required')],
+         components=['SolidComponentOfPartSolidNodule'],
          elements=['DE-000001', 'DE-000015'],
          seen_on=['CT', 'MR', 'US', 'XR']),
 

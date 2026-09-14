@@ -54,7 +54,7 @@ Includes:
 - explicitly permitted location refinements
 - subtype grouping and indentation
 - Diagnosis connections, including inherited connections
-- symmetric `OCCURS_WITH` representation when declared symmetric by the graph
+- symmetric `OCCURS_WITH` representation, stored once and traversed in both directions by predicate semantics
 - `HAS_COMPONENT` and `COMPONENT_OF`
 - measurements
 - DataElements

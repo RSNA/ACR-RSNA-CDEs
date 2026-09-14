@@ -1,6 +1,9 @@
 # DataElement Concepts
 
-DataElements extracted from the canonical `definition-graph.json`. DataElements are attributes that describe a FindingClass or Diagnosis. Each section shows the allowed values defined by the model and where the DataElement is used. Scope is shown if a DataElement itself is explicitly scoped in the model.
+- DataElements extracted from the canonical `definition-graph.json`. 
+- DataElements are attributes that describe a FindingClass or Diagnosis. 
+- Each section shows the allowed values defined by the model and where the DataElement is used. 
+- Scope is shown if a DataElement itself is explicitly scoped in the model.
 
 ## acuity
 

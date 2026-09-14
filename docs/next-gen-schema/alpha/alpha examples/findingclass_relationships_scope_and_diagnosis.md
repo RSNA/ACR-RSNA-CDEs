@@ -1,6 +1,13 @@
 # FindingClass Relationships, Scope, and Diagnosis Connections
 
-FindingClass relationships extracted from the canonical `definition-graph.json`. FindingClasses are grouped by their subtype hierarchy. Diagnosis connections include relationships asserted from Diagnosis to FindingClass, with subtype inheritance identified where applicable. `OCCURS_WITH` is expanded in both directions when the relationship is marked symmetric. `AVAILABLE_LOCATION_REFINEMENTS (example of the mechanism, not a comprehensive or confirmed set)` is shown only when an explicit `AnatomicRefinementRule` defines permitted targets. Predicate choice, target selection, and traversal behavior remain independent. Fixed DataElement values are shown separately as `HAS_VALUE_CONSTRAINT`; defining status and any explicit modeling-status note are preserved. Narrowing notes are likewise shown when declared. Absent relationships are omitted.
+- FindingClass relationships extracted from the canonical `definition-graph.json`. 
+- FindingClasses are grouped by their subtype hierarchy. 
+- Diagnosis connections include relationships asserted from Diagnosis to FindingClass, with subtype inheritance identified where applicable. 
+- `OCCURS_WITH` is symmetric by definition and is expanded in both directions. 
+- `AVAILABLE_LOCATION_REFINEMENTS (example of the mechanism, not a comprehensive or confirmed set)` is shown only when an explicit `AnatomicRefinementRule` defines permitted targets. Predicate choice, target selection, and traversal behavior remain independent. 
+- Fixed DataElement values are shown separately as `HAS_VALUE_CONSTRAINT`; defining status and any explicit modeling-status note are preserved. 
+- Narrowing notes are likewise shown when declared. 
+- Absent relationships are omitted.
 
 ## acute infarct
 

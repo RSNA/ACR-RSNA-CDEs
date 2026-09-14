@@ -66,7 +66,6 @@ ANN = [  # annotation properties the model uses
     ("modalityRestriction","Restricts an element or measurement to a subset of the modalities the finding is seen on."),
     ("criterion",          "A stated criterion carried as an annotation rather than as a defining condition."),
     ("epistemic",          "True where a relation holds between our knowledge of two things rather than between the things."),
-    ("inferenceBearing",   "False where software must not draw conclusions from this relation."),
     ("designNote",         "A note recorded during alpha construction."),
     ("sourceText",         "Report text an instance example was drawn from."),
     ("sourceRef",          "Where in the modelling corpus the example came from."),
@@ -115,23 +114,23 @@ OBJ_PROPS = [
     ("mayManifestAs",          None,
      "Evidential. The diagnosis can show itself as the target. Carries typicality (how often) "
      "and specificity (how much seeing it narrows the differential). Annotation-only.",
-     dict(epistemic=True, inference=False)),
+     dict(epistemic=True)),
     ("mayRepresent",           None,
      "Inverse of mayManifestAs. How a report reads: finding toward conclusion.",
-     dict(inverse="mayManifestAs", epistemic=True, inference=False)),
+     dict(inverse="mayManifestAs", epistemic=True)),
     ("mayCause",               None,
      "Causal. The source can produce the target as a distinct second entity. Distinct from "
      "mayManifestAs, which is about evidence rather than production.",
      dict(inference=False)),
     ("mayBeCausedBy",          None, "Inverse of mayCause.",
-     dict(inverse="mayCause", inference=False)),
+     dict(inverse="mayCause")),
     ("occursWith",             None,
      "Symmetric and associative. Seen together; asserts and excludes nothing about causality "
-     "or sequence.", dict(symmetric=True, inference=False)),
+     "or sequence.", dict(symmetric=True)),
     ("mayBeRelatedTo",         None,
      "Symmetric catch-all for an association the author cannot yet type. A triage queue, not "
      "a home; every use is a candidate for replacement by a typed edge.",
-     dict(symmetric=True, inference=False)),
+     dict(symmetric=True)),
     ("hasEtiology",            None, "Relates a definition to the kind of cause behind it.", {}),
     ("assessedBy",             None, "Relates a FindingClass or Diagnosis to an AssessmentScheme.", {}),
     ("hasCategory",            None, "Relates an AssessmentScheme to one of its categories.", {}),
@@ -149,9 +148,9 @@ OBJ_PROPS = [
     ("mayProgressTo",          None,
      "Identity-preserving evolution: the same entity in a later state. The relationship is "
      "authored explicitly; no additional temporal identity inference is asserted.",
-     dict(epistemic=False, inference=False)),
+     dict(epistemic=False)),
     ("mayProgressFrom",        None, "Inverse of mayProgressTo.",
-     dict(inverse="mayProgressTo", inference=False)),
+     dict(inverse="mayProgressTo")),
 ]
 
 
@@ -353,8 +352,6 @@ def build_alpha_graph(anat):
             g.add((p, OWL.inverseOf, CDE[opts["inverse"]]))
         if opts.get("epistemic"):
             g.add((p, CDE.epistemic, Literal(True)))
-        if "inference" in opts:
-            g.add((p, CDE.inferenceBearing, Literal(opts["inference"])))
 
     # Refinement-rule fields are independent. Native RadLex properties are referenced
     # as vocabulary resources rather than redefined as CDE predicates.
@@ -372,10 +369,8 @@ def build_alpha_graph(anat):
         g.add((ap, RDFS.comment, Literal(comment)))
 
     g.add((CDE.mayRepresent, CDE.designNote, Literal(
-        "Inferential reading, one edge. It covers direct appearances and indirect signs "
-        "alike, and carries no formal semantics, so no reasoner check uses it. Marked "
-        "epistemic and inferenceBearing false so that is explicit rather than assumed. "
-        "")))
+        "Inverse evidential reading from finding toward diagnostic conclusion. It covers "
+        "direct appearances and indirect signs alike and carries no formal inference semantics.")))
 
     # ---- etiology
     et_uri = {}
@@ -655,10 +650,9 @@ def build_alpha_graph(anat):
                 g.add((rule_uri, CDE.traversalSpecification, Literal(str(rule["traversal"]))))
         for prop, vid in fc.get("fixed", []):
             g.add((c, RDFS.subClassOf, some(g, CDE[prop], val_uri[vid])))
-        for compname, strength in fc.get("components", []):
+        for compname in fc.get("components", []):
             r = some(g, CDE.hasComponent, fc_uri[compname])
             g.add((c, RDFS.subClassOf, r))
-            annotate_axiom(g, c, RDFS.subClassOf, r, [(CDE.scopeStrength, Literal(strength))])
         if fc.get("component_of"):
             g.add((c, RDFS.subClassOf, some(g, CDE.componentOf, fc_uri[fc["component_of"]])))
         for deid, mods in (fc.get("modality_scoped") or {}).items():

@@ -227,7 +227,7 @@ def symmetric_occurs_with(outgoing, incoming, node_id):
         if e["edge"] == "OCCURS_WITH":
             targets.append(e["to"])
     for e in incoming.get(node_id, []):
-        if e["edge"] == "OCCURS_WITH" and e.get("props", {}).get("symmetric"):
+        if e["edge"] == "OCCURS_WITH":
             targets.append(e["from"])
     return list(dict.fromkeys(targets))
 
@@ -357,7 +357,7 @@ def write_findings(anatomy, nodes, outgoing, incoming):
         "",
         "FindingClass relationships extracted from the canonical `definition-graph.json`. "
         "FindingClasses are grouped by their subtype hierarchy. Diagnosis connections include relationships asserted from Diagnosis to FindingClass, with subtype inheritance identified where applicable. "
-        "`OCCURS_WITH` is expanded in both directions when the relationship is marked symmetric. "
+        "`OCCURS_WITH` is symmetric by definition and is expanded in both directions. "
         f"`{REFINEMENT_HEADING}` is shown only when an explicit `AnatomicRefinementRule` defines permitted targets. Predicate choice, target selection, and traversal behavior remain independent. "
         "Fixed DataElement values are shown separately as `HAS_VALUE_CONSTRAINT`; defining status and any explicit modeling-status note are preserved. Narrowing notes are likewise shown when declared. Absent relationships are omitted.",
         "",
@@ -381,7 +381,7 @@ def write_diagnoses(nodes, outgoing):
     lines = [
         "# Diagnosis Relationships and Scope",
         "",
-        "Diagnosis relationships extracted from the canonical `definition-graph.json`. When scope is inherited rather than directly asserted, the nearest ancestor providing that scope is identified. Absent relationships are omitted.",
+        "Diagnosis relationships and scope extracted from the canonical `definition-graph.json`. Only explicitly asserted scope relationships are shown. Absent relationships are omitted.",
         "",
     ]
     for idx, diagnosis in enumerate(diagnoses):

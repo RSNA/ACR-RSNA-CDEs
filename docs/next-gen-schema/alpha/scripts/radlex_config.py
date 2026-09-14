@@ -20,7 +20,7 @@ def _discover_default():
     if not candidates:
         candidates = list(refs.glob("**/RadLex.owl"))
     if not candidates:
-        raise FileNotFoundError("No bundled RadLex.owl found under references/")
+        raise FileNotFoundError("No local RadLex.owl found under references/")
     return max(candidates, key=lambda p: (_version_key(p), str(p)))
 
 

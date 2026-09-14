@@ -474,7 +474,6 @@
      "definition": "No calcification is identified.",
      "rank": null,
      "exclusive": true,
-     "exclusive_note": "selecting this excludes every other value of this element",
      "bindings": []
     },
     {
@@ -740,8 +739,7 @@
  ],
  "components": [
   {
-   "finding": "FC-000009",
-   "strength": "required"
+   "finding": "FC-000009"
   }
  ],
  "may_represent": [

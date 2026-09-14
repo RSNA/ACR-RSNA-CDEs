@@ -145,8 +145,6 @@ def build():
             props = {"rank": vrank} if ordered else {}
             if de.get("exclusive_none") == vid:
                 props["exclusive"] = True
-                props["exclusive_note"] = ("selecting this excludes every other value of "
-                                           "this element")
             edges.append(E("HAS_VALUE", de["id"], vid, props))
 
     # ---- measurements
@@ -229,8 +227,7 @@ def build():
         nodes.append(n)
 
         if fc.get("parent"):
-            edges.append(E("SUBTYPE_OF", fc["id"], fc_id[fc["parent"]],
-                       {"inheritance": "strict"}))
+            edges.append(E("SUBTYPE_OF", fc["id"], fc_id[fc["parent"]], {}))
         eff_el, eff_ms, eff_mod = spec.expand(fc)
         for deid in eff_el:
             props = {}
@@ -261,17 +258,15 @@ def build():
         for s in fc.get("in_subspecialty", []):
             edges.append(E("IN_SUBSPECIALTY", fc["id"], s,
                        {}))
-        # Symmetric: stored once. A consumer walking edges out of the target must read
-        # the flag and traverse backwards; two stored edges would mean two ids for one
-        # assertion, and retiring one would leave the other standing.
+        # OCCURS_WITH is symmetric by predicate semantics and stored once. Consumers
+        # traverse the predicate in both directions; assertion-level symmetry metadata
+        # would only duplicate the relationship definition.
         for target in fc.get("occurs_with", []):
-            edges.append(E("OCCURS_WITH", fc["id"], fc_id[target], {"symmetric": True}))
-        for cname, strength in fc.get("components", []):
-            edges.append(E("HAS_COMPONENT", fc["id"], fc_id[cname],
-                       {"strength": strength, "direction": "required_on_whole"}))
+            edges.append(E("OCCURS_WITH", fc["id"], fc_id[target], {}))
+        for cname in fc.get("components", []):
+            edges.append(E("HAS_COMPONENT", fc["id"], fc_id[cname], {}))
         if fc.get("component_of"):
-            edges.append(E("COMPONENT_OF", fc["id"], fc_id[fc["component_of"]],
-                           {"direction": "necessary_on_component"}))
+            edges.append(E("COMPONENT_OF", fc["id"], fc_id[fc["component_of"]], {}))
         for prop, vid in fc.get("fixed", []):
             edges.append(E("HAS_VALUE_CONSTRAINT", fc["id"], vid,
                            {"element": prop, "defining": False,
@@ -359,8 +354,7 @@ def build():
         for target, typicality, specificity in dx.get("manifests_as", []):
             tid = fc_id.get(target) or dx_id_map.get(target)
             edges.append(E("MAY_MANIFEST_AS", dx["id"], tid,
-                           {"typicality": typicality, "specificity": specificity,
-                            "reading": "evidential", "inference_bearing": False}))
+                           {"typicality": typicality, "specificity": specificity}))
         # causal: the source can produce the target as a distinct second entity
         for target, typicality in dx.get("causes", []):
             tid = fc_id.get(target) or dx_id_map.get(target)
@@ -368,7 +362,7 @@ def build():
         for target in dx.get("progresses_to", []):
             edges.append(E("MAY_PROGRESS_TO", dx["id"], dx_id_map[target], {}))
         for target in dx.get("occurs_with", []):
-            edges.append(E("OCCURS_WITH", dx["id"], dx_id_map[target], {"symmetric": True}))
+            edges.append(E("OCCURS_WITH", dx["id"], dx_id_map[target], {}))
         for et in dx.get("etiology", []):
             edges.append(E("HAS_ETIOLOGY", dx["id"], et, {}))
         for sc in dx.get("scoped_to", []):
@@ -445,7 +439,7 @@ def compile_findings(nodes, edges, de_index, as_index, anat):
                 elif e["edge"] == "IN_SUBSPECIALTY":
                     subspecialties.append(e["to"])
                 elif e["edge"] == "HAS_COMPONENT":
-                    components.append(dict(finding=e["to"], strength=e["props"].get("strength")))
+                    components.append(dict(finding=e["to"]))
                 elif e["edge"] == "SCOPED_TO":
                     scopes.append(dict(location=e["to"], **e["props"]))
                 elif e["edge"] == "HAS_ANATOMIC_REFINEMENT_RULE":
@@ -540,10 +534,7 @@ def compile_findings(nodes, edges, de_index, as_index, anat):
                 permitted_values=[dict(
                     value_id=v[0], name=v[1], definition=v[3],
                     rank=(v[4] if ordered else None),
-                    **({"exclusive": True,
-                        "exclusive_note": "selecting this excludes every other value of "
-                                          "this element"}
-                       if de.get("exclusive_none") == v[0] else {}),
+                    **({"exclusive": True} if de.get("exclusive_none") == v[0] else {}),
                     bindings=([binding("RADLEX", v[2], v[1])] if v[2] else []))
                     for v in vals]))
         for mid, meta in measurements.items():

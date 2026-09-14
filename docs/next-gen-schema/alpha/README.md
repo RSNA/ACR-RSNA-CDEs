@@ -33,15 +33,13 @@ MECHANISMS.md                    generated mechanism documentation
 boundaries/                      node/edge boundary documents
 ```
 
-The optional `standalone/radcde-standalone.ttl` artifact is a full single-file merge of the generated CDE ontology and configured RadLex release. The modular ontology plus its direct RadLex import is authoritative. The standalone builder writes through temporary files and replaces the final Turtle atomically so an interrupted build does not leave a truncated artifact.
-
 ## RadLex source configuration
 
 This alpha was built and verified against RadLex Release 4.3. Download the
 matching release from RSNA's RadLex site, agreeing to their license there,
 before configuring the build to use it.
 
-The build discovers the bundled `references/**/RadLex.owl` by default. To point the build at another release without changing code:
+The build discovers the local `references/**/RadLex.owl` by default. The RadLex source file is intentionally not committed or included in the distributed ZIP. For the configured 4.3 release, place it at `references/PunRadLex_Owl4.3/RadLex.owl`. To point the build at another release without changing code:
 
 ```bash
 export RADCDE_RADLEX_OWL=/path/to/RadLex.owl
@@ -65,8 +63,6 @@ python verify_codes.py
 python build_shape.py
 python build_radlex_shape.py
 python build_mechanisms.py
-python build_standalone.py
-python test_standalone.py
 cd "../alpha examples"
 python generate_ontology_docs.py
 cd ..
@@ -74,7 +70,7 @@ rm -f cde-node-boundaries.zip
 zip cde-node-boundaries.zip boundaries/*.md
 ```
 
-`build_anatomy.py` creates a read-only native RadLex index. It does not generate an anatomy ontology. The standalone file, generated example documents, and nested boundary ZIP are derived artifacts and should be refreshed when their sources change.
+`build_anatomy.py` creates a read-only native RadLex index. It does not generate an anatomy ontology. Generated example documents and the nested boundary ZIP are derived artifacts and should be refreshed when their sources change.
 
 The current build contains 45 FindingClasses and 20 deliberate probe classes.
 

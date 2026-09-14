@@ -15,22 +15,22 @@ cde:BIRADS a owl:Class ;
     rdfs:label "BI-RADS assessment" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:BIRADS_BI_RADS_6 ],
+            owl:someValuesFrom cde:BIRADS_BI_RADS_2 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:BIRADS_BI_RADS_0 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:BIRADS_BI_RADS_2 ],
+            owl:someValuesFrom cde:BIRADS_BI_RADS_1 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:BIRADS_BI_RADS_4 ],
+            owl:someValuesFrom cde:BIRADS_BI_RADS_6 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:BIRADS_BI_RADS_3 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:BIRADS_BI_RADS_1 ],
+            owl:someValuesFrom cde:BIRADS_BI_RADS_4 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:BIRADS_BI_RADS_5 ],
@@ -101,20 +101,20 @@ cde:Metabolic a owl:Class ;
 cde:MuralNodule a owl:Class ;
     rdfs:label "mural nodule" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
+            owl:onProperty cde:hasEnhancementPattern ;
+            owl:someValuesFrom cde:EnhancementPatternValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:componentOf ;
-            owl:someValuesFrom cde:ComplexRenalCyst ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasEnhancementPattern ;
-            owl:someValuesFrom cde:EnhancementPatternValue ],
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:LongAxisDiameter ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:componentOf ;
+            owl:someValuesFrom cde:ComplexRenalCyst ],
         cde:FindingClass ;
     skos:definition "A solid nodular projection from the wall of a fluid-filled structure." ;
     skos:prefLabel "mural nodule" ;
@@ -296,20 +296,20 @@ cde:SimpleRenalCyst a owl:Class ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+            owl:someValuesFrom cde:MR ],
         cde:RenalCyst ;
     owl:equivalentClass [ a owl:Class ;
             owl:intersectionOf ( cde:RenalCyst [ a owl:Restriction ;
@@ -396,9 +396,6 @@ cde:includeTargetDescendants a owl:AnnotationProperty ;
 cde:includeTargetRoot a owl:AnnotationProperty ;
     rdfs:comment "Whether the taxonomy root itself is an eligible target." .
 
-cde:inferenceBearing a owl:AnnotationProperty ;
-    rdfs:comment "False where software must not draw conclusions from this relation." .
-
 cde:invades a owl:ObjectProperty ;
     rdfs:comment "Extends into and disrupts a structure." ;
     rdfs:subPropertyOf cde:actsOn .
@@ -417,25 +414,21 @@ cde:localId a owl:AnnotationProperty ;
 
 cde:mayBeCausedBy a owl:ObjectProperty ;
     rdfs:comment "Inverse of mayCause." ;
-    owl:inverseOf cde:mayCause ;
-    cde:inferenceBearing false .
+    owl:inverseOf cde:mayCause .
 
 cde:mayBeRelatedTo a owl:ObjectProperty,
         owl:SymmetricProperty ;
-    rdfs:comment "Symmetric catch-all for an association the author cannot yet type. A triage queue, not a home; every use is a candidate for replacement by a typed edge." ;
-    cde:inferenceBearing false .
+    rdfs:comment "Symmetric catch-all for an association the author cannot yet type. A triage queue, not a home; every use is a candidate for replacement by a typed edge." .
 
 cde:mayProgressFrom a owl:ObjectProperty ;
     rdfs:comment "Inverse of mayProgressTo." ;
-    owl:inverseOf cde:mayProgressTo ;
-    cde:inferenceBearing false .
+    owl:inverseOf cde:mayProgressTo .
 
 cde:mayRepresent a owl:ObjectProperty ;
     rdfs:comment "Inverse of mayManifestAs. How a report reads: finding toward conclusion." ;
     owl:inverseOf cde:mayManifestAs ;
-    cde:designNote "Inferential reading, one edge. It covers direct appearances and indirect signs alike, and carries no formal semantics, so no reasoner check uses it. Marked epistemic and inferenceBearing false so that is explicit rather than assumed. " ;
-    cde:epistemic true ;
-    cde:inferenceBearing false .
+    cde:designNote "Inverse evidential reading from finding toward diagnostic conclusion. It covers direct appearances and indirect signs alike and carries no formal inference semantics." ;
+    cde:epistemic true .
 
 cde:measuredUnit a owl:DatatypeProperty .
 
@@ -565,16 +558,16 @@ cde:ARR_000001 a owl:NamedIndividual,
 
 cde:AdrenalAdenoma a owl:Class ;
     rdfs:label "adrenal adenoma" ;
-    rdfs:subClassOf _:N21b61e2485924df898678e1c0c35b8a8,
-        [ a owl:Restriction ;
+    rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Neoplastic ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:scopedToSpecific ;
             owl:someValuesFrom radlex:RID92 ],
+        _:Ne33e4353853d4b2daa35ccc61ad76057,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         cde:Diagnosis ;
     skos:broadMatch radlex:RID4211 ;
     skos:definition "A benign neoplasm of the adrenal cortex." ;
@@ -597,21 +590,21 @@ cde:AzygosFissure a owl:Class ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        _:N9eeb12628a78415b9b4eb28297f69d2e,
+        [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_CH ],
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_CH ],
-        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        _:Ned5b9210761945059f29fd7ca0279785,
         cde:FindingClass ;
     skos:definition "An accessory fissure formed by the azygos vein invaginating the right upper lobe during development." ;
     skos:exactMatch radlex:RID43259 ;
@@ -643,16 +636,16 @@ cde:BosniakClassification a owl:Class ;
             owl:someValuesFrom cde:BosniakClassification_Bosniak_II ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:BosniakClassification_Bosniak_IV ],
+            owl:someValuesFrom cde:BosniakClassification_Bosniak_IIF ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCategory ;
+            owl:someValuesFrom cde:BosniakClassification_Bosniak_III ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:BosniakClassification_Bosniak_I ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:BosniakClassification_Bosniak_IIF ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:BosniakClassification_Bosniak_III ],
+            owl:someValuesFrom cde:BosniakClassification_Bosniak_IV ],
         cde:AssessmentScheme ;
     skos:exactMatch radlex:RID50660 ;
     cde:created "2026-09-14"^^xsd:date ;
@@ -680,15 +673,15 @@ cde:BosniakClassification_Bosniak_I a owl:Class ;
 cde:ChronicPyelonephritis a owl:Class ;
     rdfs:label "chronic pyelonephritis" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasEtiology ;
-            owl:someValuesFrom cde:Infectious ],
-        [ a owl:Restriction ;
             owl:onProperty cde:scopedToRegion ;
             owl:someValuesFrom radlex:RID205 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        _:N94c20bc520914215832bbc0963795c47,
+        _:Nb5f21d3b4591438793375e418ff39327,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasEtiology ;
+            owl:someValuesFrom cde:Infectious ],
         cde:Diagnosis ;
     skos:definition "Pyelonephritis with established parenchymal damage from prior or recurrent infection." ;
     skos:exactMatch sct:63302006 ;
@@ -707,18 +700,18 @@ cde:ChronicPyelonephritis a owl:Class ;
 cde:Chylothorax a owl:Class ;
     rdfs:label "chylothorax" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:hasEtiology ;
+            owl:someValuesFrom cde:Iatrogenic ],
+        [ a owl:Restriction ;
             owl:onProperty cde:scopedToSpecific ;
             owl:someValuesFrom radlex:RID1363 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Traumatic ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasEtiology ;
-            owl:someValuesFrom cde:Iatrogenic ],
+        _:N9ed1a5ce83be4747b7b67dd2142cb830,
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        _:Ne7e8bbbdff5a4c99ae07c86c45cda561,
         cde:Diagnosis ;
     skos:definition "Chyle in the pleural space from disruption or obstruction of the thoracic duct." ;
     skos:exactMatch sct:83035003 ;
@@ -775,15 +768,13 @@ cde:EndDiastolicVelocity a owl:Class ;
 
 cde:EpiduralHematoma a owl:Class ;
     rdfs:label "epidural hematoma" ;
-    rdfs:subClassOf [ a owl:Restriction ;
+    rdfs:subClassOf _:N097a46f6a1774bc28f327bcd3686caff,
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
@@ -791,12 +782,14 @@ cde:EpiduralHematoma a owl:Class ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        _:Nef3e2168ddfa4d99b52262c46d798970,
-        [ a owl:Restriction ;
             owl:onProperty cde:hasCollectionShape ;
             owl:someValuesFrom cde:V_000370_Biconvex ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         cde:IntracranialHemorrhage ;
     skos:definition "Blood in the potential space between the skull and the dura, characteristically biconvex and not crossing sutures." ;
     skos:prefLabel "epidural hematoma" ;
@@ -813,33 +806,33 @@ cde:EpiduralHematoma a owl:Class ;
 cde:ExternalCarotidArteryStenosis a owl:Class ;
     rdfs:label "external carotid artery stenosis" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:EndDiastolicVelocity ],
-        _:N0d3fbc5f490e44caa131b4f25fae1aef,
+        [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_NR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        _:N80b26f96470142408babf5a1772a2a94,
         [ a owl:Restriction ;
             owl:onProperty cde:hasFlowCharacter ;
             owl:someValuesFrom cde:FlowCharacterValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasEcaStenosisSignificance ;
+            owl:someValuesFrom cde:EcaStenosisSignificanceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_NR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasEcaStenosisSignificance ;
-            owl:someValuesFrom cde:EcaStenosisSignificanceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
+            owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:PeakSystolicVelocity ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
@@ -858,19 +851,19 @@ cde:ExternalCarotidArteryStenosis a owl:Class ;
 
 cde:Hemothorax a owl:Class ;
     rdfs:label "hemothorax" ;
-    rdfs:subClassOf _:N064a6facb59746d1b184295395038da3,
+    rdfs:subClassOf _:N019d9add758c4947baf8133e44f56c6c,
         [ a owl:Restriction ;
             owl:onProperty cde:scopedToSpecific ;
             owl:someValuesFrom radlex:RID1363 ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasEtiology ;
-            owl:someValuesFrom cde:Iatrogenic ],
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Traumatic ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
+            owl:onProperty cde:hasEtiology ;
+            owl:someValuesFrom cde:Iatrogenic ],
         cde:Diagnosis ;
     skos:definition "Blood in the pleural space." ;
     skos:exactMatch sct:31892009,
@@ -887,16 +880,16 @@ cde:Hemothorax a owl:Class ;
 
 cde:HepatocellularCarcinoma a owl:Class ;
     rdfs:label "hepatocellular carcinoma" ;
-    rdfs:subClassOf _:N2d6fc6b40c524265b5d9362b39524261,
+    rdfs:subClassOf _:N04cfd6457dd94388aa03a24b2a61628d,
         [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
+            owl:onProperty cde:scopedToRegion ;
+            owl:someValuesFrom radlex:RID58 ],
         [ a owl:Restriction ;
             owl:onProperty cde:assessedBy ;
             owl:someValuesFrom cde:LIRADS ],
         [ a owl:Restriction ;
-            owl:onProperty cde:scopedToRegion ;
-            owl:someValuesFrom radlex:RID58 ],
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Neoplastic ],
@@ -920,31 +913,31 @@ cde:HepatocellularCarcinoma a owl:Class ;
 
 cde:Hydronephrosis a owl:Class ;
     rdfs:label "hydronephrosis" ;
-    rdfs:subClassOf [ a owl:Restriction ;
+    rdfs:subClassOf _:N035a7afa3ba846d8b6d4974968ce7766,
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasSeverity ;
+            owl:someValuesFrom cde:SeverityValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        _:N2565c6e8a01d4c7a82542887541978b5,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasSeverity ;
-            owl:someValuesFrom cde:SeverityValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_AB ],
+            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_AB ],
         cde:FindingClass ;
     skos:definition "Dilation of the renal collecting system." ;
     skos:exactMatch sct:43064006,
@@ -975,39 +968,39 @@ cde:Inflammatory a owl:Class ;
 cde:InternalCarotidArteryStenosis a owl:Class ;
     rdfs:label "internal carotid artery stenosis" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:ECSTPercentStenosis ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:InvolvedLength ],
+        _:N2d7fc3dbc41e42a5aaa46283f9f051db,
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        _:N22effaf9d5d245549f7a74c7d2154653,
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_NR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasNarrowingDegree ;
             owl:someValuesFrom cde:NarrowingDegreeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:InvolvedLength ],
+            owl:someValuesFrom cde:ResidualLumenDiameter ],
         [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_NR ],
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:ECSTPercentStenosis ],
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:NASCETPercentStenosis ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:ResidualLumenDiameter ],
         cde:FindingClass ;
     skos:definition "Narrowing of the internal carotid artery lumen." ;
     skos:prefLabel "internal carotid artery stenosis" ;
@@ -1024,24 +1017,24 @@ cde:InternalCarotidArteryStenosis a owl:Class ;
 cde:IntraparenchymalHemorrhage a owl:Class ;
     rdfs:label "intraparenchymal hemorrhage" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        _:N730597deaba24c948e4c1a360baba81a,
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
-        _:Nbee8d83c08cc461bbe96b258d855fe24,
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:someValuesFrom cde:XR ],
         cde:IntracranialHemorrhage ;
     skos:definition "Blood within the brain parenchyma itself." ;
     skos:prefLabel "intraparenchymal hemorrhage" ;
@@ -1058,13 +1051,13 @@ cde:IntraparenchymalHemorrhage a owl:Class ;
 
 cde:IntrapulmonaryLymphNode a owl:Class ;
     rdfs:label "intrapulmonary lymph node" ;
-    rdfs:subClassOf _:Na684d61208ce471599e1766c1d6b1944,
-        [ a owl:Restriction ;
+    rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:scopedToRegion ;
             owl:someValuesFrom radlex:RID1301 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
+        _:Nbf9a8ab3085a4eacb5b609be93da7619,
         cde:Diagnosis ;
     skos:definition "A normal lymph node within the lung parenchyma, characteristically perifissural, oval and subpleural." ;
     skos:exactMatch radlex:RID1496 ;
@@ -1082,24 +1075,24 @@ cde:IntrapulmonaryLymphNode a owl:Class ;
 cde:IntraventricularHemorrhage a owl:Class ;
     rdfs:label "intraventricular hemorrhage" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        _:N06cb11502f8f4e96a87c3ee5497cc282,
-        [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:someValuesFrom cde:US ],
+        _:N6f179a5b6af34aa582d4fc26256fb413,
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
         cde:IntracranialHemorrhage ;
     skos:definition "Blood within the ventricular system." ;
     skos:prefLabel "intraventricular hemorrhage" ;
@@ -1129,25 +1122,25 @@ cde:LungRADS a owl:Class ;
     rdfs:label "Lung-RADS" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:LungRADS_Lung_RADS_S ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:LungRADS_Lung_RADS_4X ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:LungRADS_Lung_RADS_4B ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:LungRADS_Lung_RADS_3 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:LungRADS_Lung_RADS_2 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:LungRADS_Lung_RADS_1 ],
+            owl:someValuesFrom cde:LungRADS_Lung_RADS_4X ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCategory ;
+            owl:someValuesFrom cde:LungRADS_Lung_RADS_S ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:LungRADS_Lung_RADS_4A ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCategory ;
+            owl:someValuesFrom cde:LungRADS_Lung_RADS_1 ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCategory ;
+            owl:someValuesFrom cde:LungRADS_Lung_RADS_4B ],
         cde:AssessmentScheme ;
     skos:exactMatch radlex:RID50134 ;
     cde:created "2026-09-14"^^xsd:date ;
@@ -1177,12 +1170,12 @@ cde:LungRADS_Lung_RADS_1 a owl:Class ;
 cde:MalignantNeoplasticDisease a owl:Class ;
     rdfs:label "malignant neoplastic disease" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Neoplastic ],
-        _:Nf8c50f76bf6547048c3402a446af5bc6,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        _:Nde0765c1f8a34ea0b2b8c335e78c04fa,
         cde:Diagnosis ;
     skos:definition "Any malignant neoplasm, primary or metastatic." ;
     skos:exactMatch sct:363346000,
@@ -1218,7 +1211,7 @@ cde:NephroticSyndrome a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        _:Nb0fd131a01b44aa7a88928a5153212ec,
+        _:N90b37137e90a4f70ac4832f1bf9760a9,
         cde:Diagnosis ;
     skos:definition "Heavy proteinuria with hypoalbuminemia and edema." ;
     skos:exactMatch sct:52254009 ;
@@ -1236,23 +1229,23 @@ cde:NephroticSyndrome a owl:Class ;
 cde:NonSolidPulmonaryNodule a owl:Class ;
     rdfs:label "non-solid pulmonary nodule" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
+            owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         cde:PulmonaryNodule ;
     owl:equivalentClass [ a owl:Class ;
             owl:intersectionOf ( cde:PulmonaryNodule [ a owl:Restriction ;
@@ -1276,19 +1269,19 @@ cde:NonSolidPulmonaryNodule a owl:Class ;
 
 cde:ParapneumonicEffusion a owl:Class ;
     rdfs:label "parapneumonic effusion" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasEtiology ;
-            owl:someValuesFrom cde:Infectious ],
+    rdfs:subClassOf _:N52bc2af95ed14185a651007d0a0d6543,
+        [ a owl:Restriction ;
+            owl:onProperty cde:scopedToSpecific ;
+            owl:someValuesFrom radlex:RID1363 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        _:N3ab6f788dbca4c9594bdfb595bd9777b,
         [ a owl:Restriction ;
             owl:onProperty cde:mayProgressTo ;
             owl:someValuesFrom cde:Empyema ],
         [ a owl:Restriction ;
-            owl:onProperty cde:scopedToSpecific ;
-            owl:someValuesFrom radlex:RID1363 ],
+            owl:onProperty cde:hasEtiology ;
+            owl:someValuesFrom cde:Infectious ],
         cde:Diagnosis ;
     skos:definition "Pleural effusion accompanying pneumonia, before it becomes an empyema." ;
     skos:exactMatch sct:81075000 ;
@@ -1321,15 +1314,15 @@ cde:PeakSystolicVelocity a owl:Class ;
 cde:PulmonaryGranuloma a owl:Class ;
     rdfs:label "pulmonary granuloma" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:scopedToRegion ;
+            owl:someValuesFrom radlex:RID1301 ],
+        _:N339eb66073924eea9a25a2f63dabe1fe,
+        [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Infectious ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:scopedToRegion ;
-            owl:someValuesFrom radlex:RID1301 ],
-        _:N77c6e9f230e840a88ddaba8b7796a659,
         cde:Diagnosis ;
     skos:broadMatch radlex:RID3953 ;
     skos:definition "A focus of granulomatous inflammation in the lung, usually the sequela of prior granulomatous infection." ;
@@ -1349,15 +1342,15 @@ cde:PulmonaryGranuloma a owl:Class ;
 cde:PulmonaryHamartoma a owl:Class ;
     rdfs:label "pulmonary hamartoma" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:scopedToRegion ;
+            owl:someValuesFrom radlex:RID1301 ],
+        [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Congenital ],
+        _:N7d5757a3308e45ab983950d3020320d1,
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:scopedToRegion ;
-            owl:someValuesFrom radlex:RID1301 ],
-        _:Naef27063dbff4dc9842b432dcbf43b60,
         cde:Diagnosis ;
     skos:broadMatch radlex:RID4335 ;
     skos:definition "A benign lung neoplasm of disorganised mesenchymal tissue, characteristically containing fat and chondroid calcification." ;
@@ -1374,16 +1367,16 @@ cde:PulmonaryHamartoma a owl:Class ;
 
 cde:ReactiveLymphadenopathy a owl:Class ;
     rdfs:label "reactive lymphadenopathy" ;
-    rdfs:subClassOf [ a owl:Restriction ;
+    rdfs:subClassOf _:N28957899aaaa430eac28885320cdb6bb,
+        [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Inflammatory ],
         [ a owl:Restriction ;
-            owl:onProperty cde:scopedToClass ;
-            owl:someValuesFrom radlex:RID13296 ],
-        [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        _:Nebffe440035a421f952f0d26b51991ea,
+        [ a owl:Restriction ;
+            owl:onProperty cde:scopedToClass ;
+            owl:someValuesFrom radlex:RID13296 ],
         cde:Diagnosis ;
     skos:definition "Lymph node enlargement secondary to a benign immune response." ;
     skos:prefLabel "reactive lymphadenopathy" ;
@@ -1419,36 +1412,36 @@ cde:RenalLength a owl:Class ;
 cde:RenalLesion a owl:Class ;
     rdfs:label "renal lesion" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCalcification ;
+            owl:someValuesFrom cde:CalcificationValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:LesionCount ],
-        _:N72e1b620887546488fe2df0ed4167b4e,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasCalcification ;
-            owl:someValuesFrom cde:CalcificationValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:LongAxisDiameter ],
         [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_AB ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_AB ],
+        [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        _:Nf3621bf776214b3f8a0ca5b3463f82e2,
         cde:FindingClass ;
     skos:definition "A focal abnormality of the renal parenchyma, not further characterised." ;
     skos:prefLabel "renal lesion" ;
@@ -1480,36 +1473,36 @@ cde:ResidualLumenDiameter a owl:Class ;
 cde:RibFracture a owl:Class ;
     rdfs:label "rib fracture" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasFractureDisplacement ;
-            owl:someValuesFrom cde:FractureDisplacementValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        _:N26f7d5b8bc0b4c2094517389d2100ab8,
-        [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_CH ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasComminution ;
-            owl:someValuesFrom cde:ComminutionValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:DisplacementDistance ],
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasAcuity ;
             owl:someValuesFrom cde:AcuityValue ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasComminution ;
+            owl:someValuesFrom cde:ComminutionValue ],
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:someValuesFrom cde:CT ],
+        _:N759e643c552c41dd8e9ded5bfbe9a4af,
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasFractureDisplacement ;
+            owl:someValuesFrom cde:FractureDisplacementValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:DisplacementDistance ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
@@ -1558,9 +1551,6 @@ cde:SolidComponentOfPartSolidNodule a owl:Class ;
             owl:onProperty cde:componentOf ;
             owl:someValuesFrom cde:PartSolidPulmonaryNodule ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:SolidComponentDiameter ],
-        [ a owl:Restriction ;
             owl:onProperty cde:hasAttenuation ;
             owl:someValuesFrom cde:V_000010_Solid ],
         [ a owl:Restriction ;
@@ -1569,6 +1559,9 @@ cde:SolidComponentOfPartSolidNodule a owl:Class ;
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:SolidComponentDiameter ],
         cde:FindingClass ;
     skos:definition "The solid portion of a part-solid pulmonary nodule." ;
     skos:exactMatch radlex:RID50154 ;
@@ -1585,7 +1578,16 @@ cde:SolidComponentOfPartSolidNodule a owl:Class ;
 
 cde:SubarachnoidHemorrhage a owl:Class ;
     rdfs:label "subarachnoid hemorrhage" ;
-    rdfs:subClassOf _:N087c93155cda4fe3a2c2a00b77ad2bbc,
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
+        _:N98ff6904d74c44f5a597aac64568a462,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCollectionShape ;
             owl:someValuesFrom cde:V_000372_Conforming ],
@@ -1594,19 +1596,10 @@ cde:SubarachnoidHemorrhage a owl:Class ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
         cde:IntracranialHemorrhage ;
     skos:altLabel "SAH" ;
     skos:definition "Blood in the subarachnoid space, filling sulci and basal cisterns." ;
@@ -1627,27 +1620,27 @@ cde:SubarachnoidHemorrhage a owl:Class ;
 cde:SubduralHematoma a owl:Class ;
     rdfs:label "subdural hematoma" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
             owl:onProperty cde:hasCollectionShape ;
             owl:someValuesFrom cde:V_000371_Crescentic ],
-        _:N0f4ae1ac2ade4e41bd8314c41edd1624,
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:someValuesFrom cde:US ],
+        _:N91c67c71f21c4a40b35cfbebd7afbabb,
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
         cde:IntracranialHemorrhage ;
     skos:definition "Blood in the space between the dura and the arachnoid, characteristically crescentic and crossing sutures." ;
     skos:prefLabel "subdural hematoma" ;
@@ -1665,19 +1658,19 @@ cde:TIRADS a owl:Class ;
     rdfs:label "ACR TI-RADS" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:TIRADS_TR3 ],
+            owl:someValuesFrom cde:TIRADS_TR5 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:TIRADS_TR2 ],
+            owl:someValuesFrom cde:TIRADS_TR1 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:TIRADS_TR4 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:TIRADS_TR5 ],
+            owl:someValuesFrom cde:TIRADS_TR2 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:TIRADS_TR1 ],
+            owl:someValuesFrom cde:TIRADS_TR3 ],
         cde:AssessmentScheme ;
     skos:exactMatch radlex:RID50503 ;
     cde:created "2026-09-14"^^xsd:date ;
@@ -1702,31 +1695,31 @@ cde:TIRADS_TR1 a owl:Class ;
 
 cde:TendinousLesion a owl:Class ;
     rdfs:label "tendon lesion" ;
-    rdfs:subClassOf _:N0e1f082a90f84a61bf04411141a46187,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:LongAxisDiameter ],
-        [ a owl:Restriction ;
+    rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:LongAxisDiameter ],
+        _:N90520dd5185d4bc9995e920b65c851a0,
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:LesionCount ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+            owl:someValuesFrom cde:MR ],
         cde:FindingClass ;
     skos:definition "A lesion involving a tendon." ;
     skos:prefLabel "tendon lesion" ;
@@ -1742,52 +1735,52 @@ cde:TendinousLesion a owl:Class ;
 
 cde:ThyroidNodule a owl:Class ;
     rdfs:label "thyroid nodule" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+    rdfs:subClassOf _:N09ba09550eba4f2e95e6d45c7c38277a,
         [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_HN ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasEchogenicity ;
+            owl:someValuesFrom cde:EchogenicityValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:LongAxisDiameter ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:MeanDiameter ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:LongAxisDiameter ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasThyroidMargin ;
-            owl:someValuesFrom cde:ThyroidMarginValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:assessedBy ;
-            owl:someValuesFrom cde:TIRADS ],
+            owl:someValuesFrom cde:LesionCount ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasThyroidComposition ;
             owl:someValuesFrom cde:ThyroidCompositionValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:LesionCount ],
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasEchogenicity ;
-            owl:someValuesFrom cde:EchogenicityValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasEchogenicFoci ;
-            owl:someValuesFrom cde:EchogenicFociValue ],
-        _:Nd0684d4026014f16af28637e23a11924,
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasThyroidMargin ;
+            owl:someValuesFrom cde:ThyroidMarginValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasEchogenicFoci ;
+            owl:someValuesFrom cde:EchogenicFociValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:assessedBy ;
+            owl:someValuesFrom cde:TIRADS ],
         cde:FindingClass ;
     skos:definition "A nodule within the thyroid gland." ;
     skos:exactMatch sct:237495005,
@@ -2343,21 +2336,23 @@ cde:V_000450_Hyperacute a owl:Class ;
 cde:VentricularShuntCatheter a owl:Class ;
     rdfs:label "ventricular shunt catheter" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasTipPositionStatus ;
-            owl:someValuesFrom cde:TipPositionStatusValue ],
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_NR ],
-        _:N97dd97721ba24e709699a6e62d58a0b5,
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasTipPositionStatus ;
+            owl:someValuesFrom cde:TipPositionStatusValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasDeviceIntegrity ;
             owl:someValuesFrom cde:DeviceIntegrityValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
@@ -2365,11 +2360,9 @@ cde:VentricularShuntCatheter a owl:Class ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_NR ],
+        _:Ndcfb1a2e35f343ebb331d47bc5f99965,
         cde:FindingClass ;
     skos:definition "A catheter placed to divert cerebrospinal fluid from the ventricular system." ;
     skos:prefLabel "ventricular shunt catheter" ;
@@ -4969,27 +4962,27 @@ cde:hasWallCharacter a owl:FunctionalProperty,
 cde:AcuteInfarct a owl:Class ;
     rdfs:label "acute infarct" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasVascularTerritory ;
+            owl:someValuesFrom cde:VascularTerritoryValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        _:N9a566c8876d64bac992e4ad3502750c2,
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasVascularTerritory ;
-            owl:someValuesFrom cde:VascularTerritoryValue ],
-        _:N81614426b5814b0c9d5d247be1fdd555,
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_NR ],
@@ -5028,31 +5021,31 @@ cde:BosniakClassification_Bosniak_II a owl:Class ;
 
 cde:CerebralAtrophy a owl:Class ;
     rdfs:label "cerebral atrophy" ;
-    rdfs:subClassOf _:N0db296e21ff14459b83c09b273b1a29c,
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:hasSeverity ;
+            owl:someValuesFrom cde:SeverityValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_NR ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasSeverity ;
-            owl:someValuesFrom cde:SeverityValue ],
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
+        _:Nd0fad4c3c8524054abec29b6d99c2215,
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
+            owl:someValuesFrom cde:MR ],
         cde:FindingClass ;
     skos:definition "Loss of brain parenchymal volume beyond that expected for age." ;
     skos:prefLabel "cerebral atrophy" ;
@@ -5068,20 +5061,20 @@ cde:CerebralAtrophy a owl:Class ;
 
 cde:ChronicSmallVesselDisease a owl:Class ;
     rdfs:label "chronic small vessel disease" ;
-    rdfs:subClassOf _:N348280ad10104fbea62af4a8b6d53845,
-        [ a owl:Restriction ;
+    rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:scopedToRegion ;
             owl:someValuesFrom radlex:RID6434 ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasEtiology ;
-            owl:someValuesFrom cde:Vascular ],
-        _:Nccb14de3b7e44225bcbfe0f73cfebe32,
-        [ a owl:Restriction ;
             owl:onProperty cde:hasSeverity ;
             owl:someValuesFrom cde:SeverityValue ],
+        _:N37665f8264c944f6a032852e8fc9c103,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasEtiology ;
+            owl:someValuesFrom cde:Vascular ],
+        _:Naf4f682619c6425a9a57dab3ed5aa7fd,
         cde:Diagnosis ;
     skos:definition "Chronic ischaemic change of the cerebral small vessels." ;
     skos:prefLabel "chronic small vessel disease" ;
@@ -5095,14 +5088,8 @@ cde:ChronicSmallVesselDisease a owl:Class ;
 cde:ComplexRenalCyst a owl:Class ;
     rdfs:label "complex renal cyst" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasCalcification ;
-            owl:someValuesFrom cde:CalcificationValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
+            owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
@@ -5110,11 +5097,17 @@ cde:ComplexRenalCyst a owl:Class ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasCalcification ;
+            owl:someValuesFrom cde:CalcificationValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         cde:RenalCyst ;
     owl:equivalentClass [ a owl:Class ;
             owl:intersectionOf ( cde:RenalCyst [ a owl:Restriction ;
@@ -5136,12 +5129,12 @@ cde:ComplexRenalCyst a owl:Class ;
 cde:Empyema a owl:Class ;
     rdfs:label "empyema" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasEtiology ;
-            owl:someValuesFrom cde:Infectious ],
-        _:N411a9b3d556a444291e0f130692eb2b9,
-        [ a owl:Restriction ;
             owl:onProperty cde:scopedToSpecific ;
             owl:someValuesFrom radlex:RID1363 ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasEtiology ;
+            owl:someValuesFrom cde:Infectious ],
+        _:N5c7641c118184e8fa5d1c2b3c5d6c296,
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
@@ -5168,26 +5161,26 @@ cde:Encephalomalacia a owl:Class ;
     rdfs:label "encephalomalacia" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        _:N98f77000aae64a3785f130b5483378ff,
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_NR ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        _:Nc957f27628344e93af357cf606a38b2c,
+        [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_NR ],
         cde:FindingClass ;
     skos:definition "Established parenchymal loss with cystic change, the sequela of prior injury or infarction." ;
     skos:exactMatch sct:58762006,
@@ -5208,8 +5201,8 @@ cde:HeartFailure a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        _:N254d03b42a9a46aeab574c27273742cf,
-        _:Nf181382cf9644d59a9d552ee40ff32c7,
+        _:N8a9c0f646aa149468b88d427e8bf15dc,
+        _:Nfceb6760d5374c14a181545b1b08e9d2,
         cde:Diagnosis ;
     skos:definition "Inability of the heart to maintain adequate output, with venous congestion." ;
     skos:exactMatch sct:84114007,
@@ -5245,25 +5238,25 @@ cde:LIRADS a owl:Class ;
     rdfs:label "LI-RADS" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
+            owl:someValuesFrom cde:LIRADS_LR_TIV ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCategory ;
+            owl:someValuesFrom cde:LIRADS_LR_M ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCategory ;
+            owl:someValuesFrom cde:LIRADS_LR_1 ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:LIRADS_LR_2 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:LIRADS_LR_3 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:LIRADS_LR_1 ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:LIRADS_LR_5 ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:LIRADS_LR_M ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasCategory ;
             owl:someValuesFrom cde:LIRADS_LR_4 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCategory ;
-            owl:someValuesFrom cde:LIRADS_LR_TIV ],
+            owl:someValuesFrom cde:LIRADS_LR_5 ],
         cde:AssessmentScheme ;
     skos:exactMatch radlex:RID49823 ;
     cde:created "2026-09-14"^^xsd:date ;
@@ -5301,16 +5294,16 @@ cde:LungRADS_Lung_RADS_2 a owl:Class ;
 
 cde:MalignantPleuralEffusion a owl:Class ;
     rdfs:label "malignant pleural effusion" ;
-    rdfs:subClassOf _:N1b849150c2f44981acc59711afce9285,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
+    rdfs:subClassOf _:N56d2f6b392874f35a2f917c7d0bb5b1b,
         [ a owl:Restriction ;
             owl:onProperty cde:scopedToSpecific ;
             owl:someValuesFrom radlex:RID1363 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Neoplastic ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         cde:Diagnosis ;
     skos:definition "Pleural effusion from involvement of the pleura by malignancy." ;
     skos:prefLabel "malignant pleural effusion" ;
@@ -5327,33 +5320,33 @@ cde:MalignantPleuralEffusion a owl:Class ;
 cde:MediastinalShift a owl:Class ;
     rdfs:label "mediastinal shift" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_CH ],
-        _:N5ccccca3ad7a4bfd8eb84b6388b412f8,
+            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasDirection ;
             owl:someValuesFrom cde:DirectionValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
+            owl:someValuesFrom cde:CT ],
+        _:N9b53c6a580b34f48bfe077faf4aa2531,
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:DisplacementDistance ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:DisplacementDistance ],
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_CH ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         cde:FindingClass ;
     skos:definition "Displacement of the mediastinum from the midline." ;
     skos:exactMatch sct:19616004 ;
@@ -5372,33 +5365,33 @@ cde:MediastinalShift a owl:Class ;
 cde:MidlineShift a owl:Class ;
     rdfs:label "midline shift" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_NR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasDirection ;
             owl:someValuesFrom cde:DirectionValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        _:Nd63dead0ccd643fdb3353e850c2aad36,
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        _:N6c28606b46444e34b0d03c54a7196673,
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:DisplacementDistance ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_NR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
         cde:FindingClass ;
     skos:definition "Displacement of midline intracranial structures from the midline." ;
     skos:prefLabel "midline shift" ;
@@ -5412,30 +5405,70 @@ cde:MidlineShift a owl:Class ;
     cde:versionNumber 1 ;
     cde:versionStatus "proposed" .
 
-cde:PerinephricStranding a owl:Class ;
-    rdfs:label "perinephric fat stranding" ;
+cde:PartSolidPulmonaryNodule a owl:Class ;
+    rdfs:label "part-solid pulmonary nodule" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_AB ],
-        _:N40d66356198943708ae15c2e60b62b3c,
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasComponent ;
+            owl:someValuesFrom cde:SolidComponentOfPartSolidNodule ],
+        cde:PulmonaryNodule ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:PulmonaryNodule [ a owl:Restriction ;
+                        owl:onProperty cde:hasAttenuation ;
+                        owl:someValuesFrom cde:V_000011_PartSolid ] ) ] ;
+    skos:definition "A pulmonary nodule containing both a solid and a ground-glass component." ;
+    skos:exactMatch radlex:RID50152 ;
+    skos:prefLabel "part-solid pulmonary nodule" ;
+    cde:created "2026-09-14"^^xsd:date ;
+    cde:designNote "Defined class: conditions are necessary and sufficient, so a reasoner classifies into it. Nothing about it is authored twice." ;
+    cde:hasBinding cde:binding-PartSolidPulmonaryNodule-RADLEX-RID50152 ;
+    cde:lastModified "2026-09-14"^^xsd:date ;
+    cde:localId "FC-000007" ;
+    cde:nodeType "FindingClass" ;
+    cde:versionNumber 1 ;
+    cde:versionStatus "proposed" .
+
+cde:PerinephricStranding a owl:Class ;
+    rdfs:label "perinephric fat stranding" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_AB ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        _:N83958f2e8f62411392e2c8b5cb873d78,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         cde:FindingClass ;
     skos:definition "Increased attenuation with linear or hazy strands in the perirenal fat." ;
     skos:prefLabel "perinephric fat stranding" ;
@@ -5451,29 +5484,29 @@ cde:Pneumothorax a owl:Class ;
     rdfs:label "pneumothorax" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        _:N0dbd3418cf9443d0aad1fba86dd9d2f2,
+            owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasPneumothoraxSize ;
-            owl:someValuesFrom cde:PneumothoraxSizeValue ],
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_CH ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        _:N86756901132a41269aed205787a5dfa5,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPneumothoraxSize ;
+            owl:someValuesFrom cde:PneumothoraxSizeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_CH ],
         cde:FindingClass ;
     skos:definition "Gas within the pleural space." ;
     skos:exactMatch sct:36118008,
@@ -5493,22 +5526,16 @@ cde:PulmonaryArteryFillingDefect a owl:Class ;
     rdfs:label "pulmonary artery filling defect" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:InvolvedLength ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_CH ],
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
@@ -5516,9 +5543,15 @@ cde:PulmonaryArteryFillingDefect a owl:Class ;
             owl:onProperty cde:hasOcclusiveness ;
             owl:someValuesFrom cde:OcclusivenessValue ],
         [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_CH ],
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        _:Ne59c9c5495264390a2defdb6221c76c6,
+            owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:InvolvedLength ],
+        _:Ne5a08d9c9a22495abe283fa0f9b254d3,
         cde:FindingClass ;
     skos:definition "Intraluminal material within a pulmonary artery on contrast-enhanced CT." ;
     skos:prefLabel "pulmonary artery filling defect" ;
@@ -5532,17 +5565,17 @@ cde:PulmonaryArteryFillingDefect a owl:Class ;
 
 cde:PulmonaryEmbolism a owl:Class ;
     rdfs:label "pulmonary embolism" ;
-    rdfs:subClassOf _:N28d58777fbee47e485b128e1669ae4d2,
+    rdfs:subClassOf _:N3b63c9641e494b38ae0dc0b89b2a4e26,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Vascular ],
         [ a owl:Restriction ;
             owl:onProperty cde:scopedToSpecific ;
             owl:someValuesFrom radlex:RID974 ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        _:Nd1734c68aa6a41f6a8b5a3feb8313e6d,
+        _:Nf51ff3a7eae04d97867d3d8cbf83a839,
         cde:Diagnosis ;
     skos:definition "Thromboembolic occlusion of pulmonary arteries." ;
     skos:exactMatch sct:59282003,
@@ -5560,17 +5593,17 @@ cde:PulmonaryEmbolism a owl:Class ;
 
 cde:RenalCellCarcinoma a owl:Class ;
     rdfs:label "renal cell carcinoma" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:scopedToRegion ;
-            owl:someValuesFrom radlex:RID205 ],
-        _:N6f24a99a683f4c949fb00d06576eee6b,
+    rdfs:subClassOf _:N7ecd7085cf5d4da1a4775e445628c913,
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        _:N9f39f3f119034cd68a038c5e07b3efc2,
+        _:N9754d78f292e48a5a18a9f3006595bdb,
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Neoplastic ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:scopedToRegion ;
+            owl:someValuesFrom radlex:RID205 ],
         cde:Diagnosis ;
     skos:altLabel "RCC",
         "hypernephroma" ;
@@ -5582,11 +5615,11 @@ cde:RenalCellCarcinoma a owl:Class ;
     cde:hasBinding cde:binding-RenalCellCarcinoma-RADLEX-RID4230,
         cde:binding-RenalCellCarcinoma-SNOMEDCT-702391001 ;
     cde:hasSynonym [ cde:synonymScope "exact" ;
-            cde:synonymTerm "hypernephroma" ;
-            cde:synonymType "synonym" ],
-        [ cde:synonymScope "exact" ;
             cde:synonymTerm "RCC" ;
-            cde:synonymType "abbreviation" ] ;
+            cde:synonymType "abbreviation" ],
+        [ cde:synonymScope "exact" ;
+            cde:synonymTerm "hypernephroma" ;
+            cde:synonymType "synonym" ] ;
     cde:lastModified "2026-09-14"^^xsd:date ;
     cde:localId "DX-000023" ;
     cde:nodeType "Diagnosis" ;
@@ -5597,27 +5630,27 @@ cde:RenalCellCarcinoma a owl:Class ;
 cde:RenalCorticalScarring a owl:Class ;
     rdfs:label "renal cortical scarring" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
-        _:N4c4d4bd74dbb4425bb0de1840e1a53b2,
+        _:N406b4efb060f48148c1d713de0171fe6,
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_AB ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_AB ],
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         cde:FindingClass ;
     skos:closeMatch sct:441872001 ;
     skos:definition "Focal cortical thinning with retraction of the overlying contour." ;
@@ -5634,31 +5667,31 @@ cde:RenalCorticalScarring a owl:Class ;
 
 cde:RenalEnlargement a owl:Class ;
     rdfs:label "renal enlargement" ;
-    rdfs:subClassOf _:N0439feb5e9ad46d7892e3216f265e8f7,
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
+        _:N1de0084d33f340a8ba96c20bfe6f6109,
         [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_AB ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:RenalLength ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
+            owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:RenalLength ],
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
         cde:FindingClass ;
     skos:altLabel "nephromegaly" ;
     skos:definition "Renal length beyond the expected range for age and body size." ;
@@ -5684,17 +5717,14 @@ cde:RenalMass a owl:Class ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
+            owl:onProperty cde:hasEnhancementPattern ;
+            owl:someValuesFrom cde:EnhancementPatternValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCalcification ;
             owl:someValuesFrom cde:CalcificationValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:LongAxisDiameter ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasEnhancementPattern ;
-            owl:someValuesFrom cde:EnhancementPatternValue ],
+            owl:someValuesFrom cde:LesionCount ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
@@ -5702,18 +5732,21 @@ cde:RenalMass a owl:Class ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_AB ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:LesionCount ],
-        _:N4ecf17ea1ebd4c2e969f742d47a916a9,
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:LongAxisDiameter ],
+        _:N7569c0afecfb415cb396e59546dd693d,
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
         cde:FindingClass ;
     skos:closeMatch radlex:RID50658 ;
     skos:definition "A space-occupying lesion of the kidney." ;
@@ -5732,27 +5765,27 @@ cde:RenalMass a owl:Class ;
 cde:StriatedNephrogram a owl:Class ;
     rdfs:label "striated nephrogram" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_AB ],
+        _:N37239d9d6733437fb959888988832581,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        _:N8f5f3df0ce6f4a5197e768f7f617d592,
-        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_AB ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
         cde:FindingClass ;
     skos:definition "Alternating linear bands of higher and lower attenuation radiating from the papilla to the cortex on contrast-enhanced imaging." ;
     skos:prefLabel "striated nephrogram" ;
@@ -6368,26 +6401,26 @@ cde:WhiteMatterHyperintensity a owl:Class ;
     rdfs:label "white matter hyperintensity" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
-        _:N3e0c26d0db0b4fda877054d9713eb2ab,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        _:N8c67029b9051401aa1be2ed13e53ae63,
+        [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_NR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         cde:FindingClass ;
     skos:definition "Increased T2 signal in the cerebral white matter." ;
     skos:prefLabel "white matter hyperintensity" ;
@@ -6480,26 +6513,25 @@ cde:hasPulmonaryMargin a owl:FunctionalProperty,
     cde:versionStatus "proposed" .
 
 cde:mayProgressTo a owl:ObjectProperty ;
-    rdfs:comment "Identity-preserving evolution: the same entity in a later state. The relationship is authored explicitly; no additional temporal identity inference is asserted." ;
-    cde:inferenceBearing false .
+    rdfs:comment "Identity-preserving evolution: the same entity in a later state. The relationship is authored explicitly; no additional temporal identity inference is asserted." .
 
 cde:AcutePyelonephritis a owl:Class ;
     rdfs:label "acute pyelonephritis" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasEtiology ;
-            owl:someValuesFrom cde:Infectious ],
-        _:N49cc36b8a4e148cf9856eb1577579f09,
-        _:N7c1ef7d1fbfc4eb298f6541bb9b71d5a,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:scopedToRegion ;
             owl:someValuesFrom radlex:RID205 ],
-        _:Nc9b43c16143b4dbba2693fa5bbc2c42c,
+        _:N8232db9431f041639abea29d2818d8dc,
+        _:N8ce1b3251ee047e2b12604db69705b47,
         [ a owl:Restriction ;
             owl:onProperty cde:hasSeverity ;
             owl:someValuesFrom cde:SeverityValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        _:Ne2433b70b1f643538f5a215171f81ddc,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasEtiology ;
+            owl:someValuesFrom cde:Infectious ],
         cde:Diagnosis ;
     skos:definition "Active bacterial infection of the renal parenchyma and collecting system." ;
     skos:exactMatch sct:36689008 ;
@@ -6518,42 +6550,42 @@ cde:AcutePyelonephritis a owl:Class ;
 cde:AdrenalNodule a owl:Class ;
     rdfs:label "adrenal nodule" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        _:N01702a40f5f4457bb2a6a2a509a08eb7,
-        [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:MeanDiameter ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:LesionCount ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCalcification ;
+            owl:someValuesFrom cde:CalcificationValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:AttenuationHU ],
+        _:N4a23cfe3e89e4f32b456b33eb3af8789,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:LongAxisDiameter ],
         [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_AB ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasCalcification ;
-            owl:someValuesFrom cde:CalcificationValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:LesionCount ],
         cde:FindingClass ;
     skos:definition "A nodule within the adrenal gland." ;
     skos:prefLabel "adrenal nodule" ;
@@ -6600,18 +6632,18 @@ cde:BosniakClassification_Bosniak_IIF a owl:Class ;
 
 cde:CerebralInfarction a owl:Class ;
     rdfs:label "cerebral infarction" ;
-    rdfs:subClassOf _:N3046e154fc3e4190ba632471c30b1a20,
-        _:N3f6b130148ac4d1bb798ebd8408386a2,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
+    rdfs:subClassOf _:N67018dcbb1f04161b90046e01a314ce6,
+        _:N6c1e491e441b488f8cb050c4ddcfc644,
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Vascular ],
         [ a owl:Restriction ;
             owl:onProperty cde:scopedToRegion ;
             owl:someValuesFrom radlex:RID6434 ],
-        _:Nea41afd7fe51459db2d9cb8d6dd92638,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        _:Nbb08f599cd4146559805f3fb825eb44c,
         cde:Diagnosis ;
     skos:broadMatch radlex:RID5172 ;
     skos:definition "Tissue death in the brain from interruption of arterial supply." ;
@@ -6647,42 +6679,42 @@ cde:DisplacementDistance a owl:Class ;
 cde:HepaticMass a owl:Class ;
     rdfs:label "hepatic mass" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
             owl:onProperty cde:hasCalcification ;
             owl:someValuesFrom cde:CalcificationValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:assessedBy ;
-            owl:someValuesFrom cde:LIRADS ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasEnhancementPattern ;
-            owl:someValuesFrom cde:EnhancementPatternValue ],
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_AB ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
+            owl:onProperty cde:hasEnhancementPattern ;
+            owl:someValuesFrom cde:EnhancementPatternValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        _:N6e0f407d797b4d088874cc8745833326,
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_AB ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:LongAxisDiameter ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        _:Nd53198fafde543419de25b1e520143f5,
+            owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:LesionCount ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:assessedBy ;
+            owl:someValuesFrom cde:LIRADS ],
         cde:FindingClass ;
     skos:definition "A space-occupying lesion of the liver." ;
     skos:prefLabel "hepatic mass" ;
@@ -6730,16 +6762,16 @@ cde:MeanDiameter a owl:Class ;
     rdfs:label "mean diameter" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:derivedFromMeasurement ;
-            owl:someValuesFrom cde:ShortAxisDiameter ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurementComponent ;
             owl:someValuesFrom cde:LongAxisDiameter ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurementComponent ;
             owl:someValuesFrom cde:ShortAxisDiameter ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurementComponent ;
+            owl:someValuesFrom cde:LongAxisDiameter ],
         [ a owl:Restriction ;
             owl:onProperty cde:derivedFromMeasurement ;
-            owl:someValuesFrom cde:LongAxisDiameter ],
+            owl:someValuesFrom cde:ShortAxisDiameter ],
         cde:Measurement ;
     skos:definition "The mean of the long- and short-axis diameters on the plane showing the maximal dimension." ;
     cde:created "2026-09-14"^^xsd:date ;
@@ -6765,58 +6797,20 @@ cde:PET a owl:Class ;
     cde:versionNumber 1 ;
     cde:versionStatus "published" .
 
-cde:PartSolidPulmonaryNodule a owl:Class ;
-    rdfs:label "part-solid pulmonary nodule" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        _:N72a7c9e03d5a466db854a007aac84c27,
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        cde:PulmonaryNodule ;
-    owl:equivalentClass [ a owl:Class ;
-            owl:intersectionOf ( cde:PulmonaryNodule [ a owl:Restriction ;
-                        owl:onProperty cde:hasAttenuation ;
-                        owl:someValuesFrom cde:V_000011_PartSolid ] ) ] ;
-    skos:definition "A pulmonary nodule containing both a solid and a ground-glass component." ;
-    skos:exactMatch radlex:RID50152 ;
-    skos:prefLabel "part-solid pulmonary nodule" ;
-    cde:created "2026-09-14"^^xsd:date ;
-    cde:designNote "Defined class: conditions are necessary and sufficient, so a reasoner classifies into it. Nothing about it is authored twice." ;
-    cde:hasBinding cde:binding-PartSolidPulmonaryNodule-RADLEX-RID50152 ;
-    cde:lastModified "2026-09-14"^^xsd:date ;
-    cde:localId "FC-000007" ;
-    cde:nodeType "FindingClass" ;
-    cde:versionNumber 1 ;
-    cde:versionStatus "proposed" .
-
 cde:Pneumonia a owl:Class ;
     rdfs:label "pneumonia" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        _:N3110f0d9cdf644fc9c5723c0c6533205,
+        _:N33c28ba0e015484495d5b434f7b223df,
+        [ a owl:Restriction ;
             owl:onProperty cde:scopedToSpecific ;
             owl:someValuesFrom radlex:RID35739 ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Infectious ],
-        _:Nc048be8477ad44ff8d801db21fa7edea,
-        _:Nc4d9110a88c5412e89d5f92b5161d654,
-        _:Nc5fc7ae8be1a4afdad546c1dc28a4853,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
+        _:Nc85db7e9f28740ce8ad0d80b5dc7e687,
         cde:Diagnosis ;
     skos:definition "Infection of the lung parenchyma." ;
     skos:exactMatch sct:233604007,
@@ -6834,20 +6828,14 @@ cde:Pneumonia a owl:Class ;
 cde:PulmonaryMass a owl:Class ;
     rdfs:label "pulmonary mass" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasDistribution ;
-            owl:someValuesFrom cde:DistributionValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:LongAxisDiameter ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
+            owl:onProperty cde:hasDistribution ;
+            owl:someValuesFrom cde:DistributionValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
+            owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasCalcification ;
             owl:someValuesFrom cde:CalcificationValue ],
@@ -6856,20 +6844,26 @@ cde:PulmonaryMass a owl:Class ;
             owl:someValuesFrom cde:SP_CH ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:LesionCount ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        _:Ne78df325316b4c8a8e1f2c2c09820b5a,
-        [ a owl:Restriction ;
             owl:onProperty cde:hasPulmonaryMargin ;
             owl:someValuesFrom cde:PulmonaryMarginValue ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        _:Ncae2fd576f2d4b608b2b7f1536523edc,
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:someValuesFrom cde:XR ],
         cde:FindingClass ;
     skos:definition "A space-occupying lesion of the lung exceeding 30 mm." ;
     skos:prefLabel "pulmonary mass" ;
@@ -6907,21 +6901,21 @@ cde:TIRADS_TR3 a owl:Class ;
 
 cde:TensionPneumothorax a owl:Class ;
     rdfs:label "tension pneumothorax" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasEtiology ;
-            owl:someValuesFrom cde:Iatrogenic ],
+    rdfs:subClassOf _:N0807deb080a74569961f06fc69ab5d98,
+        _:N101113a2dbbf422eb79c80f371e072f2,
+        _:N31d96d058adb46a9a9807e6f7a6532e6,
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
-            owl:someValuesFrom cde:Traumatic ],
-        _:N5853983fdee94374ab25627a36c67dd1,
-        _:N8de5614b80554cffbef8758d2ae4b2cb,
-        _:Nc3c6904681bf43a3ad7eb888fb6a988a,
+            owl:someValuesFrom cde:Iatrogenic ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:scopedToSpecific ;
             owl:someValuesFrom radlex:RID1363 ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasEtiology ;
+            owl:someValuesFrom cde:Traumatic ],
         cde:Diagnosis ;
     skos:definition "A pneumothorax under positive pressure, displacing the mediastinum and impairing venous return. A physiological state concluded from imaging signs together with the clinical picture, not a feature seen directly." ;
     skos:exactMatch radlex:RID28525 ;
@@ -7511,36 +7505,36 @@ cde:scopedTo a owl:ObjectProperty ;
 cde:Atelectasis a owl:Class ;
     rdfs:label "atelectasis" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasAtelectasisMechanism ;
-            owl:someValuesFrom cde:AtelectasisMechanismValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_CH ],
-        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        [ a owl:Restriction ;
             owl:onProperty cde:hasExtent ;
             owl:someValuesFrom cde:ExtentValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasAtelectasisMorphology ;
             owl:someValuesFrom cde:AtelectasisMorphologyValue ],
+        _:Nbfd05c9d6c0c4819be57c6d3ee35472d,
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        _:Ndd05c9af95f64b2faf24101f0e303a0e,
+            owl:onProperty cde:hasAtelectasisMechanism ;
+            owl:someValuesFrom cde:AtelectasisMechanismValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_CH ],
         cde:FindingClass ;
     skos:altLabel "collapse" ;
     skos:definition "Incomplete expansion or collapse of lung tissue." ;
@@ -7586,33 +7580,33 @@ cde:ComminutionValue a owl:Class ;
 cde:Consolidation a owl:Class ;
     rdfs:label "consolidation" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasExtent ;
-            owl:someValuesFrom cde:ExtentValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_CH ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasExtent ;
+            owl:someValuesFrom cde:ExtentValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        _:Nb275d1c48c304d7f885ed9aad790ed69,
+        [ a owl:Restriction ;
             owl:onProperty cde:hasDistribution ;
             owl:someValuesFrom cde:DistributionValue ],
-        _:Ncefb98470caf463a8c75e2f2d373c1c3,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
         cde:FindingClass ;
     skos:altLabel "airspace opacity" ;
     skos:definition "Replacement of alveolar air by fluid, cells or other material, obscuring the underlying vessels." ;
@@ -7649,33 +7643,33 @@ cde:FlowCharacterValue a owl:Class ;
 cde:GroundGlassOpacity a owl:Class ;
     rdfs:label "ground-glass opacity" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasExtent ;
-            owl:someValuesFrom cde:ExtentValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_CH ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
+        _:N7f5a47d3b03d4740abb781f57956e92f,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasDistribution ;
+            owl:someValuesFrom cde:DistributionValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasExtent ;
+            owl:someValuesFrom cde:ExtentValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasDistribution ;
-            owl:someValuesFrom cde:DistributionValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
-        _:Neebc3fc81b1249598032095f77dc2a16,
         cde:FindingClass ;
     skos:definition "Hazy increased lung attenuation that does not obscure the vessels." ;
     skos:exactMatch sct:1217294009,
@@ -7710,16 +7704,16 @@ cde:LungRADS_Lung_RADS_4A a owl:Class ;
 
 cde:MetastaticDisease a owl:Class ;
     rdfs:label "metastatic disease" ;
-    rdfs:subClassOf _:N2a4d95a7063c40379b2e06a6cf17656e,
-        _:N3080997a38274441bed49a1f88ad6e13,
+    rdfs:subClassOf _:N3d58373f5bc849a68eba3db9b8404856,
+        _:N482c96c2266845b2835e94591ca39856,
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
-        _:N3be90c43554e46f48a3bf26022a15237,
+        _:Nc6e52bb920de406195b691a8fc578fd0,
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Neoplastic ],
-        _:Neb99d9182a5343eea6269e4db7414bbd,
+        _:Nf93f99a3a54744b79b0e9c5acb592524,
         cde:Diagnosis ;
     skos:closeMatch radlex:RID5231 ;
     skos:definition "Neoplasm that has spread from a primary site to a discontiguous site." ;
@@ -7744,20 +7738,20 @@ cde:NodalShapeValue a owl:Class ;
 cde:PulmonaryEdema a owl:Class ;
     rdfs:label "pulmonary edema" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:scopedToRegion ;
             owl:someValuesFrom radlex:RID1301 ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasEtiology ;
-            owl:someValuesFrom cde:Vascular ],
-        _:N8b510b5b95c24563ae1dcf14372ede9f,
+        _:N5bcc6232523648d484007f6cc84a1333,
         [ a owl:Restriction ;
             owl:onProperty cde:hasSeverity ;
             owl:someValuesFrom cde:SeverityValue ],
-        _:Necc6a7fa8b62453eb48327ec33589c88,
-        _:Ned2eda650d3e45f79b441c3987141b21,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        _:N90ca48ea421640cf8bab7fa87d19bf7b,
+        _:Nb7eaed5cd7164919b088acb9ced3b9b6,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasEtiology ;
+            owl:someValuesFrom cde:Vascular ],
         cde:Diagnosis ;
     skos:definition "Accumulation of fluid in the lung, most often from raised left atrial pressure." ;
     skos:exactMatch sct:19242006,
@@ -7776,10 +7770,7 @@ cde:SolidPulmonaryNodule a owl:Class ;
     rdfs:label "solid pulmonary nodule" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
+            owl:someValuesFrom cde:XR ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasPresence ;
             owl:someValuesFrom cde:PresenceValue ],
@@ -7788,10 +7779,13 @@ cde:SolidPulmonaryNodule a owl:Class ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
+            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
         cde:PulmonaryNodule ;
     owl:equivalentClass [ a owl:Class ;
             owl:intersectionOf ( cde:PulmonaryNodule [ a owl:Restriction ;
@@ -8282,8 +8276,7 @@ cde:hasDistribution a owl:FunctionalProperty,
 
 cde:occursWith a owl:ObjectProperty,
         owl:SymmetricProperty ;
-    rdfs:comment "Symmetric and associative. Seen together; asserts and excludes nothing about causality or sequence." ;
-    cde:inferenceBearing false .
+    rdfs:comment "Symmetric and associative. Seen together; asserts and excludes nothing about causality or sequence." .
 
 cde:AttenuationValue a owl:Class ;
     rdfs:label "attenuation value" ;
@@ -8331,25 +8324,19 @@ cde:LungRADS_Lung_RADS_4B a owl:Class ;
 
 cde:MediastinalLymphadenopathy a owl:Class ;
     rdfs:label "mediastinal lymphadenopathy" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasFdgAvidity ;
-            owl:someValuesFrom cde:FdgAvidityValue ],
+    rdfs:subClassOf _:N0695c006374c4a129394dce1440b1b07,
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:PET ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        _:N4021815c0aae468f89edb00768d15705,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:ShortAxisDiameter ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasNodalArchitecture ;
-            owl:someValuesFrom cde:NodalArchitectureValue ],
+            owl:onProperty cde:hasFdgAvidity ;
+            owl:someValuesFrom cde:FdgAvidityValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_CH ],
@@ -8363,11 +8350,17 @@ cde:MediastinalLymphadenopathy a owl:Class ;
             owl:onProperty cde:hasNodalShape ;
             owl:someValuesFrom cde:NodalShapeValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:ShortAxisDiameter ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
+            owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasNodalArchitecture ;
+            owl:someValuesFrom cde:NodalArchitectureValue ],
         cde:FindingClass ;
     skos:altLabel "adenopathy" ;
     skos:broadMatch radlex:RID3798 ;
@@ -8406,45 +8399,45 @@ cde:PneumothoraxSizeValue a owl:Class ;
 cde:RenalCyst a owl:Class ;
     rdfs:label "renal cyst" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasComposition ;
-            owl:someValuesFrom cde:CompositionValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:LongAxisDiameter ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:LesionCount ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:WallThickness ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasWallCharacter ;
-            owl:someValuesFrom cde:WallCharacterValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:assessedBy ;
-            owl:someValuesFrom cde:BosniakClassification ],
-        _:Nd8110f8dafc84daea951571238127e86,
         [ a owl:Restriction ;
             owl:onProperty cde:inSubspecialty ;
             owl:someValuesFrom cde:SP_AB ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasWallCharacter ;
+            owl:someValuesFrom cde:WallCharacterValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:LongAxisDiameter ],
+            owl:someValuesFrom cde:LesionCount ],
+        _:N82da553adacc428f9112d9d7a4c12dd5,
+        [ a owl:Restriction ;
+            owl:onProperty cde:assessedBy ;
+            owl:someValuesFrom cde:BosniakClassification ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasComposition ;
+            owl:someValuesFrom cde:CompositionValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:WallThickness ],
         cde:FindingClass ;
     skos:definition "A fluid-filled structure bounded by a wall, within the kidney." ;
     skos:prefLabel "renal cyst" ;
@@ -8789,42 +8782,42 @@ cde:Infectious a owl:Class ;
 cde:IntracranialHemorrhage a owl:Class ;
     rdfs:label "intracranial hemorrhage" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_NR ],
+            owl:onProperty cde:hasAmount ;
+            owl:someValuesFrom cde:AmountValue ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:AttenuationHU ],
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_NR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCollectionShape ;
+            owl:someValuesFrom cde:CollectionShapeValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        _:N84f614dbcb2348b4b5d1291d3fe6cea2,
         [ a owl:Restriction ;
             owl:onProperty cde:hasHemorrhageAge ;
             owl:someValuesFrom cde:HemorrhageAgeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
-        _:N3cc0271e930f41b686276cb8bfd29901,
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:Volume ],
         [ a owl:Restriction ;
-            owl:onProperty cde:hasCollectionShape ;
-            owl:someValuesFrom cde:CollectionShapeValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasAmount ;
-            owl:someValuesFrom cde:AmountValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:AttenuationHU ],
         cde:FindingClass ;
     skos:definition "Blood within the cranial cavity. The compartment it occupies is the clinically decisive fact and is carried by the subtypes." ;
     skos:prefLabel "intracranial hemorrhage" ;
@@ -9025,22 +9018,22 @@ cde:LIRADS_LR_TIV a owl:Class ;
 
 cde:LungCancer a owl:Class ;
     rdfs:label "lung cancer" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:scopedToRegion ;
-            owl:someValuesFrom radlex:RID1301 ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        _:N1235dbb18c1a41289402cbc57a1f26f5,
-        _:N34b0378524c24188aa905801a0166e1f,
-        _:N666e441e5165430f9e64cac62c019c38,
-        _:N821b7a38bbbc4068ab85263d0c339d55,
-        _:N8fc8d5d6fe274ab09bd0ae1c9e688487,
-        _:Na22bd882a9cb4828aa9cf2121f2fb2d3,
-        _:Nc25ffa0eb474473ba9625fe72a5fab2e,
+    rdfs:subClassOf _:N03c1d97eb32b4253995fd41a715ee411,
         [ a owl:Restriction ;
             owl:onProperty cde:hasEtiology ;
             owl:someValuesFrom cde:Neoplastic ],
+        _:N21e74c7152194a7e81e7897190bb0aa9,
+        _:N36501fcd7aa444e080e479a58c9ac569,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        _:N6dfd4dd42e1a4d379fe48c3bba23b9d2,
+        _:N8477604930174bcb9cd00957c32f5397,
+        _:Nb2b8af44e2514307a98606e6834bc829,
+        [ a owl:Restriction ;
+            owl:onProperty cde:scopedToRegion ;
+            owl:someValuesFrom radlex:RID1301 ],
+        _:Nd8a51b0774744059a648016dace851b9,
         cde:Diagnosis ;
     skos:altLabel "bronchogenic carcinoma" ;
     skos:definition "Primary malignant neoplasm arising from lung tissue." ;
@@ -9137,57 +9130,57 @@ cde:HemorrhageAgeValue a owl:Class ;
 cde:PulmonaryNodule a owl:Class ;
     rdfs:label "pulmonary nodule" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasDistribution ;
-            owl:someValuesFrom cde:DistributionValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:MR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPulmonaryMargin ;
-            owl:someValuesFrom cde:PulmonaryMarginValue ],
-        _:N1bf11c40710f4eaa9a83089d124b39d3,
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:LongAxisDiameter ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasAttenuation ;
-            owl:someValuesFrom cde:AttenuationValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:assessedBy ;
-            owl:someValuesFrom cde:LungRADS ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasCalcification ;
-            owl:someValuesFrom cde:CalcificationValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_CH ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
             owl:onProperty cde:hasIntervalChange ;
             owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasFdgAvidity ;
-            owl:someValuesFrom cde:FdgAvidityValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:PET ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:CT ],
         [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:US ],
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_CH ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasCalcification ;
+            owl:someValuesFrom cde:CalcificationValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:MeanDiameter ],
         [ a owl:Restriction ;
             owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:LongAxisDiameter ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
             owl:someValuesFrom cde:LesionCount ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:US ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasFdgAvidity ;
+            owl:someValuesFrom cde:FdgAvidityValue ],
+        _:Na19518d7a63b49bdb9eb9f10d8c7c28f,
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasDistribution ;
+            owl:someValuesFrom cde:DistributionValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPulmonaryMargin ;
+            owl:someValuesFrom cde:PulmonaryMarginValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:MR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:assessedBy ;
+            owl:someValuesFrom cde:LungRADS ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasAttenuation ;
+            owl:someValuesFrom cde:AttenuationValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:PET ],
         cde:FindingClass ;
     owl:disjointWith cde:PulmonaryMass ;
     skos:altLabel "SPN",
@@ -9201,12 +9194,12 @@ cde:PulmonaryNodule a owl:Class ;
     cde:hasAnatomicRefinementRule cde:ARR_000001 ;
     cde:hasBinding cde:binding-PulmonaryNodule-RADLEX-RID50149,
         cde:binding-PulmonaryNodule-SNOMEDCT-427359005 ;
-    cde:hasSynonym [ cde:synonymScope "narrow" ;
-            cde:synonymTerm "SPN" ;
-            cde:synonymType "abbreviation" ],
-        [ cde:synonymScope "exact" ;
+    cde:hasSynonym [ cde:synonymScope "exact" ;
             cde:synonymTerm "lung nodule" ;
-            cde:synonymType "synonym" ] ;
+            cde:synonymType "synonym" ],
+        [ cde:synonymScope "narrow" ;
+            cde:synonymTerm "SPN" ;
+            cde:synonymType "abbreviation" ] ;
     cde:lastModified "2026-09-14"^^xsd:date ;
     cde:localId "FC-000005" ;
     cde:nodeType "FindingClass" ;
@@ -9306,8 +9299,7 @@ cde:SeverityValue a owl:Class ;
             owl:unionOf ( cde:V_000190_Minimal cde:V_000191_Mild cde:V_000192_Moderate cde:V_000193_Severe ) ] .
 
 cde:mayCause a owl:ObjectProperty ;
-    rdfs:comment "Causal. The source can produce the target as a distinct second entity. Distinct from mayManifestAs, which is about evidence rather than production." ;
-    cde:inferenceBearing false .
+    rdfs:comment "Causal. The source can produce the target as a distinct second entity. Distinct from mayManifestAs, which is about evidence rather than production." .
 
 cde:DistributionValue a owl:Class ;
     rdfs:label "distribution value" ;
@@ -9334,48 +9326,48 @@ cde:LongAxisDiameter a owl:Class ;
 cde:PleuralEffusion a owl:Class ;
     rdfs:label "pleural effusion" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty cde:hasInternalComplexity ;
-            owl:someValuesFrom cde:InternalComplexityValue ],
-        _:N0ceb05500c3349e6935ea0689332c674,
-        [ a owl:Restriction ;
-            owl:onProperty cde:occursWith ;
-            owl:someValuesFrom cde:Atelectasis ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasPresence ;
-            owl:someValuesFrom cde:PresenceValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasAmount ;
-            owl:someValuesFrom cde:AmountValue ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:CT ],
-        [ a owl:Restriction ;
             owl:onProperty cde:seenOn ;
             owl:someValuesFrom cde:US ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:Volume ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:inSubspecialty ;
-            owl:someValuesFrom cde:SP_CH ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasMeasurement ;
-            owl:someValuesFrom cde:AttenuationHU ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:occursWith ;
-            owl:someValuesFrom cde:GroundGlassOpacity ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:seenOn ;
-            owl:someValuesFrom cde:XR ],
-        [ a owl:Restriction ;
-            owl:onProperty cde:hasIntervalChange ;
-            owl:someValuesFrom cde:IntervalChangeValue ],
         [ a owl:Restriction ;
             owl:onProperty cde:occursWith ;
             owl:someValuesFrom cde:MediastinalLymphadenopathy ],
         [ a owl:Restriction ;
             owl:onProperty cde:occursWith ;
             owl:someValuesFrom cde:Consolidation ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:inSubspecialty ;
+            owl:someValuesFrom cde:SP_CH ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasInternalComplexity ;
+            owl:someValuesFrom cde:InternalComplexityValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasIntervalChange ;
+            owl:someValuesFrom cde:IntervalChangeValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:CT ],
+        _:N7193e56d193f4774945277673040adcf,
+        [ a owl:Restriction ;
+            owl:onProperty cde:seenOn ;
+            owl:someValuesFrom cde:XR ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:Volume ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:occursWith ;
+            owl:someValuesFrom cde:GroundGlassOpacity ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasAmount ;
+            owl:someValuesFrom cde:AmountValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasMeasurement ;
+            owl:someValuesFrom cde:AttenuationHU ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:hasPresence ;
+            owl:someValuesFrom cde:PresenceValue ],
+        [ a owl:Restriction ;
+            owl:onProperty cde:occursWith ;
+            owl:someValuesFrom cde:Atelectasis ],
         cde:FindingClass ;
     skos:altLabel "effusion",
         "pleural fluid" ;
@@ -9388,10 +9380,10 @@ cde:PleuralEffusion a owl:Class ;
     cde:hasBinding cde:binding-PleuralEffusion-RADLEX-RID34539,
         cde:binding-PleuralEffusion-SNOMEDCT-60046008 ;
     cde:hasSynonym [ cde:synonymScope "exact" ;
-            cde:synonymTerm "effusion" ;
+            cde:synonymTerm "pleural fluid" ;
             cde:synonymType "synonym" ],
         [ cde:synonymScope "exact" ;
-            cde:synonymTerm "pleural fluid" ;
+            cde:synonymTerm "effusion" ;
             cde:synonymType "synonym" ] ;
     cde:lastModified "2026-09-14"^^xsd:date ;
     cde:localId "FC-000021" ;
@@ -9471,8 +9463,7 @@ cde:Value a owl:Class ;
 
 cde:mayManifestAs a owl:ObjectProperty ;
     rdfs:comment "Evidential. The diagnosis can show itself as the target. Carries typicality (how often) and specificity (how much seeing it narrows the differential). Annotation-only." ;
-    cde:epistemic true ;
-    cde:inferenceBearing false .
+    cde:epistemic true .
 
 cde:scopedToRegion a owl:ObjectProperty ;
     rdfs:comment "Regional anatomic scope. The kind records authoring intent; no native RadLex predicate or traversal is implied." ;
@@ -9579,601 +9570,122 @@ cde:Binding a owl:Class ;
 
 [] a owl:Axiom ;
     owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:TensionPneumothorax ;
-    owl:annotatedTarget _:N5853983fdee94374ab25627a36c67dd1 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "obligate" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PulmonaryNodule ;
-    owl:annotatedTarget _:N1bf11c40710f4eaa9a83089d124b39d3 ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:TensionPneumothorax ;
-    owl:annotatedTarget _:N8de5614b80554cffbef8758d2ae4b2cb ;
-    cde:specificity "suggestive" ;
-    cde:typicality "occasional" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Chylothorax ;
-    owl:annotatedTarget _:Ne7e8bbbdff5a4c99ae07c86c45cda561 ;
-    cde:specificity "highly_suggestive" ;
-    cde:typicality "obligate" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PleuralEffusion ;
-    owl:annotatedTarget _:N0ceb05500c3349e6935ea0689332c674 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:RenalLesion ;
-    owl:annotatedTarget _:N72e1b620887546488fe2df0ed4167b4e ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:HepatocellularCarcinoma ;
-    owl:annotatedTarget _:N2d6fc6b40c524265b5d9362b39524261 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PulmonaryEmbolism ;
-    owl:annotatedTarget _:N28d58777fbee47e485b128e1669ae4d2 ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PartSolidPulmonaryNodule ;
-    owl:annotatedTarget _:N72a7c9e03d5a466db854a007aac84c27 ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:LungCancer ;
-    owl:annotatedTarget _:N8fc8d5d6fe274ab09bd0ae1c9e688487 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "occasional" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:WhiteMatterHyperintensity ;
-    owl:annotatedTarget _:N3e0c26d0db0b4fda877054d9713eb2ab ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:AcuteInfarct ;
-    owl:annotatedTarget _:N81614426b5814b0c9d5d247be1fdd555 ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:ChronicSmallVesselDisease ;
-    owl:annotatedTarget _:N348280ad10104fbea62af4a8b6d53845 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "obligate" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:IntraventricularHemorrhage ;
-    owl:annotatedTarget _:N06cb11502f8f4e96a87c3ee5497cc282 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PulmonaryEdema ;
-    owl:annotatedTarget _:N8b510b5b95c24563ae1dcf14372ede9f ;
-    cde:specificity "suggestive" ;
-    cde:typicality "occasional" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Pneumonia ;
-    owl:annotatedTarget _:Nc4d9110a88c5412e89d5f92b5161d654 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "very_frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:CerebralInfarction ;
-    owl:annotatedTarget _:N3f6b130148ac4d1bb798ebd8408386a2 ;
-    cde:specificity "pathognomonic" ;
-    cde:typicality "obligate" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:SubarachnoidHemorrhage ;
-    owl:annotatedTarget _:N087c93155cda4fe3a2c2a00b77ad2bbc ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Pneumothorax ;
-    owl:annotatedTarget _:N0dbd3418cf9443d0aad1fba86dd9d2f2 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:AcutePyelonephritis ;
-    owl:annotatedTarget _:N49cc36b8a4e148cf9856eb1577579f09 ;
-    cde:specificity "highly_suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Consolidation ;
-    owl:annotatedTarget _:Ncefb98470caf463a8c75e2f2d373c1c3 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:CerebralInfarction ;
-    owl:annotatedTarget _:Nea41afd7fe51459db2d9cb8d6dd92638 ;
-    cde:typicality "very_frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:MediastinalShift ;
-    owl:annotatedTarget _:N5ccccca3ad7a4bfd8eb84b6388b412f8 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:HepaticMass ;
-    owl:annotatedTarget _:Nd53198fafde543419de25b1e520143f5 ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:HeartFailure ;
-    owl:annotatedTarget _:N254d03b42a9a46aeab574c27273742cf ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:TendinousLesion ;
-    owl:annotatedTarget _:N0e1f082a90f84a61bf04411141a46187 ;
-    cde:designNote "SCOPED_TO kind=class" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PulmonaryGranuloma ;
-    owl:annotatedTarget _:N77c6e9f230e840a88ddaba8b7796a659 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "very_frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Pneumonia ;
-    owl:annotatedTarget _:Nc5fc7ae8be1a4afdad546c1dc28a4853 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:ExternalCarotidArteryStenosis ;
-    owl:annotatedTarget _:N0d3fbc5f490e44caa131b4f25fae1aef ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PulmonaryEdema ;
-    owl:annotatedTarget _:Necc6a7fa8b62453eb48327ec33589c88 ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:RenalEnlargement ;
-    owl:annotatedTarget _:N0439feb5e9ad46d7892e3216f265e8f7 ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:ChronicPyelonephritis ;
-    owl:annotatedTarget _:N94c20bc520914215832bbc0963795c47 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "very_frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:RenalCellCarcinoma ;
-    owl:annotatedTarget _:N9f39f3f119034cd68a038c5e07b3efc2 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:GroundGlassOpacity ;
-    owl:annotatedTarget _:Neebc3fc81b1249598032095f77dc2a16 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:IntrapulmonaryLymphNode ;
-    owl:annotatedTarget _:Na684d61208ce471599e1766c1d6b1944 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:RenalMass ;
-    owl:annotatedTarget _:N4ecf17ea1ebd4c2e969f742d47a916a9 ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Encephalomalacia ;
-    owl:annotatedTarget _:N98f77000aae64a3785f130b5483378ff ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Empyema ;
-    owl:annotatedTarget _:N411a9b3d556a444291e0f130692eb2b9 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "obligate" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:MalignantPleuralEffusion ;
-    owl:annotatedTarget _:N1b849150c2f44981acc59711afce9285 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "obligate" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:LungCancer ;
-    owl:annotatedTarget _:Na22bd882a9cb4828aa9cf2121f2fb2d3 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "occasional" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:MetastaticDisease ;
-    owl:annotatedTarget _:N3be90c43554e46f48a3bf26022a15237 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:VentricularShuntCatheter ;
-    owl:annotatedTarget _:N97dd97721ba24e709699a6e62d58a0b5 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "expected" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:HeartFailure ;
-    owl:annotatedTarget _:Nf181382cf9644d59a9d552ee40ff32c7 ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
     owl:annotatedSource cde:RenalCyst ;
-    owl:annotatedTarget _:Nd8110f8dafc84daea951571238127e86 ;
+    owl:annotatedTarget _:N82da553adacc428f9112d9d7a4c12dd5 ;
     cde:designNote "SCOPED_TO kind=region" ;
     cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Pneumonia ;
-    owl:annotatedTarget _:Nc048be8477ad44ff8d801db21fa7edea ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:RibFracture ;
-    owl:annotatedTarget _:N26f7d5b8bc0b4c2094517389d2100ab8 ;
-    cde:designNote "SCOPED_TO kind=class" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:TensionPneumothorax ;
-    owl:annotatedTarget _:Nc3c6904681bf43a3ad7eb888fb6a988a ;
-    cde:specificity "highly_suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:MetastaticDisease ;
-    owl:annotatedTarget _:N2a4d95a7063c40379b2e06a6cf17656e ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Hydronephrosis ;
-    owl:annotatedTarget _:N2565c6e8a01d4c7a82542887541978b5 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PulmonaryHamartoma ;
-    owl:annotatedTarget _:Naef27063dbff4dc9842b432dcbf43b60 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:CerebralInfarction ;
-    owl:annotatedTarget _:N3046e154fc3e4190ba632471c30b1a20 ;
-    cde:typicality "occasional" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:SubduralHematoma ;
-    owl:annotatedTarget _:N0f4ae1ac2ade4e41bd8314c41edd1624 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:ReactiveLymphadenopathy ;
-    owl:annotatedTarget _:Nebffe440035a421f952f0d26b51991ea ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:MidlineShift ;
-    owl:annotatedTarget _:Nd63dead0ccd643fdb3353e850c2aad36 ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:CerebralAtrophy ;
-    owl:annotatedTarget _:N0db296e21ff14459b83c09b273b1a29c ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:LungCancer ;
-    owl:annotatedTarget _:N821b7a38bbbc4068ab85263d0c339d55 ;
-    cde:typicality "occasional" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:InternalCarotidArteryStenosis ;
-    owl:annotatedTarget _:N22effaf9d5d245549f7a74c7d2154653 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Atelectasis ;
-    owl:annotatedTarget _:Ndd05c9af95f64b2faf24101f0e303a0e ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:MetastaticDisease ;
-    owl:annotatedTarget _:Neb99d9182a5343eea6269e4db7414bbd ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PulmonaryEdema ;
-    owl:annotatedTarget _:Ned2eda650d3e45f79b441c3987141b21 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:AdrenalAdenoma ;
-    owl:annotatedTarget _:N21b61e2485924df898678e1c0c35b8a8 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "very_frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:MetastaticDisease ;
-    owl:annotatedTarget _:N3080997a38274441bed49a1f88ad6e13 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "occasional" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:LungCancer ;
-    owl:annotatedTarget _:N34b0378524c24188aa905801a0166e1f ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:AdrenalNodule ;
-    owl:annotatedTarget _:N01702a40f5f4457bb2a6a2a509a08eb7 ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:LungCancer ;
-    owl:annotatedTarget _:Nc25ffa0eb474473ba9625fe72a5fab2e ;
-    cde:specificity "highly_suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:ParapneumonicEffusion ;
-    owl:annotatedTarget _:N3ab6f788dbca4c9594bdfb595bd9777b ;
-    cde:specificity "suggestive" ;
-    cde:typicality "obligate" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:ChronicSmallVesselDisease ;
-    owl:annotatedTarget _:Nccb14de3b7e44225bcbfe0f73cfebe32 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:StriatedNephrogram ;
-    owl:annotatedTarget _:N8f5f3df0ce6f4a5197e768f7f617d592 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:MalignantNeoplasticDisease ;
-    owl:annotatedTarget _:Nf8c50f76bf6547048c3402a446af5bc6 ;
-    cde:typicality "occasional" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:AcutePyelonephritis ;
-    owl:annotatedTarget _:Nc9b43c16143b4dbba2693fa5bbc2c42c ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
 
 [] a owl:Axiom ;
     owl:annotatedProperty rdfs:subClassOf ;
     owl:annotatedSource cde:PulmonaryMass ;
-    owl:annotatedTarget _:Ne78df325316b4c8a8e1f2c2c09820b5a ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:MediastinalLymphadenopathy ;
-    owl:annotatedTarget _:N4021815c0aae468f89edb00768d15705 ;
-    cde:designNote "SCOPED_TO kind=class" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:AcutePyelonephritis ;
-    owl:annotatedTarget _:N7c1ef7d1fbfc4eb298f6541bb9b71d5a ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PerinephricStranding ;
-    owl:annotatedTarget _:N40d66356198943708ae15c2e60b62b3c ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:ThyroidNodule ;
-    owl:annotatedTarget _:Nd0684d4026014f16af28637e23a11924 ;
+    owl:annotatedTarget _:Ncae2fd576f2d4b608b2b7f1536523edc ;
     cde:designNote "SCOPED_TO kind=region" ;
     cde:scopeStrength "required" .
 
 [] a owl:Axiom ;
     owl:annotatedProperty rdfs:subClassOf ;
     owl:annotatedSource cde:RenalCorticalScarring ;
-    owl:annotatedTarget _:N4c4d4bd74dbb4425bb0de1840e1a53b2 ;
+    owl:annotatedTarget _:N406b4efb060f48148c1d713de0171fe6 ;
     cde:designNote "SCOPED_TO kind=region" ;
     cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:IntracranialHemorrhage ;
-    owl:annotatedTarget _:N3cc0271e930f41b686276cb8bfd29901 ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:LungCancer ;
-    owl:annotatedTarget _:N1235dbb18c1a41289402cbc57a1f26f5 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "frequent" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:Hemothorax ;
-    owl:annotatedTarget _:N064a6facb59746d1b184295395038da3 ;
-    cde:specificity "suggestive" ;
-    cde:typicality "obligate" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:IntraparenchymalHemorrhage ;
-    owl:annotatedTarget _:Nbee8d83c08cc461bbe96b258d855fe24 ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
-
-[] a owl:Axiom ;
-    owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:NephroticSyndrome ;
-    owl:annotatedTarget _:Nb0fd131a01b44aa7a88928a5153212ec ;
-    cde:typicality "frequent" .
 
 [] a owl:Axiom ;
     owl:annotatedProperty rdfs:subClassOf ;
     owl:annotatedSource cde:RenalCellCarcinoma ;
-    owl:annotatedTarget _:N6f24a99a683f4c949fb00d06576eee6b ;
+    owl:annotatedTarget _:N9754d78f292e48a5a18a9f3006595bdb ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:PerinephricStranding ;
+    owl:annotatedTarget _:N83958f2e8f62411392e2c8b5cb873d78 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:RenalCellCarcinoma ;
+    owl:annotatedTarget _:N7ecd7085cf5d4da1a4775e445628c913 ;
     cde:specificity "suggestive" ;
     cde:typicality "occasional" .
 
 [] a owl:Axiom ;
     owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PulmonaryArteryFillingDefect ;
-    owl:annotatedTarget _:Ne59c9c5495264390a2defdb6221c76c6 ;
-    cde:designNote "SCOPED_TO kind=specific" ;
-    cde:scopeStrength "required" .
+    owl:annotatedSource cde:Hemothorax ;
+    owl:annotatedTarget _:N019d9add758c4947baf8133e44f56c6c ;
+    cde:specificity "suggestive" ;
+    cde:typicality "obligate" .
 
 [] a owl:Axiom ;
     owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:LungCancer ;
-    owl:annotatedTarget _:N666e441e5165430f9e64cac62c019c38 ;
+    owl:annotatedSource cde:CerebralInfarction ;
+    owl:annotatedTarget _:N6c1e491e441b488f8cb050c4ddcfc644 ;
+    cde:specificity "pathognomonic" ;
+    cde:typicality "obligate" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:ChronicSmallVesselDisease ;
+    owl:annotatedTarget _:Naf4f682619c6425a9a57dab3ed5aa7fd ;
     cde:specificity "suggestive" ;
     cde:typicality "frequent" .
 
 [] a owl:Axiom ;
     owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:AzygosFissure ;
-    owl:annotatedTarget _:Ned5b9210761945059f29fd7ca0279785 ;
-    cde:designNote "SCOPED_TO kind=region" ;
-    cde:scopeStrength "required" .
+    owl:annotatedSource cde:MetastaticDisease ;
+    owl:annotatedTarget _:N482c96c2266845b2835e94591ca39856 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
 
 [] a owl:Axiom ;
     owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:EpiduralHematoma ;
-    owl:annotatedTarget _:Nef3e2168ddfa4d99b52262c46d798970 ;
+    owl:annotatedSource cde:PulmonaryGranuloma ;
+    owl:annotatedTarget _:N339eb66073924eea9a25a2f63dabe1fe ;
+    cde:specificity "suggestive" ;
+    cde:typicality "very_frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:StriatedNephrogram ;
+    owl:annotatedTarget _:N37239d9d6733437fb959888988832581 ;
     cde:designNote "SCOPED_TO kind=specific" ;
     cde:scopeStrength "required" .
 
 [] a owl:Axiom ;
     owl:annotatedProperty rdfs:subClassOf ;
-    owl:annotatedSource cde:PulmonaryEmbolism ;
-    owl:annotatedTarget _:Nd1734c68aa6a41f6a8b5a3feb8313e6d ;
-    cde:specificity "pathognomonic" ;
+    owl:annotatedSource cde:MalignantPleuralEffusion ;
+    owl:annotatedTarget _:N56d2f6b392874f35a2f917c7d0bb5b1b ;
+    cde:specificity "suggestive" ;
     cde:typicality "obligate" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:MidlineShift ;
+    owl:annotatedTarget _:N6c28606b46444e34b0d03c54a7196673 ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:MediastinalLymphadenopathy ;
+    owl:annotatedTarget _:N0695c006374c4a129394dce1440b1b07 ;
+    cde:designNote "SCOPED_TO kind=class" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:ExternalCarotidArteryStenosis ;
+    owl:annotatedTarget _:N80b26f96470142408babf5a1772a2a94 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:MediastinalShift ;
+    owl:annotatedTarget _:N9b53c6a580b34f48bfe077faf4aa2531 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
 
 [] a owl:Restriction ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -10182,351 +9694,820 @@ cde:Binding a owl:Class ;
     owl:onProperty cde:hasCalcification ;
     owl:someValuesFrom cde:V_000030_None .
 
-_:N01702a40f5f4457bb2a6a2a509a08eb7 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID88 .
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:LungCancer ;
+    owl:annotatedTarget _:Nd8a51b0774744059a648016dace851b9 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
 
-_:N0439feb5e9ad46d7892e3216f265e8f7 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID205 .
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:AdrenalAdenoma ;
+    owl:annotatedTarget _:Ne33e4353853d4b2daa35ccc61ad76057 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "very_frequent" .
 
-_:N064a6facb59746d1b184295395038da3 a owl:Restriction ;
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:SubarachnoidHemorrhage ;
+    owl:annotatedTarget _:N98ff6904d74c44f5a597aac64568a462 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:AdrenalNodule ;
+    owl:annotatedTarget _:N4a23cfe3e89e4f32b456b33eb3af8789 ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:WhiteMatterHyperintensity ;
+    owl:annotatedTarget _:N8c67029b9051401aa1be2ed13e53ae63 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:PulmonaryEmbolism ;
+    owl:annotatedTarget _:Nf51ff3a7eae04d97867d3d8cbf83a839 ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:PleuralEffusion ;
+    owl:annotatedTarget _:N7193e56d193f4774945277673040adcf ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:InternalCarotidArteryStenosis ;
+    owl:annotatedTarget _:N2d7fc3dbc41e42a5aaa46283f9f051db ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:ChronicSmallVesselDisease ;
+    owl:annotatedTarget _:N37665f8264c944f6a032852e8fc9c103 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "obligate" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:MalignantNeoplasticDisease ;
+    owl:annotatedTarget _:Nde0765c1f8a34ea0b2b8c335e78c04fa ;
+    cde:typicality "occasional" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:TensionPneumothorax ;
+    owl:annotatedTarget _:N31d96d058adb46a9a9807e6f7a6532e6 ;
+    cde:specificity "highly_suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:EpiduralHematoma ;
+    owl:annotatedTarget _:N097a46f6a1774bc28f327bcd3686caff ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:NephroticSyndrome ;
+    owl:annotatedTarget _:N90b37137e90a4f70ac4832f1bf9760a9 ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:HeartFailure ;
+    owl:annotatedTarget _:N8a9c0f646aa149468b88d427e8bf15dc ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:LungCancer ;
+    owl:annotatedTarget _:N36501fcd7aa444e080e479a58c9ac569 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "occasional" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:MetastaticDisease ;
+    owl:annotatedTarget _:Nc6e52bb920de406195b691a8fc578fd0 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "occasional" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:Chylothorax ;
+    owl:annotatedTarget _:N9ed1a5ce83be4747b7b67dd2142cb830 ;
+    cde:specificity "highly_suggestive" ;
+    cde:typicality "obligate" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:IntracranialHemorrhage ;
+    owl:annotatedTarget _:N84f614dbcb2348b4b5d1291d3fe6cea2 ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:IntraparenchymalHemorrhage ;
+    owl:annotatedTarget _:N730597deaba24c948e4c1a360baba81a ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:Encephalomalacia ;
+    owl:annotatedTarget _:Nc957f27628344e93af357cf606a38b2c ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:PulmonaryArteryFillingDefect ;
+    owl:annotatedTarget _:Ne5a08d9c9a22495abe283fa0f9b254d3 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:HepatocellularCarcinoma ;
+    owl:annotatedTarget _:N04cfd6457dd94388aa03a24b2a61628d ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:AcutePyelonephritis ;
+    owl:annotatedTarget _:N8232db9431f041639abea29d2818d8dc ;
+    cde:specificity "highly_suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:ThyroidNodule ;
+    owl:annotatedTarget _:N09ba09550eba4f2e95e6d45c7c38277a ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:CerebralInfarction ;
+    owl:annotatedTarget _:Nbb08f599cd4146559805f3fb825eb44c ;
+    cde:typicality "very_frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:CerebralInfarction ;
+    owl:annotatedTarget _:N67018dcbb1f04161b90046e01a314ce6 ;
+    cde:typicality "occasional" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:HepaticMass ;
+    owl:annotatedTarget _:N6e0f407d797b4d088874cc8745833326 ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:ParapneumonicEffusion ;
+    owl:annotatedTarget _:N52bc2af95ed14185a651007d0a0d6543 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "obligate" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:VentricularShuntCatheter ;
+    owl:annotatedTarget _:Ndcfb1a2e35f343ebb331d47bc5f99965 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "expected" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:AzygosFissure ;
+    owl:annotatedTarget _:N9eeb12628a78415b9b4eb28297f69d2e ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:Atelectasis ;
+    owl:annotatedTarget _:Nbfd05c9d6c0c4819be57c6d3ee35472d ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:Empyema ;
+    owl:annotatedTarget _:N5c7641c118184e8fa5d1c2b3c5d6c296 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "obligate" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:PulmonaryEdema ;
+    owl:annotatedTarget _:Nb7eaed5cd7164919b088acb9ced3b9b6 ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:LungCancer ;
+    owl:annotatedTarget _:N6dfd4dd42e1a4d379fe48c3bba23b9d2 ;
+    cde:typicality "occasional" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:PulmonaryEdema ;
+    owl:annotatedTarget _:N90ca48ea421640cf8bab7fa87d19bf7b ;
+    cde:specificity "suggestive" ;
+    cde:typicality "occasional" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:ReactiveLymphadenopathy ;
+    owl:annotatedTarget _:N28957899aaaa430eac28885320cdb6bb ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:HeartFailure ;
+    owl:annotatedTarget _:Nfceb6760d5374c14a181545b1b08e9d2 ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:Pneumonia ;
+    owl:annotatedTarget _:N3110f0d9cdf644fc9c5723c0c6533205 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "very_frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:RibFracture ;
+    owl:annotatedTarget _:N759e643c552c41dd8e9ded5bfbe9a4af ;
+    cde:designNote "SCOPED_TO kind=class" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:IntrapulmonaryLymphNode ;
+    owl:annotatedTarget _:Nbf9a8ab3085a4eacb5b609be93da7619 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:RenalEnlargement ;
+    owl:annotatedTarget _:N1de0084d33f340a8ba96c20bfe6f6109 ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:RenalLesion ;
+    owl:annotatedTarget _:Nf3621bf776214b3f8a0ca5b3463f82e2 ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:RenalMass ;
+    owl:annotatedTarget _:N7569c0afecfb415cb396e59546dd693d ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:MetastaticDisease ;
+    owl:annotatedTarget _:N3d58373f5bc849a68eba3db9b8404856 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:LungCancer ;
+    owl:annotatedTarget _:N03c1d97eb32b4253995fd41a715ee411 ;
+    cde:specificity "highly_suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:AcuteInfarct ;
+    owl:annotatedTarget _:N9a566c8876d64bac992e4ad3502750c2 ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:Hydronephrosis ;
+    owl:annotatedTarget _:N035a7afa3ba846d8b6d4974968ce7766 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:PulmonaryEmbolism ;
+    owl:annotatedTarget _:N3b63c9641e494b38ae0dc0b89b2a4e26 ;
+    cde:specificity "pathognomonic" ;
+    cde:typicality "obligate" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:AcutePyelonephritis ;
+    owl:annotatedTarget _:Ne2433b70b1f643538f5a215171f81ddc ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:LungCancer ;
+    owl:annotatedTarget _:N21e74c7152194a7e81e7897190bb0aa9 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:TendinousLesion ;
+    owl:annotatedTarget _:N90520dd5185d4bc9995e920b65c851a0 ;
+    cde:designNote "SCOPED_TO kind=class" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:LungCancer ;
+    owl:annotatedTarget _:Nb2b8af44e2514307a98606e6834bc829 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "occasional" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:LungCancer ;
+    owl:annotatedTarget _:N8477604930174bcb9cd00957c32f5397 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:IntraventricularHemorrhage ;
+    owl:annotatedTarget _:N6f179a5b6af34aa582d4fc26256fb413 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:AcutePyelonephritis ;
+    owl:annotatedTarget _:N8ce1b3251ee047e2b12604db69705b47 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:PulmonaryHamartoma ;
+    owl:annotatedTarget _:N7d5757a3308e45ab983950d3020320d1 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:TensionPneumothorax ;
+    owl:annotatedTarget _:N0807deb080a74569961f06fc69ab5d98 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "occasional" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:Consolidation ;
+    owl:annotatedTarget _:Nb275d1c48c304d7f885ed9aad790ed69 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:SubduralHematoma ;
+    owl:annotatedTarget _:N91c67c71f21c4a40b35cfbebd7afbabb ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:Pneumonia ;
+    owl:annotatedTarget _:N33c28ba0e015484495d5b434f7b223df ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:Pneumonia ;
+    owl:annotatedTarget _:Nc85db7e9f28740ce8ad0d80b5dc7e687 ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:MetastaticDisease ;
+    owl:annotatedTarget _:Nf93f99a3a54744b79b0e9c5acb592524 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:CerebralAtrophy ;
+    owl:annotatedTarget _:Nd0fad4c3c8524054abec29b6d99c2215 ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:ChronicPyelonephritis ;
+    owl:annotatedTarget _:Nb5f21d3b4591438793375e418ff39327 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "very_frequent" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:GroundGlassOpacity ;
+    owl:annotatedTarget _:N7f5a47d3b03d4740abb781f57956e92f ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:Pneumothorax ;
+    owl:annotatedTarget _:N86756901132a41269aed205787a5dfa5 ;
+    cde:designNote "SCOPED_TO kind=specific" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:PulmonaryNodule ;
+    owl:annotatedTarget _:Na19518d7a63b49bdb9eb9f10d8c7c28f ;
+    cde:designNote "SCOPED_TO kind=region" ;
+    cde:scopeStrength "required" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:TensionPneumothorax ;
+    owl:annotatedTarget _:N101113a2dbbf422eb79c80f371e072f2 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "obligate" .
+
+[] a owl:Axiom ;
+    owl:annotatedProperty rdfs:subClassOf ;
+    owl:annotatedSource cde:PulmonaryEdema ;
+    owl:annotatedTarget _:N5bcc6232523648d484007f6cc84a1333 ;
+    cde:specificity "suggestive" ;
+    cde:typicality "frequent" .
+
+_:N019d9add758c4947baf8133e44f56c6c a owl:Restriction ;
     owl:onProperty cde:mayManifestAs ;
     owl:someValuesFrom cde:PleuralEffusion .
 
-_:N06cb11502f8f4e96a87c3ee5497cc282 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID7123 .
-
-_:N087c93155cda4fe3a2c2a00b77ad2bbc a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID7119 .
-
-_:N0ceb05500c3349e6935ea0689332c674 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID1363 .
-
-_:N0d3fbc5f490e44caa131b4f25fae1aef a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID684 .
-
-_:N0db296e21ff14459b83c09b273b1a29c a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID6434 .
-
-_:N0dbd3418cf9443d0aad1fba86dd9d2f2 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID1363 .
-
-_:N0e1f082a90f84a61bf04411141a46187 a owl:Restriction ;
-    owl:onProperty cde:scopedToClass ;
-    owl:someValuesFrom radlex:RID6067 .
-
-_:N0f4ae1ac2ade4e41bd8314c41edd1624 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID7120 .
-
-_:N1235dbb18c1a41289402cbc57a1f26f5 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:MediastinalLymphadenopathy .
-
-_:N1b849150c2f44981acc59711afce9285 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:PleuralEffusion .
-
-_:N1bf11c40710f4eaa9a83089d124b39d3 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID1301 .
-
-_:N21b61e2485924df898678e1c0c35b8a8 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:AdrenalNodule .
-
-_:N22effaf9d5d245549f7a74c7d2154653 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID585 .
-
-_:N254d03b42a9a46aeab574c27273742cf a owl:Restriction ;
-    owl:onProperty cde:mayCause ;
-    owl:someValuesFrom cde:PulmonaryEdema .
-
-_:N2565c6e8a01d4c7a82542887541978b5 a owl:Restriction ;
+_:N035a7afa3ba846d8b6d4974968ce7766 a owl:Restriction ;
     owl:onProperty cde:scopedToSpecific ;
     owl:someValuesFrom radlex:RID228 .
 
-_:N26f7d5b8bc0b4c2094517389d2100ab8 a owl:Restriction ;
-    owl:onProperty cde:scopedToClass ;
-    owl:someValuesFrom radlex:RID2471 .
-
-_:N28d58777fbee47e485b128e1669ae4d2 a owl:Restriction ;
-    owl:onProperty cde:mayCause ;
-    owl:someValuesFrom cde:PleuralEffusion .
-
-_:N2a4d95a7063c40379b2e06a6cf17656e a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:PulmonaryNodule .
-
-_:N2d6fc6b40c524265b5d9362b39524261 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:HepaticMass .
-
-_:N3046e154fc3e4190ba632471c30b1a20 a owl:Restriction ;
-    owl:onProperty cde:mayCause ;
-    owl:someValuesFrom cde:MidlineShift .
-
-_:N3080997a38274441bed49a1f88ad6e13 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:AdrenalNodule .
-
-_:N348280ad10104fbea62af4a8b6d53845 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:WhiteMatterHyperintensity .
-
-_:N34b0378524c24188aa905801a0166e1f a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:SolidPulmonaryNodule .
-
-_:N3ab6f788dbca4c9594bdfb595bd9777b a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:PleuralEffusion .
-
-_:N3be90c43554e46f48a3bf26022a15237 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:MediastinalLymphadenopathy .
-
-_:N3cc0271e930f41b686276cb8bfd29901 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID9080 .
-
-_:N3e0c26d0db0b4fda877054d9713eb2ab a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID16996 .
-
-_:N3f6b130148ac4d1bb798ebd8408386a2 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:AcuteInfarct .
-
-_:N4021815c0aae468f89edb00768d15705 a owl:Restriction ;
-    owl:onProperty cde:scopedToClass ;
-    owl:someValuesFrom radlex:RID28891 .
-
-_:N40d66356198943708ae15c2e60b62b3c a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID434 .
-
-_:N411a9b3d556a444291e0f130692eb2b9 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:PleuralEffusion .
-
-_:N49cc36b8a4e148cf9856eb1577579f09 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:StriatedNephrogram .
-
-_:N4c4d4bd74dbb4425bb0de1840e1a53b2 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID205 .
-
-_:N4ecf17ea1ebd4c2e969f742d47a916a9 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID205 .
-
-_:N5853983fdee94374ab25627a36c67dd1 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:Pneumothorax .
-
-_:N5ccccca3ad7a4bfd8eb84b6388b412f8 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID1384 .
-
-_:N666e441e5165430f9e64cac62c019c38 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:PulmonaryMass .
-
-_:N6f24a99a683f4c949fb00d06576eee6b a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:ComplexRenalCyst .
-
-_:N72a7c9e03d5a466db854a007aac84c27 a owl:Restriction ;
-    owl:onProperty cde:hasComponent ;
-    owl:someValuesFrom cde:SolidComponentOfPartSolidNodule .
-
-_:N72e1b620887546488fe2df0ed4167b4e a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID205 .
-
-_:N77c6e9f230e840a88ddaba8b7796a659 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:SolidPulmonaryNodule .
-
-_:N7c1ef7d1fbfc4eb298f6541bb9b71d5a a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:PerinephricStranding .
-
-_:N81614426b5814b0c9d5d247be1fdd555 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID6434 .
-
-_:N821b7a38bbbc4068ab85263d0c339d55 a owl:Restriction ;
-    owl:onProperty cde:mayCause ;
-    owl:someValuesFrom cde:PleuralEffusion .
-
-_:N8b510b5b95c24563ae1dcf14372ede9f a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:Consolidation .
-
-_:N8de5614b80554cffbef8758d2ae4b2cb a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:Atelectasis .
-
-_:N8f5f3df0ce6f4a5197e768f7f617d592 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID205 .
-
-_:N8fc8d5d6fe274ab09bd0ae1c9e688487 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:Atelectasis .
-
-_:N94c20bc520914215832bbc0963795c47 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:RenalCorticalScarring .
-
-_:N97dd97721ba24e709699a6e62d58a0b5 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID7124 .
-
-_:N98f77000aae64a3785f130b5483378ff a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID6434 .
-
-_:N9f39f3f119034cd68a038c5e07b3efc2 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:RenalMass .
-
-_:Na22bd882a9cb4828aa9cf2121f2fb2d3 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:NonSolidPulmonaryNodule .
-
-_:Na684d61208ce471599e1766c1d6b1944 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:SolidPulmonaryNodule .
-
-_:Naef27063dbff4dc9842b432dcbf43b60 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:SolidPulmonaryNodule .
-
-_:Nb0fd131a01b44aa7a88928a5153212ec a owl:Restriction ;
-    owl:onProperty cde:mayCause ;
-    owl:someValuesFrom cde:PleuralEffusion .
-
-_:Nbee8d83c08cc461bbe96b258d855fe24 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID6434 .
-
-_:Nc048be8477ad44ff8d801db21fa7edea a owl:Restriction ;
-    owl:onProperty cde:mayCause ;
-    owl:someValuesFrom cde:PleuralEffusion .
-
-_:Nc25ffa0eb474473ba9625fe72a5fab2e a owl:Restriction ;
+_:N03c1d97eb32b4253995fd41a715ee411 a owl:Restriction ;
     owl:onProperty cde:mayManifestAs ;
     owl:someValuesFrom cde:PartSolidPulmonaryNodule .
 
-_:Nc3c6904681bf43a3ad7eb888fb6a988a a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:MediastinalShift .
-
-_:Nc4d9110a88c5412e89d5f92b5161d654 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:Consolidation .
-
-_:Nc5fc7ae8be1a4afdad546c1dc28a4853 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:GroundGlassOpacity .
-
-_:Nc9b43c16143b4dbba2693fa5bbc2c42c a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:RenalEnlargement .
-
-_:Nccb14de3b7e44225bcbfe0f73cfebe32 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:CerebralAtrophy .
-
-_:Ncefb98470caf463a8c75e2f2d373c1c3 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID35739 .
-
-_:Nd0684d4026014f16af28637e23a11924 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID7578 .
-
-_:Nd1734c68aa6a41f6a8b5a3feb8313e6d a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:PulmonaryArteryFillingDefect .
-
-_:Nd53198fafde543419de25b1e520143f5 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID58 .
-
-_:Nd63dead0ccd643fdb3353e850c2aad36 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID6434 .
-
-_:Nd8110f8dafc84daea951571238127e86 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID205 .
-
-_:Ndd05c9af95f64b2faf24101f0e303a0e a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID1301 .
-
-_:Ne59c9c5495264390a2defdb6221c76c6 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID974 .
-
-_:Ne78df325316b4c8a8e1f2c2c09820b5a a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID1301 .
-
-_:Ne7e8bbbdff5a4c99ae07c86c45cda561 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:PleuralEffusion .
-
-_:Nea41afd7fe51459db2d9cb8d6dd92638 a owl:Restriction ;
-    owl:onProperty cde:mayCause ;
-    owl:someValuesFrom cde:Encephalomalacia .
-
-_:Neb99d9182a5343eea6269e4db7414bbd a owl:Restriction ;
+_:N04cfd6457dd94388aa03a24b2a61628d a owl:Restriction ;
     owl:onProperty cde:mayManifestAs ;
     owl:someValuesFrom cde:HepaticMass .
 
-_:Nebffe440035a421f952f0d26b51991ea a owl:Restriction ;
+_:N0695c006374c4a129394dce1440b1b07 a owl:Restriction ;
+    owl:onProperty cde:scopedToClass ;
+    owl:someValuesFrom radlex:RID28891 .
+
+_:N0807deb080a74569961f06fc69ab5d98 a owl:Restriction ;
     owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:MediastinalLymphadenopathy .
+    owl:someValuesFrom cde:Atelectasis .
 
-_:Necc6a7fa8b62453eb48327ec33589c88 a owl:Restriction ;
-    owl:onProperty cde:mayCause ;
-    owl:someValuesFrom cde:PleuralEffusion .
-
-_:Ned2eda650d3e45f79b441c3987141b21 a owl:Restriction ;
-    owl:onProperty cde:mayManifestAs ;
-    owl:someValuesFrom cde:GroundGlassOpacity .
-
-_:Ned5b9210761945059f29fd7ca0279785 a owl:Restriction ;
-    owl:onProperty cde:scopedToRegion ;
-    owl:someValuesFrom radlex:RID1303 .
-
-_:Neebc3fc81b1249598032095f77dc2a16 a owl:Restriction ;
-    owl:onProperty cde:scopedToSpecific ;
-    owl:someValuesFrom radlex:RID35739 .
-
-_:Nef3e2168ddfa4d99b52262c46d798970 a owl:Restriction ;
+_:N097a46f6a1774bc28f327bcd3686caff a owl:Restriction ;
     owl:onProperty cde:scopedToSpecific ;
     owl:someValuesFrom radlex:RID7111 .
 
-_:Nf181382cf9644d59a9d552ee40ff32c7 a owl:Restriction ;
+_:N09ba09550eba4f2e95e6d45c7c38277a a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID7578 .
+
+_:N101113a2dbbf422eb79c80f371e072f2 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:Pneumothorax .
+
+_:N1de0084d33f340a8ba96c20bfe6f6109 a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID205 .
+
+_:N21e74c7152194a7e81e7897190bb0aa9 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:PulmonaryMass .
+
+_:N28957899aaaa430eac28885320cdb6bb a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:MediastinalLymphadenopathy .
+
+_:N2d7fc3dbc41e42a5aaa46283f9f051db a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID585 .
+
+_:N3110f0d9cdf644fc9c5723c0c6533205 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:Consolidation .
+
+_:N31d96d058adb46a9a9807e6f7a6532e6 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:MediastinalShift .
+
+_:N339eb66073924eea9a25a2f63dabe1fe a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:SolidPulmonaryNodule .
+
+_:N33c28ba0e015484495d5b434f7b223df a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:GroundGlassOpacity .
+
+_:N36501fcd7aa444e080e479a58c9ac569 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:NonSolidPulmonaryNodule .
+
+_:N37239d9d6733437fb959888988832581 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID205 .
+
+_:N37665f8264c944f6a032852e8fc9c103 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:WhiteMatterHyperintensity .
+
+_:N3b63c9641e494b38ae0dc0b89b2a4e26 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:PulmonaryArteryFillingDefect .
+
+_:N3d58373f5bc849a68eba3db9b8404856 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:HepaticMass .
+
+_:N406b4efb060f48148c1d713de0171fe6 a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID205 .
+
+_:N482c96c2266845b2835e94591ca39856 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:MediastinalLymphadenopathy .
+
+_:N4a23cfe3e89e4f32b456b33eb3af8789 a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID88 .
+
+_:N52bc2af95ed14185a651007d0a0d6543 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:PleuralEffusion .
+
+_:N56d2f6b392874f35a2f917c7d0bb5b1b a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:PleuralEffusion .
+
+_:N5bcc6232523648d484007f6cc84a1333 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:GroundGlassOpacity .
+
+_:N5c7641c118184e8fa5d1c2b3c5d6c296 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:PleuralEffusion .
+
+_:N67018dcbb1f04161b90046e01a314ce6 a owl:Restriction ;
+    owl:onProperty cde:mayCause ;
+    owl:someValuesFrom cde:MidlineShift .
+
+_:N6c1e491e441b488f8cb050c4ddcfc644 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:AcuteInfarct .
+
+_:N6c28606b46444e34b0d03c54a7196673 a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID6434 .
+
+_:N6dfd4dd42e1a4d379fe48c3bba23b9d2 a owl:Restriction ;
     owl:onProperty cde:mayCause ;
     owl:someValuesFrom cde:PleuralEffusion .
 
-_:Nf8c50f76bf6547048c3402a446af5bc6 a owl:Restriction ;
+_:N6e0f407d797b4d088874cc8745833326 a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID58 .
+
+_:N6f179a5b6af34aa582d4fc26256fb413 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID7123 .
+
+_:N7193e56d193f4774945277673040adcf a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID1363 .
+
+_:N730597deaba24c948e4c1a360baba81a a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID6434 .
+
+_:N7569c0afecfb415cb396e59546dd693d a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID205 .
+
+_:N759e643c552c41dd8e9ded5bfbe9a4af a owl:Restriction ;
+    owl:onProperty cde:scopedToClass ;
+    owl:someValuesFrom radlex:RID2471 .
+
+_:N7d5757a3308e45ab983950d3020320d1 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:SolidPulmonaryNodule .
+
+_:N7ecd7085cf5d4da1a4775e445628c913 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:ComplexRenalCyst .
+
+_:N7f5a47d3b03d4740abb781f57956e92f a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID35739 .
+
+_:N80b26f96470142408babf5a1772a2a94 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID684 .
+
+_:N8232db9431f041639abea29d2818d8dc a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:StriatedNephrogram .
+
+_:N82da553adacc428f9112d9d7a4c12dd5 a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID205 .
+
+_:N83958f2e8f62411392e2c8b5cb873d78 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID434 .
+
+_:N8477604930174bcb9cd00957c32f5397 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:MediastinalLymphadenopathy .
+
+_:N84f614dbcb2348b4b5d1291d3fe6cea2 a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID9080 .
+
+_:N86756901132a41269aed205787a5dfa5 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID1363 .
+
+_:N8a9c0f646aa149468b88d427e8bf15dc a owl:Restriction ;
+    owl:onProperty cde:mayCause ;
+    owl:someValuesFrom cde:PulmonaryEdema .
+
+_:N8c67029b9051401aa1be2ed13e53ae63 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID16996 .
+
+_:N8ce1b3251ee047e2b12604db69705b47 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:RenalEnlargement .
+
+_:N90520dd5185d4bc9995e920b65c851a0 a owl:Restriction ;
+    owl:onProperty cde:scopedToClass ;
+    owl:someValuesFrom radlex:RID6067 .
+
+_:N90b37137e90a4f70ac4832f1bf9760a9 a owl:Restriction ;
+    owl:onProperty cde:mayCause ;
+    owl:someValuesFrom cde:PleuralEffusion .
+
+_:N90ca48ea421640cf8bab7fa87d19bf7b a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:Consolidation .
+
+_:N91c67c71f21c4a40b35cfbebd7afbabb a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID7120 .
+
+_:N9754d78f292e48a5a18a9f3006595bdb a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:RenalMass .
+
+_:N98ff6904d74c44f5a597aac64568a462 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID7119 .
+
+_:N9a566c8876d64bac992e4ad3502750c2 a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID6434 .
+
+_:N9b53c6a580b34f48bfe077faf4aa2531 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID1384 .
+
+_:N9ed1a5ce83be4747b7b67dd2142cb830 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:PleuralEffusion .
+
+_:N9eeb12628a78415b9b4eb28297f69d2e a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID1303 .
+
+_:Na19518d7a63b49bdb9eb9f10d8c7c28f a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID1301 .
+
+_:Naf4f682619c6425a9a57dab3ed5aa7fd a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:CerebralAtrophy .
+
+_:Nb275d1c48c304d7f885ed9aad790ed69 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID35739 .
+
+_:Nb2b8af44e2514307a98606e6834bc829 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:Atelectasis .
+
+_:Nb5f21d3b4591438793375e418ff39327 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:RenalCorticalScarring .
+
+_:Nb7eaed5cd7164919b088acb9ced3b9b6 a owl:Restriction ;
+    owl:onProperty cde:mayCause ;
+    owl:someValuesFrom cde:PleuralEffusion .
+
+_:Nbb08f599cd4146559805f3fb825eb44c a owl:Restriction ;
+    owl:onProperty cde:mayCause ;
+    owl:someValuesFrom cde:Encephalomalacia .
+
+_:Nbf9a8ab3085a4eacb5b609be93da7619 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:SolidPulmonaryNodule .
+
+_:Nbfd05c9d6c0c4819be57c6d3ee35472d a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID1301 .
+
+_:Nc6e52bb920de406195b691a8fc578fd0 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:AdrenalNodule .
+
+_:Nc85db7e9f28740ce8ad0d80b5dc7e687 a owl:Restriction ;
+    owl:onProperty cde:mayCause ;
+    owl:someValuesFrom cde:PleuralEffusion .
+
+_:Nc957f27628344e93af357cf606a38b2c a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID6434 .
+
+_:Ncae2fd576f2d4b608b2b7f1536523edc a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID1301 .
+
+_:Nd0fad4c3c8524054abec29b6d99c2215 a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID6434 .
+
+_:Nd8a51b0774744059a648016dace851b9 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:SolidPulmonaryNodule .
+
+_:Ndcfb1a2e35f343ebb331d47bc5f99965 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID7124 .
+
+_:Nde0765c1f8a34ea0b2b8c335e78c04fa a owl:Restriction ;
     owl:onProperty cde:mayCause ;
     owl:someValuesFrom cde:MalignantPleuralEffusion .
+
+_:Ne2433b70b1f643538f5a215171f81ddc a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:PerinephricStranding .
+
+_:Ne33e4353853d4b2daa35ccc61ad76057 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:AdrenalNodule .
+
+_:Ne5a08d9c9a22495abe283fa0f9b254d3 a owl:Restriction ;
+    owl:onProperty cde:scopedToSpecific ;
+    owl:someValuesFrom radlex:RID974 .
+
+_:Nf3621bf776214b3f8a0ca5b3463f82e2 a owl:Restriction ;
+    owl:onProperty cde:scopedToRegion ;
+    owl:someValuesFrom radlex:RID205 .
+
+_:Nf51ff3a7eae04d97867d3d8cbf83a839 a owl:Restriction ;
+    owl:onProperty cde:mayCause ;
+    owl:someValuesFrom cde:PleuralEffusion .
+
+_:Nf93f99a3a54744b79b0e9c5acb592524 a owl:Restriction ;
+    owl:onProperty cde:mayManifestAs ;
+    owl:someValuesFrom cde:PulmonaryNodule .
+
+_:Nfceb6760d5374c14a181545b1b08e9d2 a owl:Restriction ;
+    owl:onProperty cde:mayCause ;
+    owl:someValuesFrom cde:PleuralEffusion .
 

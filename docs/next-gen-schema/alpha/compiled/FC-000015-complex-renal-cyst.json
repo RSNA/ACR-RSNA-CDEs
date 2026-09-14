@@ -379,7 +379,6 @@
      "definition": "No calcification is identified.",
      "rank": null,
      "exclusive": true,
-     "exclusive_note": "selecting this excludes every other value of this element",
      "bindings": []
     },
     {
