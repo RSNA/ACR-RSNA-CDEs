@@ -6,45 +6,31 @@ One row per mechanism. No decision numbers, no cross-references, no history.
 If a mechanism is contested or unfinished, that is stated in its own entry
 rather than pointing somewhere else.
 """
-import json, collections, datetime
+import json, datetime
 import spec
+from pathlib import Path
 
-OUT = "/mnt/user-data/outputs/radcde-alpha"
+OUT = str(Path(__file__).resolve().parent.parent)
 
 # (mechanism, what it does, why it is this way, status)
 MECHANISMS = [
 
     # ---- identity and anchoring -------------------------------------------
-    ("Anchor verdict: how a concept binds to RadLex",
-     "Every finding and diagnosis records how it relates to RadLex: one concept exists "
-     "(`anchored`), the term decomposes into concepts that exist (`post_coordinated`), it "
-     "is absent but a radiologist reports it (`unanchored_requestable`), or its nature puts "
-     "it outside a radiology lexicon (`out_of_primary_scope`).",
-     "RadLex is shallowly pre-coordinated and deeply post-coordinated. A check that looks "
-     "only for one matching concept reports gaps that are not there and files change "
-     "requests for terms already expressible. The fourth verdict stops clinical syndromes "
-     "bloating the lexicon.",
+    ("Binding to several terminologies without a primary designation",
+     "A node may bind to several terminologies. Each binding records the terminology, code, "
+     "the source terminology's own label, the SKOS match strength and the release it was "
+     "resolved against. No binding is designated primary or secondary.",
+     "Different terminologies may cover different kinds of concepts well. The model records "
+     "the bindings that are useful without forcing a hierarchy among terminology systems. "
+     "Anatomy identity is handled separately by the direct RadLex anatomy import.",
      "applied"),
 
-    ("Criteria for requesting a new RadLex term",
-     "Four things are tried before asking the source for a new concept: does one already "
-     "exist; does the term decompose into concepts that all exist; is the distinguishing "
-     "feature already carried by an edge in the graph; and does the term belong in a "
-     "radiology lexicon at all. A request is filed only when all four fail.",
-     "Asking for everything bloats the source. Tested against fourteen candidates in this "
-     "build, ten did not warrant a request: eight decompose, one was already carried "
-     "structurally, and one belongs to SNOMED. Mural nodule is the clearest case — it is a "
-     "nodule, and the mural part is already said by COMPONENT_OF, so asking for the "
-     "pre-coordinated term would duplicate what the graph states.",
-     "applied"),
-
-    ("Binding to several terminologies, with one primary",
-     "A node may bind to several terminologies. Exactly one binding is primary and only "
-     "that one's hierarchy is imported. Each binding records system, code, the source's own "
-     "label, the SKOS match strength and the release it was resolved against.",
-     "RadLex is the primary anchor, especially for anatomy. SNOMED CT covers clinical terms "
-     "RadLex should not be asked to carry. Storing the source label lets a re-import detect "
-     "that an upstream concept was relabelled under us.",
+    ("RadLex composition for concepts without one exact RadLex binding",
+     "When a CDE concept can be represented from existing RadLex concepts rather than one "
+     "pre-coordinated RadLex concept, `radlex_composition` records a base concept plus zero or "
+     "more modifiers.",
+     "The composition preserves useful RadLex semantics without treating absence of a single "
+     "pre-coordinated term as a terminology defect.",
      "applied"),
 
     ("Terms RadLex discourages are not treated as synonyms",
@@ -57,7 +43,7 @@ MECHANISMS = [
 
     ("Duplicate detection searches RadLex synonyms, not only labels",
      "A candidate concept is checked against preferred labels and synonym fields, filtered "
-     "to English, before a local node is minted.",
+     "to English, before a CDE node is created.",
      "Of RadLex's English synonym terms, 99% match no preferred label anywhere. Two "
      "first-order concepts in this build were reachable only by synonym: renal cell "
      "carcinoma is labelled 'renal adenocarcinoma', intrapulmonary lymph node is labelled "
@@ -75,10 +61,11 @@ MECHANISMS = [
      "applied"),
 
     ("Authoring patterns are topic checklists, not element bundles",
-     "A pattern lists the TOPICS a kind of finding is usually described by. It names no "
-     "DataElement, inserts nothing, and appears in no artifact. An author sees the topics as a "
-     "checklist and then decides, per finding, whether an existing element genuinely fits or a "
-     "new one is needed. Reuse is never forced.",
+     "A pattern lists broad TOPICS that may help when authoring a kind of finding. It names no "
+     "DataElement and inserts nothing into the ontology, definition graph, compiled model, or "
+     "FindingClass. Patterns are authoring guidance only and are documented for authors; they "
+     "are not ontology entities. An author may use a pattern, compose authoring considerations "
+     "through `applies_with`, or use no pattern when none fits. Reuse is never forced.",
      "The two carotid stenosis classes are the case that settles it. They share a name and "
      "share nothing else: the internal carotid takes five NASCET diameter-ratio bands and two "
      "competing percentage methods, the external carotid takes two bands read from velocity, "
@@ -86,60 +73,61 @@ MECHANISMS = [
      "Different element, different measurements, different modality. A pattern that inserted "
      "the stenosis machinery into everything called a stenosis would have put NASCET "
      "percentages on a vessel nobody measures that way. "
-     "A pattern must not hold element ids and splice them into the classes that apply it. That "
-     "forces a shared element onto classes it does not suit, and the only way to make one fit "
-     "is to widen it: a single margin element reaching nine values across three societies, so "
-     "that a tendon lesion can be reported as having extra-thyroidal extension. Published "
-     "elements must not move to accommodate new findings. Discoverability is the useful part "
-     "and is anatomy-aware: an author scoping to the lung should be shown lung-scoped "
-     "distribution elements, not ones whose values come from another organ.",
+     "A pattern must not hold element ids and splice them into a FindingClass. That forces a "
+     "shared element onto classes it does not suit, and the only way to make one fit is to "
+     "widen it: a single margin element reaching nine values across three societies, so that "
+     "a tendon lesion can be reported as having extra-thyroidal extension. Published elements "
+     "must not move to accommodate new findings. Discoverability is the useful part; a future "
+     "authoring tool may make that discoverability anatomy-aware without turning the pattern "
+     "into ontology semantics.",
      "applied"),
 
-    ("Laterality is authored, not derived",
-     "The base pattern supplies presence and interval change to every finding. Laterality is "
-     "an ordinary element that a class declares if the finding can be sided. 37 of 45 classes "
-     "declare it; the rest do not.",
-     "RadLex has no laterality property. None of its 49 object properties concerns sidedness "
-     "and there is no side annotation, so it cannot be read off. It cannot be derived either, "
-     "and two routes were tested. Member_Of a named set catches the adrenal glands and the "
-     "carotid arteries, and also fires on the liver and the kidney through 'set of viscera of "
-     "abdomen' and 'set of solid abdominal organs', which are groupings rather than pairs. "
-     "Lateralised subclasses catch the lung, kidney and adrenal gland, and miss the rib "
-     "entirely and the thyroid, which has left and right lobes rather than left and right "
-     "glands. Combined, the two would call the liver paired and the rib unsided. So whether a "
-     "finding can be sided is decided when the class is authored. Expect this question to "
-     "return; the answer is not that nobody looked.",
+    ("Fixed DataElement values are represented with HAS_VALUE_CONSTRAINT",
+     "When membership in a FindingClass fixes an applicable DataElement to one Value, the "
+     "class carries `HAS_VALUE_CONSTRAINT` to that Value and the edge records which element "
+     "the value belongs to. The fixed element is not presented as a choice on that class, "
+     "including when the element is inherited from a parent.",
+     "This provides a semantic mechanism for a model assertion that a value is fixed, instead of "
+     "leaving that assertion only in prose or presenting a choice the model says the class cannot take. Pulmonary nodule "
+     "subtypes use it for attenuation: solid, part-solid and non-solid each constrain the "
+     "parent attenuation element to the corresponding value. Intracranial haemorrhage uses "
+     "the same mechanism in a provisional intracranial-haemorrhage test case: the current alpha "
+     "models epidural as biconvex, subdural as crescentic, and subarachnoid as conforming, while "
+     "intraventricular and intraparenchymal haemorrhage provisionally narrow the inherited "
+     "collection-shape value set to conforming or rounded. This division is a modeling "
+     "hypothesis for exercising fixed-value versus narrowing behavior, not a radiologist-backed "
+     "clinical rule. It must remain open to revision after clinical review. "
+     "`defining=true` is reserved for value constraints participating in a defined class "
+     "equivalence; `defining=false` records a necessary fixed value without making the class "
+     "necessary-and-sufficient from that value alone.",
      "applied"),
 
-    ("Scope refinement, declared as a kind and compiled to a list",
-     "A class states where it is and, where the location can be narrowed, WHICH KIND of "
-     "anatomy may narrow it: a pulmonary nodule is in the lung and may be refined to any lobe "
-     "of lung. The permitted concepts are derived from that one declaration by walking the "
-     "anatomy, never authored. The OWL keeps it as a constraint a reasoner can check; the "
-     "compiled shape carries the derived list so a vendor holding only that file has a closed "
-     "set, the same as any element's permitted values.",
-     "Free refinement below the scope is too permissive: everything under lung includes the "
-     "secondary pulmonary lobule, and a nodule scoped there is congruent and meaningless. A "
-     "hand-authored list is too rigid and goes stale. Declaring the kind is neither. "
-     "Both the sided and the unsided forms are permitted, because a report says upper lobe of "
-     "the right lung, or the right upper lobe, or just the upper lobe, and all three have to "
-     "resolve. The cost is accepted knowingly: two records can encode one thing differently, "
-     "as RID1303 alone or as RID34695 with laterality right, and anyone comparing them "
-     "normalises. Deriving one from the other would be the same conversion refused between "
-     "NASCET and ECST. Where a report supports it, the most specific concept is preferred, and "
-     "that is a preference stated here rather than a field repeated in every shape. "
-     "The OWL carries no constraint because the obvious one does not bite: allValuesFrom the "
-     "kind is violated only if the wrong target is disjoint from it, and no anatomy class in "
-     "this build is declared disjoint from any other. RadLex does not declare it and walking "
-     "the imported hierarchy to assert sibling disjointness is ontology maintenance this "
-     "alpha is not taking on. The axiom was written, found to catch nothing, and removed "
-     "rather than left looking like a guard.",
-     "applied, not reasoner-enforced"),
+    ("Sidedness is carried by native anatomy, not a DataElement",
+     "A finding does not declare a separate side element. When the resolved native RadLex "
+     "anatomic location is sided, that anatomy concept carries the sidedness. More specific native "
+     "anatomy may also preserve sided context through its own relationships.",
+     "Duplicating the same fact as a finding attribute would create two representations of one "
+     "anatomic assertion. The CDE layer therefore does not mint substitute sided anatomy, add a "
+     "fallback side field, or repair missing RadLex relationships. If the configured RadLex "
+     "release cannot represent the needed sided anatomy, that limitation remains visible until the "
+     "native ontology supplies it.",
+     "applied"),
+
+    ("Anatomic refinement is a first-class rule with independent controls",
+     "A finding may attach an `AnatomicRefinementRule` that independently records the scope "
+     "being narrowed, zero or more exact native RadLex predicates, an eligible target concept "
+     "set, and traversal behavior when traversal is actually authored. The pulmonary-nodule "
+     "rule currently preserves the seven descendants of `RID34694` (lobe of lung) as its "
+     "target set and intentionally specifies no native predicate or traversal policy.",
+     "Predicate choice must not define the target set, a taxonomy set must not imply an "
+     "anatomical relationship, and selecting a predicate must not silently make it recursive. "
+     "Only authored RadLex relationships are represented as permitted predicates.",
+     "applied; traversal vocabulary remains to be authored when needed"),
 
     ("Every finding is anatomically anchored",
      "A FindingClass carries a scope, or it is a component reached only through "
-     "`HAS_COMPONENT`, or it is a subtype. A class with none of these is a pattern that "
-     "escaped into the graph, and the linter says so.",
+     "`HAS_COMPONENT`, or it is a subtype. A class with none of these does not meet the "
+     "current FindingClass boundary, and the linter says so.",
      "'Hepatic lesion' is a class; 'lesion' is not. Location is what turns a shape into "
      "something reportable. Enforced for now and not yet disproved: no finding has appeared "
      "that a radiologist reports without a location. A counterexample would not simply relax "
@@ -148,39 +136,29 @@ MECHANISMS = [
      "applied, no counterexample yet"),
 
     ("Authoring checks: advisory lint, not schema",
-     "Six advisory rules, none enforced by a reasoner and none constraining what an author may "
+     "Eight advisory rules, none enforced by a reasoner and none constraining what an author may "
      "write. The sharpest is that an element is never narrowed to a single value.",
-     "An element every user answers the same way is not recording an observation, it is "
-     "restating the class definition. Four elements were removed on that test: volume change, "
-     "content type, parenchymal pattern and clinical significance. Each looked like a shared "
-     "element and was a definition in disguise.",
+     "An element every user answers the same way is not recording an observation; it is "
+     "restating the class definition and belongs in the class definition instead.",
      "applied"),
 
     ("When a subtype earns its place",
-     "Two tests. First, something in the model must distinguish a subtype from its siblings: a "
-     "defining element value, a different scope, a required component, or its own elements. If "
-     "the only difference is the label, it is a value on an element rather than a class. "
-     "Second, subtypes partition on exactly one axis; a second axis becomes an element.",
-     "Applied case by case before it was written down, and the cases agree. Pulmonary nodule "
-     "subtypes are separated by a defining attenuation value, and part-solid gains a component. "
-     "Renal cyst subtypes by a composition value. Haemorrhage compartments by scope, each to a "
-     "different space. Atelectasis had five subtypes separated by NOTHING: identical scope to "
-     "lung, identical elements, no defining value, distinguishable only by name. They also "
-     "mixed two axes, morphology and mechanism, which co-occur, so neither could partition the "
-     "other. Replaced by one class carrying both as elements. "
-     "NEEDS A RADIOLOGIST: whether obstructive atelectasis behaves differently enough to earn "
-     "classhood after all, since it implies an obstructing lesion and that is a causal edge no "
-     "other mechanism carries; and whether the two axes are genuinely independent or some "
-     "combinations cannot occur.",
+     "A subtype must differ from its siblings through modelled semantics: a defining element "
+     "value, a different scope, a required component, or its own elements. Subtypes partition "
+     "on one axis; an independent second axis remains an element.",
+     "Pulmonary nodule subtypes are separated by defining attenuation values, renal cyst "
+     "subtypes by composition, and haemorrhage compartments by scope. Atelectasis morphology "
+     "and mechanism remain elements because they are independent axes that can co-occur. "
+     "NEEDS A RADIOLOGIST: whether obstructive atelectasis has sufficiently distinct causal "
+     "behaviour to warrant classhood.",
      "needs confirmation"),
 
     ("Defined classes: subtypes a reasoner computes",
      "A class whose conditions are necessary and sufficient is computed by a reasoner rather "
      "than authored. A part-solid nodule is a pulmonary nodule whose attenuation is "
      "part-solid, and nothing about it is written twice.",
-     "The alternative was either a condition on an edge that consumers must evaluate, or a "
-     "subtype maintained by hand alongside its siblings. A defined class is neither: one "
-     "axiom, and inheritance does the rest.",
+     "One necessary-and-sufficient axiom lets the reasoner compute membership and inheritance "
+     "without duplicating the defining condition across the subtype hierarchy.",
      "applied"),
 
     ("Component relationships, asserted in either direction",
@@ -192,53 +170,54 @@ MECHANISMS = [
      "applied"),
 
     ("Edges are addressable objects with their own identity",
-     "Every authored edge carries an id and a version block, so a relationship can change, "
-     "be cited in a change request, or be retired without either endpoint changing. "
-     "Imported anatomy relations are excluded because re-import regenerates them.",
+     "Every edge in the canonical definition graph is CDE-authored and carries an id and a "
+     "version block, so a relationship can change or be retired without either endpoint changing. "
+     "Native RadLex anatomy relations remain outside this graph in the RadLex-derived index.",
      "An edge that can only be described cannot be governed.",
      "applied"),
 
     # ---- anatomy ----------------------------------------------------------
-    ("Two anatomy traversals: mereology and location, kept apart",
-     "`partOf` is transitive and inference-bearing, used for scope congruence. "
-     "`containedIn` is separate and used only to derive the body region.",
-     "A kidney is not part of the abdomen, it is located in it. Merging them would let a "
-     "scope check chase location links into nonsense. Keeping them apart also means the "
-     "body region needs no authored edge: it is computed from the scope target.",
+    ("AnatomicLocation is a CDE role over native RadLex anatomy",
+     "The CDE model keeps `AnatomicLocation` as a node/role type, but the concepts occupying "
+     "that role are native RadLex RIDs under RID3 (`anatomical entity`). No `AL-*` identity "
+     "or CDE-owned anatomy class is minted.",
+     "This keeps one concept identity. CDE can still distinguish anatomy nodes in its graph "
+     "without maintaining a parallel anatomy terminology.",
      "applied"),
 
-    ("RadLex partonomy senses imported as subproperties of one partOf",
-     "`Part_Of`, `Regional_Part_Of` and `Constitutional_Part_Of` are imported as three "
-     "subproperties of one `partOf`, so traversal happens over the parent and each sense "
-     "stays visible on the edge. Where a pair is asserted under both a specific sense and "
-     "the generic one, the specific is kept.",
-     "The alternative was one edge with a sense property, which loses traversal, or three "
-     "unrelated edges, which loses the shared walk.",
+    ("RadLex is imported directly and native predicates are preserved",
+     "The generated CDE OWL imports the configured RadLex ontology directly. Native RadLex object "
+     "properties, their `rdfs:subPropertyOf` hierarchy, inverses, taxonomy and relationship "
+     "assertions keep their source IRIs and are never renamed to CDE proxy predicates.",
+     "Future RadLex releases can therefore add relationship types without requiring a CDE "
+     "predicate mapping or semantic rewrite.",
      "applied"),
 
-    ("Anatomy imported as an extract, regenerated on each RadLex release",
-     "Only the concepts the authored layer uses are imported, plus enough hierarchy above "
-     "each to place them. The anatomy module is regenerated by re-import and contains "
-     "nothing authored except gap-fill.",
-     "Keeps the maintenance surface bounded and makes the imported/authored boundary "
-     "structural rather than a convention.",
+    ("Native RadLex predicates are available without a privileged traversal family",
+     "The RadLex index exposes exact relationships, property definitions, subproperty metadata, "
+     "inverse declarations, and exact-property one-hop traversal. It does not choose `Part_Of` "
+     "or any other property family as the default CDE refinement mechanism.",
+     "RadLex distinguishes `Part_Of`, `Contained_In`, `Member_Of`, `Branch_Of`, and other "
+     "relations. Preserving those distinctions avoids turning an ontology hierarchy into an "
+     "application traversal policy.",
      "applied"),
 
-    ("Local gap-fill for relationships RadLex does not assert",
-     "Where an imported concept exists but a relationship does not, the relationship is "
-     "authored locally with a change request reference, and removed on the release that "
-     "carries it.",
-     "RadLex has no upward relation for the adrenal gland and does not connect lung "
-     "parenchyma to the lung. Without gap-fill, anything scoped there derives no body "
-     "region and fails scope checks in a way that looks like a model bug.",
+    ("Missing RadLex relationships remain gaps",
+     "If the configured RadLex release does not supply a relationship needed to connect two "
+     "anatomic concepts, the model reports the missing native path and does not author a "
+     "replacement relationship.",
+     "This makes upstream terminology limitations visible and avoids a second relationship "
+     "layer that would have to be reconciled with later RadLex releases.",
      "applied"),
 
-    ("Laterality pre-coordinated with an axis",
-     "Scope points at the sided concept the source names; a side axis is carried alongside "
-     "so the unsided form is reachable without composing anything.",
-     "RadLex already pre-coordinates 'left clavicle'. Consumers that want structure plus a "
-     "separate side field read the axis; consumers that want the concept read the concept.",
+    ("Target concept sets are independent from predicates",
+     "A refinement rule may define eligible targets from an exact native RadLex taxonomy root "
+     "with explicit root/descendant inclusion. The same rule may independently permit one or "
+     "more exact native predicates. Multiple predicates remain multiple predicates.",
+     "A target taxonomy answers which concepts are eligible, not how they are anatomically "
+     "related. The application therefore never infers a predicate from taxonomic membership.",
      "applied"),
+
 
     # ---- semantics --------------------------------------------------------
     ("When acuity is a value and when it is a class",
@@ -295,18 +274,24 @@ MECHANISMS = [
      "different project.",
      "deliberately coarse"),
 
-    ("Scope kind: which relation a congruence check walks",
-     "`SCOPED_TO` carries a kind that says which relation a congruence check walks: "
-     "`specific` walks subsumption, `region` walks containment, `class` walks taxonomy.",
-     "Tendons share no container, so a tendon lesion cannot be scoped by containment. "
-     "Organs do, so a pulmonary nodule can. One edge with a kind covers both.",
+    ("Scope kind records authoring intent, not a traversal policy",
+     "`SCOPED_TO` may still carry `specific`, `region`, or `class` as the authored scope category. "
+     "Those values do not select a native RadLex predicate, expand a property hierarchy, or "
+     "authorize recursive traversal.",
+     "Relationship semantics belong in an explicit refinement rule rather than being hidden "
+     "inside a generic scope kind.",
      "applied"),
 
     ("Scope strength: how binding the location claim is",
      "`required`, `expected` or `unconstrained`, recorded on the scope edge.",
      "Declares how binding the claim is, so a consumer can tell a definitional scope from a "
-     "usual one. Nothing enforces it yet.",
-     "declared, unenforced"),
+     "usual one. This cannot be enforced as an OWL axiom: OWL is open-world, so 'required' "
+     "cannot mean 'absence is invalid' without closed-world checking. That checking belongs "
+     "to a future report-validation layer that checks real submitted data against "
+     "compiled/*.json, once instance data exists to check. Probe B5_ThyroidNoduleInLung is "
+     "the negative control already in place for this: it documents, by staying white, that "
+     "no axiom currently carries scope strength.",
+     "deferred to a future instance-validation layer, by design"),
 
     # ---- data -------------------------------------------------------------
     ("Single-select and multi-select declared on the element",
@@ -320,9 +305,17 @@ MECHANISMS = [
      "A finding may restrict an element to a subset of its values. In the alpha this emits "
      "as an annotation and a lint rule, not as an axiom.",
      "A hard stop does not always fit the language, and anatomy narrowing in particular is "
-     "guidance because a diagnosis draws on several regions at once. A probe carries the "
-     "hard form so the value of enforcing it accumulates without the alpha paying for it.",
-     "soft on purpose"),
+     "guidance because a diagnosis draws on several regions at once. Probe "
+     "B3_RibFractureWithChronicAcuity already demonstrates the hard form as an "
+     "owl:allValuesFrom restriction, reasoner-checked and working, but only inside the "
+     "probes file. Promoting a specific narrow from advisory to enforced needs two things: "
+     "an explicit per-narrow flag distinguishing hard from soft, and a change to "
+     "build_owl.py to emit the real restriction for flagged cases instead of the current "
+     "narrowsTo annotation. Promote a narrow when a violation would be clinically wrong "
+     "rather than merely unusual, e.g. RibFracture excluding chronic acuity; leave it soft "
+     "where legitimate cases can fall outside the narrowed set, e.g. anatomy narrowing "
+     "against multi-region diagnoses.",
+     "soft by default; hard form proven in probe B3, not yet promotable without a flag"),
 
     ("Ordered value lists: rank on all values or none",
      "`rank` appears on every value of an element or on none.",
@@ -355,7 +348,8 @@ MECHANISMS = [
      "carries none when the method is general. Greatest pole-to-pole length is a kidney "
      "method, so that measurement is renal length scoped to the kidney. Greatest diameter on "
      "a single plane holds anywhere, so long-axis diameter is unscoped and reused freely. "
-     "Nine of thirteen are unscoped.",
+     f"{sum(1 for m in spec.MEASUREMENTS if not m.get('scoped_to_anatomy'))} of "
+     f"{len(spec.MEASUREMENTS)} are unscoped.",
      "A measurement IS its method, so a generic parent with no method would carry no content, "
      "and one with several methods would not say which applied. There is therefore no shared "
      "parent and no subtype hierarchy: an organ needing a length gets its own measurement with "
@@ -369,8 +363,8 @@ MECHANISMS = [
     ("Measurements carry their own scope",
      "A descriptor of a normal structure is a Measurement scoped to a location, with no "
      "owning finding.",
-     "The alternative was letting elements hang off anatomy nodes, which makes the entire "
-     "descriptor set of a structure depend on a concept we do not govern.",
+     "Keeping the descriptor as a Measurement avoids making an external anatomy concept own "
+     "the CDE descriptor set.",
      "applied"),
 
     ("Values are owned by one element, never shared",
@@ -394,22 +388,6 @@ MECHANISMS = [
      "construction and lets the reasoner return the verdict.",
      "applied"),
 
-    ("Unresolved mentions: report text that resolves to no class",
-     "Report text that names something finding-shaped but does not resolve to a class is "
-     "recorded as an `UnresolvedMention` (`UM-*`), which is not a FindingClass and is "
-     "declared disjoint from one.",
-     "With no abstract classes there is nowhere to put an unlocalised nodule, and that is "
-     "correct: it is not a finding yet. Recording it keeps underspecification countable "
-     "without putting a vague code in the output that an extractor could stop at.",
-     "applied"),
-
-    ("Scope resolution: why a mention carries no location",
-     "Four values say why a mention carries no location: the source stated one, stated an "
-     "unresolvable one, stated none, or extraction missed it.",
-     "Without it, a report that said nothing and a pipeline that failed produce identical "
-     "output, and neither coding rate nor localisation rate can be measured.",
-     "scope only; measurement, laterality and presence still need it"),
-
     ("Compiled shapes: the flat form vendors read",
      "Each finding is emitted as one flat shape with references resolved and patterns "
      "applied, so a consumer evaluates nothing.",
@@ -431,13 +409,13 @@ NOT_ADOPTED = [
      "point at."),
     ("IN_REGION edge",
      "Coarse body region authored alongside the scope edge.",
-     "Redundant: the region is derived by walking containment upward from the scope target. "
-     "An authored region can also contradict the scope with nothing to adjudicate."),
+     "Not adopted. The model keeps exact native RadLex relationships available from the scope "
+     "target rather than authoring a second regional assertion. Any use of those relationships "
+     "for refinement requires an explicit rule."),
     ("MAY_PROGRESS_TO",
      "Identity-preserving evolution: the same entity in a later state.",
-     "The distinction is real, but identity preservation is not expressible without time, "
-     "and progression pairs are characteristically disjoint. Declared and unused; three "
-     "probes show what it would and would not buy."),
+     "Used for explicitly authored progression between Diagnosis classes. The relationship "
+     "records the stated progression pair without adding a separate temporal identity model."),
     ("INTERPRETED_FROM",
      "Relates an interpretation to what it was read from.",
      "Meaning shifts depending on how many things it points at and which are present."),
@@ -463,7 +441,7 @@ GAPS = [
      "One lesion, several, a cluster, innumerable. The model can describe a finding and "
      "cannot say how many there are or that an attribute applies to all of them.",
      "This is the largest gap and it is upstream of three others: negation, remainder "
-     "negation and bilaterality all turn on what the statement is about."),
+     "negation and bilateral involvement all turn on what the statement is about."),
     ("Negation beyond a named finding",
      "'No renal abnormality' names no finding, so nothing carries a presence value. 'No other "
      "significant adenopathy' is a claim about everything examined and not mentioned.",
@@ -495,25 +473,14 @@ GAPS = [
      "Nothing represents a procedure, so a finding attributable to one cannot say which, and "
      "there is nothing against which to judge whether an appearance is expected.",
      "Post-procedural findings are common in reports and none is expressible."),
-    ("Decomposing a pre-coordinated anchor",
+    ("Decomposing a pre-coordinated terminology concept",
      "Scope points at the concept the source names. Where that concept is pre-coordinated, as "
      "'left lung' or 'upper lobe of right lung' are, there is no way to ask for the structure "
      "and the modifier separately.",
      "A consumer wanting structure plus a side field, rather than the concept as named, has "
      "nothing to read. The same applies to any pre-coordinated axis the source builds in, not "
-     "only laterality. `anchor_base` and `anchor_modifiers` decompose an anchor we compose "
-     "ourselves; they say nothing about one the source arrived with."),
-
-    ("Inheritance is all or nothing",
-     "A subtype carries everything its parent declares. It can add and it can narrow, but it "
-     "cannot decline. `collection shape` sits correctly on intracranial haemorrhage, where a "
-     "radiologist describing an undifferentiated extra-axial collection does call it biconvex "
-     "or crescentic, and all five compartment subtypes inherit it. So epidural haematoma offers "
-     "four shapes when it can only be biconvex.",
-     "The fix would be letting a subtype suppress an inherited element, which is rejected: "
-     "there is no principled test for when suppression is right, so it becomes a per-class "
-     "exception with a rule attached. One odd case does not justify it. NEEDS A RADIOLOGIST: "
-     "whether offering the full shape list on a named compartment is harmless or misleading."),
+     "including sidedness. `radlex_composition` decomposes a CDE concept represented compositionally from RadLex; "
+     "it says nothing about a concept that already has a direct terminology binding."),
 
     ("Comparison to a named prior",
      "Interval change is coarse and carries no reference to which study was compared.",

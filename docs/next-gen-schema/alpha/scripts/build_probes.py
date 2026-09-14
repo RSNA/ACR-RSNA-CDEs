@@ -14,11 +14,11 @@ tests is not actually being enforced.
 import os
 import rdflib
 from rdflib import Graph, Namespace, Literal, URIRef, BNode
-from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS, DCTERMS
+from rdflib.namespace import RDF, RDFS, OWL, SKOS, DCTERMS
 
 BASE = "https://radelement.org/ng/"
 CDE = Namespace(BASE)
-ANAT = Namespace(BASE + "anatomy/")
+RADLEX = Namespace("http://www.radlex.org/RID/")
 PROBE = Namespace(BASE + "probe/")
 ONT = URIRef(BASE + "radcde-probes")
 
@@ -41,7 +41,7 @@ def inter(g, members):
 
 def build():
     g = Graph()
-    for p, n in [("cde", CDE), ("anat", ANAT), ("probe", PROBE),
+    for p, n in [("cde", CDE), ("radlex", RADLEX), ("probe", PROBE),
                  ("owl", OWL), ("skos", SKOS), ("dcterms", DCTERMS)]:
         g.bind(p, n)
     g.add((ONT, RDF.type, OWL.Ontology))
@@ -66,19 +66,16 @@ def build():
           "subclass":     "EXPECT SUBCLASS of an existing class - yellow row in SubClass Of, "
                           "moves in the tree when the dropdown is set to Inferred",
           "consistent":   "EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows",
-          "unrelated":    "EXPECT UNRELATED to its pair - neither equivalent nor a subclass of it",
         }
         VERDICT = {
-          "A1": "subclass", "A2": "subclass", "A3": "equivalent", "A4": "subclass",
-          "A5": "subclass", "A6": "subclass",
+          "A3": "equivalent", "A6": "subclass", "C1": "equivalent",
           "E10": "inconsistent",
           "B1": "inconsistent", "B2": "inconsistent", "B3": "inconsistent",
           "B4": "inconsistent", "B5": "consistent", "B6": "inconsistent",
-          "C1": "consistent", "C2": "inconsistent", "C3": "consistent",
           "D1": "consistent",
-          "E1": "unrelated", "E2": "consistent", "E3": "subclass", "E4": "consistent",
-          "E5": "consistent", "E6": "inconsistent", "E7": "consistent",
+          "E1": "consistent", "E2": "consistent", "E5": "consistent", "E6": "inconsistent", "E7": "consistent",
           "E8": "equivalent", "E9": "equivalent",
+          "E11": "inconsistent", "E12": "inconsistent",
         }
         tag = OUTCOME[VERDICT[name.split("_")[0]]]
         c = PROBE[name]
@@ -95,40 +92,12 @@ def build():
         return c
 
     # ---------------- Group A: should classify -----------------------------
-    probe("A1_NoduleInRightUpperLobe",
-          "PROBE A1: a nodule in the right upper lobe",
-          [CDE.PulmonaryNodule, some(g, CDE.scopedToRegion, ANAT.RID1303)],
-          "A", "subsumed by PulmonaryNodule",
-          "The differentia for PulmonaryNodule is scope to lung. The right upper lobe "
-          "reaches lung by two partOf steps, so this fires only if the property chain "
-          "scopedToRegion o partOf is working. This is decision-register item 3 made testable.")
-
-    probe("A2_NoduleInSuperiorSegmentRLL",
-          "PROBE A2: a nodule in the superior segment of the right lower lobe",
-          [CDE.PulmonaryNodule, some(g, CDE.scopedToRegion, ANAT.RID1316)],
-          "A", "subsumed by PulmonaryNodule",
-          "Three partOf steps: segment -> lower lobe -> right lung, then one subsumption "
-          "step right lung -> lung. The mixed chain named in classifier-placement-considerations.md.")
-
     probe("A3_PartSolidByAttenuation",
           "PROBE A3: a pulmonary nodule whose attenuation is part-solid",
           [CDE.PulmonaryNodule, some(g, CDE.hasAttenuation, CDE.V_000011_PartSolid)],
           "A", "subsumed by PartSolidPulmonaryNodule",
           "The condition-versus-subtype case. The subtype is defined, so nobody authors "
           "it twice and the component requirement attaches to it automatically.")
-
-    probe("A4_NoduleInLocalSubpleuralRegion",
-          "PROBE A4: a nodule in the locally coined subpleural region",
-          [CDE.PulmonaryNodule, some(g, CDE.scopedToRegion, ANAT["AL_L0002"])],
-          "A", "subsumed by PulmonaryNodule",
-          "The scope path runs through two locally authored partOf edges before it reaches "
-          "imported RadLex structure. Tests that local gap-fill edges participate in closure.")
-
-    probe("A5_NoduleInThyroidLobe",
-          "PROBE A5: a nodule in the left lobe of the thyroid gland",
-          [CDE.ThyroidNodule, some(g, CDE.scopedToRegion, ANAT.RID7579)],
-          "A", "subsumed by ThyroidNodule",
-          "Same mechanism in a second organ, to check the pattern is not lung-specific.")
 
     probe("A6_CystWithMuralNodule",
           "PROBE A6: a cyst with a mural nodule component",
@@ -137,8 +106,7 @@ def build():
           "The second conditional-relationship case, and it fires in the opposite direction "
           "from the part-solid one. Nothing here asserts a composition value. The chain is: "
           "a mural nodule is necessarily componentOf some ComplexCyst, componentOf is "
-          "functional, so the cyst holding it IS that complex cyst. This is the case "
-          "03-conditional-relationships.md asks for under its TODO.")
+          "functional, so the cyst holding it IS that complex cyst.")
 
     # ---------------- Group B: should go red -------------------------------
     probe("B1_SolidAndPartSolid",
@@ -155,8 +123,9 @@ def build():
           "PROBE B2: something that is both a nodule and a mass",
           [CDE.PulmonaryNodule, CDE.PulmonaryMass],
           "B", "unsatisfiable",
-          "The 30 mm boundary is carried as disjointness, not as a size condition. "
-          "See DECISIONS.md D-07 for why the criterion itself is an annotation.")
+          "The current definition model declares PulmonaryNodule and PulmonaryMass disjoint. "
+          "This probe verifies that the class distinction remains reasoner-enforced rather than "
+          "only a naming convention.")
 
     def only_(prop, classes):
         u = BNode()
@@ -176,17 +145,17 @@ def build():
                                  CDE.V_000333_Healed, CDE.V_000335_IndeterminateAge]),
            some(g, CDE.hasAcuity, CDE.V_000334_Chronic)],
           "B", "unsatisfiable",
-          "PulmonaryNodule narrows margin to smooth, lobulated, irregular, spiculated. "
-          "Narrowing at the point of use is an allValuesFrom axiom rather than an edge "
-          "property, so a reasoner enforces it. This is the FHIR-profile behaviour named "
-          "in 02-data-element.md, made checkable.")
+          "RibFracture narrows Acuity to acute, healing, healed, or indeterminate age. "
+          "Chronic remains a value of the reusable Acuity DataElement but is excluded at this "
+          "point of use with an allValuesFrom restriction. This probe verifies that the class-" 
+          "specific narrowing is reasoner-enforced.")
 
     probe("B4_FindingThatIsAlsoADiagnosis",
           "PROBE B4: something that is both a FindingClass and a Diagnosis",
           [CDE.FindingClass, CDE.Diagnosis],
           "B", "unsatisfiable",
-          "The node types are declared disjoint. This is what stops a named cyst drifting "
-          "between the two layers, which 02-modeling-case-cyst.md raises as an open question.")
+          "FindingClass and Diagnosis are intentionally disjoint node types. This probe "
+          "verifies that a concept cannot simultaneously occupy both semantic roles.")
 
     probe("B6_SimpleCystWithMuralNodule",
           "PROBE B6: a simple cyst with a mural nodule",
@@ -201,72 +170,37 @@ def build():
 
     probe("B5_ThyroidNoduleInLung",
           "PROBE B5: a thyroid nodule located in the lung",
-          [CDE.ThyroidNodule, some(g, CDE.scopedToRegion, ANAT.RID1301)],
+          [CDE.ThyroidNodule, some(g, CDE.scopedToRegion, RADLEX.RID1301)],
           "B", "SATISFIABLE - this one is expected to stay white",
           "Deliberate negative control. scopedToRegion is not functional and lung and "
           "thyroid are not declared disjoint, so nothing rules this out. It shows what "
           "the model does NOT check, which matters for the strength property: strength "
           "declares how binding a scope claim is, and no OWL axiom currently carries it.")
 
-    # ---------------- Group C: the proposed MAY_PROGRESS_TO edge ------------
-    probe("C1_NoduleProgressingToMass",
-          "PROBE C1: a nodule with a mayProgressTo edge to a mass",
-          [CDE.PulmonaryNodule, some(g, CDE.mayProgressTo, CDE.PulmonaryMass)],
-          "C", "SATISFIABLE",
-          "The edge as a plain relation between two individuals is fine. Nothing is "
-          "contradicted, because the nodule and the mass are two different individuals. "
-          "This is the edge read as sequence only, and at that reading it carries no "
-          "identity claim and no more force than an annotation.")
-
-    probe("C2_IdentityPreservingProgression",
-          "PROBE C2: one entity that is both the earlier and the later state",
-          [CDE.PulmonaryNodule, CDE.PulmonaryMass],
-          "C", "unsatisfiable",
-          "This is what 'identity-preserving' means in a model with no time: the same "
-          "individual instantiates both endpoints. It is probe B2 under another name. "
-          "Progression edges characteristically join disjoint classes (acute/chronic, "
-          "infarct/encephalomalacia), so this is not special to nodule and mass. It is "
-          "what the edge costs whenever it is inference-bearing.")
-
-    probe("C3_ProgressionWithinOneClass",
-          "PROBE C3: a cyst that may progress to a cyst",
-          [CDE.RenalCyst, some(g, CDE.mayProgressTo, CDE.RenalCyst)],
-          "C", "SATISFIABLE",
-          "The shape that actually works: progression within one class, where what changes "
-          "is the value of an attribute rather than the class. RadLex models acute and "
-          "chronic this way, as children of temporal descriptor RID5716, and carries no "
-          "'acute hemorrhage' or 'chronic hemorrhage' concept at all.")
+    # ---------------- Group C: authored progression --------------------------
+    probe("C1_ParapneumonicEffusionProgressesToEmpyema",
+          "PROBE C1: parapneumonic effusion may progress to empyema",
+          [CDE.ParapneumonicEffusion, some(g, CDE.mayProgressTo, CDE.Empyema)],
+          "C", "equivalent to ParapneumonicEffusion",
+          "ParapneumonicEffusion currently authors MAY_PROGRESS_TO Empyema. Because that "
+          "restriction is already part of the class definition, intersecting the class with "
+          "the same progression restriction should not narrow it further. This probe verifies "
+          "that the authored progression axiom remains present." )
 
     # ---------------- Group E: mechanisms nothing else exercises ------------
-    probe("E1_ScopeDoesNotTravelAlongContainedIn",
-          "PROBE E1: a finding scoped to the kidney",
-          [CDE.FindingClass, some(g, CDE.scopedToRegion, ANAT.RID205)],
-          "E", "NOT subsumed by E2, which is expected to stay separate",
-          "Deliberate negative. The kidney reaches the abdomen only through Contained_In, and "
-          "scope congruence chases partOf alone, so this must NOT classify under a class scoped "
-          "to the abdomen. If the two ever merge, containedIn has leaked into the partOf family "
-          "and a scope claim can travel along a location link.")
+    probe("E1_KidneyPartOfUrinaryTract",
+          "PROBE E1: native kidney Part_Of urinary tract relationship",
+          [RADLEX.RID205, some(g, RADLEX.Part_Of, RADLEX.RID204)],
+          "E", "SATISFIABLE",
+          "Preserves the exact native Part_Of predicate. This probe does not authorize any "
+          "application traversal or substitution with another RadLex property.")
 
-    probe("E2_ScopedToAbdomen",
-          "PROBE E2: a finding scoped to the abdomen",
-          [CDE.FindingClass, some(g, CDE.scopedToRegion, ANAT.RID56)],
-          "E", "SATISFIABLE, and must not subsume E1",
-          "The other half of E1.")
-
-    probe("E3_ScopeTravelsAlongLocalGapFill",
-          "PROBE E3: a finding scoped to the lung parenchyma",
-          [CDE.FindingClass, some(g, CDE.scopedToRegion, ANAT.RID35739)],
-          "E", "subsumed by E4",
-          "RadLex gives lung parenchyma exactly one edge, IS_A parenchyma, and never connects "
-          "it to the lung. A local gap-fill partOf edge supplies that. If this stops "
-          "classifying under E4, the gap-fill has been lost and everything scoped to lung "
-          "parenchyma has quietly detached from the lung.")
-
-    probe("E4_ScopedToLung",
-          "PROBE E4: a finding scoped to the lung",
-          [CDE.FindingClass, some(g, CDE.scopedToRegion, ANAT.RID1301)],
-          "E", "SATISFIABLE, and should subsume E3",
-          "The other half of E3.")
+    probe("E2_KidneyContainedInRetroperitoneum",
+          "PROBE E2: native kidney Contained_In retroperitoneum relationship",
+          [RADLEX.RID205, some(g, RADLEX.Contained_In, RADLEX.RID431)],
+          "E", "SATISFIABLE",
+          "Preserves the distinct native Contained_In fact alongside Part_Of. The CDE layer "
+          "does not rewrite either predicate or use one as a proxy for the other.")
 
     probe("E5_MultiSelectAllowsTwoValues",
           "PROBE E5: a pulmonary nodule with popcorn and punctate calcification",
@@ -339,25 +273,40 @@ def build():
           "proves it. Read against E5, which asserts two real patterns together and must stay "
           "satisfiable.")
 
+    probe("E11_EpiduralCannotBeCrescentic",
+          "PROBE E11: an epidural hematoma with crescentic collection shape",
+          [CDE.EpiduralHematoma,
+           some(g, CDE.hasCollectionShape, CDE.V_000371_Crescentic)],
+          "E", "unsatisfiable",
+          "The current alpha provisionally models epidural hematoma with a fixed biconvex collection-shape constraint. "
+          "Collection shape is single-select, so asserting crescentic tests whether the fixed-value mechanism makes "
+          "the modeled combination inconsistent. This is a mechanism test, not a radiologist-validated clinical rule.")
+
+    probe("E12_SubduralCannotBeBiconvex",
+          "PROBE E12: a subdural hematoma with biconvex collection shape",
+          [CDE.SubduralHematoma,
+           some(g, CDE.hasCollectionShape, CDE.V_000370_Biconvex)],
+          "E", "unsatisfiable",
+          "The current alpha provisionally models subdural hematoma with a fixed crescentic collection-shape constraint. "
+          "Collection shape is single-select, so asserting biconvex tests whether the fixed-value mechanism makes "
+          "the modeled combination inconsistent. This is a mechanism test, not a radiologist-validated clinical rule.")
+
     # ---------------- Group D: what the reasoner cannot check ---------------
     probe("D1_FindingClassWithNoAnatomicAnchor",
           "PROBE D1: a finding class with no anatomic anchor",
           [CDE.FindingClass],
           "D", "SATISFIABLE - expected to stay white",
-          "The lint rules that replace inheritance are not axioms. Nothing here is "
-          "contradictory, and no reasoner will object to a class with no location, no "
-          "pattern applied, or an element authored twice. Those checks live in "
-          "scripts/spec.py lint() and run at authoring time, which is exactly what the "
-          "pattern decision commits to: consistency by generation and linting rather than "
-          "by inheritance. D1 staying white is the point. Knowing where a constraint "
-          "cannot live is the difference between a rule and a hope.",
+          "The requirement that a top-level FindingClass have an anatomic scope is an "
+          "authoring lint rule, not an OWL axiom. A reasoner therefore should not make this "
+          "primitive test class inconsistent merely because it lacks a location. This probe "
+          "keeps the boundary between authoring validation and ontology semantics explicit.",
           primitive=True)
 
     return g
 
 
 if __name__ == "__main__":
-    out = "/mnt/user-data/outputs/radcde-alpha"
+    out = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     g = build()
     g.serialize(destination=f"{out}/radcde-probes.ttl", format="turtle")
     g.serialize(destination=f"{out}/rdfxml/radcde-probes.rdf", format="xml")

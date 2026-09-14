@@ -1,6 +1,6 @@
 # Diagnosis Relationships and Scope
 
-Diagnosis relationships extracted from `alpha-turtle.ttl`. When scope is inherited rather than directly asserted, the nearest ancestor providing that scope is identified. Absent relationships are omitted.
+Diagnosis relationships extracted from the canonical `definition-graph.json`. When scope is inherited rather than directly asserted, the nearest ancestor providing that scope is identified. Absent relationships are omitted.
 
 ## acute pyelonephritis
 
@@ -158,6 +158,7 @@ Diagnosis relationships extracted from `alpha-turtle.ttl`. When scope is inherit
 - **pleural effusion**
   - `SCOPED_TO_SPECIFIC`: pleural space
 - **pulmonary edema**
+  - `SCOPED_TO_REGION`: lung
 
 #### HAS_DATA_ELEMENT (attributes associated directly with it)
 
@@ -266,6 +267,7 @@ Diagnosis relationships extracted from `alpha-turtle.ttl`. When scope is inherit
 #### MAY_CAUSE (FindingClass that may occur as a consequence of the diagnosis)
 
 - **malignant pleural effusion**
+  - `SCOPED_TO_SPECIFIC`: pleural space
 
 #### HAS_DATA_ELEMENT (attributes associated directly with it)
 

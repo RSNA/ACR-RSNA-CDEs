@@ -7,6 +7,7 @@
  "bindings": [],
  "synonyms": [],
  "anatomic_scope": [],
+ "anatomic_refinement_rules": [],
  "seen_on": [],
  "subspecialty": [],
  "elements": [
@@ -34,9 +35,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -63,9 +64,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -92,9 +93,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -121,9 +122,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -253,22 +254,14 @@
  "component_of": "FC-000015",
  "component": true,
  "fixed_values": [],
- "anchor_verdict": "structurally_expressed",
- "anchor_base": {
-  "system": "RADLEX",
-  "code": "RID3875",
-  "label": "nodule"
- },
- "anchor_modifiers": [],
- "change_request": null,
  "source_definition": null,
  "concept_source": null,
  "version": {
   "number": 1,
   "status": "proposed",
-  "created": "2026-09-10",
+  "created": "2026-09-14",
   "published": null,
-  "last_modified": "2026-09-10",
+  "last_modified": "2026-09-14",
   "contributors": [
    {
     "id": "PERSON-000001",
@@ -277,6 +270,11 @@
    }
   ]
  },
- "source": "local",
- "source_status": "unrequested"
+ "radlex_composition": {
+  "base": {
+   "code": "RID3875",
+   "label": "nodule"
+  },
+  "modifiers": []
+ }
 }

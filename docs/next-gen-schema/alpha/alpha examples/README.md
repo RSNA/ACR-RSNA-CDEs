@@ -1,29 +1,30 @@
 # Alpha Examples Ontology Documentation Generator
 
-This directory is expected to be named `alpha examples`.
+This directory is named `alpha examples`.
 
-Keep the Turtle ontology file and `generate_ontology_docs.py` in the same directory.
+The generated Markdown files are human-readable inspection views of the canonical alpha model. Their presentation intentionally preserves the original alpha-example format, including subtype grouping, diagnosis connections, scopes, relationship sections, value constraints, measurements, modalities, subspecialties, and compact DataElement usage tables.
+
+## Source
+
+The generator reads the canonical graph at:
+
+```text
+graph/definition-graph.json
+```
+
+It also reads:
+
+```text
+scripts/anatomy.json
+```
+
+for RadLex taxonomy membership used by explicitly authored anatomic refinement rules.
+
+The examples do not independently infer anatomy relationships from RadLex. `AVAILABLE_LOCATION_REFINEMENTS` is emitted only when an explicit `AnatomicRefinementRule` permits the target concept set.
 
 ## Requirements
 
-Python 3 and `rdflib` are required.
-
-Install `rdflib` if needed:
-
-```bash
-python3 -m pip install rdflib
-```
-
-## Directory layout
-
-Example:
-
-```text
-alpha examples/
-├── alpha-turtle.ttl
-├── generate_ontology_docs.py
-└── README.md
-```
+Python 3 is required. The generator uses only the Python standard library.
 
 ## Run
 
@@ -31,14 +32,6 @@ From the `alpha examples` directory:
 
 ```bash
 python3 generate_ontology_docs.py
-```
-
-If no filename is supplied, the script automatically uses the most recently modified `.ttl` file in the same directory.
-
-You can also specify the Turtle file explicitly:
-
-```bash
-python3 generate_ontology_docs.py "alpha-turtle.ttl"
 ```
 
 ## Generated files
@@ -51,24 +44,26 @@ diagnosis_relationships_and_scope.md
 dataelement_concepts.md
 ```
 
-The generator derives the documents fresh from the Turtle file each time. It does not patch a previous Markdown version.
+The generator derives the documents fresh from the canonical graph each time. It does not patch a previous Markdown version.
 
 ### FindingClass document
 
 Includes:
 
 - FindingClass scope
-- constrained available location refinements
+- explicitly permitted location refinements
 - subtype grouping and indentation
-- Diagnosis connections
-- symmetric `OCCURS_WITH` representation when declared symmetric by the ontology
-- `COMPONENT_OF`
+- Diagnosis connections, including inherited connections
+- symmetric `OCCURS_WITH` representation when declared symmetric by the graph
+- `HAS_COMPONENT` and `COMPONENT_OF`
 - measurements
 - DataElements
+- fixed DataElement value constraints
+- assessment schemes
 - modality through `SEEN_ON`
 - subspecialty information
 
-Location refinement is intentionally conservative. Anatomical containment alone is not treated as proof that a structure is a valid authoring location. The generator includes named specialization, explicit regional subdivisions, and regional/lobar/segmental anatomy rather than every `partOf` descendant.
+Anatomic refinement is intentionally explicit. Predicate selection, target selection, and traversal behavior are separate controls. A scoped anatomy alone does not authorize generation of narrower locations.
 
 ### Diagnosis document
 
@@ -81,23 +76,16 @@ Includes:
 - `MAY_PROGRESS_TO`
 - assessment relationships
 - DataElements associated directly with the Diagnosis
+- scope of connected FindingClasses
 
 ### DataElement document
 
 Includes:
 
 - DataElement values
-- explicit DataElement scope if one is present in the ontology
+- explicit DataElement scope if present
 - compact `USED_BY` table separating Diagnoses from FindingClasses
 
 ## Validation
 
-After generation, the script prints counts for FindingClasses, Diagnoses, and DataElements.
-
-It also prints warnings when an expected ontology structure changes in a way that may require reviewing the generator, such as:
-
-- no FindingClasses, Diagnoses, or DataElements being detected
-- `occursWith` existing but no longer being declared symmetric
-- a DataElement having no detected value list
-
-Review any warning before treating the generated Markdown as current documentation.
+After generation, the script prints counts for FindingClasses, Diagnoses, and DataElements. It also reports DataElements with no detected value list so that unexpected model changes are visible during review.

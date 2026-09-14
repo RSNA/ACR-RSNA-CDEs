@@ -8,13 +8,13 @@
  "synonyms": [],
  "anatomic_scope": [
   {
-   "location": "AL-000062",
+   "location": "RID6067",
    "kind": "class",
    "strength": "required",
-   "source": "local",
    "name": "tendon"
   }
  ],
+ "anatomic_refinement_rules": [],
  "seen_on": [
   "CT",
   "MR",
@@ -47,9 +47,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -76,9 +76,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -105,9 +105,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -134,9 +134,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -232,28 +232,14 @@
  "component_of": null,
  "component": false,
  "fixed_values": [],
- "anchor_verdict": "post_coordinated",
- "anchor_base": {
-  "system": "RADLEX",
-  "code": "RID38780",
-  "label": "lesion"
- },
- "anchor_modifiers": [
-  {
-   "system": "RADLEX",
-   "code": "RID6067",
-   "label": "tendon"
-  }
- ],
- "change_request": null,
  "source_definition": null,
  "concept_source": null,
  "version": {
   "number": 1,
   "status": "proposed",
-  "created": "2026-09-10",
+  "created": "2026-09-14",
   "published": null,
-  "last_modified": "2026-09-10",
+  "last_modified": "2026-09-14",
   "contributors": [
    {
     "id": "PERSON-000001",
@@ -262,6 +248,16 @@
    }
   ]
  },
- "source": "local",
- "source_status": "unrequested"
+ "radlex_composition": {
+  "base": {
+   "code": "RID38780",
+   "label": "lesion"
+  },
+  "modifiers": [
+   {
+    "code": "RID6067",
+    "label": "tendon"
+   }
+  ]
+ }
 }

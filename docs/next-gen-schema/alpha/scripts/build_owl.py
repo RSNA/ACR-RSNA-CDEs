@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Emits the OWL serialisation of the alpha model as two modules:
+Emits the generated OWL serialisation of the alpha CDE model.
 
-  radcde-anatomy.ttl   imported anatomy (MIREOT from RadLex 4.3)
-  radcde-alpha.ttl     the authored layer, owl:imports the above
+RadLex is imported directly as the anatomy source of truth. AnatomicLocation
+is a CDE node/role type; native RadLex class identities are referenced directly
+and no parallel CDE anatomy vocabulary is generated.
 
 Mapping from the JSON graph model to OWL:
 
@@ -12,7 +13,7 @@ Mapping from the JSON graph model to OWL:
   DataElement node         -> owl:ObjectProperty + a value-domain owl:Class
   Value node               -> owl:Class under that value domain
   Measurement node         -> owl:Class under cde:Measurement
-  AnatomicLocation node    -> owl:Class under cde:AnatomicLocation
+  AnatomicLocation node    -> native RadLex owl:Class referenced directly
   AssessmentScheme node    -> owl:Class under cde:AssessmentScheme
   HAS_DATA_ELEMENT edge    -> subClassOf (prop some ValueDomain)
   narrow on that edge      -> subClassOf (prop only (V1 or V2 ...))
@@ -21,35 +22,32 @@ Mapping from the JSON graph model to OWL:
   binding                  -> a cde:Binding individual + a skos mapping
   version block            -> flat annotations
 """
-import json, datetime, os, collections
+import json, datetime
 import snomed
 import rdflib
 from rdflib import Graph, Namespace, Literal, URIRef, BNode
 from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS, DCTERMS
 import spec
+from pathlib import Path
+from radlex_config import RADLEX_NS, RADLEX_ONTOLOGY_IRI
 
 BASE   = "https://radelement.org/ng/"
 CDE    = Namespace(BASE)
-ANAT   = Namespace(BASE + "anatomy/")
-RADLEX = Namespace("http://radlex.org/RID/")
+RADLEX = Namespace(RADLEX_NS)
 SCT    = Namespace("http://snomed.info/id/")
 TODAY  = Literal(datetime.date.today().isoformat(), datatype=XSD.date)
 
-ONT_ALPHA   = URIRef(BASE + "radcde-alpha")
-ONT_ANATOMY = URIRef(BASE + "radcde-anatomy")
+ONT_ALPHA = URIRef(BASE + "radcde-alpha")
+RADLEX_ONTOLOGY = URIRef(RADLEX_ONTOLOGY_IRI)
 
 ANN = [  # annotation properties the model uses
     ("localId",            "The type-prefixed identifier of the corresponding node in the definition graph."),
     ("nodeType",           "Which node type of the definition graph this entity serialises."),
-    ("source",             "imported or local."),
-    ("sourceStatus",       "Relationship of a local object to the source terminology."),
-    ("changeRequest",      "External change-request reference for a local object."),
     ("bindingSystem",      "Terminology identifier of a binding."),
     ("bindingCode",        "Code in that terminology."),
     ("sourceLabel",        "That terminology's label for the code, as of sourceVersion."),
     ("bindingMatch",       "SKOS mapping strength of the binding."),
     ("sourceVersion",      "Terminology release the binding was resolved against."),
-    ("primaryBinding",     "True on the one binding whose hierarchy is imported."),
     ("synonymTerm",        "An alternate term for the concept."),
     ("synonymType",        "synonym, abbreviation, acronym or eponym."),
     ("synonymScope",       "exact, narrow, broad or related. Stops a narrow synonym being treated as an exact hit."),
@@ -72,7 +70,7 @@ ANN = [  # annotation properties the model uses
     ("designNote",         "A note recorded during alpha construction."),
     ("sourceText",         "Report text an instance example was drawn from."),
     ("sourceRef",          "Where in the modelling corpus the example came from."),
-    ("synonymOnlyHit",     "True where the anchor concept is reachable only through the source's synonym field."),
+    ("synonymOnlyHit",     "True where the RadLex binding is reachable only through the source's synonym field."),
     ("unsanctionedTerm",   "A term the source terminology explicitly discourages for this concept. "
                            "NOT a synonym: never emitted as skos:altLabel and never matched by duplicate detection."),
     ("conceptSource",      "The body the source terminology credits for the concept (Fleischner, PI-RADS, LI-RADS...)."),
@@ -83,25 +81,13 @@ ANN = [  # annotation properties the model uses
                            "a subproperty of the source's Synonym and therefore NOT a synonym."),
     ("isComponent",        "True where the class is reached only through HAS_COMPONENT."),
     ("mentionTerm",        "The term in the source text that a mention names."),
-    ("anchorVerdict",      "anchored, post_coordinated, unanchored_requestable or "
-                           "out_of_primary_scope. How the concept relates to the primary anchor."),
-    ("anchorBase",         "The head concept of a post-coordinated anchor: what the finding IS. "
-                           "Pulmonary mass has base mass. Points at the source concept, the same "
-                           "way a binding does, rather than naming it in text."),
-    ("anchorModifier",     "A concept that restricts the base. Pulmonary mass has modifier lung. "
-                           "Base plus modifiers says how the anchor composes, which a flat list "
-                           "of codes does not."),
+    ("radlexCompositionBase", "The RadLex head concept used when a CDE concept is represented compositionally."),
+    ("radlexCompositionModifier", "A RadLex concept that modifies the compositional base."),
     ("typicality",         "How often the source shows the target: occasional, frequent, "
                            "very_frequent, obligate. Read forward, diagnosis to finding."),
     ("specificity",        "How much seeing the target narrows the differential: suggestive, "
                            "highly_suggestive, pathognomonic. Read backward, finding to diagnosis."),
     ("noImagingElements",  "True on a diagnosis carried only so causal edges have a target."),
-    ("refinementKind",     "Which kind of anatomy a scope may be narrowed to on a particular "
-                           "observation. The permitted concepts are derived from it, never "
-                           "authored, and are enumerated in the compiled shape. Stated here as "
-                           "text rather than as an axiom because the axiom would not bite: no "
-                           "anatomy class in this build is declared disjoint from any other, so "
-                           "an allValuesFrom restriction on the kind rules nothing out."),
     ("exclusiveValue",     "A value whose selection excludes every sibling. Used for a none "
                            "option on a multi-select element, where value disjointness alone "
                            "does not prevent none being asserted alongside a pattern."),
@@ -114,16 +100,8 @@ ANN = [  # annotation properties the model uses
 OBJ_PROPS = [
     ("scopedTo",               None, "Relates a definition to an AnatomicLocation.", {}),
     ("scopedToSpecific",       "scopedTo", "Scope checked by identity or subsumption. kind=specific.", {}),
-    ("scopedToRegion",         "scopedTo", "Scope checked by containment along partOf. kind=region.", {}),
+    ("scopedToRegion",         "scopedTo", "Regional anatomic scope. The kind records authoring intent; no native RadLex predicate or traversal is implied.", {}),
     ("scopedToClass",          "scopedTo", "Scope checked taxonomically. kind=class.", {}),
-    ("partOf",                 None, "Mereological. Transitive.", dict(transitive=True)),
-    ("containedIn",            None,
-     "Location, not mereology: a kidney is in the abdomen, it is not part of it. Deliberately "
-     "NOT a subproperty of partOf and deliberately not in the scopedToRegion chain, so a scope "
-     "claim never travels along it. Traversed only to derive the body-region facet.", {}),
-    ("generalPartOf",          "partOf", "RadLex Part_Of.", {}),
-    ("regionalPartOf",         "partOf", "RadLex Regional_Part_Of.", {}),
-    ("constitutionalPartOf",   "partOf", "RadLex Constitutional_Part_Of.", {}),
     ("hasDataElement",         None, "Parent of every element property. Each DataElement is a subproperty.", {}),
     ("hasMeasurement",         None, "Relates a FindingClass or Diagnosis to a Measurement.", {}),
     ("hasMeasurementComponent",None, "Relates a Measurement to a component Measurement.", {}),
@@ -168,12 +146,11 @@ OBJ_PROPS = [
     ("erodes",                 "actsOn", "Destroys the substance of a structure.", {}),
     ("abuts",                  "actsOn", "Contacts a structure without disrupting it.", {}),
     ("causesFinding",          None, "A finding downstream of another finding.", dict(epistemic=False)),
-    # --- under evaluation, not adopted.
     ("mayProgressTo",          None,
-     "PROPOSED, NOT ADOPTED. Identity-preserving evolution: the same entity in a later state. "
-     "Annotation-only, because the identity claim is not expressible atemporally. See probes C1-C3.",
+     "Identity-preserving evolution: the same entity in a later state. The relationship is "
+     "authored explicitly; no additional temporal identity inference is asserted.",
      dict(epistemic=False, inference=False)),
-    ("mayProgressFrom",        None, "PROPOSED, NOT ADOPTED. Inverse of mayProgressTo.",
+    ("mayProgressFrom",        None, "Inverse of mayProgressTo.",
      dict(inverse="mayProgressTo", inference=False)),
 ]
 
@@ -181,7 +158,7 @@ OBJ_PROPS = [
 # --------------------------------------------------------------------------
 def new_graph():
     g = Graph()
-    for p, n in [("cde", CDE), ("anat", ANAT), ("radlex", RADLEX), ("sct", SCT),
+    for p, n in [("cde", CDE), ("radlex", RADLEX), ("sct", SCT),
                  ("skos", SKOS), ("owl", OWL), ("dcterms", DCTERMS)]:
         g.bind(p, n)
     return g
@@ -199,19 +176,31 @@ MATCH_PROP = {"exactMatch": SKOS.exactMatch, "closeMatch": SKOS.closeMatch,
               "relatedMatch": SKOS.relatedMatch}
 
 
-def add_sct(g, subj, key, table, slug, primary=False):
-    """SNOMED CT as a secondary binding. Codes are supplied, never written from memory."""
+def add_sct(g, subj, key, table, slug):
+    """Add a SNOMED CT binding. Codes are supplied, never written from memory."""
     if key not in table:
         return
     code, label, match = table[key]
-    add_binding(g, subj, code, label, match, system="SNOMEDCT", primary=primary, slug=slug)
+    add_binding(g, subj, code, label, match, system="SNOMEDCT", slug=slug)
 
 
 def add_binding(g, subj, code, source_label, match="exactMatch",
-                system="RADLEX", primary=False, slug=None):
-    """Binding as an individual (W3C n-ary pattern) plus a plain SKOS mapping."""
+                system="RADLEX", slug=None):
+    """Binding as an individual (W3C n-ary pattern) plus a plain SKOS mapping.
+
+    For RadLex, sourceLabel is always the configured terminology's preferred
+    English label rather than the CDE display term.
+    """
     if not code:
         return
+    if system == "RADLEX":
+        try:
+            ap = Path(__file__).with_name("anatomy.json")
+            if ap.exists():
+                ai = json.load(open(ap, encoding="utf-8"))
+                source_label = ai.get("classes", {}).get(code, {}).get("label") or source_label
+        except Exception:
+            pass
     b = CDE[f"binding-{slug or str(subj).rsplit('/',1)[-1]}-{system}-{code}"]
     g.add((b, RDF.type, OWL.NamedIndividual))
     g.add((b, RDF.type, CDE.Binding))
@@ -220,8 +209,6 @@ def add_binding(g, subj, code, source_label, match="exactMatch",
     g.add((b, CDE.sourceLabel, Literal(source_label)))
     g.add((b, CDE.bindingMatch, Literal(match)))
     g.add((b, CDE.sourceVersion, Literal(spec.RADLEX_VERSION)))
-    if primary:
-        g.add((b, CDE.primaryBinding, Literal(True)))
     version_block(g, b)
     g.add((subj, CDE.hasBinding, b))
     ns = RADLEX if system == "RADLEX" else SCT
@@ -290,126 +277,24 @@ def disjoint(g, classes):
 
 
 # ==========================================================================
-# ANATOMY MODULE
-# ==========================================================================
-def build_anatomy_graph(anat):
-    g = new_graph()
-    g.add((ONT_ANATOMY, RDF.type, OWL.Ontology))
-    g.add((ONT_ANATOMY, DCTERMS.title,
-           Literal("RadElement next-gen alpha: imported anatomy module")))
-    g.add((ONT_ANATOMY, RDFS.comment, Literal(
-        "MIREOT extract from RadLex %s. Only the concepts the authored layer uses, plus "
-        "enough hierarchy above each one to place it. Imported partonomy senses: Part_Of, "
-        "Regional_Part_Of, Constitutional_Part_Of. Member_Of, Contained_In and Segment_Of "
-        "are deliberately not imported: Member_Of is terminology-set membership, and "
-        "chaining it as partonomy places findings inside term sets. Nothing in this file "
-        "is authored; it is regenerated by re-import." % spec.RADLEX_VERSION)))
-    g.add((ONT_ANATOMY, OWL.versionInfo, Literal("alpha-0.1")))
-
-    g.add((CDE.AnatomicLocation, RDF.type, OWL.Class))
-    for name, _, _, _ in [(p, a, b, c) for p, a, b, c in OBJ_PROPS]:
-        pass
-    for pname, parent, comment, opts in OBJ_PROPS:
-        if pname in ("partOf", "generalPartOf", "regionalPartOf",
-                     "constitutionalPartOf", "containedIn"):
-            p = CDE[pname]
-            g.add((p, RDF.type, OWL.ObjectProperty))
-            g.add((p, RDFS.comment, Literal(comment)))
-            if parent:
-                g.add((p, RDFS.subPropertyOf, CDE[parent]))
-            if opts.get("transitive"):
-                g.add((p, RDF.type, OWL.TransitiveProperty))
-
-    for rid, nd in anat["nodes"].items():
-        c = ANAT[rid]
-        g.add((c, RDF.type, OWL.Class))
-        g.add((c, RDFS.subClassOf, CDE.AnatomicLocation))
-        g.add((c, RDFS.label, Literal(nd["name"])))
-        g.add((c, SKOS.prefLabel, Literal(nd["name"])))
-        g.add((c, SKOS.definition, Literal(nd["definition"])))
-        g.add((c, CDE.localId, Literal(nd["al_id"])))
-        g.add((c, CDE.nodeType, Literal("AnatomicLocation")))
-        g.add((c, CDE.source, Literal("imported")))
-        add_binding(g, c, rid, nd["source_label"], "exactMatch", primary=True, slug=rid)
-        add_sct(g, c, rid, snomed.ANATOMY, rid)
-        add_synonyms(g, c, [(s, "synonym") for s in nd["synonyms"]])
-        for a_ in nd.get("acronyms", []):
-            add_synonyms(g, c, [(a_, "acronym")])
-        for t_ in nd.get("synonyms_la", []):
-            g.add((c, SKOS.altLabel, Literal(t_, lang="la")))
-        for m_ in nd.get("misspellings", []):
-            g.add((c, CDE.misspelling, Literal(m_)))
-        if nd.get("has_real_definition"):
-            g.add((c, CDE.sourceDefinition, Literal(nd["definition"])))
-        if nd.get("concept_source"):
-            g.add((c, CDE.conceptSource, Literal(nd["concept_source"])))
-        for u_ in nd.get("unsanctioned", []):
-            g.add((c, CDE.unsanctionedTerm, Literal(u_)))
-        for cl in nd.get("change_log", [])[:4]:
-            g.add((c, CDE.sourceChangeLog, Literal(cl)))
-        for rb in nd.get("replaced_by", []):
-            g.add((c, CDE.replacedBy, Literal(rb)))
-        version_block(g, c, status="published")
-
-    for nid, nd in anat["local_nodes"].items():
-        c = ANAT[nid.replace("-", "_")]
-        g.add((c, RDF.type, OWL.Class))
-        g.add((c, RDFS.subClassOf, CDE.AnatomicLocation))
-        g.add((c, RDFS.label, Literal(nd["name"])))
-        g.add((c, SKOS.definition, Literal(nd["definition"])))
-        g.add((c, CDE.localId, Literal(nd["al_id"])))
-        g.add((c, CDE.nodeType, Literal("AnatomicLocation")))
-        g.add((c, CDE.source, Literal("local")))
-        g.add((c, CDE.sourceStatus, Literal(nd["source_status"])))
-        if nd.get("request"):
-            g.add((c, CDE.changeRequest, Literal(nd["request"])))
-        if nd.get("note"):
-            g.add((c, CDE.designNote, Literal(nd["note"])))
-        version_block(g, c)
-
-    def uri_for(x):
-        return ANAT[x.replace("-", "_")] if x.startswith("AL-") else ANAT[x]
-
-    for e in anat["is_a"]:
-        g.add((uri_for(e["frm"]), RDFS.subClassOf, uri_for(e["to"])))
-    for e in anat["part_of"] + anat["local_edges"]:
-        g.add((uri_for(e["frm"]), RDFS.subClassOf,
-               some(g, CDE[e["prop"]], uri_for(e["to"]))))
-
-    g.add((ONT_ANATOMY, RDFS.comment, Literal(
-        "SIDEDNESS IS NOT CARRIED HERE, AND CANNOT BE DERIVED. RadLex has no laterality "
-        "property: none of its 49 object properties concerns sidedness, and there is no side "
-        "annotation. Nor is pairedness recoverable from structure. Two routes were tested and "
-        "both fail in both directions. Member_Of a named set catches the adrenal glands and "
-        "the carotid arteries, but also fires on the liver and the kidney through 'set of "
-        "viscera of abdomen' and 'set of solid abdominal organs', which are groupings rather "
-        "than pairs. Lateralised subclasses catch the lung, the kidney and the adrenal gland, "
-        "but miss the rib entirely and miss the thyroid, which has left and right lobes rather "
-        "than left and right glands. Combined, the two routes would call the liver paired and "
-        "the rib unsided. "
-        "Whether a finding can be sided is therefore an authoring decision, carried by the "
-        "laterality DataElement that a class declares. An earlier build tagged five anatomy "
-        "nodes with a private Left/Right axis by matching label prefixes; it was removed as a "
-        "weaker duplicate of that element, which is bound to RadLex and SNOMED. "
-        "STILL UNMET: consumers wanting structure plus a separate side field, rather than the "
-        "pre-coordinated concept RadLex names, have nothing to read. Five string-matched tags "
-        "did not meet that requirement and should not be mistaken for having met it.")))
-
-    return g
-
-
-# ==========================================================================
-# AUTHORED LAYER
+# AUTHORED ALPHA MODULE
 # ==========================================================================
 def value_domain_name(de):
     return de["prop"][3:] + "Value" if de["prop"].startswith("has") else de["prop"] + "Value"
 
 
 def build_alpha_graph(anat):
+    def anat_uri(x):
+        if not isinstance(x, str) or not x.startswith("RID"):
+            raise ValueError(f"Anatomic references must be native RadLex RIDs, got {x!r}")
+        if x not in anat.get("classes", {}):
+            raise KeyError(f"RadLex anatomy reference {x} is not present in the configured source")
+        return URIRef(anat["classes"][x]["iri"])
+
     g = new_graph()
     g.add((ONT_ALPHA, RDF.type, OWL.Ontology))
-    g.add((ONT_ALPHA, OWL.imports, ONT_ANATOMY))
-    g.add((ONT_ALPHA, DCTERMS.title, Literal("RadElement next-gen alpha: authored definition layer")))
+    g.add((ONT_ALPHA, OWL.imports, RADLEX_ONTOLOGY))
+    g.add((ONT_ALPHA, DCTERMS.title, Literal("RadElement next-gen alpha: generated CDE definition layer")))
     g.add((ONT_ALPHA, OWL.versionInfo, Literal("alpha-0.1")))
     g.add((ONT_ALPHA, RDFS.comment, Literal(
         "A first-pass OWL rendering of the next-generation RadElement definition layer, "
@@ -435,15 +320,21 @@ def build_alpha_graph(anat):
         ("Modality", "An imaging technique."),
         ("Subspecialty", "A radiology subspecialty."),
         ("Etiology", "A kind of cause. Target for hasEtiology."),
-        ("Binding", "A mapping from a local concept to a code in an external terminology."),
+        ("Binding", "A terminology binding from a CDE concept to a code in another terminology."),
+        ("AnatomicRefinementRule", "An explicit rule separating eligible anatomy targets, native RadLex predicates, and traversal behavior."),
     ]:
         g.add((CDE[nt], RDF.type, OWL.Class))
         g.add((CDE[nt], RDFS.comment, Literal(comment)))
-        if nt not in ("DefinitionEntity", "Binding", "AssessmentCategory"):
+        if nt not in ("DefinitionEntity", "Binding", "AssessmentCategory", "AnatomicRefinementRule"):
             g.add((CDE[nt], RDFS.subClassOf, CDE.DefinitionEntity))
-    g.add((CDE.AnatomicLocation, RDFS.subClassOf, CDE.DefinitionEntity))
+    # AnatomicLocation is a CDE role/type, not a second anatomy vocabulary.
+    # Native RadLex classes occupy this role in the graph; the generated CDE OWL does
+    # not assert new subclass axioms on RadLex subjects.
+    g.add((CDE.AnatomicLocation, RDF.type, OWL.Class))
+    g.add((CDE.AnatomicLocation, RDFS.comment, Literal(
+        "Application/model role for native RadLex anatomical concepts; no local anatomy concepts are created.")))
     disjoint(g, [CDE.FindingClass, CDE.Diagnosis, CDE.Value,
-                 CDE.Measurement, CDE.AnatomicLocation, CDE.AssessmentScheme])
+                 CDE.Measurement, CDE.AssessmentScheme, CDE.AnatomicRefinementRule])
 
     # ---- object properties
     for pname, parent, comment, opts in OBJ_PROPS:
@@ -465,14 +356,20 @@ def build_alpha_graph(anat):
         if "inference" in opts:
             g.add((p, CDE.inferenceBearing, Literal(opts["inference"])))
 
-    # property chain: scope follows containment.
-    # scopedToRegion o partOf -> scopedToRegion
-    chain = rdflib.collection.Collection(g, BNode(), [CDE.scopedToRegion, CDE.partOf])
-    g.add((CDE.scopedToRegion, OWL.propertyChainAxiom, chain.uri))
-    g.add((CDE.scopedToRegion, CDE.designNote, Literal(
-        "Property chain scopedToRegion o partOf -> scopedToRegion. A finding scoped to a "
-        "lobe is thereby scoped to the lung, without every combination being written out. "
-        "This is the mechanism behind decision-register item 3, anatomic scope stored or inferred.")))
+    # Refinement-rule fields are independent. Native RadLex properties are referenced
+    # as vocabulary resources rather than redefined as CDE predicates.
+    for ap, comment in [
+        (CDE.hasAnatomicRefinementRule, "Links a definition class to a first-class anatomic refinement rule."),
+        (CDE.refinesScope, "The authored scope entry narrowed by the rule."),
+        (CDE.targetTaxonomyRoot, "Native RadLex taxonomy root used only to define eligible target concepts."),
+        (CDE.allowedAnatomicTarget, "One exact native RadLex concept explicitly permitted as a refinement target."),
+        (CDE.allowedRadLexPredicate, "One exact native RadLex object property permitted by the rule; multiple values remain distinct."),
+        (CDE.traversalSpecification, "Explicit traversal behavior when authored; absence means no traversal behavior has been specified."),
+        (CDE.includeTargetRoot, "Whether the taxonomy root itself is an eligible target."),
+        (CDE.includeTargetDescendants, "Whether native rdfs:subClassOf descendants are eligible targets."),
+    ]:
+        g.add((ap, RDF.type, OWL.AnnotationProperty))
+        g.add((ap, RDFS.comment, Literal(comment)))
 
     g.add((CDE.mayRepresent, CDE.designNote, Literal(
         "Inferential reading, one edge. It covers direct appearances and indirect signs "
@@ -492,35 +389,9 @@ def build_alpha_graph(anat):
         g.add((c, CDE.localId, Literal(eid)))
         g.add((c, CDE.nodeType, Literal("Etiology")))
         if rid:
-            add_binding(g, c, rid, name, "closeMatch", primary=True, slug=cls)
+            add_binding(g, c, rid, name, "closeMatch", slug=cls)
         add_sct(g, c, eid, snomed.ETIOLOGY, cls)
         version_block(g, c, status="proposed")
-
-    # ---- scope resolution
-    g.add((CDE.ScopeResolution, RDF.type, OWL.Class))
-    g.add((CDE.ScopeResolution, RDFS.comment, Literal(
-        "Why an observation carries no anatomic scope. Same four-way shape as the presence "
-        "element: the absence is recorded with its reason rather than left to a reader. "
-        "Without it, one class means genuinely generic, the report did not say, and the "
-        "extractor failed.")))
-    g.add((CDE.scopeResolution, RDF.type, OWL.ObjectProperty))
-    g.add((CDE.scopeResolution, RDF.type, OWL.FunctionalProperty))
-    g.add((CDE.scopeResolution, RDFS.range, CDE.ScopeResolution))
-    g.add((CDE.scopeResolution, RDFS.comment, Literal(
-        "Relates an observation to the reason its anatomic scope is or is not resolved.")))
-    sr_uri, sr_classes = {}, []
-    for sid, cls, name, defn in spec.SCOPE_RESOLUTION:
-        c = CDE[cls]
-        sr_uri[sid] = c
-        sr_classes.append(c)
-        g.add((c, RDF.type, OWL.Class))
-        g.add((c, RDFS.subClassOf, CDE.ScopeResolution))
-        g.add((c, RDFS.label, Literal(name)))
-        g.add((c, SKOS.definition, Literal(defn)))
-        g.add((c, CDE.localId, Literal(sid)))
-        g.add((c, CDE.nodeType, Literal("ScopeResolution")))
-        version_block(g, c, status="proposed")
-    disjoint(g, sr_classes)
 
     # ---- modalities and subspecialties
     for mid, code, label, rid in spec.MODALITIES:
@@ -530,7 +401,7 @@ def build_alpha_graph(anat):
         g.add((c, RDFS.label, Literal(label)))
         g.add((c, CDE.localId, Literal(mid)))
         g.add((c, CDE.nodeType, Literal("Modality")))
-        add_binding(g, c, rid, label, "exactMatch", primary=True, slug=code)
+        add_binding(g, c, rid, label, "exactMatch", slug=code)
         add_sct(g, c, mid, snomed.MODALITY, code)
         version_block(g, c, status="published")
     sp_uri = {}
@@ -563,8 +434,6 @@ def build_alpha_graph(anat):
             g.add((p, CDE.designNote, Literal(de["scope_note"])))
         if de.get("local_note"):
             g.add((p, CDE.designNote, Literal(de["local_note"])))
-            g.add((p, CDE.source, Literal("local")))
-            g.add((p, CDE.sourceStatus, Literal("unrequested")))
         if de.get("multi_select"):
             g.add((p, CDE.selectCardinality, Literal("multi")))
             g.add((p, CDE.designNote, Literal(de.get("cardinality_note", ""))))
@@ -596,7 +465,7 @@ def build_alpha_graph(anat):
         # thyroid gland. That is an axiom a reasoner acts on, and it says exactly what
         # the SCOPED_TO edge in the graph says.
         for rid in de.get("scoped_to", []):
-            g.add((p, RDFS.domain, some(g, CDE.scopedToRegion, ANAT[rid])))
+            g.add((p, RDFS.domain, some(g, CDE.scopedToRegion, anat_uri(rid))))
         for mcode in de.get("modality", []):
             g.add((p, RDFS.domain, some(g, CDE.seenOn, CDE[mcode])))
 
@@ -618,9 +487,6 @@ def build_alpha_graph(anat):
                 g.add((c, CDE.rank, Literal(vrank)))
             if vrid:
                 add_binding(g, c, vrid, vname, "exactMatch", slug=cn)
-            else:
-                g.add((c, CDE.source, Literal("local")))
-                g.add((c, CDE.sourceStatus, Literal("unrequested")))
             add_sct(g, c, vid, snomed.VALUES, cn)
             version_block(g, c, status="proposed")
         disjoint(g, vclasses)
@@ -676,7 +542,7 @@ def build_alpha_graph(anat):
         if ms.get("scoped_to_anatomy"):
             # normal-structure descriptor: scope on the measurement, no owning finding
             g.add((c, RDFS.subClassOf, some(g, CDE.scopedToClass,
-                                            ANAT[ms.get("scope_target", "RID478")])))
+                                            anat_uri(ms.get("scope_target", "RID478")))))
             g.add((c, CDE.designNote, Literal(
                 "Carries anatomic scope directly and belongs to no FindingClass. This is the "
                 "alternative to letting HAS_MEASUREMENT originate from an AnatomicLocation. "
@@ -696,7 +562,7 @@ def build_alpha_graph(anat):
         g.add((c, CDE.schemeVersion, Literal(a["scheme_version"])))
         g.add((c, CDE.schemeScope, Literal(a["scope"])))
         if a.get("radlex"):
-            add_binding(g, c, a["radlex"], a["name"], "exactMatch", primary=True, slug=a["cls"])
+            add_binding(g, c, a["radlex"], a["name"], "exactMatch", slug=a["cls"])
         version_block(g, c, status="proposed")
         cats = []
         for cname, crid, crank in a["categories"]:
@@ -718,9 +584,6 @@ def build_alpha_graph(anat):
         fc_uri[fc["cls"]] = CDE[fc["cls"]]
     dx_uri = {d["cls"]: CDE[d["cls"]] for d in spec.DIAGNOSES}
 
-    def anat_uri(x):
-        return ANAT[x.replace("-", "_")] if x.startswith("AL-") else ANAT[x]
-
     for fc in spec.FINDING_CLASSES:
         c = fc_uri[fc["cls"]]
         g.add((c, RDF.type, OWL.Class))
@@ -731,41 +594,33 @@ def build_alpha_graph(anat):
         g.add((c, CDE.nodeType, Literal("FindingClass")))
         g.add((c, RDFS.subClassOf, fc_uri[fc["parent"]] if fc.get("parent") else CDE.FindingClass))
         if fc.get("radlex"):
-            add_binding(g, c, fc["radlex"], fc["name"], fc.get("match", "exactMatch"),
-                        primary=True, slug=fc["cls"])
-        else:
-            g.add((c, CDE.source, Literal("local")))
-            g.add((c, CDE.sourceStatus, Literal(fc.get("source_status", "unrequested"))))
+            add_binding(g, c, fc["radlex"], fc["name"], fc.get("match", "exactMatch"), slug=fc["cls"])
         add_sct(g, c, fc["name"], snomed.FINDINGS, fc["cls"])
         add_synonyms(g, c, fc.get("synonyms"), fc.get("synonym_scope"))
         if fc.get("note"):
             g.add((c, CDE.designNote, Literal(fc["note"])))
         if fc.get("criterion"):
             g.add((c, CDE.criterion, Literal(fc["criterion"])))
-        g.add((c, CDE.anchorVerdict, Literal(fc.get("anchor_verdict", "anchored"))))
-        if fc.get("anchor_base"):
-            code, lbl = fc["anchor_base"]
-            g.add((c, CDE.anchorBase, RADLEX[code]))
-            g.add((RADLEX[code], RDFS.label, Literal(lbl)))
-        for code, lbl in fc.get("anchor_modifiers", []):
-            g.add((c, CDE.anchorModifier, RADLEX[code]))
-            g.add((RADLEX[code], RDFS.label, Literal(lbl)))
-        if fc.get("request"):
-            g.add((c, CDE.changeRequest, Literal(fc["request"])))
+        if fc.get("radlex_composition"):
+            comp = fc["radlex_composition"]
+            if comp.get("base"):
+                g.add((c, CDE.radlexCompositionBase, RADLEX[comp["base"][0]]))
+            for code, lbl in comp.get("modifiers", []):
+                g.add((c, CDE.radlexCompositionModifier, RADLEX[code]))
         if fc.get("component"):
             g.add((c, CDE.isComponent, Literal(True)))
         version_block(g, c, status="proposed")
 
-        eff_el, eff_ms, eff_mod, prov = spec.expand(fc)
+        eff_el, eff_ms, eff_mod = spec.expand(fc)
         for deid in eff_el:
             d = de_by_id[deid]
             r = some(g, d["prop"], d["domain"])
             g.add((c, RDFS.subClassOf, r))
-        # Narrowing is advisory in alpha: an annotation plus a lint rule, not an
-        # allValuesFrom axiom. Anatomy narrowing in particular is guidance, since a
-        # diagnosis draws on several regions and a hard stop would not always fit
-        # the language. Probe B3 keeps the hard form so evidence for hardening
-        # accumulates.
+        # Narrowing is advisory by default in alpha: an annotation plus a lint rule,
+        # not an allValuesFrom axiom. Probe B3_RibFractureWithChronicAcuity proves
+        # the hard form in the probes file. Promoting an authored narrow to an OWL
+        # restriction requires an explicit per-narrow hard/soft flag and generator
+        # support for flagged cases; no such flag exists in the authoring model yet.
         for deid, allowed in (fc.get("narrow") or {}).items():
             d = de_by_id[deid]
             g.add((c, CDE.narrowsTo, Literal(
@@ -782,18 +637,22 @@ def build_alpha_graph(anat):
             g.add((c, RDFS.subClassOf, some(g, CDE.inSubspecialty, sp_uri[s])))
         for target in fc.get("occurs_with", []):
             g.add((c, RDFS.subClassOf, some(g, CDE.occursWith, fc_uri[target])))
-        for target, kind_rid, kind_label in fc.get("refine_to", []):
-            # An annotation, deliberately not an axiom. The obvious axiom is
-            # allValuesFrom the kind, and it catches nothing: it is only violated if
-            # the wrong target is disjoint from the kind, and no anatomy class here is
-            # declared disjoint from any other. RadLex does not declare it and this
-            # build does not add it, so a nodule refined to the kidney stays consistent.
-            # Rather than carry an axiom that looks like a constraint and is not, the
-            # permitted set is enumerated in the compiled shape and stated here as text.
-            g.add((c, CDE.refinementKind,
-                   Literal("%s may be narrowed to any %s. NOT ENFORCED HERE: see the "
-                           "permitted_refinements list in the compiled shape for the "
-                           "closed set." % (target, kind_label))))
+        for rule in fc.get("anatomic_refinement_rules", []):
+            rule_uri = CDE[rule["id"].replace("-", "_")]
+            g.add((rule_uri, RDF.type, OWL.NamedIndividual))
+            g.add((rule_uri, RDF.type, CDE.AnatomicRefinementRule))
+            g.add((c, CDE.hasAnatomicRefinementRule, rule_uri))
+            g.add((rule_uri, CDE.refinesScope, anat_uri(rule["scope"])))
+            if rule.get("target_root"):
+                g.add((rule_uri, CDE.targetTaxonomyRoot, anat_uri(rule["target_root"])))
+                g.add((rule_uri, CDE.includeTargetRoot, Literal(bool(rule.get("include_root", False)))))
+                g.add((rule_uri, CDE.includeTargetDescendants, Literal(bool(rule.get("include_descendants", True)))))
+            for target in rule.get("allowed_targets", []):
+                g.add((rule_uri, CDE.allowedAnatomicTarget, anat_uri(target)))
+            for predicate in rule.get("allowed_predicates", []):
+                g.add((rule_uri, CDE.allowedRadLexPredicate, URIRef(predicate)))
+            if rule.get("traversal") is not None:
+                g.add((rule_uri, CDE.traversalSpecification, Literal(str(rule["traversal"]))))
         for prop, vid in fc.get("fixed", []):
             g.add((c, RDFS.subClassOf, some(g, CDE[prop], val_uri[vid])))
         for compname, strength in fc.get("components", []):
@@ -808,17 +667,12 @@ def build_alpha_graph(anat):
                                              ", ".join(m.split("-")[-1] for m in mods)))))
         for sc in fc.get("scoped_to", []):
             rid, kind, strength = sc[0], sc[1], sc[2]
-            origin = sc[3] if len(sc) > 3 else "local"
             prop = {"specific": CDE.scopedToSpecific, "region": CDE.scopedToRegion,
                     "class": CDE.scopedToClass}[kind]
             r = some(g, prop, anat_uri(rid))
             g.add((c, RDFS.subClassOf, r))
             anns = [(CDE.scopeStrength, Literal(strength)),
-                    (CDE.designNote, Literal("SCOPED_TO kind=%s" % kind)),
-                    (CDE.source, Literal(origin))]
-            if origin == "imported":
-                anns.append((CDE.designNote, Literal(
-                    "Asserted by RadLex Anatomical_Site, not authored here.")))
+                    (CDE.designNote, Literal("SCOPED_TO kind=%s" % kind))]
             annotate_axiom(g, c, RDFS.subClassOf, r, anns)
 
     # defining conditions, applied after every class exists
@@ -861,27 +715,19 @@ def build_alpha_graph(anat):
         g.add((c, CDE.nodeType, Literal("Diagnosis")))
         if dx.get("radlex"):
             add_binding(g, c, dx["radlex"], dx.get("source_label", dx["name"]),
-                        dx.get("match", "exactMatch"), primary=True, slug=dx["cls"])
-        else:
-            g.add((c, CDE.source, Literal("local")))
-            g.add((c, CDE.sourceStatus, Literal(dx.get("source_status", "unrequested"))))
-            if dx.get("request"):
-                g.add((c, CDE.changeRequest, Literal(dx["request"])))
-        add_sct(g, c, dx["name"], snomed.DIAGNOSES, dx["cls"],
-                primary=(dx["name"] in snomed.SNOMED_PRIMARY))
+                        dx.get("match", "exactMatch"), slug=dx["cls"])
+        add_sct(g, c, dx["name"], snomed.DIAGNOSES, dx["cls"])
         if dx.get("synonym_only_hit"):
             g.add((c, CDE.synonymOnlyHit, Literal(True)))
         add_synonyms(g, c, dx.get("synonyms"))
         if dx.get("note"):
             g.add((c, CDE.designNote, Literal(dx["note"])))
-        g.add((c, CDE.anchorVerdict, Literal(dx.get("anchor_verdict", "anchored"))))
-        if dx.get("anchor_base"):
-            code, lbl = dx["anchor_base"]
-            g.add((c, CDE.anchorBase, RADLEX[code]))
-            g.add((RADLEX[code], RDFS.label, Literal(lbl)))
-        for code, lbl in dx.get("anchor_modifiers", []):
-            g.add((c, CDE.anchorModifier, RADLEX[code]))
-            g.add((RADLEX[code], RDFS.label, Literal(lbl)))
+        if dx.get("radlex_composition"):
+            comp = dx["radlex_composition"]
+            if comp.get("base"):
+                g.add((c, CDE.radlexCompositionBase, RADLEX[comp["base"][0]]))
+            for code, lbl in comp.get("modifiers", []):
+                g.add((c, CDE.radlexCompositionModifier, RADLEX[code]))
         if dx.get("no_imaging_elements"):
             g.add((c, CDE.noImagingElements, Literal(True)))
         for target, typ, spec_ in dx.get("manifests_as", []):
@@ -914,52 +760,6 @@ def build_alpha_graph(anat):
             g.add((c, RDFS.subClassOf, some(g, CDE.assessedBy, as_uri[asid])))
         version_block(g, c, status="proposed")
 
-    # ---- imported facts, attached to whatever binds to the source concept
-    facts = anat.get("imported_facts", {})
-    bound_to = collections.defaultdict(list)
-    for subj, o in g.subject_objects(CDE.hasBinding):
-        code = g.value(o, CDE.bindingCode)
-        if code:
-            bound_to[str(code)].append(subj)
-    n_uns = n_src = n_def = 0
-    for rid_, f in facts.items():
-        for subj in bound_to.get(rid_, []):
-            for u_ in f.get("unsanctioned", []):
-                g.add((subj, CDE.unsanctionedTerm, Literal(u_)))
-                n_uns += 1
-            if f.get("concept_source"):
-                g.add((subj, CDE.conceptSource, Literal(f["concept_source"])))
-                n_src += 1
-            if f.get("source_definition"):
-                g.add((subj, CDE.sourceDefinition, Literal(f["source_definition"])))
-                n_def += 1
-            for rb in f.get("replaced_by", []):
-                g.add((subj, CDE.replacedBy, Literal(rb)))
-    print(f"  imported facts attached: {n_uns} unsanctioned terms, "
-          f"{n_src} source credits, {n_def} source definitions")
-
-    # ---- unresolved mentions: finding-shaped text that never became a finding
-    g.add((CDE.UnresolvedMention, RDF.type, OWL.Class))
-    g.add((CDE.UnresolvedMention, RDFS.comment, Literal(
-        "Text naming something finding-shaped that did not become a coded finding. Not a "
-        "FindingClass and disjoint from one. With no abstract genus there is no vague class "
-        "to absorb these, so they are recorded as extraction artifacts: countable, so that "
-        "underspecification can be measured, and carrying the reason, so a report that said "
-        "nothing is distinguishable from a pipeline that missed something. See D-21.")))
-    g.add((CDE.UnresolvedMention, OWL.disjointWith, CDE.FindingClass))
-    g.add((CDE.mentionTerm, RDF.type, OWL.AnnotationProperty))
-    for um in spec.UNRESOLVED_MENTIONS:
-        u = CDE[um["id"]]
-        g.add((u, RDF.type, OWL.NamedIndividual))
-        g.add((u, RDF.type, CDE.UnresolvedMention))
-        g.add((u, RDFS.label, Literal(um["id"])))
-        g.add((u, CDE.sourceText, Literal(um["source_text"])))
-        g.add((u, CDE.sourceRef, Literal(um["source_ref"])))
-        g.add((u, CDE.mentionTerm, Literal(um["term"])))
-        g.add((u, CDE.scopeResolution, sr_uri[um["scope_resolution"]]))
-        if um.get("note"):
-            g.add((u, CDE.designNote, Literal(um["note"])))
-
     # ---- worked instance examples, as individuals
     for ex in spec.INSTANCE_EXAMPLES:
         i = CDE[ex["id"]]
@@ -973,13 +773,7 @@ def build_alpha_graph(anat):
         if ex.get("asserted_note"):
             g.add((i, CDE.designNote, Literal(ex["asserted_note"])))
         if ex.get("location"):
-            loc = CDE[ex["id"] + "_site"]
-            g.add((loc, RDF.type, OWL.NamedIndividual))
-            g.add((loc, RDF.type, anat_uri(ex["location"])))
-            g.add((i, CDE.scopedToRegion, loc))
-            g.add((i, CDE.scopeResolution, sr_uri["SR-000001"]))
-        if ex.get("scope_resolution"):
-            g.add((i, CDE.scopeResolution, sr_uri[ex["scope_resolution"]]))
+            g.add((i, CDE.scopedToRegion, anat_uri(ex["location"])))
         for prop, vid in ex.get("values", {}).items():
             vi = CDE[ex["id"] + "_" + prop]
             g.add((vi, RDF.type, OWL.NamedIndividual))
@@ -1027,27 +821,34 @@ def build_alpha_graph(anat):
 
 
 if __name__ == "__main__":
-    anat = json.load(open("anatomy.json"))
-    out = "/mnt/user-data/outputs/radcde-alpha"
-    os.makedirs(out, exist_ok=True)
-    os.makedirs(out + "/rdfxml", exist_ok=True)
-
-    ga = build_anatomy_graph(anat)
-    ga.serialize(destination=f"{out}/radcde-anatomy.ttl", format="turtle")
-    ga.serialize(destination=f"{out}/rdfxml/radcde-anatomy.rdf", format="xml")
+    anat = json.load(open(Path(__file__).with_name("anatomy.json"), encoding="utf-8"))
+    root = Path(__file__).resolve().parent.parent
+    out = root
+    (out / "rdfxml").mkdir(exist_ok=True)
 
     gb, idx = build_alpha_graph(anat)
-    gb.serialize(destination=f"{out}/radcde-alpha.ttl", format="turtle")
-    gb.serialize(destination=f"{out}/rdfxml/radcde-alpha.rdf", format="xml")
+    gb.serialize(destination=str(out / "radcde-alpha.ttl"), format="turtle")
+    gb.serialize(destination=str(out / "rdfxml" / "radcde-alpha.rdf"), format="xml")
 
-    for d, ext in ((out, "ttl"), (out + "/rdfxml", "rdf")):
-        with open(f"{d}/catalog-v001.xml", "w") as f:
+    source_ref = Path(anat["source"]["path"])
+    src_path = (source_ref if source_ref.is_absolute() else root / source_ref).resolve()
+    try:
+        bundled_rel = src_path.relative_to(root)
+    except ValueError:
+        bundled_rel = None
+
+    for d, ext in ((out, "ttl"), (out / "rdfxml", "rdf")):
+        if bundled_rel is not None:
+            rel = bundled_rel if d == out else Path("..") / bundled_rel
+            radlex_catalog_uri = rel.as_posix()
+        else:
+            radlex_catalog_uri = src_path.as_uri()
+        with open(d / "catalog-v001.xml", "w", encoding="utf-8") as f:
             f.write(
                 '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n'
                 '<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">\n'
-                f'    <uri id="radcde-anatomy" name="{ONT_ANATOMY}" uri="radcde-anatomy.{ext}"/>\n'
-                f'    <uri id="radcde-alpha"   name="{ONT_ALPHA}"   uri="radcde-alpha.{ext}"/>\n'
+                f'    <uri id="radlex" name="{RADLEX_ONTOLOGY}" uri="{radlex_catalog_uri}"/>\n'
+                f'    <uri id="radcde-alpha" name="{ONT_ALPHA}" uri="radcde-alpha.{ext}"/>\n'
                 '</catalog>\n')
 
-    print("anatomy triples:", len(ga))
     print("alpha triples  :", len(gb))

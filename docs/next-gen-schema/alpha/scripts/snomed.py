@@ -6,9 +6,8 @@ None of these codes was written from memory. Every one comes from a supplied
 list or from the colleague's worked JSONL files, with his display label kept as
 `source_label` so a later release can detect an upstream relabelling.
 
-RadLex stays primary on every node. These are secondary, except where the node
-is out_of_primary_scope, in which case SNOMED is primary because RadLex should
-not be asked to carry the concept.
+These bindings coexist with other terminology bindings on the same CDE concept.
+No terminology is designated primary or secondary by this module.
 """
 
 # RID -> (code, source_label, match)
@@ -82,7 +81,6 @@ DIAGNOSES = {
     "chylothorax":                  ("83035003", "Chylothorax", "exactMatch"),
     "parapneumonic effusion":       ("81075000", "Pleural effusion associated with pulmonary infection", "exactMatch"),
     "chronic pyelonephritis":       ("63302006", "Chronic pyelonephritis", "exactMatch"),
-    # SNOMED is PRIMARY here: a clinical syndrome RadLex should not be asked to carry
     "nephrotic syndrome":           ("52254009", "Nephrotic syndrome", "exactMatch"),
 }
 
@@ -98,10 +96,6 @@ VALUES = {
     "V-000191": ("255604002", "Mild", "exactMatch"),
     "V-000192": ("6736007", "Moderate", "exactMatch"),
     "V-000193": ("24484000", "Severe", "exactMatch"),
-    "V-000300": ("7771000", "Left", "exactMatch"),
-    "V-000301": ("24028007", "Right", "exactMatch"),
-    "V-000302": ("51440002", "Right and left", "exactMatch"),
-    "V-000303": ("399488007", "Midline", "exactMatch"),
 }
 
 ETIOLOGY = {
@@ -114,5 +108,3 @@ MODALITY = {
     "MD-000004": ("278110001", "Radiographic imaging - action", "broadMatch"),
 }
 
-# Nodes where SNOMED is primary rather than secondary.
-SNOMED_PRIMARY = {"nephrotic syndrome"}

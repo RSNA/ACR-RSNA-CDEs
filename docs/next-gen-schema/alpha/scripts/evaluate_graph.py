@@ -13,20 +13,22 @@ Three groups:
 
 Deliberately NOT computed, because they would produce numbers without meaning
 here: clustering coefficient (assumes triadic closure, a definition graph has
-almost none by construction), betweenness and eigenvector centrality (dominated
-by the anatomy root, which is an artifact of import depth rather than a fact
-about the model), diameter (on a mostly-tree hierarchy this is just depth),
-assortativity, PageRank. Each is a well-defined number on this graph and none of
-them would tell you anything you could act on.
+almost none by construction), betweenness and eigenvector centrality/PageRank
+(rank connectivity or authority rather than semantic correctness), diameter
+(on a mostly-tree hierarchy this is largely a depth proxy), and assortativity.
+Each is a well-defined number on this graph and none would tell you anything you
+could act on about the definition semantics.
 
 Exit code is non-zero if any invariant fails, so it can gate a build.
 """
 import json, sys, collections, datetime
 import networkx as nx
+from pathlib import Path
+from radlex_config import RADLEX_NS
+from radlex_index import load_index, anatomy_branch
 
-OUT = "/mnt/user-data/outputs/radcde-alpha"
-HIER = {"SUBTYPE_OF", "IS_A"}
-MEREO = {"PART_OF"}
+OUT = str(Path(__file__).resolve().parent.parent)
+HIER = {"SUBTYPE_OF"}
 
 results = []
 
@@ -56,12 +58,11 @@ def structure(g, G):
     #
     # VOCABULARY types exist to be referenced. An unreferenced etiology or
     # subspecialty is unused vocabulary, which is worth reporting and is not
-    # broken. ScopeResolution is referenced only by instances, which live in the
-    # OWL, so it is always unreferenced here.
+    # broken.
     #
     # STRUCTURAL types have to hang off something. A Measurement or FindingClass
     # nothing points at is either unfinished or dead, and is a defect.
-    VOCAB = {"Etiology", "Modality", "Subspecialty", "AssessmentScheme", "ScopeResolution"}
+    VOCAB = {"Etiology", "Modality", "Subspecialty", "AssessmentScheme"}
     orphans = [n for n in G if G.degree(n) == 0]
     structural = [n for n in orphans if nt.get(n) not in VOCAB]
     vocab = [n for n in orphans if nt.get(n) in VOCAB]
@@ -81,28 +82,37 @@ def structure(g, G):
             record("STRUCTURE", "  detached", len(c),
                    note=", ".join(f"{name.get(x)} [{nt.get(x)}]" for x in list(c)[:5]))
 
-    # cycles in a taxonomy or partonomy are always bugs
-    for label, keep in [("taxonomy (SUBTYPE_OF, IS_A)", HIER), ("partonomy (PART_OF)", MEREO)]:
-        H = nx.DiGraph()
-        H.add_nodes_from(G.nodes)
-        for u, v, d in G.edges(data=True):
-            if d["edge"] in keep:
-                H.add_edge(u, v)
-        try:
-            cyc = list(nx.find_cycle(H, orientation="original"))
-        except nx.NetworkXNoCycle:
-            cyc = []
-        record("STRUCTURE", f"cycles in {label}", len(cyc), ok=(len(cyc) == 0),
-               note=" -> ".join(name.get(u, u) for u, v, _ in cyc[:5]))
-        if not cyc and H.number_of_edges():
-            depth = 0
-            roots = [n for n in H if H.out_degree(n) == 0 and H.in_degree(n) > 0]
-            for n in H:
-                if H.out_degree(n) and H.in_degree(n) == 0:
-                    for r in roots:
-                        if nx.has_path(H, n, r):
-                            depth = max(depth, nx.shortest_path_length(H, n, r))
-            record("STRUCTURE", f"max depth, {label}", depth)
+    # CDE subtype cycles are definition-graph defects.
+    H = nx.DiGraph()
+    for u, v, d in G.edges(data=True):
+        if d["edge"] in HIER:
+            H.add_edge(u, v)
+    cycles = list(nx.simple_cycles(H))
+    record("STRUCTURE", "cycles in CDE subtype taxonomy", len(cycles),
+           ok=(len(cycles) == 0),
+           note=(" -> ".join(name.get(x, x) for x in cycles[0][:6]) if cycles else ""))
+    if not cycles and H.number_of_edges():
+        record("STRUCTURE", "edges in CDE subtype taxonomy", H.number_of_edges())
+
+    # Native RadLex structure is evaluated from the upstream index rather than
+    # from copied nodes or edges in the CDE definition graph.
+    try:
+        ai = load_index()
+        branch = anatomy_branch(ai)
+        RH = nx.DiGraph()
+        for e in ai.get("taxonomy", []):
+            if e.get("from") in branch and e.get("to") in branch:
+                RH.add_edge(e["from"], e["to"])
+        rcycles = list(nx.simple_cycles(RH))
+        record("UPSTREAM", "cycles in native RadLex anatomy taxonomy", len(rcycles),
+               note=(" -> ".join(rcycles[0][:6]) if rcycles else ""))
+        preds = collections.Counter(
+            r["predicate"] for r in ai.get("relationships", [])
+            if r.get("from") in branch and r.get("to") in branch)
+        record("UPSTREAM", "native RadLex anatomy predicates", len(preds),
+               note=", ".join(f"{k.rsplit('/',1)[-1]}={v}" for k,v in preds.most_common(8)))
+    except Exception as ex:
+        record("UPSTREAM", "native RadLex anatomy predicates", "not computed", note=str(ex))
 
     # tangledness: nodes with more than one parent
     tang = collections.Counter()
@@ -217,18 +227,54 @@ def invariants(g, G):
     record("INVARIANTS", "diagnoses with no route to a finding", len(stranded),
            ok=(len(stranded) == 0), note=", ".join(name.get(x) for x in list(stranded)[:5]))
 
-    # anchor verdict present on every finding and diagnosis
-    missing = [n for n in fcs | dxs if not G.nodes[n].get("anchor_verdict")]
-    record("INVARIANTS", "nodes missing an anchor verdict", len(missing),
-           ok=(len(missing) == 0), note=", ".join(name.get(x) for x in missing[:5]))
 
-    # every reified edge carries an id and a version
-    unreified_ok = {"IS_A", "PART_OF", "CONTAINED_IN"}
-    noid = [e["edge"] for e in g["edges"]
-            if e["edge"] not in unreified_ok and not e.get("id")]
-    record("INVARIANTS", "authored edges without an id", len(noid),
+    # Every canonical edge is CDE-authored and addressable. Native RadLex
+    # anatomy-to-anatomy assertions belong in the RadLex-derived index.
+    noid = [e["edge"] for e in g["edges"] if not e.get("id")]
+    record("INVARIANTS", "canonical edges without an id", len(noid),
            ok=(len(noid) == 0), note=str(collections.Counter(noid).most_common(3)))
+    anatomy_ids = {n["id"] for n in g["nodes"] if n.get("node") == "AnatomicLocation"}
+    copied_native = [e for e in g["edges"]
+                     if e["from"] in anatomy_ids and e["to"] in anatomy_ids]
+    record("INVARIANTS", "native RadLex anatomy edges copied into definition graph",
+           len(copied_native), ok=(len(copied_native) == 0))
 
+
+    # Anatomic refinement rules validate each control independently.
+    ai = load_index()
+    props = ai.get("object_properties", {})
+    anatomy = anatomy_branch(ai)
+    rules = [n for n in g["nodes"] if n.get("node") == "AnatomicRefinementRule"]
+    bad_pred=[]; bad_target=[]; bad_traversal=[]
+    for r in rules:
+        for p in r.get("allowed_predicates", []):
+            if p not in props or not p.startswith(RADLEX_NS):
+                bad_pred.append((r["id"], p))
+        exact_targets = r.get("allowed_targets", [])
+        for target in exact_targets:
+            if target not in anatomy:
+                bad_target.append((r["id"], {"allowed_target": target}))
+        tc = r.get("target_constraint")
+        if tc is not None:
+            root = tc.get("root")
+            if tc.get("type") != "radlex_taxonomy" or root not in anatomy:
+                bad_target.append((r["id"], tc))
+        if not exact_targets and tc is None:
+            bad_target.append((r["id"], {"reason": "no target set"}))
+        if r.get("allowed_predicates") and r.get("traversal") is None:
+            bad_traversal.append(r["id"])
+    record("INVARIANTS", "refinement rules with invalid native predicates", len(bad_pred),
+           ok=(not bad_pred), note=str(bad_pred[:3]))
+    record("INVARIANTS", "refinement rules with invalid target constraints", len(bad_target),
+           ok=(not bad_target), note=str(bad_target[:3]))
+    record("INVARIANTS", "predicate-bearing refinement rules without explicit traversal", len(bad_traversal),
+           ok=(not bad_traversal), note=", ".join(bad_traversal[:5]))
+
+    # Native RadLex object-property metadata belongs to the RadLex-derived index,
+    # not the canonical CDE definition graph.
+    duplicated_meta = "radlex_object_properties" in g
+    record("INVARIANTS", "RadLex property metadata duplicated into definition graph",
+           1 if duplicated_meta else 0, ok=(not duplicated_meta))
 
 def owl_agreement(g, G):
     """The OWL and the graph are built from one source and must agree.
@@ -251,8 +297,7 @@ def owl_agreement(g, G):
         record("STRUCTURE", "OWL agreement", "skipped", note="radcde-alpha.ttl not present")
         return
     o = RG().parse(path, format="turtle")
-    NEVER = {"Value", "Subspecialty", "Modality", "AssessmentScheme", "Etiology",
-             "ScopeResolution"}
+    NEVER = {"Value", "Subspecialty", "Modality", "AssessmentScheme", "Etiology"}
     bad = []
     for s_, _, obj in o.triples((None, RDFS.subClassOf, None)):
         if not isinstance(obj, BNode):
@@ -268,41 +313,17 @@ def owl_agreement(g, G):
 
 
 def upstream(g, G):
-    """The relationship with the source vocabulary, rather than the state of our graph.
-
-    Two kinds of change request. A NODE request asks for a concept that does not
-    exist upstream. An EDGE request asks for a relationship between two concepts
-    that both already exist. They are counted separately because they are different
-    submissions and are satisfied by different upstream changes.
-    """
-    nt = nx.get_node_attributes(G, "node")
-    name = nx.get_node_attributes(G, "name")
-
-    av = collections.Counter(n.get("anchor_verdict") for n in g["nodes"]
-                             if n["node"] in ("FindingClass", "Diagnosis"))
-    for v in ("anchored", "post_coordinated", "structurally_expressed",
-              "unanchored_requestable", "out_of_primary_scope"):
-        record("UPSTREAM", f"anchor: {v}", av.get(v, 0))
-
-    node_reqs = sorted({n["request"] for n in g["nodes"] if n.get("request")})
-    edge_reqs = sorted({e["props"]["request"] for e in g["edges"]
-                        if e.get("props", {}).get("request")})
-    record("UPSTREAM", "change requests, concepts", len(node_reqs),
-           note=", ".join(node_reqs))
-    record("UPSTREAM", "change requests, relationships", len(edge_reqs),
-           note=", ".join(edge_reqs))
-    record("UPSTREAM", "change requests, total", len(set(node_reqs) | set(edge_reqs)),
-           note="a request reused on both a node and the edge that places it counts once")
-
+    """Summarize terminology bindings and RadLex compositions without ranking systems."""
     dual = sum(1 for n in g["nodes"] if len({b["system"] for b in n.get("bindings", [])}) > 1)
-    anchored = sum(1 for n in g["nodes"] if n.get("bindings"))
-    record("UPSTREAM", "nodes with any binding", anchored,
+    bound = sum(1 for n in g["nodes"] if n.get("bindings"))
+    composed = sum(1 for n in g["nodes"] if n.get("radlex_composition"))
+    record("UPSTREAM", "nodes with any terminology binding", bound,
            note=f"of {len(g['nodes'])}")
-    record("UPSTREAM", "nodes bound to more than one system", dual)
+    record("UPSTREAM", "nodes bound to more than one terminology", dual)
+    record("UPSTREAM", "nodes with RadLex composition", composed)
     sysc = collections.Counter(b["system"] for n in g["nodes"] for b in n.get("bindings", []))
     for k, v in sorted(sysc.items()):
         record("UPSTREAM", f"bindings: {k}", v)
-
 
 def smells(g, G):
     """Not failures. Things worth a look."""
@@ -333,17 +354,15 @@ GROUP_INTRO = {
                   "definition layer.",
     "RICHNESS":   "OntoQA-style. Comparable across releases rather than meaningful in "
                   "isolation: watch the direction of travel, not the value.",
-    "UPSTREAM":   "The relationship with the source vocabulary rather than the state of this "
-                  "graph. Change requests are counted in two kinds: a concept request asks for "
-                  "something that does not exist upstream, an edge request asks for a "
-                  "relationship between two concepts that both already do.",
+    "UPSTREAM":   "Terminology coverage of the graph. Binding systems are reported without "
+                  "assigning primary or secondary status, and RadLex composition is counted separately.",
     "SMELLS":     "Not failures. Things worth a look.",
 }
 
 NOT_COMPUTED = [
     ("clustering coefficient", "assumes triadic closure; a definition graph has almost none by construction"),
-    ("betweenness centrality", "dominated by the anatomy root, which reflects import depth"),
-    ("eigenvector centrality / PageRank", "same, and there is no notion of authority here to rank"),
+    ("betweenness centrality", "ranks bridge position, not semantic correctness in this definition graph"),
+    ("eigenvector centrality / PageRank", "rank connectivity or authority, neither of which is a modeling goal here"),
     ("diameter", "on a mostly-tree hierarchy this is just depth, already reported"),
     ("assortativity", "degree correlation between node types is an artifact of the schema, not a property of the content"),
 ]
@@ -371,8 +390,8 @@ def history():
 
 
 TRACKED = ["nodes", "edges", "structural orphans", "weakly connected components",
-           "change requests, total", "change requests, concepts",
-           "change requests, relationships", "anchor: unanchored_requestable",
+           "nodes with any terminology binding", "nodes bound to more than one terminology",
+           "nodes with RadLex composition",
            "relationship richness", "attribute richness", "inheritance richness",
            "element reuse", "duplicated value labels", "findings no diagnosis points at"]
 
@@ -441,9 +460,8 @@ def write_md(failed):
     runs = sorted(f[:-3] for f in os.listdir(f"{OUT}/evaluation")
                   if f.endswith(".md") and f != "README.md")
     idx = ["# Evaluation runs", "",
-           "One file per run of `scripts/evaluate_graph.py`. The richness numbers are",
-           "comparable across releases rather than meaningful in isolation, so the series",
-           "is the point. Each run carries a trend table of the last few.", "",
+           "One file per run of `scripts/evaluate_graph.py`. The current run is the",
+           "baseline for this graph architecture; later runs can be compared against it.", "",
            "| Run | Invariants |", "|---|---|"]
     for r in runs:
         body = open(f"{OUT}/evaluation/{r}.md").read()

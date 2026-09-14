@@ -8,14 +8,16 @@ records other names or framings in circulation for the same object, including
 rows where one side is empty because the concept exists on one side only.
 
 Sibling documents:
-  README.md     how to load and run it
-  DECISIONS.md  why it is shaped this way, what it costs, what would overturn it
-  SHAPE.md      what it is and what it reaches            <- this generator
+  README.md       how to load and run it
+  MECHANISMS.md   what each mechanism does and why
+  SHAPE.md        what it is and what it reaches            <- this generator
 """
 import json, collections, datetime, sys
 import spec
+from pathlib import Path
+from radlex_config import RADLEX_NS, RADLEX_VERSION
 
-OUT = "/mnt/user-data/outputs/radcde-alpha"
+OUT = str(Path(__file__).resolve().parent.parent)
 
 NODE_GLOSS = {
     "FindingClass":     ("A discrete observable entity. What a radiologist reports seeing.", ""),
@@ -23,10 +25,10 @@ NODE_GLOSS = {
     "DataElement":      ("A named attribute with a closed list of permitted answers.", "Element"),
     "Value":            ("One coded permissible answer. Belongs to exactly one DataElement.", ""),
     "Measurement":      ("A quantitative attribute carrying its own method and units.", "quantitative DataElement"),
-    "AnatomicLocation": ("A place: organ, space, region or structure.", "Anatomy"),
+    "AnatomicLocation": ("A CDE role occupied by native RadLex anatomy concepts.", "Anatomy"),
+    "AnatomicRefinementRule": ("An explicit rule separating eligible anatomy targets, permitted native RadLex predicates, and traversal behavior.", ""),
     "AssessmentScheme": ("A named scheme with an issuing authority and its own version clock.", "Assessment"),
     "Etiology":         ("A kind of cause. Target for HAS_ETIOLOGY.", ""),
-    "ScopeResolution":  ("Why a mention carries no anatomic scope.", ""),
     "Modality":         ("An imaging technique.", ""),
     "Subspecialty":     ("A radiology subspecialty.", ""),
 }
@@ -48,19 +50,20 @@ EDGE_GLOSS = {
     "SUBTYPE_OF":               ("Taxonomy, more to less specific. Strict monotonic inheritance.", "HAS_SUBTYPE (inverse)"),
     "HAS_DATA_ELEMENT":         ("Applies an element. May narrow the permitted values, never widen them.", "HAS_ELEMENT"),
     "HAS_VALUE":                ("Binds a Value to its owning DataElement. Exactly one per Value.", "member"),
-    "HAS_VALUE_CONSTRAINT":     ("Fixes an element to one value as a defining condition.", ""),
+    "HAS_VALUE_CONSTRAINT":     ("Fixes an applicable DataElement to one Value on a FindingClass. The `defining` property distinguishes a necessary fixed value from one participating in a necessary-and-sufficient class definition.", ""),
     "HAS_MEASUREMENT":          ("Applies a Measurement.", ""),
     "HAS_MEASUREMENT_COMPONENT":("Relates a composite Measurement to its parts.", ""),
     "DERIVED_FROM_MEASUREMENT": ("Relates a computed Measurement to its inputs.", ""),
     "HAS_COMPONENT":            ("The whole must have this sub-part.", "MAY_HAVE_COMPONENT"),
     "COMPONENT_OF":             ("This sub-part belongs only to that whole; says nothing about whether the whole has one.", "MAY_BE_COMPONENT_OF"),
-    "SCOPED_TO":                ("Anatomic scope. `kind` says which relation a congruence check walks.", "IN_REGION"),
-    "REFINES_SCOPE_TO":         ("Where a scope may be narrowed on a particular observation. Derived by walking the anatomy for the kind the class declares, never authored.", ""),
-    "IS_A":                     ("Taxonomic, within anatomy. Imported, unreified.", ""),
-    "PART_OF":                  ("Mereological, within anatomy. Transitive, inference-bearing.", ""),
+    "SCOPED_TO":                ("Anatomic scope. `kind` records an authored scope category and does not select a RadLex predicate or traversal.", "IN_REGION"),
+    "HAS_ANATOMIC_REFINEMENT_RULE": ("Links a definition to an explicit anatomic refinement rule.", ""),
+    "REFINES_SCOPE":            ("Identifies which authored scope entry a refinement rule narrows.", ""),
+    "TARGET_TAXONOMY_ROOT":     ("Names a native RadLex taxonomy root used only to define eligible target concepts.", ""),
+    "ALLOWED_ANATOMIC_TARGET":  ("Names one exact native RadLex concept permitted as a refinement target.", ""),
     "MAY_MANIFEST_AS":          ("Evidential. The diagnosis can show itself as the target.", "MAY_REPRESENT (inverse)"),
     "MAY_CAUSE":                ("Causal. The source produces the target as a distinct second entity.", "MAY_BE_CAUSED_BY (inverse)"),
-    "MAY_PROGRESS_TO":          ("Temporal. Identity-preserving evolution. Proposed, not adopted.", "MAY_PROGRESS_FROM (inverse)"),
+    "MAY_PROGRESS_TO":          ("Temporal. Authored progression from one Diagnosis to another.", "MAY_PROGRESS_FROM (inverse)"),
     "OCCURS_WITH":              ("Symmetric, between two findings or two diagnoses. Seen together; asserts nothing about cause or sequence. Stored once; a consumer must read the flag to traverse it backwards.", ""),
     "HAS_ETIOLOGY":             ("The kind of cause behind a definition.", ""),
     "ASSESSED_BY":              ("A standardized scheme applies to the source.", "ASSESSES (inverse)"),
@@ -70,7 +73,7 @@ EDGE_GLOSS = {
 
 EDGE_NOT_ADOPTED = [
     ("IN_REGION", "Coarse body region, authored alongside SCOPED_TO.",
-     "Not adopted. The region is derived by walking containment upward from the scope target."),
+     "Not adopted. Native RadLex relationships remain available from the scope target under their exact native predicates; no second regional assertion is authored."),
     ("MAY_BE_RELATED_TO", "Symmetric catch-all for an association not yet typed.",
      "Declared, unused. A triage queue, not a home."),
     ("INTERPRETED_FROM", "Relates an interpretation to what it was read from.",
@@ -82,13 +85,11 @@ PROP_GLOSS = {
     "narrow": "The subset of values permitted here. Advisory in alpha.",
     "modality": "Restricts an element to some of the modalities the finding is seen on.",
     "rank": "Position in an ordered value list. On every value of an element or on none.",
-    "kind": "specific, region or class. Which relation a congruence check walks.",
-    "of_scope": "Which scope entry a refinement narrows.",
-    "derived": "True where the edge was computed from a declared kind rather than authored.",
+    "kind": "specific, region or class. Records the authored scope category; it does not select a native RadLex predicate or traversal policy.",
+    "include_root": "Whether a taxonomy root itself is an eligible target.",
+    "include_descendants": "Whether native taxonomy descendants are eligible targets.",
     "strength": "required, expected or unconstrained. How binding the claim is.",
     "defining": "True where the edge is a necessary and sufficient condition.",
-    "sense": "Which RadLex partonomy relation the edge was imported from.",
-    "family": "mereology or location. Which traversal the anatomy edge belongs to.",
     "inheritance": "strict. A subtype carries everything its parent carries.",
     "typicality": "occasional, frequent, very_frequent, obligate. Reads forward: how often the source shows the target.",
     "specificity": "suggestive, highly_suggestive, pathognomonic. Reads backward: how much seeing it narrows the differential.",
@@ -96,13 +97,12 @@ PROP_GLOSS = {
     "reading": "evidential or inferential. What kind of claim the edge makes.",
     "symmetric": "True where the edge asserts the same thing both ways.",
     "direction": "required_on_whole or necessary_on_component. Which way a conditional runs.",
-    "generated_from_pattern": "The authoring pattern that supplied this edge.",
     "element": "Which DataElement a fixed value belongs to.",
-    "source": "imported or local.",
-    "source_status": "Relationship of a local object to the source terminology.",
+    "source": "Native source provenance for imported RadLex material.",
     "source_version": "Release the edge was imported from.",
+    "source_form": "Native RadLex source expression for an imported taxonomy assertion.",
+    "forms": "Native RDF/OWL source expression forms that asserted the same RadLex relationship.",
     "system": "Terminology the edge came from.",
-    "request": "External change-request reference.",
     "inference_bearing": "False where software must not draw conclusions from the edge.",
 }
 
@@ -119,13 +119,11 @@ COVERAGE = [
     ("Anatomic variant, explicitly not disease", "yes", "AzygosFissure."),
     ("Anatomic scope at any granularity", "yes", "SCOPED_TO with kind specific, region or class."),
     ("Sub-organ position, as 'in the right upper lobe'", "yes",
-     "REFINES_SCOPE_TO. The class declares which kind of anatomy may narrow its scope and the "
-     "permitted concepts are derived from it. Sided and unsided forms are both permitted, so "
-     "'the right upper lobe' and 'the upper lobe' both resolve. The closed set is in the "
-     "compiled shape; no reasoner enforces it, because no anatomy class here is declared "
-     "disjoint from any other."),
-    ("Body region for filtering", "yes", "Derived, not authored."),
-    ("Laterality of a finding", "yes", "DE-000031, declared per class. RadLex has no laterality property and sidedness is not derivable from its structure, so this is an authoring decision."),
+     "AnatomicRefinementRule. Eligible target concepts are defined independently from any "
+     "native RadLex predicate or traversal behavior. The pulmonary-nodule rule currently "
+     "uses the lobe-of-lung taxonomy target set and deliberately authors no predicate."),
+    ("Body region for filtering", "yes", "Available from native RadLex context; not authored as a separate CDE region edge."),
+    ("Sidedness of a finding", "yes", "Carried by the resolved native RadLex anatomy when a sided concept is available. No separate CDE side element or local fallback is authored."),
     ("Side as a field separate from the structure", "no", "Scope points at the pre-coordinated concept. Asking for 'lung' and 'left' separately is not supported."),
     ("Interval change against a prior", "yes", "DE-000015. Coarse: new, unchanged, increased, decreased."),
     ("Quantitative measurement with method", "yes", "13 Measurement nodes carrying units and method."),
@@ -141,7 +139,7 @@ COVERAGE = [
      "Nothing represents a procedure, so a finding attributable to one cannot name which, and "
      "there is nothing against which to judge whether an appearance is expected."),
     ("Diagnosis from several findings together", "partial", "Every edge is binary. specificity grades each finding, but nothing says a conjunction is stronger than any member. See section 7, pyelonephritis."),
-    ("Identity-preserving progression", "partial", "MAY_PROGRESS_TO proposed and unadopted; unusable atemporally where the endpoints are disjoint."),
+    ("Identity-preserving progression", "partial", "MAY_PROGRESS_TO is authored for explicit progression pairs, but the ontology does not infer temporal identity beyond the stated relationship."),
     ("Acute versus chronic", "partial", "As a temporal-descriptor value on one class, or as separate classes. Both appear; no rule decides which."),
     ("Two encodings of one criterion", "partial", "CarotidStenosis carries an ordinal and a percentage. Nothing relates them."),
     ("Negation of a named finding", "yes",
@@ -160,7 +158,7 @@ COVERAGE = [
      "and called scattered or miliary. Neither is supplied by the other patterns, so a rib "
      "fracture has neither. And a count says how many, not which ones, and cannot attach an "
      "attribute to one member. See section 7, rib fractures."),
-    ("Bilateral as one instance or two", "no", "A laterality value exists; what it means for instance identity does not."),
+    ("Bilateral involvement as one instance or two", "no", "Native sided anatomy can identify the involved structures, but instance identity and plurality remain unresolved."),
     ("Certainty and hedging", "partial",
      "`presence: indeterminate` covers one band: the data do not permit calling the finding "
      "present or absent. It says nothing about confidence in a diagnosis, so 'concerning for "
@@ -174,17 +172,29 @@ COVERAGE = [
 OPEN = [
     ("What the subject of a statement is: one lesion, several, a cluster, innumerable", "Section 7, rib fractures"),
     ("How a category of findings is negated, and how remainder negation works", "Coverage, not representable"),
-    ("Whether a bilateral finding is one instance or two", "DE-000031, value `bilateral`"),
+    ("Whether bilateral involvement is one finding instance or two", "Plurality and instance identity"),
     ("How a conjunction of findings supports a diagnosis more than any member", "Section 7, pyelonephritis"),
     ("Whether acute/chronic is a value or a subtype, and what decides", "IntracranialHemorrhage vs ChronicPyelonephritis"),
     ("How two encodings of one criterion relate", "CarotidStenosis: ordinal and percentage"),
-    ("Whether MAY_PROGRESS_TO is adopted, and under which reading", "probes C1 to C3"),
     ("Whether `specificity` earns its place or is over-engineering", "35 MAY_MANIFEST_AS edges"),
     ("Where a procedure lives, so a post-procedural finding has something to be expected against", "Coverage, not representable"),
     ("Whether narrowing hardens from annotation to axiom", "probe B3"),
     ("Whether elements can be shared with narrowed values where meaning is stable", "8 duplicated value labels"),
 ]
 
+
+
+RDFS_SUBCLASS = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+def edge_gloss(k):
+    if k in EDGE_GLOSS: return EDGE_GLOSS[k]
+    if k == RDFS_SUBCLASS: return ("Native RadLex taxonomy relationship (rdfs:subClassOf).", "")
+    if k.startswith(RADLEX_NS): return ("Native RadLex object-property relationship; predicate identity is preserved.", "")
+    return ("Relationship emitted by the current definition graph.", "")
+
+def edge_display(k):
+    if k == RDFS_SUBCLASS: return "rdfs:subClassOf"
+    if k.startswith(RADLEX_NS): return "RadLex:" + k.rsplit("/",1)[-1]
+    return k
 
 def main():
     g = json.load(open(f"{OUT}/graph/definition-graph.json"))
@@ -200,9 +210,11 @@ def main():
 
     errs = [f"gloss for absent node type '{k}'" for k in NODE_GLOSS if k not in byt]
     errs += [f"node type '{k}' has no gloss" for k in byt if k not in NODE_GLOSS]
-    et = {e["edge"] for e in edges}
-    errs += [f"gloss for absent edge '{k}'" for k in EDGE_GLOSS if k not in et]
-    errs += [f"edge '{k}' has no gloss" for k in et if k not in EDGE_GLOSS]
+    cde_edges = [e for e in edges if e["edge"] != RDFS_SUBCLASS and not e["edge"].startswith(RADLEX_NS)]
+    et = {e["edge"] for e in cde_edges}
+    optional_edges = {"ALLOWED_ANATOMIC_TARGET"}
+    errs += [f"gloss for absent edge '{k}'" for k in EDGE_GLOSS if k not in et and k not in optional_edges]
+    errs += [f"edge '{k}' has no gloss" for k in et if k not in EDGE_GLOSS and k != RDFS_SUBCLASS and not k.startswith(RADLEX_NS)]
     if errs:
         print("aborted:")
         for e in errs:
@@ -264,10 +276,12 @@ def main():
         "  FC -->|HAS_DATA_ELEMENT| DE",
         "  DX -->|HAS_DATA_ELEMENT| DE",
         "  DE -->|HAS_VALUE| V",
+        "  FC -->|HAS_VALUE_CONSTRAINT| V",
         "  FC -->|HAS_MEASUREMENT| MS",
         "  MS -->|HAS_MEASUREMENT_COMPONENT| MS",
         "  FC -->|SCOPED_TO| AL",
-        "  AL -->|PART_OF / IS_A / CONTAINED_IN| AL",
+        "  FC -->|HAS_ANATOMIC_REFINEMENT_RULE| RR[AnatomicRefinementRule]",
+        "  RR -->|REFINES_SCOPE / TARGET_TAXONOMY_ROOT| AL",
         "  FC -->|ASSESSED_BY| AS",
         "  FC -->|SEEN_ON| MD",
         "  FC -->|IN_SUBSPECIALTY| SP",
@@ -279,8 +293,8 @@ def main():
     w("")
     w("Edge properties are omitted here; they are listed in full under Edges. Thick borders")
     w("are the two node types the model is about. The dashed one is imported")
-    w("rather than authored. Body region is deliberately not an edge: it is derived by")
-    w("walking `PART_OF` and `CONTAINED_IN` upward from the `SCOPED_TO` target.")
+    w("rather than authored. Native RadLex relationships are documented separately in")
+    w("`RADLEX-SHAPE.md`; they are not CDE-defined edges and are never flattened into CDE proxies.")
     w("")
 
     # 3 nodes
@@ -302,7 +316,7 @@ def main():
     w("## 4. Edges")
     w("")
     sig = collections.defaultdict(lambda: [collections.Counter(), collections.Counter()])
-    for e in edges:
+    for e in cde_edges:
         sig[e["edge"]][0][(nt.get(e["from"], "?"), nt.get(e["to"], "?"))] += 1
         for k, v in e.get("props", {}).items():
             if v is not None:
@@ -314,19 +328,31 @@ def main():
     w("|---|---|---:|---|---|")
     for k in sorted(sig):
         pairs, props = sig[k]
-        gl, alt = EDGE_GLOSS[k]
+        gl, alt = edge_gloss(k)
         s_ = "<br>".join(f"`{a}`→`{b}`" for a, b in sorted(pairs))
         p_ = ", ".join(f"`{x}`" for x in sorted(props)) or "—"
         w(f"| **{k}** | {s_} | {sum(pairs.values())} | {p_} | {alt or '—'} |")
     w("")
     for k in sorted(sig):
-        w(f"- **{k}** — {EDGE_GLOSS[k][0]}")
+        w(f"- **{edge_display(k)}** — {edge_gloss(k)[0]}")
     w("")
     w("| Considered, not in the graph | Would be | Status |")
     w("|---|---|---|")
     for n_, d_, s_ in EDGE_NOT_ADOPTED:
         w(f"| `{n_}` | {d_} | {s_} |")
     w("")
+    w("### HAS_VALUE_CONSTRAINT examples")
+    w("")
+    w("`HAS_VALUE_CONSTRAINT` represents a model assertion that one applicable DataElement is fixed to one Value for a FindingClass. The edge points directly to that Value and its `element` property identifies the DataElement property being fixed. Whether a particular clinical assertion is sufficiently established to use this mechanism is a separate modeling decision.")
+    w("")
+    w("Two current patterns make the distinction explicit:")
+    w("")
+    w("- **Pulmonary nodule attenuation.** `SolidPulmonaryNodule`, `PartSolidPulmonaryNodule`, and `NonSolidPulmonaryNodule` constrain the inherited attenuation axis to solid, part-solid, and non-solid respectively. These constraints are `defining=true` because they participate in the defined subtype equivalence.")
+    w("- **Intracranial haemorrhage collection shape, provisional mechanism test.** The current alpha models `EpiduralHematoma` with biconvex, `SubduralHematoma` with crescentic, and `SubarachnoidHemorrhage` with conforming as `defining=false` fixed constraints. `IntraventricularHemorrhage` and `IntraparenchymalHemorrhage` instead provisionally narrow the inherited value set to conforming or rounded. This division is intentionally being used to exercise the difference between a fixed value and an open narrow. It has **not been validated by a radiologist** and must not be read as an authoritative clinical partition; the final assignments may change after clinical review.")
+    w("")
+    w("When the model uses a fixed constraint, that element is omitted from the class's compiled/presented element choices, even when the DataElement is inherited from its parent. The modeled constraint remains in the definition graph and OWL. In the haemorrhage example, this behavior is being tested provisionally and does not imply clinical validation of the assignments.")
+    w("")
+
     w("### Edge properties")
     w("")
     w("| Property | Meaning |")
@@ -336,33 +362,40 @@ def main():
     w("")
     reified = sum(1 for e in edges if e.get("id"))
     w(f"{reified} of {len(edges)} edges carry an id and a version block, so a relationship can")
-    w("change without either endpoint changing. The rest are imported anatomy relations,")
-    w("which re-import regenerates.")
+    w("change without either endpoint changing. Native RadLex anatomy relations are not copied")
+    w("into the canonical definition graph; they remain in the RadLex-derived index.")
     w("")
 
     # 5 patterns
     w("## 5. Authoring patterns")
     w("")
-    w("Not nodes, not elements, and in no artifact. A pattern lists the **topics** a kind of")
-    w("finding is usually described by. It names no DataElement and inserts nothing: an author")
-    w("sees the topics as a checklist and then chooses, per finding, whether an existing element")
-    w("genuinely fits or a new one is needed. Reuse is never forced.")
+    w("Authoring patterns are **not part of the ontology**. They are not nodes, classes, edges,")
+    w("DataElements, axioms, or compiled FindingClass content. They are optional authoring")
+    w("guidance documented here because this file also describes the authoring layer. A pattern")
+    w("lists broad topics an author may consider. It names no DataElement and inserts nothing.")
+    w("An author may use one, compose considerations through `applies_with`, or use no pattern")
+    w("when none fits. Reuse is never forced.")
     w("")
     w("| Pattern | With | Topics |")
     w("|---|---|---|")
     for pt in spec.PATTERNS:
         w(f"| `{pt['name']}` | {pt.get('applies_with') or '—'} | "
-          f"{', '.join(pt['topics'])} |")
+          f"{', '.join(pt['topics']) if pt['topics'] else 'none'} |")
     w("")
-    w("A pattern must not hold element ids and splice them into the classes that apply it.")
+    w("A pattern must not hold element ids and splice them into a FindingClass.")
     w("That forces a shared element onto classes it does not suit, and the only way to make one")
     w("fit is to widen it: a single `margin` element reaching nine values across three")
     w("societies, so that a tendon lesion can be reported as having extra-thyroidal extension.")
     w("Published elements must not move to accommodate new findings.")
     w("")
-    w("The useful part is discoverability, and it is anatomy-aware. An author scoping a finding")
-    w("to the lung should be shown lung-scoped distribution elements, not ones whose values come")
-    w("from another organ. That belongs in the authoring tool, not in the graph.")
+    w("`nodule` intentionally contributes no new topic. It uses the `focal-lesion` size topic;")
+    w("the nodule-versus-mass distinction is a size threshold on that topic, not a separate one.")
+    w("")
+    w("`applies_with` composes authoring considerations only. It does not assert subclassing,")
+    w("inheritance, or any other ontology relationship, and it does not attach DataElements.")
+    w("")
+    w("The useful part is discoverability, which may be anatomy-aware in a future authoring tool.")
+    w("That is application behavior, not ontology semantics.")
     w("")
     w("### Authoring checks")
     w("")
@@ -370,34 +403,22 @@ def main():
     w("")
     w("| Rule | Says |")
     w("|---|---|")
-    for r in spec.PATTERN_LINT:
+    for r in spec.AUTHORING_LINT:
         w(f"| `{r['rule']}` | {r['says']} |")
     w("")
     lint_out = spec.lint()
     w(f"Currently **{'clean' if not lint_out else str(len(lint_out)) + ' findings'}**.")
     w("")
 
-    # 6 anchoring
-    w("## 6. Anchoring")
+    # 6 terminology composition
+    w("## 6. Terminology bindings and RadLex composition")
     w("")
-    av = collections.Counter(n.get("anchor_verdict") for n in nodes
-                             if n["node"] in ("FindingClass", "Diagnosis"))
-    w("RadLex is the primary anchor. Multiple bindings are supported; SNOMED CT is in scope")
-    w("as a secondary. Every finding and diagnosis carries one verdict.")
+    w("Terminology bindings are peers. The model does not designate a primary or secondary terminology.")
+    w("When a CDE concept is not represented by one exact RadLex concept but can be expressed")
+    w("compositionally, `radlex_composition` records the RadLex base and modifiers explicitly.")
     w("")
-    w("| Verdict | n | Meaning | Action |")
-    w("|---|---:|---|---|")
-    for v, mn, ac in [
-        ("anchored", "one pre-coordinated RadLex concept", "bind, primary"),
-        ("post_coordinated", "head term plus modifiers, all present in RadLex", "bind compositionally, record components"),
-        ("structurally_expressed", "the distinguishing feature is already carried by an edge", "bind the base concept, no request"),
-        ("unanchored_requestable", "absent, does not decompose, within radiology scope", "local node, file a change request"),
-        ("out_of_primary_scope", "the term's nature puts it outside a radiology lexicon", "another system is primary, no request"),
-    ]:
-        w(f"| `{v}` | {av.get(v, 0)} | {mn} | {ac} |")
-    w("")
-    reqs = sorted({n["request"] for n in nodes if n.get("request")})
-    w(f"{len(reqs)} change requests outstanding.")
+    comps = [n for n in nodes if n.get("radlex_composition")]
+    w(f"{len(comps)} nodes currently carry a RadLex composition.")
     w("")
 
     # 7 traces
@@ -415,7 +436,6 @@ def main():
         w("| | |")
         w("|---|---|")
         w(f"| FindingClass | `{c['finding_id']}` {c['name']} |")
-        w(f"| Anchor | `{f.get('anchor_verdict')}` |")
         scope = ", ".join(f"{name.get(s['location'], s['location'])} ({s['kind']}/{s['strength']})"
                           for s in c["anatomic_scope"])
         w(f"| Scope | {scope or '—'} |")
@@ -433,7 +453,7 @@ def main():
     w("")
     shape_table("pulmonary nodule")
     w("Every part lands. The site is a lobe and the scope claim is against the lung, satisfied")
-    w("through two `PART_OF` steps and one subsumption step. Stating the attenuation is enough")
+    w("through explicitly authored refinement semantics. No native RadLex relationship is selected merely from a scope kind. Stating the attenuation is enough")
     w("to reach the subtype: probe `A3` asserts a pulmonary nodule with part-solid attenuation")
     w("and the reasoner returns `PartSolidPulmonaryNodule`, with no subtype asserted anywhere.")
     w("")
@@ -441,12 +461,14 @@ def main():
     w("not which diameter, and the class offers both a long-axis and a mean diameter.")
     w("")
 
-    w("### 2. A pleural effusion &nbsp;&nbsp; `HOLDS`")
+    w("### 2. A pleural effusion &nbsp;&nbsp; `HOLDS IN PART`")
     w("")
     w("> *Moderate left pleural effusion, in the setting of pneumonia.*")
     w("")
     shape_table("pleural effusion")
-    w("The non-focal case. No margin, no size, no distribution: amount and laterality instead.")
+    w("The non-focal morphology is representable, including amount. The left-sided location is")
+    w("representable only when the configured native RadLex anatomy provides an appropriate sided")
+    w("location or relationship. The CDE model does not add a side field to fill that gap.")
     w("")
     w("The pneumonia link is a **`MAY_CAUSE`**, not a `MAY_MANIFEST_AS`. Pneumonia does not show")
     w("itself as an effusion, it produces one, and the two edges exist to keep those apart.")
@@ -511,7 +533,7 @@ def main():
     w("")
     w("Three of the not-representable rows are deliberately out of scope: follow-up")
     w("recommendations, technique and clinical history. The rest — category and remainder")
-    w("negation, bilaterality, prior-study comparison — sit with the partial rows for plurality")
+    w("negation, bilateral involvement, and prior-study comparison sit with the partial rows for plurality")
     w("and certainty, because they are one problem wearing several faces: the model describes")
     w("findings and has no representation of the **statement** a radiologist makes about them.")
     w("A count can say four fractures without saying which four; a report can deny something")
@@ -530,7 +552,7 @@ def main():
     w("")
     w("Clinical content is provisional and unvalidated; ordinal scales in particular were")
     w("assembled from report language rather than a society standard. RadLex codes are")
-    w("extracted from RadLex.owl 4.3 and each is verified against its label at build time.")
+    w(f"extracted from the configured RadLex {RADLEX_VERSION} source and each is verified against its label at build time.")
 
     open(f"{OUT}/SHAPE.md", "w").write("\n".join(L) + "\n")
     print(f"SHAPE.md written: {len(L)} lines")

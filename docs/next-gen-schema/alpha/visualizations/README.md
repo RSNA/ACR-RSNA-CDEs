@@ -1,117 +1,38 @@
-# Ontology Visualizations
+# Ontology visualizations
 
-This directory contains visualizations and supporting files for exploring and illustrating the alpha ontology. It includes the Turtle export used as the source for the interactive ontology map, the script that generates that map, a hardcoded demonstration UI, and conceptual PNG illustrations of the knowledge graph structure.
-
-## Directory Structure
-
-```text
-visualizations/
-├── alpha-turtle.ttl
-├── cde-knowledge-graph-hardcoded-view.html
-├── conceptual-illustration-zoomed-findingclass.png
-├── conceptual-illustration-zoomed-out.png
-├── ontology_map.html
-├── ontology_visualizer.py
-└── README.md
-```
+This directory contains the interactive graph visualizer, a hardcoded demonstration UI, and conceptual illustrations of the knowledge-graph structure.
 
 ## Files
 
-### `alpha-turtle.ttl`
+- `ontology_visualizer.py` reads `../graph/definition-graph.json` for CDE-authored semantics, `../scripts/anatomy.json` for native RadLex display context and inverse-property metadata, and `../radcde-alpha.ttl` for formal CDE inverse declarations and generated AssessmentCategory classes, then generates `ontology_map.html`.
+- `cde-knowledge-graph-hardcoded-view.html` is a synthetic demonstration UI and is not generated from the canonical graph.
+- `conceptual-illustration-zoomed-findingclass.png` is a conceptual FindingClass-centered illustration.
+- `conceptual-illustration-zoomed-out.png` is a conceptual overview illustration.
 
-Turtle-format export of:
+## Interactive map
 
-`alpha/standalone/radcde-standalone.ttl`
+The visualizer consumes generated model artifacts rather than maintaining relationship or category vocabularies of its own. The canonical CDE definition graph supplies authored graph content, the generated RadLex anatomy index supplies native anatomy context and `inverseOf` metadata, and the generated CDE OWL supplies formal CDE `owl:inverseOf` declarations and AssessmentCategory class identities.
 
-The file is exported from Protégé and serves as the ontology source used by the visualization script.
+Anatomy nodes retain native RID identity. Native RadLex anatomy edges retain their exact predicate IRI and are marked as RadLex relationships. CDE-defined edges are marked separately. Anatomic refinement rules are CDE nodes whose tooltips expose their scope, exact target RIDs, taxonomy target set, permitted native RadLex predicates, and traversal specification independently.
 
-### `cde-knowledge-graph-hardcoded-view.html`
+The canonical graph contains only anatomy RIDs explicitly referenced by CDE definitions. For display, the visualizer joins those references to the RadLex index and adds native taxonomy ancestry plus a limited native relationship neighborhood. Projection affects display only; it does not alter predicate identity or graph semantics.
 
-Hardcoded UI containing synthetic data for demonstration purposes.
+### Interaction
 
-This file is not generated from `alpha-turtle.ttl` and does not have an associated generation script. Use `ontology_map.html` to interact with the current alpha ontology.
+Use the search box to search nodes by name or ID. Selecting a result focuses its semantic neighborhood. Double-clicking a node applies the same focus and centers it at the configured 0.32 scale. Clicking empty space returns to the full projected graph.
 
-### `conceptual-illustration-zoomed-findingclass.png`
+The **Highlight node type** controls emphasize nodes of one type and their immediate context. The toolbar provides **Reset Selection**, **Fit graph**, **Enable/Disable physics**, and **Reset focus** controls.
 
-Conceptual PNG illustration showing a zoomed-in view of the knowledge graph with a `FindingClass` as the central concept.
+Node tooltips show the node name, type, and definition. AssessmentScheme focus expands its category breakdown from generated model data; category names, ranks, bindings, and class identities are not hardcoded in the visualizer. Anatomic refinement rules additionally show each authored control separately. Native RadLex edge tooltips show the RadLex vocabulary, predicate label, and full predicate IRI.
 
-This is an explanatory illustration rather than a visualization generated from the Turtle ontology.
+When both directions of a formally declared inverse relationship are present, node focus keeps the edge whose direction leaves the selected node and suppresses only the matching reciprocal inverse. RadLex pairs are discovered from `anatomy.json`; CDE pairs are discovered from `owl:inverseOf` in `radcde-alpha.ttl`. Missing inverses are never guessed or synthesized.
 
-### `conceptual-illustration-zoomed-out.png`
+## Regeneration
 
-Conceptual PNG illustration showing a zoomed-out view of the knowledge graph structure.
-
-This is an explanatory illustration rather than a visualization generated from the Turtle ontology.
-
-### `ontology_visualizer.py`
-
-Python script that reads `alpha-turtle.ttl` and generates the interactive ontology visualization.
-
-Running the script produces `ontology_map.html`.
-
-### `ontology_map.html`
-
-Interactive visualization of the alpha ontology network generated directly from `alpha-turtle.ttl`.
-
-The map is intended as an exploratory view of the ontology rather than a separate representation of the model. It can be useful for understanding how FindingClasses, Diagnoses, DataElements, Values, Measurements, anatomy, assessment schemes, modalities, subspecialties, and other concepts connect across the network.
-
-## Using the Interactive Ontology Map
-
-Open `ontology_map.html` in a web browser.
-
-### Search
-
-Use the search box at the top of the page to search nodes by name or ID. Matching nodes appear in a dropdown as you type.
-
-Selecting a result focuses the graph on that concept and its relevant semantic neighborhood.
-
-The search results can also be navigated with the arrow keys and selected with Enter. Escape closes the search results.
-
-### Selecting a Node
-
-Click a node to focus on the relationships most relevant to that type of concept.
-
-The focus is semantic rather than simply showing every node within a fixed number of graph hops. For example:
-
-- Selecting a `FindingClass` shows its directly related findings, diagnoses, anatomy, assessments, modalities, subspecialties, DataElements, and Measurements. Values belonging to its DataElements are also included.
-- Selecting a `Diagnosis` shows its directly associated findings, diagnoses, assessments, modalities, subspecialties, and directly attached DataElements and their values.
-- Selecting a `DataElement` shows its permitted Values, the FindingClasses and Diagnoses that use it, and its direct anatomic scope when one is declared.
-- Selecting a `Value` shows its DataElement, sibling values, and the FindingClasses and Diagnoses that use that DataElement.
-- Selecting a `Measurement` shows its direct semantic relationships, including the FindingClasses or Diagnoses that use it and related Measurements.
-
-FindingClass focus may also display reusable modeling patterns and peer FindingClasses that share those patterns. These are contextual authoring information rather than ontology nodes in the generated artifacts.
-
-Double-clicking a node focuses the same semantic neighborhood and centers the selected node in the viewport.
-
-Clicking empty space returns to the full graph.
-
-### Highlight Node Type
-
-The **Highlight node type** controls in the lower-right corner provide another way to explore the ontology.
-
-Selecting a type emphasizes all nodes of that type, their incident relationships, and their immediately connected nodes. Connected nodes remain visible as context but are visually secondary.
-
-This is useful for examining where a particular kind of concept, such as DataElements, Diagnoses, Measurements, or anatomy, participates across the network without expanding every neighboring relationship.
-
-### Graph Controls
-
-The toolbar provides several controls:
-
-- **Reset Selection** clears the current search and selection and returns the visualization to the full graph.
-- **Fit graph** fits the currently visible portion of the graph into the viewport. When a focus or type highlight is active, it fits that view rather than the entire hidden network.
-- **Enable physics / Disable physics** toggles the force-directed graph simulation. Physics is disabled after the initial graph stabilization so the layout remains stable during exploration. Re-enable it if you want the network to reposition itself.
-- **Reset focus** removes the current semantic focus or node-type highlight without otherwise changing the graph.
-
-The graph itself can also be panned and zoomed normally.
-
-## Regenerating the `ontology_map` Visualization
-
-After exporting an updated `alpha-turtle.ttl`, run:
+From this directory, run:
 
 ```bash
 python3 ontology_visualizer.py
 ```
 
-The script will regenerate `ontology_map.html` using the current Turtle file.
-
-`ontology_map.html` should therefore be regenerated whenever the Turtle export changes so that the visualization remains synchronized with the current alpha.
+The script writes `ontology_map.html` beside itself. The generated HTML is a build artifact and need not be committed.

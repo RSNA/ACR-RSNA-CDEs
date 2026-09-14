@@ -14,9 +14,9 @@
    "version": {
     "number": 1,
     "status": "published",
-    "created": "2026-09-10",
+    "created": "2026-09-14",
     "published": null,
-    "last_modified": "2026-09-10",
+    "last_modified": "2026-09-14",
     "contributors": [
      {
       "id": "PERSON-000001",
@@ -24,20 +24,19 @@
       "via": "alpha-generator"
      }
     ]
-   },
-   "primary": true
+   }
   }
  ],
  "synonyms": [],
  "anatomic_scope": [
   {
-   "location": "AL-000035",
+   "location": "RID1303",
    "kind": "region",
    "strength": "required",
-   "source": "local",
    "name": "upper lobe of right lung"
   }
  ],
+ "anatomic_refinement_rules": [],
  "seen_on": [
   "CT",
   "MR",
@@ -72,9 +71,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -101,9 +100,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -130,9 +129,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -159,9 +158,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -185,18 +184,14 @@
  "component_of": null,
  "component": false,
  "fixed_values": [],
- "anchor_verdict": "anchored",
- "anchor_base": null,
- "anchor_modifiers": [],
- "change_request": null,
  "source_definition": null,
  "concept_source": null,
  "version": {
   "number": 1,
   "status": "proposed",
-  "created": "2026-09-10",
+  "created": "2026-09-14",
   "published": null,
-  "last_modified": "2026-09-10",
+  "last_modified": "2026-09-14",
   "contributors": [
    {
     "id": "PERSON-000001",

@@ -1,6 +1,6 @@
 # DataElement Concepts
 
-DataElements extracted from `alpha-turtle.ttl`. DataElements are attributes that describe a FindingClass or Diagnosis. Each section shows the allowed values defined by the ontology and where the DataElement is used. Scope is shown if a DataElement itself is explicitly scoped in the ontology.
+DataElements extracted from the canonical `definition-graph.json`. DataElements are attributes that describe a FindingClass or Diagnosis. Each section shows the allowed values defined by the model and where the DataElement is used. Scope is shown if a DataElement itself is explicitly scoped in the model.
 
 ## acuity
 
@@ -128,7 +128,7 @@ DataElements extracted from `alpha-turtle.ttl`. DataElements are attributes that
 
 | Diagnosis | FindingClass |
 | --- | --- |
-|  | - intracranial hemorrhage |
+|  | - intracranial hemorrhage<br/>- intraparenchymal hemorrhage<br/>- intraventricular hemorrhage |
 
 ---
 
@@ -432,23 +432,6 @@ DataElements extracted from `alpha-turtle.ttl`. DataElements are attributes that
 | Diagnosis | FindingClass |
 | --- | --- |
 |  | - acute infarct<br/>- adrenal nodule<br/>- atelectasis<br/>- cerebral atrophy<br/>- complex renal cyst<br/>- consolidation<br/>- encephalomalacia<br/>- epidural hematoma<br/>- external carotid artery stenosis<br/>- ground-glass opacity<br/>- hepatic mass<br/>- hydronephrosis<br/>- internal carotid artery stenosis<br/>- intracranial hemorrhage<br/>- intraparenchymal hemorrhage<br/>- intraventricular hemorrhage<br/>- mediastinal lymphadenopathy<br/>- mediastinal shift<br/>- midline shift<br/>- mural nodule<br/>- non-solid pulmonary nodule<br/>- part-solid pulmonary nodule<br/>- perinephric fat stranding<br/>- pleural effusion<br/>- pneumothorax<br/>- pulmonary artery filling defect<br/>- pulmonary mass<br/>- pulmonary nodule<br/>- renal cortical scarring<br/>- renal cyst<br/>- renal enlargement<br/>- renal lesion<br/>- renal mass<br/>- rib fracture<br/>- simple renal cyst<br/>- solid pulmonary nodule<br/>- striated nephrogram<br/>- subarachnoid hemorrhage<br/>- subdural hematoma<br/>- tendon lesion<br/>- thyroid nodule<br/>- ventricular shunt catheter<br/>- white matter hyperintensity |
-
----
-
-## laterality
-
-#### VALUES
-
-- **bilateral**
-- **left**
-- **midline**
-- **right**
-
-#### USED_BY
-
-| Diagnosis | FindingClass |
-| --- | --- |
-|  | - acute infarct<br/>- adrenal nodule<br/>- atelectasis<br/>- consolidation<br/>- encephalomalacia<br/>- external carotid artery stenosis<br/>- ground-glass opacity<br/>- hydronephrosis<br/>- internal carotid artery stenosis<br/>- perinephric fat stranding<br/>- pleural effusion<br/>- pneumothorax<br/>- pulmonary artery filling defect<br/>- pulmonary mass<br/>- pulmonary nodule<br/>- renal cortical scarring<br/>- renal cyst<br/>- renal enlargement<br/>- renal lesion<br/>- renal mass<br/>- rib fracture<br/>- striated nephrogram<br/>- thyroid nodule<br/>- ventricular shunt catheter |
 
 ---
 

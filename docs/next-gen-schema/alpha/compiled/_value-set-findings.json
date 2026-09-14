@@ -1,6 +1,6 @@
 {
  "value_set": "finding-classes",
- "description": "Every FindingClass is anatomically anchored and may be emitted as an answer, except components, which are reached only through HAS_COMPONENT. Authoring patterns are not nodes, name no elements, and appear in no artifact.",
+ "description": "Every FindingClass is anatomically anchored and may be emitted as an answer, except components, which are reached only through HAS_COMPONENT.",
  "source_version": "4.3",
  "standalone": [
   {
@@ -188,7 +188,6 @@
  ],
  "counts": {
   "standalone": 43,
-  "component_only": 2,
-  "patterns": "not in any artifact"
+  "component_only": 2
  }
 }

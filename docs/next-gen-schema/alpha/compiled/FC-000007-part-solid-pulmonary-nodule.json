@@ -14,9 +14,9 @@
    "version": {
     "number": 1,
     "status": "published",
-    "created": "2026-09-10",
+    "created": "2026-09-14",
     "published": null,
-    "last_modified": "2026-09-10",
+    "last_modified": "2026-09-14",
     "contributors": [
      {
       "id": "PERSON-000001",
@@ -24,68 +24,66 @@
       "via": "alpha-generator"
      }
     ]
-   },
-   "primary": true
+   }
   }
  ],
  "synonyms": [],
  "anatomic_scope": [
   {
-   "location": "AL-000033",
+   "location": "RID1301",
    "kind": "region",
    "strength": "required",
-   "source": "local",
-   "name": "lung",
-   "permitted_refinements": [
+   "name": "lung"
+  }
+ ],
+ "anatomic_refinement_rules": [
+  {
+   "id": "ARR-000001",
+   "scope": "RID1301",
+   "allowed_predicates": [],
+   "allowed_targets": [],
+   "target_constraint": {
+    "type": "radlex_taxonomy",
+    "root": "RID34694",
+    "include_root": false,
+    "include_descendants": true
+   },
+   "traversal": null,
+   "permitted_targets": [
     {
-     "code": "RID1333",
-     "name": "lingula",
-     "id": "AL-000041"
+     "code": null,
+     "name": "RID1310",
+     "id": "RID1310"
     },
     {
-     "code": "RID1338",
-     "name": "lower lobe of left lung",
-     "id": "AL-000042"
+     "code": null,
+     "name": "RID1315",
+     "id": "RID1315"
     },
     {
-     "code": "RID34696",
-     "name": "lower lobe of lung",
-     "id": "AL-000195"
+     "code": null,
+     "name": "RID1327",
+     "id": "RID1327"
     },
     {
-     "code": "RID1315",
-     "name": "lower lobe of right lung",
-     "id": "AL-000037"
+     "code": null,
+     "name": "RID1338",
+     "id": "RID1338"
     },
     {
-     "code": "RID1310",
-     "name": "middle lobe of lung",
-     "id": "AL-000036"
+     "code": null,
+     "name": "RID34695",
+     "id": "RID34695"
     },
     {
-     "code": "RID1339",
-     "name": "superior segment of lower lobe of left lung",
-     "id": "AL-000043"
-    },
-    {
-     "code": "RID1316",
-     "name": "superior segment of lower lobe of right lung",
-     "id": "AL-000038"
-    },
-    {
-     "code": "RID1327",
-     "name": "upper lobe of left lung",
-     "id": "AL-000040"
-    },
-    {
-     "code": "RID34695",
-     "name": "upper lobe of lung",
-     "id": "AL-000194"
+     "code": null,
+     "name": "RID34696",
+     "id": "RID34696"
     },
     {
      "code": "RID1303",
      "name": "upper lobe of right lung",
-     "id": "AL-000035"
+     "id": "RID1303"
     }
    ]
   }
@@ -125,9 +123,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -154,9 +152,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -183,9 +181,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -212,9 +210,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -292,15 +290,15 @@
       {
        "system": "RADLEX",
        "code": "RID5714",
-       "source_label": "smooth",
+       "source_label": "smooth margin",
        "match": "exactMatch",
        "source_version": "4.3",
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -321,15 +319,15 @@
       {
        "system": "RADLEX",
        "code": "RID5711",
-       "source_label": "lobulated",
+       "source_label": "lobulated margin",
        "match": "exactMatch",
        "source_version": "4.3",
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -350,15 +348,15 @@
       {
        "system": "RADLEX",
        "code": "RID5715",
-       "source_label": "irregular",
+       "source_label": "irregular margin",
        "match": "exactMatch",
        "source_version": "4.3",
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -379,15 +377,15 @@
       {
        "system": "RADLEX",
        "code": "RID5713",
-       "source_label": "spiculated",
+       "source_label": "spiculated margin",
        "match": "exactMatch",
        "source_version": "4.3",
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -517,133 +515,6 @@
    ]
   },
   {
-   "element_id": "DE-000031",
-   "name": "laterality",
-   "definition": "Which side of a paired structure the finding involves.",
-   "select_cardinality": "single",
-   "narrowed": false,
-   "modality_restricted_to": null,
-   "inherited_from": "FC-000005",
-   "permitted_values": [
-    {
-     "value_id": "V-000300",
-     "name": "left",
-     "definition": "The patient's left.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5824",
-       "source_label": "left",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    },
-    {
-     "value_id": "V-000301",
-     "name": "right",
-     "definition": "The patient's right.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5825",
-       "source_label": "right",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    },
-    {
-     "value_id": "V-000302",
-     "name": "bilateral",
-     "definition": "Both sides.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5771",
-       "source_label": "bilateral",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    },
-    {
-     "value_id": "V-000303",
-     "name": "midline",
-     "definition": "Neither side; on the midline.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5826",
-       "source_label": "midline",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    }
-   ]
-  },
-  {
    "element_id": "DE-000002",
    "name": "attenuation",
    "definition": "The density characteristics of a pulmonary nodule on CT.",
@@ -663,15 +534,15 @@
       {
        "system": "RADLEX",
        "code": "RID50151",
-       "source_label": "solid",
+       "source_label": "solid pulmonary nodule",
        "match": "exactMatch",
        "source_version": "4.3",
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -692,15 +563,15 @@
       {
        "system": "RADLEX",
        "code": "RID50152",
-       "source_label": "part-solid",
+       "source_label": "part-solid pulmonary nodule",
        "match": "exactMatch",
        "source_version": "4.3",
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -721,15 +592,15 @@
       {
        "system": "RADLEX",
        "code": "RID50153",
-       "source_label": "non-solid",
+       "source_label": "non-solid pulmonary nodule",
        "match": "exactMatch",
        "source_version": "4.3",
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -888,18 +759,14 @@
    "defining": true
   }
  ],
- "anchor_verdict": "anchored",
- "anchor_base": null,
- "anchor_modifiers": [],
- "change_request": null,
  "source_definition": null,
- "concept_source": "Cancer Care Ontario",
+ "concept_source": null,
  "version": {
   "number": 1,
   "status": "proposed",
-  "created": "2026-09-10",
+  "created": "2026-09-14",
   "published": null,
-  "last_modified": "2026-09-10",
+  "last_modified": "2026-09-14",
   "contributors": [
    {
     "id": "PERSON-000001",

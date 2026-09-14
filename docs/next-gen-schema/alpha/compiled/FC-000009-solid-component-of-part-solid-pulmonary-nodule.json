@@ -14,9 +14,9 @@
    "version": {
     "number": 1,
     "status": "published",
-    "created": "2026-09-10",
+    "created": "2026-09-14",
     "published": null,
-    "last_modified": "2026-09-10",
+    "last_modified": "2026-09-14",
     "contributors": [
      {
       "id": "PERSON-000001",
@@ -24,12 +24,12 @@
       "via": "alpha-generator"
      }
     ]
-   },
-   "primary": true
+   }
   }
  ],
  "synonyms": [],
  "anatomic_scope": [],
+ "anatomic_refinement_rules": [],
  "seen_on": [
   "CT"
  ],
@@ -59,9 +59,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -88,9 +88,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -117,9 +117,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -146,9 +146,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -192,18 +192,14 @@
    "defining": false
   }
  ],
- "anchor_verdict": "anchored",
- "anchor_base": null,
- "anchor_modifiers": [],
- "change_request": null,
  "source_definition": null,
- "concept_source": "Cancer Care Ontario",
+ "concept_source": null,
  "version": {
   "number": 1,
   "status": "proposed",
-  "created": "2026-09-10",
+  "created": "2026-09-14",
   "published": null,
-  "last_modified": "2026-09-10",
+  "last_modified": "2026-09-14",
   "contributors": [
    {
     "id": "PERSON-000001",

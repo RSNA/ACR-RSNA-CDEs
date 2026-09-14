@@ -31,10 +31,6 @@
   {
    "rule": "occurs-with-same-type",
    "says": "OCCURS_WITH relates two findings or two diagnoses. Between a diagnosis and a finding a more specific edge already exists (MAY_MANIFEST_AS or MAY_CAUSE), so reaching for co-occurrence there is declining to say which."
-  },
-  {
-   "rule": "anchor-verdict",
-   "says": "Every node records an anchor verdict: anchored, post_coordinated, unanchored_requestable or out_of_primary_scope."
   }
  ],
  "findings": [],

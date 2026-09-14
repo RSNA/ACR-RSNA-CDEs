@@ -1,185 +1,18 @@
+from radlex_config import RADLEX_VERSION  # public build metadata used by generators
 # -*- coding: utf-8 -*-
 """
 Content specification for the RadElement next-gen alpha model.
 
-Every RadLex code here was verified against the supplied Radlex_v4_3.csv export.
-Where a concept has no RadLex code, that is recorded as a local node with a
-source_status, which is itself part of what the alpha is meant to surface.
+RadLex bindings and compositional references are verified against the configured RadLex source.
+Other terminologies may also bind to the same CDE concept where appropriate.
 """
 
-RADLEX_VERSION = "4.3"
 
 # ---------------------------------------------------------------------------
-# ANATOMY  (imported. RID -> local AL node)
-# Only what the modelled findings actually need, per MIREOT.
+# ANATOMY
+# Anatomy identities and relationships are imported directly from RadLex.
+# AnatomicLocation is a CDE role/type; no local anatomy vocabulary is maintained.
 # ---------------------------------------------------------------------------
-
-ANATOMY_SEEDS = [
-    # thorax / lung
-    "RID1301",  # lung
-    "RID1302",  # right lung
-    "RID1326",  # left lung
-    "RID1303",  # upper lobe of right lung
-    "RID1310",  # middle lobe of lung
-    "RID1315",  # lower lobe of right lung
-    "RID1316",  # superior segment of lower lobe of right lung
-    "RID1327",  # upper lobe of left lung  (verified at build time)
-    "RID1338",  # lower lobe of left lung  (verified at build time)
-    "RID1243",  # thorax
-    # thyroid
-    "RID7578",  # thyroid gland
-    "RID7579",  # left lobe of thyroid gland
-    "RID7581",  # right lobe of thyroid gland
-    "RID7584",  # isthmus of thyroid gland
-    "RID50344", # lobe of thyroid gland
-    # abdominal solid organs
-    "RID58",    # liver
-    "RID205",   # kidney
-    "RID88",    # adrenal gland
-    "RID170",   # pancreas
-    "RID86",    # spleen
-    "RID56",    # abdomen
-    "RID29989", # abdomen proper
-    # breast
-    "RID28749", # breast
-    # nodal
-    "RID13296", # lymph node
-    "RID28891", # mediastinal lymph node
-    "RID1517",  # axillary lymph node
-    "RID1496",  # pulmonary lymph node
-    "RID1520",  # anterior mediastinal lymph node
-    "RID7695",  # lymph node of neck
-    # structure-type scope demo (IS_A rather than PART_OF)
-    "RID6067",  # tendon
-    "RID478",   # artery
-    # spaces and non-organ places, needed by the non-focal findings
-    "RID1362",  # pleura
-    "RID1363",  # pleural space
-    "RID1370",  # parietal pleura
-    "RID1371",  # visceral pleura
-    "RID1384",  # mediastinum
-    "RID35739", # lung parenchyma
-    "RID5978",  # parenchyma
-    "RID28538", # airspace
-    "RID1361",  # secondary pulmonary lobule
-    "RID431",   # retroperitoneum
-    "RID434",   # perirenal space
-    "RID228",   # renal pelvis
-    # neuro, vascular, skeletal
-    "RID6434",  # brain
-    "RID9080",  # head
-    "RID16996", # cerebral white matter
-    "RID7124",  # lateral ventricle
-    "RID585",   # internal carotid artery
-    "RID684",   # external carotid artery
-    "RID974",   # pulmonary artery
-    "RID2471",  # rib
-    "RID34694", # lobe of lung, the kind a pulmonary scope refines to
-    "RID1333",  # lingula, already Part_Of upper lobe of left lung upstream
-    "RID1339",  # superior segment of lower lobe of left lung, balancing the right
-    "RID92",    # cortex of adrenal gland
-    "RID89",    # limb of adrenal gland
-    # intracranial compartments
-    "RID6383",  # intracranial
-    "RID7111",  # epidural space
-    "RID7119",  # subarachnoid space
-    "RID7120",  # subdural space
-    "RID7123",  # cerebral ventricle
-    "RID648",   # anterior cerebral artery
-    "RID665",   # middle cerebral artery
-    "RID804",   # posterior cerebral artery
-    "RID791",   # basilar artery
-    "RID6437",  # telencephalon
-]
-
-# Locally coined AnatomicLocations: concepts the source does not name.
-# These exercise source / source_status / request and the empty-bindings case.
-LOCAL_ANATOMY = [
-    dict(local="AL-L0001", name="lung periphery",
-         definition="The outer third of the lung parenchyma, measured from the "
-                    "pleural surface toward the hilum.",
-         source_status="pending_request", request="RADLEX-REQ-0101",
-         part_of="RID1301",
-         note="A zone, not a structure. RadLex names no peripheral zone of lung, and a zone "
-              "defined by distance from a surface has no concept there at all."),
-    dict(local="AL-L0006", name="zone of adrenal gland",
-         definition="A gross anatomic zone of the adrenal gland, as distinguished on "
-                    "cross-sectional imaging.",
-         source_status="pending_request", request="RADLEX-REQ-0640",
-         part_of="RID88",
-         note="The kind an adrenal scope refines to. RadLex has no gross zoning of the gland: "
-              "it carries the histological zonae, the cortex and medulla, and a childless "
-              "limb concept, none of which is what a radiologist describes."),
-    dict(local="AL-L0003", name="body of adrenal gland",
-         definition="The central confluence where the two limbs of the gland meet.",
-         source_status="pending_request", request="RADLEX-REQ-0641",
-         part_of="AL-L0006",
-         note="RadLex carries limb of adrenal gland RID89 with no children and no body "
-              "concept, so the gross morphology axis a radiologist uses is not expressible "
-              "upstream at all."),
-    dict(local="AL-L0004", name="medial limb of adrenal gland",
-         definition="The limb running medially from the body of the gland.",
-         source_status="pending_request", request="RADLEX-REQ-0642",
-         part_of="AL-L0006"),
-    dict(local="AL-L0005", name="lateral limb of adrenal gland",
-         definition="The limb running laterally from the body of the gland.",
-         source_status="pending_request", request="RADLEX-REQ-0643",
-         part_of="AL-L0006"),
-    dict(local="AL-L0002", name="subpleural region of lung",
-         definition="The region of lung parenchyma immediately deep to the visceral pleura.",
-         source_status="post_coordinated",
-         anchor_base=("RID46032", "subpleural"), anchor_modifiers=[("RID1301", "lung")],
-         part_of="AL-L0001",
-         note=""),
-]
-
-
-# Gap-fill edges between imported nodes. The node exists upstream; the
-# relationship does not. Authored locally as a placeholder while the change
-# request is processed, and removed on the release that carries it.
-#
-# Both were checked against the Parents chain first, because the RadLex release
-# notes warn that some part-of links were inadvertently converted to is-a and a
-# semantically part-of link sitting only in `Parents` would not appear in the
-# part-of counts. Neither chain contains one: adrenal gland runs
-# corticomedullary organ -> parenchymatous organ -> solid organ, and lung
-# parenchyma runs parenchyma -> organ component -> cardinal organ part. Both are
-# genuine type hierarchies, so the missing relationship is a real gap.
-
-LOCAL_ANATOMY_EDGES = [
-    # RadLex organises the nervous system as an organ system, not as a regional part
-    # of the head: brain climbs to nervous system and then to human body, never
-    # through head. The intracranial spaces are worse, being only IS_A nervous
-    # system space with no location at all. RadLex has no cranial cavity concept
-    # either. Without these, nothing intracranial has a body region and a haemorrhage
-    # in the subdural space cannot be shown to be inside the head.
-    dict(frm="RID6434", to="RID9080", prop="containedIn", family="location",
-         source_status="pending_request", request="RADLEX-REQ-0631",
-         note="brain is located in the head."),
-    dict(frm="RID7111", to="RID9080", prop="containedIn", family="location",
-         source_status="pending_request", request="RADLEX-REQ-0632",
-         note="epidural space, cranial portion, is located in the head."),
-    dict(frm="RID7119", to="RID9080", prop="containedIn", family="location",
-         source_status="pending_request", request="RADLEX-REQ-0633",
-         note="subarachnoid space is located in the head."),
-    dict(frm="RID7120", to="RID9080", prop="containedIn", family="location",
-         source_status="pending_request", request="RADLEX-REQ-0634",
-         note="subdural space is located in the head."),
-    dict(frm="RID7123", to="RID9080", prop="containedIn", family="location",
-         source_status="pending_request", request="RADLEX-REQ-0635",
-         note="cerebral ventricle is located in the head."),
-    dict(frm="RID35739", to="RID1301", prop="generalPartOf", family="mereology",
-         source_status="pending_request", request="RADLEX-REQ-0501",
-         note="lung parenchyma has exactly one edge in RadLex 4.3, IS_A parenchyma. It is not "
-              "connected to the lung. Without this, anything scoped to lung parenchyma derives "
-              "no body region and fails scope congruence against lung."),
-    dict(frm="RID88", to="RID431", prop="containedIn", family="location",
-         source_status="pending_request", request="RADLEX-REQ-0502",
-         note="adrenal gland carries Has_Part, Has_Regional_Part and Has_Constitutional_Part "
-              "downward and Member_Of to 'set of adrenal glands', but nothing upward. RadLex "
-              "never says where the adrenal gland is."),
-]
-
 
 # Values whose binding is deliberately loose: the code is the nearest concept
 # RadLex has, not a synonym of our label. Read by the builders and by
@@ -200,8 +33,7 @@ DATA_ELEMENTS = [
     dict(id="DE-000039", prop="hasPulmonaryMargin", name="pulmonary margin",
          definition="The character of the interface between a pulmonary lesion and the "
                     "surrounding lung.",
-         radlex=None, anchor_base=("RID43359", "lesion margin"),
-         anchor_modifiers=[("RID1301", "lung")],
+         radlex=None, radlex_composition=dict(base=("RID43359", "lesion margin"), modifiers=[("RID1301", "lung")]),
          scoped_to=['RID1301'],
          values=[("V-000380", "smooth", "RID5714", "The interface is even and uninterrupted.", None),
                  ("V-000381", "lobulated", "RID5711", "The interface undulates with rounded protrusions.", None),
@@ -211,8 +43,7 @@ DATA_ELEMENTS = [
     dict(id="DE-000040", prop="hasThyroidMargin", name="thyroid margin",
          definition="The character of the interface between a thyroid nodule and the "
                     "surrounding gland.",
-         radlex=None, anchor_base=("RID43359", "lesion margin"),
-         anchor_modifiers=[("RID7578", "thyroid gland")],
+         radlex=None, radlex_composition=dict(base=("RID43359", "lesion margin"), modifiers=[("RID7578", "thyroid gland")]),
          scoped_to=['RID7578'],
          values=[("V-000390", "smooth", "RID5714", "Even and uninterrupted.", None),
                  ("V-000391", "ill-defined", "RID5709",
@@ -227,8 +58,7 @@ DATA_ELEMENTS = [
 
     dict(id="DE-000041", prop="hasThyroidComposition", name="thyroid composition",
          definition="The internal make-up of a thyroid nodule, on the ACR TI-RADS axis.",
-         radlex=None, anchor_base=("RID39409", "composition"),
-         anchor_modifiers=[("RID7578", "thyroid gland")],
+         radlex=None, radlex_composition=dict(base=("RID39409", "composition"), modifiers=[("RID7578", "thyroid gland")]),
          scoped_to=['RID7578'],
          values=[("V-000400", "cystic or almost completely cystic", "RID5739",
                   "Entirely or nearly entirely fluid.", 1),
@@ -260,8 +90,8 @@ DATA_ELEMENTS = [
               'stages with distinct MR signal, and early and late subacute are different '
               'stages that look different and mean different things. Forcing them into a list '
               'built around healing and healed would be reusing an orthopaedic vocabulary for '
-              'a haemoglobin degradation sequence. Only acute, chronic and indeterminate have '
-              'RadLex concepts; the rest are local.'),
+              'a haemoglobin degradation sequence. Only acute, chronic and indeterminate currently have '
+              'RadLex bindings; the remaining values do not.'),
 
     dict(id='DE-000044', prop='hasFlowCharacter', name='flow character',
          definition='How blood moves through the segment on colour Doppler.',
@@ -305,7 +135,7 @@ DATA_ELEMENTS = [
                  ('V-000414', 'adhesive', None,
                   'Surfactant deficiency with alveolar collapse.', None)],
          note='Compressive, obstructive and cicatricial post-coordinate from RadLex; passive '
-              'and adhesive have no concept and are local.'),
+              'and adhesive currently have no RadLex binding.'),
 
     dict(id='DE-000043', prop='hasAtelectasisMorphology', name='atelectasis morphology',
          definition='What the volume loss looks like.',
@@ -552,7 +382,7 @@ dict(id='DE-000004',
  'healed fracture on a first study has no prior to compare against and is still '
  'recognisably old.'),
          radlex=None,
-         anchor_base=('RID5716', 'temporal descriptor'),
+         radlex_composition=dict(base=('RID5716', 'temporal descriptor'), modifiers=[]),
          values=[('V-000330', 'acute', 'RID5718',
   'Recent. Sharp fracture margins without callus; haemorrhage still dense.', 1),
  ('V-000331', 'subacute', None,
@@ -600,7 +430,7 @@ dict(id='DE-000004',
          unvalidated=True,
          definition='How much material is present, on a coarse ordinal scale.',
          radlex=None,
-         anchor_base=('RID5761', 'quantity descriptor'),
+         radlex_composition=dict(base=('RID5761', 'quantity descriptor'), modifiers=[]),
          values=[('V-000150', 'trace', None, 'Barely detectable.', 1),
  ('V-000151', 'small', 'RID5774', 'Present but of little consequence.', 2),
  ('V-000152', 'moderate', None, 'Substantial without dominating the space.', 3),
@@ -692,7 +522,7 @@ dict(id='DE-000004',
          radlex=None,
          values=[('V-000230', 'non-occlusive', None, 'Flow persists around the content.', None),
  ('V-000231', 'partially occlusive', None, 'Flow reduced but present.', None),
- ('V-000232', 'occlusive', 'RID4962', 'No flow through the segment.', None)]),
+ ('V-000232', 'occlusive', 'RID49453', 'No flow through the segment.', None)]),
 
     dict(id='DE-000025',
          prop='hasDeviceIntegrity',
@@ -738,18 +568,6 @@ dict(id='DE-000004',
          values=[('V-000270', 'simple', None, 'Two fragments.', None),
  ('V-000271', 'comminuted', None, 'More than two fragments.', None)]),
 
-dict(id='DE-000031',
-         prop='hasLaterality',
-         name='laterality',
-         definition='Which side of a paired structure the finding involves.',
-         radlex=None,
-         anchor_components=[],
-         values=[('V-000300', 'left', 'RID5824', "The patient's left.", None),
- ('V-000301', 'right', 'RID5825', "The patient's right.", None),
- ('V-000302', 'bilateral', 'RID5771', 'Both sides.', None),
- ('V-000303', 'midline', 'RID5826', 'Neither side; on the midline.', None)],
-         note=('Applies only where the scoped structure is paired or sided. The bilateral value does '
- 'not settle whether a bilateral finding is one instance or two; that remains open.')),
 ]
 
 
@@ -950,74 +768,52 @@ SUBSPECIALTIES = [
 
 
 # ---------------------------------------------------------------------------
-# PATTERNS
+# AUTHORING PATTERNS
 #
-# Recurring bundles of elements and measurements that show up wherever a
-# particular kind of finding is authored. Patterns are NOT nodes. They are not
-# written to the graph, they carry no identifier a consumer can reference, and
-# nothing subclasses them.
+# Broad authoring heuristics for recurring kinds of radiology findings. These
+# are NOT ontology entities, are NOT written to the definition graph or OWL,
+# and do not generate axioms, DataElements, or inheritance. A pattern is only a
+# topic checklist for an author. It is acceptable for a FindingClass to match no
+# pattern at all.
 #
-# This follows DOSDP (Dead Simple OWL Design Patterns), the practice used across
-# OBO by Mondo and uPheno: a pattern is a template that generates axioms for
-# each instantiation, and the pattern itself never appears in the ontology.
-# Consistency comes from generation plus a lint check at authoring time rather
-# than from inheritance at reasoning time.
-#
-# `anchor` records the source concept the pattern corresponds to, so a reviewer
-# can see that RID38780 lesion was considered and deliberately not made a node.
+# `applies_with` composes authoring considerations only. It does not assert an
+# ontology relationship or automatically attach anything to a FindingClass.
 #
 # ---------------------------------------------------------------------------
 
 PATTERNS = [
-    dict(name="focal-lesion", topics=["margin", "size", "distribution", "calcification"],
-         note="A discrete, bounded abnormality."),
-    dict(name="nodule", topics=["size"], applies_with="focal-lesion",
-         note="A rounded lesion, small relative to what contains it."),
-    dict(name="mass", topics=["composition", "enhancement", "size", "effect on neighbours"],
-         applies_with="focal-lesion",
-         note="A space-occupying lesion that acts on the structures around it."),
+    dict(name="focal-lesion", topics=["margin", "size", "distribution", "calcification"]),
+    dict(name="nodule", topics=[], applies_with="focal-lesion",
+         note="Distinguished from mass by a size threshold on the inherited size topic, not a new topic."),
+    dict(name="mass", topics=["composition", "enhancement", "effect on adjacent structures"],
+         applies_with="focal-lesion"),
     dict(name="cyst", topics=["wall character", "internal contents", "composition"],
-         applies_with="focal-lesion", note="A fluid-filled structure bounded by a wall."),
-    dict(name="collection", topics=["amount", "internal complexity", "attenuation"],
-         note="Material accumulated in a space or potential space."),
-    dict(name="parenchymal-alteration", topics=["extent", "pattern", "distribution"],
-         note="A change in the character of tissue across a region, without discrete borders."),
-    dict(name="volume-alteration", topics=["severity", "extent"],
-         note="Loss or gain of tissue volume relative to expected."),
-    dict(name="luminal-alteration", topics=["degree", "length involved", "calibre"],
-         note="A change in the calibre of a tubular or hollow structure."),
-    dict(name="intraluminal-content", topics=["occlusiveness", "length involved"],
-         note="Material within a lumen that does not belong there."),
-    dict(name="discontinuity", topics=["displacement", "comminution", "acuity"],
-         note="A break in a normally continuous structure."),
-    dict(name="displacement", topics=["direction", "distance"],
-         note="A structure lying away from its expected position."),
-    dict(name="device", topics=["integrity", "tip position"],
-         note="A man-made object placed in or on the patient."),
-    dict(name="variant", topics=["presence"],
-         note="Normal alternative anatomy, reported because it can be mistaken for disease."),
+         applies_with="focal-lesion"),
+    dict(name="diffuse-parenchymal-process", topics=["extent", "distribution", "attenuation/signal character"]),
+    dict(name="volume-change", topics=["direction (increase/decrease)", "degree", "symmetry"]),
+    dict(name="collection", topics=["amount", "internal complexity", "shape", "evolution/age"]),
+    dict(name="luminal-caliber-change", topics=["direction (narrowed/dilated)", "degree", "length involved"]),
+    dict(name="fracture", topics=["displacement", "comminution", "acuity"]),
+    dict(name="soft-tissue-tear", topics=["thickness/degree", "partial vs. full-thickness", "retraction"]),
+    dict(name="displacement", topics=["direction", "distance"]),
+    dict(name="device", topics=["integrity", "tip position"]),
+    dict(name="anatomic-variant", topics=["presence"]),
+    dict(name="lymphadenopathy", topics=["short-axis size", "number", "nodal architecture"]),
 ]
 
-# PATTERNS ARE NOT NODES AND ARE NOT ELEMENTS.
+# PATTERNS ARE AUTHORING GUIDANCE ONLY.
 #
-# A pattern lists the TOPICS a kind of finding is usually described by. It names
-# no DataElement and inserts nothing. An author writing a new finding sees the
-# topics as a checklist, then chooses: reuse an existing element if one genuinely
-# fits, or write a new one. Reuse is never forced.
+# A pattern lists likely TOPICS, not DataElement ids. It inserts nothing into a
+# FindingClass and is never required. An author may use one pattern, compose the
+# considerations of patterns linked by `applies_with`, or use no pattern when no
+# broad checklist fits. The author then decides whether an existing DataElement
+# genuinely fits or a new one is needed. Reuse is never forced.
 #
-# The earlier design had patterns hold element ids and splice them into each class
-# at build time. That pushed a shared element onto classes it did not suit, and the
-# only way to make it fit was to widen the published element. `margin` reaching nine
-# values across three societies, so that a tendon lesion could be reported as
-# extra-thyroidal extension, is what that produced. Published elements should not
-# move to accommodate new findings.
-#
-# Discoverability is the useful part and is anatomy-aware: an author scoping a
-# finding to the lung should be shown lung-scoped distribution elements, not ones
-# whose values come from another organ. That belongs in the authoring tool.
+# Discoverability can be anatomy-aware in a future authoring tool, but that is
+# application behavior, not ontology semantics.
 
 # Lint rules the authoring tool applies. Not schema, not published.
-PATTERN_LINT = [
+AUTHORING_LINT = [
     dict(rule="no-single-value-narrowing",
          says="A narrow list never reduces an element to one value. An element every user "
               "answers the same way is not recording an observation, it is restating the "
@@ -1058,9 +854,6 @@ PATTERN_LINT = [
          says="OCCURS_WITH relates two findings or two diagnoses. Between a diagnosis and a "
               "finding a more specific edge already exists (MAY_MANIFEST_AS or MAY_CAUSE), so "
               "reaching for co-occurrence there is declining to say which."),
-    dict(rule="anchor-verdict",
-         says="Every node records an anchor verdict: anchored, post_coordinated, "
-              "unanchored_requestable or out_of_primary_scope."),
 ]
 
 
@@ -1076,15 +869,18 @@ FINDING_CLASSES = [
          cls='PulmonaryNodule',
          name='pulmonary nodule',
          radlex='RID50149',
-         anchor_verdict='anchored',
          definition='A nodule within the lung parenchyma.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000039', 'DE-000013', 'DE-000004', 'DE-000031',
+         elements=['DE-000001', 'DE-000015', 'DE-000039', 'DE-000013', 'DE-000004',
  'DE-000002', 'DE-000014'],
          seen_on=['CT', 'MR', 'US', 'XR', 'PET'],
                   modality_scoped={'DE-000002': ['CT'], 'DE-000014': ['PET']},
          scoped_to=[('RID1301', 'region', 'required')],
-         refine_to=[('RID1301', 'RID34694', 'lobe of lung')],
+         anatomic_refinement_rules=[
+             dict(id='ARR-000001', scope='RID1301',
+                  target_root='RID34694', include_root=False, include_descendants=True,
+                  allowed_targets=[], allowed_predicates=[]),
+         ],
          assessed_by=['AS-000001'],
          in_subspecialty=['CH'],
          disjoint_with=['PulmonaryMass'],
@@ -1098,7 +894,6 @@ FINDING_CLASSES = [
          cls='SolidPulmonaryNodule',
          name='solid pulmonary nodule',
          radlex='RID50151',
-         anchor_verdict='anchored',
          definition='A pulmonary nodule that completely obscures the underlying lung parenchyma.',
          parent='PulmonaryNodule',
          defined=True,
@@ -1110,7 +905,6 @@ FINDING_CLASSES = [
          cls='PartSolidPulmonaryNodule',
          name='part-solid pulmonary nodule',
          radlex='RID50152',
-         anchor_verdict='anchored',
          definition='A pulmonary nodule containing both a solid and a ground-glass component.',
          parent='PulmonaryNodule',
          defined=True,
@@ -1123,7 +917,6 @@ FINDING_CLASSES = [
          cls='NonSolidPulmonaryNodule',
          name='non-solid pulmonary nodule',
          radlex='RID50153',
-         anchor_verdict='anchored',
          definition='A pulmonary nodule that does not obscure the underlying lung parenchyma.',
          parent='PulmonaryNodule',
          defined=True,
@@ -1136,7 +929,6 @@ FINDING_CLASSES = [
          cls='SolidComponentOfPartSolidNodule',
          name='solid component of part-solid pulmonary nodule',
          radlex='RID50154',
-         anchor_verdict='anchored',
          definition='The solid portion of a part-solid pulmonary nodule.',
          defined=False,
          component=True,
@@ -1151,10 +943,9 @@ FINDING_CLASSES = [
          cls='ThyroidNodule',
          name='thyroid nodule',
          radlex='RID50509',
-         anchor_verdict='anchored',
          definition='A nodule within the thyroid gland.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000040', 'DE-000031', 'DE-000005', 'DE-000041',
+         elements=['DE-000001', 'DE-000015', 'DE-000040', 'DE-000005', 'DE-000041',
  'DE-000033'],
          seen_on=['CT', 'MR', 'US', 'XR'],
                   modality_scoped={'DE-000005': ['US'], 'DE-000033': ['US']},
@@ -1171,27 +962,22 @@ FINDING_CLASSES = [
     dict(id='FC-000011',
          cls='AdrenalNodule',
          name='adrenal nodule',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID3875', 'nodule'),
-         anchor_modifiers=[('RID88', 'adrenal gland')],
+         radlex_composition=dict(base=('RID3875', 'nodule'), modifiers=[('RID88', 'adrenal gland')]),
          definition='A nodule within the adrenal gland.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000004', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000004'],
          measurements=['MS-000001', 'MS-000006', 'MS-000003', 'MS-000005'],
          scoped_to=[('RID88', 'region', 'required')],
-         refine_to=[('RID88', 'AL-L0006', 'zone of adrenal gland')],
          in_subspecialty=['AB'],
          seen_on=['CT', 'MR', 'US', 'XR']),
 
     dict(id='FC-000017',
          cls='PulmonaryMass',
          name='pulmonary mass',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID3874', 'mass'),
-         anchor_modifiers=[('RID1301', 'lung')],
+         radlex_composition=dict(base=('RID3874', 'mass'), modifiers=[('RID1301', 'lung')]),
          definition='A space-occupying lesion of the lung exceeding 30 mm.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000039', 'DE-000013', 'DE-000004', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000039', 'DE-000013', 'DE-000004'],
          narrow={'DE-000013': ['V-000120', 'V-000121', 'V-000122']},
          scoped_to=[('RID1301', 'region', 'required')],
          in_subspecialty=['CH'],
@@ -1201,9 +987,7 @@ FINDING_CLASSES = [
     dict(id='FC-000018',
          cls='HepaticMass',
          name='hepatic mass',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID3874', 'mass'),
-         anchor_modifiers=[('RID58', 'liver')],
+         radlex_composition=dict(base=('RID3874', 'mass'), modifiers=[('RID58', 'liver')]),
          definition='A space-occupying lesion of the liver.',
          defined=False,
          elements=['DE-000001', 'DE-000015', 'DE-000007', 'DE-000004'],
@@ -1219,10 +1003,9 @@ FINDING_CLASSES = [
          radlex='RID50658',
          match='closeMatch',
          source_label='kidney mass',
-         anchor_verdict='anchored',
          definition='A space-occupying lesion of the kidney.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000007', 'DE-000004', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000007', 'DE-000004'],
          scoped_to=[('RID205', 'region', 'required')],
          in_subspecialty=['AB'],
          note=('Kept distinct from renal lesion. Radiologists say both with a real difference: a '
@@ -1233,28 +1016,24 @@ FINDING_CLASSES = [
     dict(id='FC-000020',
          cls='RenalLesion',
          name='renal lesion',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID38780', 'lesion'),
-         anchor_modifiers=[('RID205', 'kidney')],
+         radlex_composition=dict(base=('RID38780', 'lesion'), modifiers=[('RID205', 'kidney')]),
          definition='A focal abnormality of the renal parenchyma, not further characterised.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000004', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000004'],
          scoped_to=[('RID205', 'region', 'required')],
          in_subspecialty=['AB'],
-         note=('The focal-lesion pattern at the kidney with no further commitment. Distinct from '
- 'renal mass, which asserts behaviour.'),
+         note=('A renal lesion with no further morphologic commitment. Distinct from renal mass, '
+               'which asserts behaviour.'),
          measurements=['MS-000001', 'MS-000006'],
          seen_on=['CT', 'MR', 'US', 'XR']),
 
     dict(id='FC-000004',
          cls='RenalCyst',
          name='renal cyst',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID3890', 'cyst'),
-         anchor_modifiers=[('RID205', 'kidney')],
+         radlex_composition=dict(base=('RID3890', 'cyst'), modifiers=[('RID205', 'kidney')]),
          definition='A fluid-filled structure bounded by a wall, within the kidney.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000008', 'DE-000006', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000008', 'DE-000006'],
          scoped_to=[('RID205', 'region', 'required')],
          assessed_by=['AS-000004'],
          in_subspecialty=['AB'],
@@ -1267,7 +1046,6 @@ FINDING_CLASSES = [
          radlex='RID49690',
          match='broadMatch',
          source_label='simple cyst',
-         anchor_verdict='anchored',
          definition='A renal cyst with uniformly fluid contents.',
          parent='RenalCyst',
          defined=True,
@@ -1278,9 +1056,7 @@ FINDING_CLASSES = [
     dict(id='FC-000015',
          cls='ComplexRenalCyst',
          name='complex renal cyst',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID3890', 'cyst'),
-         anchor_modifiers=[('RID205', 'kidney')],
+         radlex_composition=dict(base=('RID3890', 'cyst'), modifiers=[('RID205', 'kidney')]),
          definition='A renal cyst whose contents are not uniformly fluid.',
          note='Carries calcification; the parent does not. A simple cyst does not calcify, and a calcified renal cyst is Bosniak II or above, which is complex by definition.',
          parent='RenalCyst',
@@ -1292,15 +1068,14 @@ FINDING_CLASSES = [
     dict(id='FC-000014',
          cls='MuralNodule',
          name='mural nodule',
-         anchor_verdict='structurally_expressed',
-         anchor_base=('RID3875', 'nodule'),
+         radlex_composition=dict(base=('RID3875', 'nodule'), modifiers=[]),
          definition='A solid nodular projection from the wall of a fluid-filled structure.',
          defined=False,
          component=True,
          component_of='ComplexRenalCyst',
          elements=['DE-000001', 'DE-000007', 'DE-000015'],
          measurements=['MS-000001'],
-         note=('No request filed. It is a nodule, and the mural part is already carried by '
+         note=('It is a nodule, and the mural part is already carried by '
  'COMPONENT_OF: a nodule that is a component of a cyst is a mural nodule. Asking for '
  'the pre-coordinated term would duplicate what the graph already says.')),
 
@@ -1308,10 +1083,9 @@ FINDING_CLASSES = [
          cls='PleuralEffusion',
          name='pleural effusion',
          radlex='RID34539',
-         anchor_verdict='anchored',
          definition='Fluid within the pleural space beyond the physiologic few millilitres.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000016', 'DE-000017', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000016', 'DE-000017'],
          seen_on=['CT', 'US', 'XR'],
          scoped_to=[('RID1363', 'specific', 'required')],
          in_subspecialty=['CH'],
@@ -1328,24 +1102,20 @@ FINDING_CLASSES = [
          cls='Pneumothorax',
          name='pneumothorax',
          radlex='RID5352',
-         anchor_verdict='anchored',
          definition='Gas within the pleural space.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000031', 'DE-000035'],
+         elements=['DE-000001', 'DE-000015', 'DE-000035'],
          scoped_to=[('RID1363', 'specific', 'required')],
          in_subspecialty=['CH'],
-         note=('Gas rather than fluid, which is why the collection pattern is about material in a '
- 'space rather than fluid in a space. Tension is NOT an element here. It is a '
- 'physiological state concluded from a constellation of signs, so it is a Diagnosis '
- 'reached by MAY_MANIFEST_AS, the same shape as empyema over pleural effusion.'),
+         note=('Gas rather than fluid. Tension is NOT an element here. It is a physiological '
+               'state concluded from a constellation of signs, so it is a Diagnosis reached by '
+               'MAY_MANIFEST_AS, the same shape as empyema over pleural effusion.'),
          seen_on=['CT', 'MR', 'US', 'XR']),
 
     dict(id='FC-000023',
          cls='IntracranialHemorrhage',
          name='intracranial hemorrhage',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID4700', 'hemorrhage'),
-         anchor_modifiers=[('RID6383', 'intracranial')],
+         radlex_composition=dict(base=('RID4700', 'hemorrhage'), modifiers=[('RID6383', 'intracranial')]),
          definition=('Blood within the cranial cavity. The compartment it occupies is the clinically '
  'decisive fact and is carried by the subtypes.'),
          defined=False,
@@ -1363,75 +1133,73 @@ FINDING_CLASSES = [
     dict(id='FC-000043',
          cls='EpiduralHematoma',
          name='epidural hematoma',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID4700', 'hemorrhage'),
-         anchor_modifiers=[('RID7111', 'epidural space')],
+         radlex_composition=dict(base=('RID4700', 'hemorrhage'), modifiers=[('RID7111', 'epidural space')]),
          definition=('Blood in the potential space between the skull and the dura, characteristically '
  'biconvex and not crossing sutures.'),
          parent='IntracranialHemorrhage',
          defined=False,
          scoped_to=[('RID7111', 'specific', 'required')],
-         note='Biconvex: the dura is anchored at the sutures, so the collection cannot cross them.',
+         note=('Alpha modeling hypothesis for testing: biconvex is fixed here based on the anatomic/morphologic division being evaluated. This has not yet been radiologist-validated; the final division may change after clinical review.'),
+         fixed=[('hasCollectionShape', 'V-000370')],
+         fixed_note=('Provisional alpha mechanism test; this fixed value has not been radiologist-validated and may change after clinical review.'),
          elements=['DE-000001', 'DE-000015'],
          seen_on=['CT', 'MR', 'US', 'XR']),
 
     dict(id='FC-000044',
          cls='SubduralHematoma',
          name='subdural hematoma',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID4700', 'hemorrhage'),
-         anchor_modifiers=[('RID7120', 'subdural space')],
+         radlex_composition=dict(base=('RID4700', 'hemorrhage'), modifiers=[('RID7120', 'subdural space')]),
          definition=('Blood in the space between the dura and the arachnoid, characteristically crescentic '
  'and crossing sutures.'),
          parent='IntracranialHemorrhage',
          defined=False,
          scoped_to=[('RID7120', 'specific', 'required')],
-         note='Crescentic: crosses sutures because the subdural space is not bounded by them.',
+         note=('Alpha modeling hypothesis for testing: crescentic is fixed here based on the anatomic/morphologic division being evaluated. This has not yet been radiologist-validated; the final division may change after clinical review.'),
+         fixed=[('hasCollectionShape', 'V-000371')],
+         fixed_note=('Provisional alpha mechanism test; this fixed value has not been radiologist-validated and may change after clinical review.'),
          elements=['DE-000001', 'DE-000015'],
          seen_on=['CT', 'MR', 'US', 'XR']),
 
     dict(id='FC-000045',
          cls='SubarachnoidHemorrhage',
          name='subarachnoid hemorrhage',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID4700', 'hemorrhage'),
-         anchor_modifiers=[('RID7119', 'subarachnoid space')],
+         radlex_composition=dict(base=('RID4700', 'hemorrhage'), modifiers=[('RID7119', 'subarachnoid space')]),
          definition='Blood in the subarachnoid space, filling sulci and basal cisterns.',
          parent='IntracranialHemorrhage',
          defined=False,
          scoped_to=[('RID7119', 'specific', 'required')],
          synonyms=[('SAH', 'abbreviation')],
-         note='Conforming: fills sulci and basal cisterns rather than forming a mass.',
+         note=('Alpha modeling hypothesis for testing: conforming is fixed here based on the CSF-space morphology being evaluated. This has not yet been radiologist-validated; the final division may change after clinical review.'),
+         fixed=[('hasCollectionShape', 'V-000372')],
+         fixed_note=('Provisional alpha mechanism test; this fixed value has not been radiologist-validated and may change after clinical review.'),
          elements=['DE-000001', 'DE-000015'],
          seen_on=['CT', 'MR', 'US', 'XR']),
 
     dict(id='FC-000046',
          cls='IntraventricularHemorrhage',
          name='intraventricular hemorrhage',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID4700', 'hemorrhage'),
-         anchor_modifiers=[('RID7123', 'cerebral ventricle')],
+         radlex_composition=dict(base=('RID4700', 'hemorrhage'), modifiers=[('RID7123', 'cerebral ventricle')]),
          definition='Blood within the ventricular system.',
          parent='IntracranialHemorrhage',
          defined=False,
          scoped_to=[('RID7123', 'specific', 'required')],
-         note='Conforming: layers dependently within the ventricles.',
+         note=('Alpha modeling hypothesis for testing: biconvex and crescentic are provisionally excluded, leaving conforming and rounded as the open remainder. This division has not yet been radiologist-validated and should be reviewed clinically before being treated as authoritative.'),
+         narrow={'DE-000038': ['V-000372', 'V-000373']},
+         narrow_note={'DE-000038': ('Provisional alpha mechanism test; this narrowing has not been radiologist-validated and may change after clinical review.')},
          elements=['DE-000001', 'DE-000015'],
          seen_on=['CT', 'MR', 'US', 'XR']),
 
     dict(id='FC-000047',
          cls='IntraparenchymalHemorrhage',
          name='intraparenchymal hemorrhage',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID4700', 'hemorrhage'),
-         anchor_modifiers=[('RID6434', 'brain')],
+         radlex_composition=dict(base=('RID4700', 'hemorrhage'), modifiers=[('RID6434', 'brain')]),
          definition='Blood within the brain parenchyma itself.',
          parent='IntracranialHemorrhage',
          defined=False,
          scoped_to=[('RID6434', 'region', 'required')],
-         note=('Rounded: displaces parenchyma rather than filling a space. Scoped to telencephalon '
- 'as a stub. Deep grey, brainstem and cerebellar haemorrhages differ in cause and '
- 'prognosis and are not distinguished here.'),
+         note=('Alpha modeling hypothesis for testing: biconvex and crescentic are provisionally excluded, leaving conforming and rounded as the open remainder. This division has not yet been radiologist-validated and should be reviewed clinically before being treated as authoritative. Scoped to telencephalon as a stub; deep grey, brainstem and cerebellar haemorrhages are not distinguished here.'),
+         narrow={'DE-000038': ['V-000372', 'V-000373']},
+         narrow_note={'DE-000038': ('Provisional alpha mechanism test; this narrowing has not been radiologist-validated and may change after clinical review.')},
          elements=['DE-000001', 'DE-000015'],
          seen_on=['CT', 'MR', 'US', 'XR']),
 
@@ -1439,26 +1207,23 @@ FINDING_CLASSES = [
          cls='Consolidation',
          name='consolidation',
          radlex='RID43255',
-         anchor_verdict='anchored',
          definition=('Replacement of alveolar air by fluid, cells or other material, obscuring the '
  'underlying vessels.'),
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000019', 'DE-000013', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000019', 'DE-000013'],
          seen_on=['CT', 'MR', 'US', 'XR'],
          scoped_to=[('RID35739', 'specific', 'required')],
          in_subspecialty=['CH'],
          synonyms=[('airspace opacity', 'synonym')],
-         note=('Scoped to lung parenchyma, which reaches lung only through a locally authored '
- 'gap-fill edge. Without it this class derives no body region.')),
+         note=('Scoped specifically to lung parenchyma. No broader regional scope is authored or inferred.')),
 
     dict(id='FC-000025',
          cls='GroundGlassOpacity',
          name='ground-glass opacity',
          radlex='RID28531',
-         anchor_verdict='anchored',
          definition='Hazy increased lung attenuation that does not obscure the vessels.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000019', 'DE-000013', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000019', 'DE-000013'],
          scoped_to=[('RID35739', 'specific', 'required')],
          in_subspecialty=['CH'],
          seen_on=['CT', 'MR', 'US', 'XR']),
@@ -1466,39 +1231,33 @@ FINDING_CLASSES = [
     dict(id='FC-000026',
          cls='StriatedNephrogram',
          name='striated nephrogram',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID35573', 'spotted nephrogram'),
-         anchor_modifiers=[('RID205', 'kidney')],
+         radlex_composition=dict(base=('RID35573', 'spotted nephrogram'), modifiers=[('RID205', 'kidney')]),
          definition=('Alternating linear bands of higher and lower attenuation radiating from the papilla '
  'to the cortex on contrast-enhanced imaging.'),
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015'],
          scoped_to=[('RID205', 'specific', 'required')],
          in_subspecialty=['AB'],
          note=('The nearest RadLex concept is spotted nephrogram, a different appearance. '
- 'Post-coordination here is weaker than usual and a request may be better.'),
+ 'Post-coordination here is weaker than usual and may warrant a different terminology binding or representation.'),
          seen_on=['CT', 'MR', 'US', 'XR']),
 
     dict(id='FC-000027',
          cls='PerinephricStranding',
          name='perinephric fat stranding',
-         anchor_verdict='unanchored_requestable',
-         request='RADLEX-REQ-0603',
          definition='Increased attenuation with linear or hazy strands in the perirenal fat.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015'],
          scoped_to=[('RID434', 'specific', 'required')],
          in_subspecialty=['AB'],
-         note=('RadLex has no concept for stranding at all, by label or synonym, so this cannot be '
- 'post-coordinated. A genuine descriptor gap within radiology scope.'),
+         note=('RadLex has no concept for stranding by label or synonym in the configured release; '
+ 'the CDE concept therefore has no exact RadLex binding.'),
          seen_on=['CT', 'MR', 'US', 'XR']),
 
     dict(id='FC-000028',
          cls='WhiteMatterHyperintensity',
          name='white matter hyperintensity',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID35805', 'hyperintense'),
-         anchor_modifiers=[('RID16996', 'cerebral white matter')],
+         radlex_composition=dict(base=('RID35805', 'hyperintense'), modifiers=[('RID16996', 'cerebral white matter')]),
          definition='Increased T2 signal in the cerebral white matter.',
          defined=False,
          elements=['DE-000001', 'DE-000015'],
@@ -1511,13 +1270,11 @@ FINDING_CLASSES = [
     dict(id='FC-000029',
          cls='AcuteInfarct',
          name='acute infarct',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID5172', 'infarction'),
-         anchor_modifiers=[('RID5718', 'acute')],
+         radlex_composition=dict(base=('RID5172', 'infarction'), modifiers=[('RID5718', 'acute')]),
          definition=('Recent ischaemic tissue death, with restricted diffusion and loss of grey-white '
  'differentiation.'),
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000031', 'DE-000037'],
+         elements=['DE-000001', 'DE-000015', 'DE-000037'],
          seen_on=['CT', 'MR', 'US', 'XR'],
          scoped_to=[('RID6434', 'region', 'required')],
          in_subspecialty=['NR'],
@@ -1529,11 +1286,10 @@ FINDING_CLASSES = [
          cls='Atelectasis',
          name='atelectasis',
          radlex='RID28493',
-         anchor_verdict='anchored',
          definition='Incomplete expansion or collapse of lung tissue.',
          note='One class with two independent axes rather than five subtypes. Mechanism and morphology co-occur, so neither partitions the other, and the five classes this replaces were distinguished by nothing in the model: identical scope, identical elements, no defining value.',
          defined=False,
-         elements=['DE-000001', 'DE-000042', 'DE-000043', 'DE-000015', 'DE-000019', 'DE-000031'],
+         elements=['DE-000001', 'DE-000042', 'DE-000043', 'DE-000015', 'DE-000019'],
          seen_on=['CT', 'MR', 'US', 'XR'],
          scoped_to=[('RID1301', 'region', 'required')],
          in_subspecialty=['CH'],
@@ -1542,9 +1298,7 @@ FINDING_CLASSES = [
 dict(id='FC-000030',
          cls='CerebralAtrophy',
          name='cerebral atrophy',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID5046', 'atrophy'),
-         anchor_modifiers=[('RID6434', 'brain')],
+         radlex_composition=dict(base=('RID5046', 'atrophy'), modifiers=[('RID6434', 'brain')]),
          definition='Loss of brain parenchymal volume beyond that expected for age.',
          defined=False,
          scoped_to=[('RID6434', 'region', 'required')],
@@ -1558,11 +1312,10 @@ dict(id='FC-000030',
          cls='Encephalomalacia',
          name='encephalomalacia',
          radlex='RID39076',
-         anchor_verdict='anchored',
          definition=('Established parenchymal loss with cystic change, the sequela of prior injury or '
  'infarction.'),
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015'],
          scoped_to=[('RID6434', 'region', 'required')],
          in_subspecialty=['NR'],
          note=('The far end of the MAY_PROGRESS_TO example in D-17. Infarct and encephalomalacia are '
@@ -1572,13 +1325,11 @@ dict(id='FC-000030',
     dict(id='FC-000032',
          cls='RenalEnlargement',
          name='renal enlargement',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID3775', 'enlargement'),
-         anchor_modifiers=[('RID205', 'kidney')],
+         radlex_composition=dict(base=('RID3775', 'enlargement'), modifiers=[('RID205', 'kidney')]),
          measurements=['MS-000012'],
          definition='Renal length beyond the expected range for age and body size.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015'],
          scoped_to=[('RID205', 'region', 'required')],
          in_subspecialty=['AB'],
          synonyms=[('nephromegaly', 'synonym')],
@@ -1588,12 +1339,10 @@ dict(id='FC-000030',
     dict(id='FC-000033',
          cls='RenalCorticalScarring',
          name='renal cortical scarring',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID3829', 'scar'),
-         anchor_modifiers=[('RID205', 'kidney')],
+         radlex_composition=dict(base=('RID3829', 'scar'), modifiers=[('RID205', 'kidney')]),
          definition='Focal cortical thinning with retraction of the overlying contour.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015'],
          scoped_to=[('RID205', 'region', 'required')],
          in_subspecialty=['AB'],
          seen_on=['CT', 'MR', 'US', 'XR']),
@@ -1604,16 +1353,14 @@ dict(id='FC-000030',
          radlex='RID3798',
          match='broadMatch',
          source_label='lymphadenopathy',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID3798', 'lymphadenopathy'),
-         anchor_modifiers=[('RID1384', 'mediastinum')],
+         radlex_composition=dict(base=('RID3798', 'lymphadenopathy'), modifiers=[('RID1384', 'mediastinum')]),
          definition='Enlargement of one or more mediastinal lymph nodes.',
          defined=False,
          elements=['DE-000001', 'DE-000015', 'DE-000011', 'DE-000012', 'DE-000014'],
          measurements=['MS-000002'],
          seen_on=['CT', 'MR', 'US', 'XR', 'PET'],
          modality_scoped={'DE-000014': ['PET']},
-         scoped_to=[('RID28891', 'class', 'required', 'imported')],
+         scoped_to=[('RID28891', 'class', 'required')],
          in_subspecialty=['CH'],
          synonyms=[('adenopathy', 'synonym')],
          note=('Nodal enlargement is a volume alteration whose direction is gain. RadLex asserts '
@@ -1622,10 +1369,8 @@ dict(id='FC-000030',
     dict(id='FC-000053',
          cls='ExternalCarotidArteryStenosis',
          name='external carotid artery stenosis',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID5016', 'stenosis'),
-         anchor_modifiers=[('RID684', 'external carotid artery')],
-         elements=['DE-000001', 'DE-000015', 'DE-000031', 'DE-000045', 'DE-000044'],
+         radlex_composition=dict(base=('RID5016', 'stenosis'), modifiers=[('RID684', 'external carotid artery')]),
+         elements=['DE-000001', 'DE-000015', 'DE-000045', 'DE-000044'],
          measurements=['MS-000017', 'MS-000018'],
          definition='Narrowing of the external carotid artery lumen.',
          parent=None,
@@ -1639,21 +1384,19 @@ dict(id='FC-000030',
                'from velocity, because the vessel is small and tortuous and a diameter ratio is '
                'unreliable there. Different element, different measurements, different '
                'modality emphasis. '
-               'This is why the authoring patterns are topics rather than element bundles: a '
-               'pattern that inserted the stenosis machinery into everything called a stenosis '
-               'would have put NASCET percentages on this class.')),
+               'This demonstrates why similarly named findings must not automatically share '
+               'DataElements: inserting the internal-carotid stenosis machinery here would '
+               'incorrectly put NASCET percentages on this class.')),
 
     dict(id='FC-000034',
          cls='InternalCarotidArteryStenosis',
          name='internal carotid artery stenosis',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID5016', 'stenosis'),
-         anchor_modifiers=[('RID585', 'internal carotid artery')],
+         radlex_composition=dict(base=('RID5016', 'stenosis'), modifiers=[('RID585', 'internal carotid artery')]),
          note=('Named for the vessel it is scoped to. Carotid stenosis names a family: the common and external carotid arteries stenose too, and their measurements take different baseline landmarks, so they are separate classes rather than values on one. '
          'Carries both the ordinal band and the percentage, and both NASCET and ECST. They are not alternatives and nothing converts between them: 70 percent NASCET is roughly 85 percent ECST, so a consumer reading one as the other would be wrong by a management threshold.'),
          definition='Narrowing of the internal carotid artery lumen.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000023', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000023'],
          scoped_to=[('RID585', 'specific', 'required')],
          in_subspecialty=['NR'],
                   measurements=['MS-000013', 'MS-000016', 'MS-000014', 'MS-000015'],
@@ -1663,10 +1406,9 @@ dict(id='FC-000030',
          cls='Hydronephrosis',
          name='hydronephrosis',
          radlex='RID34393',
-         anchor_verdict='anchored',
          definition='Dilation of the renal collecting system.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000020', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000020'],
          scoped_to=[('RID228', 'specific', 'required')],
          in_subspecialty=['AB'],
          seen_on=['CT', 'MR', 'US', 'XR']),
@@ -1674,11 +1416,9 @@ dict(id='FC-000030',
     dict(id='FC-000036',
          cls='PulmonaryArteryFillingDefect',
          name='pulmonary artery filling defect',
-         anchor_verdict='unanchored_requestable',
-         request='RADLEX-REQ-0605',
          definition='Intraluminal material within a pulmonary artery on contrast-enhanced CT.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000024', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000024'],
          seen_on=['CT', 'MR', 'US', 'XR'],
          scoped_to=[('RID974', 'specific', 'required')],
          in_subspecialty=['CH'],
@@ -1690,12 +1430,10 @@ dict(id='FC-000030',
     dict(id='FC-000037',
          cls='RibFracture',
          name='rib fracture',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID4650', 'fracture'),
-         anchor_modifiers=[('RID2471', 'rib')],
+         radlex_composition=dict(base=('RID4650', 'fracture'), modifiers=[('RID2471', 'rib')]),
          definition='A break in the cortex of a rib.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000027', 'DE-000028', 'DE-000031', 'DE-000034'],
+         elements=['DE-000001', 'DE-000015', 'DE-000027', 'DE-000028', 'DE-000034'],
          seen_on=['CT', 'MR', 'US', 'XR'],
          narrow={'DE-000034': ['V-000330', 'V-000332', 'V-000333', 'V-000335']},
          scoped_to=[('RID2471', 'class', 'required')],
@@ -1709,9 +1447,7 @@ dict(id='FC-000030',
     dict(id='FC-000038',
          cls='MidlineShift',
          name='midline shift',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID4751', 'displacement'),
-         anchor_modifiers=[('RID6434', 'brain')],
+         radlex_composition=dict(base=('RID4751', 'displacement'), modifiers=[('RID6434', 'brain')]),
          definition='Displacement of midline intracranial structures from the midline.',
          defined=False,
          narrow={'DE-000021': ['V-000200', 'V-000201']},
@@ -1724,9 +1460,7 @@ dict(id='FC-000030',
     dict(id='FC-000039',
          cls='MediastinalShift',
          name='mediastinal shift',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID4751', 'displacement'),
-         anchor_modifiers=[('RID1384', 'mediastinum')],
+         radlex_composition=dict(base=('RID4751', 'displacement'), modifiers=[('RID1384', 'mediastinum')]),
          definition='Displacement of the mediastinum from the midline.',
          defined=False,
          narrow={'DE-000021': ['V-000200', 'V-000201']},
@@ -1739,12 +1473,10 @@ dict(id='FC-000030',
     dict(id='FC-000040',
          cls='VentricularShuntCatheter',
          name='ventricular shunt catheter',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID5576', 'catheter'),
-         anchor_modifiers=[('RID7123', 'cerebral ventricle')],
+         radlex_composition=dict(base=('RID5576', 'catheter'), modifiers=[('RID7123', 'cerebral ventricle')]),
          definition='A catheter placed to divert cerebrospinal fluid from the ventricular system.',
          defined=False,
-         elements=['DE-000001', 'DE-000015', 'DE-000025', 'DE-000026', 'DE-000031'],
+         elements=['DE-000001', 'DE-000015', 'DE-000025', 'DE-000026'],
          scoped_to=[('RID7124', 'specific', 'expected')],
          in_subspecialty=['NR'],
          criterion=('Intended tip position is the frontal horn of a lateral ventricle. The criterion sits '
@@ -1757,30 +1489,26 @@ dict(id='FC-000030',
          cls='AzygosFissure',
          name='azygos fissure',
          radlex='RID43259',
-         anchor_verdict='anchored',
          definition=('An accessory fissure formed by the azygos vein invaginating the right upper lobe '
  'during development.'),
          defined=False,
          scoped_to=[('RID1303', 'region', 'required')],
          in_subspecialty=['CH'],
-         note=('Not an abnormality. It takes no severity and its interval change is meaningless, '
- 'which is why the variant pattern supplies neither. A pattern set built only from '
- 'lesions could not express this at all.'),
+         note=('Not an abnormality. It takes no severity and its interval change is meaningless; '
+ 'those topics are not applicable to this finding.'),
          elements=['DE-000001'],
          seen_on=['CT', 'MR', 'US', 'XR']),
 
     dict(id='FC-000013',
          cls='TendinousLesion',
          name='tendon lesion',
-         anchor_verdict='post_coordinated',
-         anchor_base=('RID38780', 'lesion'),
-         anchor_modifiers=[('RID6067', 'tendon')],
+         radlex_composition=dict(base=('RID38780', 'lesion'), modifiers=[('RID6067', 'tendon')]),
          definition='A lesion involving a tendon.',
          defined=False,
          elements=['DE-000001', 'DE-000015'],
          scoped_to=[('RID6067', 'class', 'required')],
-         note=('Exercises SCOPED_TO kind=class, where tendons share no container so PART_OF cannot '
- 'express the scope.'),
+         note=('Exercises SCOPED_TO kind=class, where scope is evaluated taxonomically against '
+ 'tendon and its native subclasses.'),
          measurements=['MS-000001', 'MS-000006'],
          seen_on=['CT', 'MR', 'US', 'XR']),
 ]
@@ -1802,9 +1530,7 @@ DIAGNOSES = [
     # ---- thoracic focal ---------------------------------------------------
     dict(id="DX-000001", cls="PulmonaryHamartoma", name="pulmonary hamartoma",
          radlex="RID4335", match="broadMatch", source_label="hamartoma",
-         anchor_verdict="post_coordinated",
-         anchor_base=("RID4335", "hamartoma"),
-         anchor_modifiers=[("RID1301", "lung")],
+         radlex_composition=dict(base=("RID4335", "hamartoma"), modifiers=[("RID1301", "lung")]),
          elements=["DE-000001"],
          scoped_to=[("RID1301", "region", "required")],
          definition="A benign lung neoplasm of disorganised mesenchymal tissue, "
@@ -1814,9 +1540,7 @@ DIAGNOSES = [
 
     dict(id="DX-000002", cls="PulmonaryGranuloma", name="pulmonary granuloma",
          radlex="RID3953", match="broadMatch", source_label="granuloma",
-         anchor_verdict="post_coordinated",
-         anchor_base=("RID3953", "granuloma"),
-         anchor_modifiers=[("RID1301", "lung")],
+         radlex_composition=dict(base=("RID3953", "granuloma"), modifiers=[("RID1301", "lung")]),
          elements=["DE-000001"],
          scoped_to=[("RID1301", "region", "required")],
          definition="A focus of granulomatous inflammation in the lung, usually the sequela "
@@ -1825,8 +1549,7 @@ DIAGNOSES = [
          etiology=["ET-000001"]),
 
     dict(id="DX-000003", cls="IntrapulmonaryLymphNode", name="intrapulmonary lymph node",
-         radlex="RID1496", match="exactMatch", source_label="pulmonary lymph node",
-         anchor_verdict="anchored", synonym_only_hit=True,
+         radlex="RID1496", match="exactMatch", source_label="pulmonary lymph node", synonym_only_hit=True,
          elements=["DE-000001"],
          scoped_to=[("RID1301", "region", "required")],
          definition="A normal lymph node within the lung parenchyma, characteristically "
@@ -1836,7 +1559,6 @@ DIAGNOSES = [
               "A label-only duplicate check would have missed it."),
 
     dict(id="DX-000004", cls="LungCancer", name="lung cancer", radlex="RID45686",
-         anchor_verdict="anchored",
          elements=["DE-000001"],
          scoped_to=[("RID1301", "region", "required")],
          definition="Primary malignant neoplasm arising from lung tissue.",
@@ -1862,7 +1584,6 @@ DIAGNOSES = [
 
     # ---- pleural ----------------------------------------------------------
     dict(id="DX-000011", cls="Empyema", name="empyema", radlex="RID3714",
-         anchor_verdict="anchored",
          elements=["DE-000001"],
          scoped_to=[("RID1363", "specific", "required")],
          definition="Infected pleural fluid: pus in the pleural space.",
@@ -1875,7 +1596,6 @@ DIAGNOSES = [
               "finding and diagnosis layers."),
 
     dict(id="DX-000012", cls="Hemothorax", name="hemothorax", radlex="RID34595",
-         anchor_verdict="anchored",
          elements=["DE-000001"],
          scoped_to=[("RID1363", "specific", "required")],
          definition="Blood in the pleural space.",
@@ -1883,22 +1603,19 @@ DIAGNOSES = [
          etiology=["ET-000004", "ET-000007"]),
 
     dict(id="DX-000013", cls="Chylothorax", name="chylothorax", radlex=None,
-         anchor_verdict="post_coordinated",
-         anchor_base=("RID1545", "chyle"),
-         anchor_modifiers=[("RID1363", "pleural space")],
+         radlex_composition=dict(base=("RID1545", "chyle"), modifiers=[("RID1363", "pleural space")]),
          elements=["DE-000001"],
          scoped_to=[("RID1363", "specific", "required")],
          definition="Chyle in the pleural space from disruption or obstruction of the "
                     "thoracic duct.",
          manifests_as=[("PleuralEffusion", "obligate", "highly_suggestive")],
          etiology=["ET-000004", "ET-000007"],
-         note="Absent from RadLex by label and synonym, and a radiologist reports seeing it, "
-              "so this is a legitimate request rather than an out-of-scope clinical term."),
+         note="Absent from RadLex by label and synonym in the configured release; the concept is "
+              "represented by its CDE semantics and terminology composition."),
 
     dict(id="DX-000014", cls="ParapneumonicEffusion", name="parapneumonic effusion",
-         radlex=None, anchor_verdict="post_coordinated",
-         anchor_base=("RID34539", "pleural effusion"),
-         anchor_modifiers=[("RID5350", "pneumonia")],
+         radlex=None,
+         radlex_composition=dict(base=("RID34539", "pleural effusion"), modifiers=[("RID5350", "pneumonia")]),
          elements=["DE-000001"],
          scoped_to=[("RID1363", "specific", "required")],
          definition="Pleural effusion accompanying pneumonia, before it becomes an empyema.",
@@ -1908,7 +1625,7 @@ DIAGNOSES = [
 
     # ---- non-imaging diagnoses: causal targets ----------------------------
     dict(id="DX-000027", cls="TensionPneumothorax", name="tension pneumothorax",
-         radlex="RID28525", anchor_verdict="anchored",
+         radlex="RID28525",
          elements=["DE-000001"],
          scoped_to=[("RID1363", "specific", "required")],
          definition="A pneumothorax under positive pressure, displacing the mediastinum and "
@@ -1918,13 +1635,11 @@ DIAGNOSES = [
                        ("MediastinalShift", "frequent", "highly_suggestive"),
                        ("Atelectasis", "occasional", "suggestive")],
          etiology=["ET-000004", "ET-000007"],
-         note="Was briefly modelled as a present/absent DataElement on pneumothorax. That is "
-              "the legacy habit of recreating presence as the name of a thing: the value list "
-              "was the giveaway. No single sign establishes tension, which is what makes it a "
-              "conclusion rather than an attribute."),
+         note="No single imaging sign establishes tension. It is a physiological conclusion "
+              "supported by imaging findings together with the clinical picture, rather than "
+              "a present/absent attribute of pneumothorax."),
 
     dict(id="DX-000015", cls="HeartFailure", name="heart failure", radlex="RID34795",
-         anchor_verdict="anchored",
          elements=["DE-000001"],
          note="Causes the oedema rather than manifesting as it: heart failure raises left "
               "atrial pressure and fluid accumulates, which is production of a second entity. "
@@ -1936,7 +1651,6 @@ DIAGNOSES = [
          no_imaging_elements=True),
 
     dict(id="DX-000016", cls="Pneumonia", name="pneumonia", radlex="RID5350",
-         anchor_verdict="anchored",
          elements=["DE-000001"],
          scoped_to=[("RID35739", "specific", "required")],
          definition="Infection of the lung parenchyma.",
@@ -1946,7 +1660,6 @@ DIAGNOSES = [
          etiology=["ET-000001"]),
 
     dict(id="DX-000017", cls="PulmonaryEdema", name="pulmonary edema", radlex="RID4866",
-         anchor_verdict="anchored",
          elements=["DE-000001", "DE-000020"],
          scoped_to=[("RID1301", "region", "required")],
          definition="Accumulation of fluid in the lung, most often from raised left atrial "
@@ -1957,16 +1670,15 @@ DIAGNOSES = [
          etiology=["ET-000005"]),
 
     dict(id="DX-000018", cls="MalignantNeoplasticDisease", name="malignant neoplastic disease",
-         radlex="RID34616", anchor_verdict="anchored",
+         radlex="RID34616",
          elements=["DE-000001"],
          definition="Any malignant neoplasm, primary or metastatic.",
          causes=[("MalignantPleuralEffusion", "occasional")],
          no_imaging_elements=True, etiology=["ET-000002"]),
 
     dict(id="DX-000026", cls="MalignantPleuralEffusion", name="malignant pleural effusion",
-         radlex=None, anchor_verdict="post_coordinated",
-         anchor_base=("RID34539", "pleural effusion"),
-         anchor_modifiers=[("RID15655", "malignant")],
+         radlex=None,
+         radlex_composition=dict(base=("RID34539", "pleural effusion"), modifiers=[("RID15655", "malignant")]),
          elements=["DE-000001"],
          scoped_to=[("RID1363", "specific", "required")],
          definition="Pleural effusion from involvement of the pleura by malignancy.",
@@ -1977,18 +1689,15 @@ DIAGNOSES = [
               "evaluator flags as a detached component."),
 
     dict(id="DX-000019", cls="NephroticSyndrome", name="nephrotic syndrome", radlex=None,
-         anchor_verdict="out_of_primary_scope",
          elements=["DE-000001"],
          definition="Heavy proteinuria with hypoalbuminemia and edema.",
          causes=[("PleuralEffusion", "frequent")],
          no_imaging_elements=True,
-         note="A clinical syndrome, not something a radiologist observes. RadLex has no "
-              "concept and should not be asked for one. SNOMED CT is primary here, which is "
-              "the case the out_of_primary_scope verdict exists for."),
+         note="A clinical syndrome rather than an imaging observation. It is represented as a "
+              "Diagnosis and may use terminology bindings appropriate to that concept, including SNOMED CT."),
 
     # ---- vascular ---------------------------------------------------------
     dict(id="DX-000020", cls="PulmonaryEmbolism", name="pulmonary embolism", radlex="RID4834",
-         anchor_verdict="anchored",
          elements=["DE-000001"],
          scoped_to=[("RID974", "specific", "required")],
          definition="Thromboembolic occlusion of pulmonary arteries.",
@@ -2000,9 +1709,7 @@ DIAGNOSES = [
 
     # ---- renal ------------------------------------------------------------
     dict(id="DX-000021", cls="AcutePyelonephritis", name="acute pyelonephritis", radlex=None,
-         anchor_verdict="post_coordinated",
-         anchor_base=("RID3547", "pyelonephritis"),
-         anchor_modifiers=[("RID5718", "acute")],
+         radlex_composition=dict(base=("RID3547", "pyelonephritis"), modifiers=[("RID5718", "acute")]),
          elements=["DE-000001", "DE-000020"],
          scoped_to=[("RID205", "region", "required")],
          definition="Active bacterial infection of the renal parenchyma and collecting system.",
@@ -2025,9 +1732,8 @@ DIAGNOSES = [
               "grades each one alone."),
 
     dict(id="DX-000022", cls="ChronicPyelonephritis", name="chronic pyelonephritis",
-         radlex=None, anchor_verdict="post_coordinated",
-         anchor_base=("RID3547", "pyelonephritis"),
-         anchor_modifiers=[("RID5719", "chronic")],
+         radlex=None,
+         radlex_composition=dict(base=("RID3547", "pyelonephritis"), modifiers=[("RID5719", "chronic")]),
          elements=["DE-000001"],
          scoped_to=[("RID205", "region", "required")],
          definition="Pyelonephritis with established parenchymal damage from prior or "
@@ -2040,8 +1746,7 @@ DIAGNOSES = [
               "differently here because acute and chronic pyelonephritis manifest differently."),
 
     dict(id="DX-000023", cls="RenalCellCarcinoma", name="renal cell carcinoma",
-         radlex="RID4230", match="exactMatch", source_label="renal adenocarcinoma",
-         anchor_verdict="anchored", synonym_only_hit=True,
+         radlex="RID4230", match="exactMatch", source_label="renal adenocarcinoma", synonym_only_hit=True,
          elements=["DE-000001"],
          scoped_to=[("RID205", "region", "required")],
          definition="A primary malignant neoplasm arising from renal tubular epithelium.",
@@ -2052,7 +1757,7 @@ DIAGNOSES = [
 
     # ---- other focal ------------------------------------------------------
     dict(id="DX-000005", cls="HepatocellularCarcinoma", name="hepatocellular carcinoma",
-         radlex="RID4271", anchor_verdict="anchored",
+         radlex="RID4271",
          elements=["DE-000001"],
          scoped_to=[("RID58", "region", "required")],
          definition="A primary malignant neoplasm arising from hepatocytes.",
@@ -2061,9 +1766,8 @@ DIAGNOSES = [
          assessed_by=["AS-000003"], etiology=["ET-000002"]),
 
     dict(id="DX-000008", cls="AdrenalAdenoma", name="adrenal adenoma", radlex="RID4211",
-         match="broadMatch", source_label="adenoma", anchor_verdict="post_coordinated",
-         anchor_base=("RID4211", "adenoma"),
-         anchor_modifiers=[("RID92", "cortex of adrenal gland")],
+         match="broadMatch", source_label="adenoma",
+         radlex_composition=dict(base=("RID4211", "adenoma"), modifiers=[("RID92", "cortex of adrenal gland")]),
          elements=["DE-000001"],
          scoped_to=[("RID92", "specific", "required")],
          definition="A benign neoplasm of the adrenal cortex.",
@@ -2071,7 +1775,7 @@ DIAGNOSES = [
          etiology=["ET-000002"]),
 
     dict(id="DX-000009", cls="MetastaticDisease", name="metastatic disease", radlex="RID5231",
-         match="closeMatch", source_label="metastasis", anchor_verdict="anchored",
+         match="closeMatch", source_label="metastasis",
          elements=["DE-000001"],
          definition="Neoplasm that has spread from a primary site to a discontiguous site.",
          manifests_as=[("PulmonaryNodule", "frequent", "suggestive"),
@@ -2081,9 +1785,8 @@ DIAGNOSES = [
          etiology=["ET-000002"]),
 
     dict(id="DX-000010", cls="ReactiveLymphadenopathy", name="reactive lymphadenopathy",
-         radlex=None, anchor_verdict="post_coordinated",
-         anchor_base=("RID3798", "lymphadenopathy"),
-         anchor_modifiers=[("RID3382", "inflammation")],
+         radlex=None,
+         radlex_composition=dict(base=("RID3798", "lymphadenopathy"), modifiers=[("RID3382", "inflammation")]),
          elements=["DE-000001"],
          scoped_to=[("RID13296", "class", "required")],
          definition="Lymph node enlargement secondary to a benign immune response.",
@@ -2093,9 +1796,7 @@ DIAGNOSES = [
     # ---- neuro ------------------------------------------------------------
     dict(id="DX-000024", cls="CerebralInfarction", name="cerebral infarction",
          radlex="RID5172", match="broadMatch", source_label="infarction",
-         anchor_verdict="post_coordinated",
-         anchor_base=("RID5172", "infarction"),
-         anchor_modifiers=[("RID6434", "brain")],
+         radlex_composition=dict(base=("RID5172", "infarction"), modifiers=[("RID6434", "brain")]),
          elements=["DE-000001"],
          scoped_to=[("RID6434", "region", "required")],
          definition="Tissue death in the brain from interruption of arterial supply.",
@@ -2108,7 +1809,7 @@ DIAGNOSES = [
               "one finding with a temporal-descriptor value."),
 
     dict(id="DX-000025", cls="ChronicSmallVesselDisease", name="chronic small vessel disease",
-         radlex=None, anchor_verdict="unanchored_requestable", request="RADLEX-REQ-0612",
+         radlex=None,
          elements=["DE-000001", "DE-000020"],
          scoped_to=[("RID6434", "region", "required")],
          definition="Chronic ischaemic change of the cerebral small vessels.",
@@ -2119,28 +1820,8 @@ DIAGNOSES = [
 
 
 # ---------------------------------------------------------------------------
-# SCOPE RESOLUTION
-#
-# Why a mention carries no anatomic scope. `stated` and `indeterminate` describe
-# a coded finding. `not stated` and `unresolved` describe a mention that never
-# became one: with no abstract genus there is no class to put it in, so it is
-# recorded as an UnresolvedMention rather than as a vague finding.
-#
+# ADDITIONAL SCOPE ASSERTIONS
 # ---------------------------------------------------------------------------
-
-SCOPE_RESOLUTION = [
-    ("SR-000001", "ScopeStated", "stated",
-     "The source names an anatomic location and it was resolved to a node."),
-    ("SR-000002", "ScopeNotStated", "not stated",
-     "The source names no anatomic location. A fact about the report. Produces an "
-     "UnresolvedMention, not a finding."),
-    ("SR-000003", "ScopeIndeterminate", "indeterminate",
-     "The source refers to a location that cannot be resolved to a single node."),
-    ("SR-000004", "ScopeUnresolved", "unresolved",
-     "The source names a location that extraction did not resolve. A fact about the "
-     "pipeline and a defect rather than a finding. Produces an UnresolvedMention."),
-]
-
 
 SCOPE_ASSERTIONS = []
 
@@ -2149,62 +1830,21 @@ SCOPE_ASSERTIONS = []
 # INSTANCE EXAMPLES
 # ---------------------------------------------------------------------------
 
-# Deliberately empty.
-#
-# There were six worked instances and two unresolved mentions. Each paired a
-# sentence borrowed from the modelling corpora with a representation authored
-# here: which class, which element values, which measurement. The sentence was
-# real; the representation was a set of choices, and several asserted things the
-# sentence did not say. One example carried distribution=solitary and a
-# mean-diameter reading of "5 mm" when the text stated neither, and rendered in
-# the OWL indistinguishably from a value that had been derived or checked.
-#
-# They were removed rather than corrected because they added no coverage. Every
-# entailment they tested is tested by a class-level probe that invents nothing:
-# probe A3 asserts that a pulmonary nodule whose attenuation is part-solid
-# classifies as PartSolidPulmonaryNodule, which is the same claim without a
-# fabricated sentence around it.
-#
-# Instance-level validation needs data nobody here can author: either instances
-# written by a radiologist, or the output of something that actually reads text.
-# Until one exists, the probes are the honest test.
+# No authored instance examples are shipped. Representational claims are tested
+# with class-level reasoning probes instead.
 INSTANCE_EXAMPLES = []
 
 # ---------------------------------------------------------------------------
-# UNRESOLVED MENTIONS
+# AUTHORING CONTENT AND LINT
 #
-# Text that names something finding-shaped but does not become a coded finding.
-# Not a FindingClass and not in the reportable output: an extraction artifact,
-# countable so that underspecification can be measured, and carrying the reason
-# so a report that said nothing is distinguishable from a pipeline that missed
-# something.
+# Patterns are authoring guidance only. A class carries exactly the elements,
+# measurements and modalities its author declares.
 # ---------------------------------------------------------------------------
-
-UNRESOLVED_MENTIONS = []
-
-# ---------------------------------------------------------------------------
-# PATTERN EXPANSION AND LINT
-#
-# The generator applies patterns; the graph never sees them. Provenance is kept
-# so a reviewer can tell an authored element from a generated one, which is the
-# thing inheritance used to give for free.
-# ---------------------------------------------------------------------------
-
-PATTERN_BY_NAME = {p["name"]: p for p in PATTERNS}
-
-
-PATTERN_BY_NAME = {p["name"]: p for p in PATTERNS}
-
 
 def expand(fc):
-    """Return a class's own content. Patterns supply nothing.
-
-    Kept as a function because the builders call it, but it no longer merges
-    anything: a class carries exactly the elements, measurements and modalities
-    its author wrote. The empty provenance map is returned for compatibility.
-    """
+    """Return the class's authored elements, measurements and modalities."""
     return (list(fc.get("elements", [])), list(fc.get("measurements", [])),
-            list(fc.get("seen_on", [])), {})
+            list(fc.get("seen_on", [])))
 
 
 def lint():
@@ -2220,45 +1860,10 @@ def lint():
         else:
             seen[key] = de["id"]
 
-    # A class may be scoped at or BELOW the measurement's scope: carotid stenosis sits at
-    # the internal carotid artery and luminal caliber is scoped to artery, which is correct.
-    # Needs the anatomy module to walk; skipped when it is not on disk.
-    ms_scope = {m["id"]: m["scope_target"] for m in MEASUREMENTS if m.get("scoped_to_anatomy")}
-    for de in DATA_ELEMENTS:
-        for r in de.get("scoped_to", []):
-            ms_scope[de["id"]] = r
-    if ms_scope:
-        import json as _json, os as _os
-        _p = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "anatomy.json")
-        up = {}
-        if _os.path.exists(_p):
-            _a = _json.load(open(_p))
-            for _e in _a["is_a"] + _a["part_of"] + _a.get("local_edges", []):
-                up.setdefault(_e["frm"], []).append(_e["to"])
-
-            def below(x, target, depth=12):
-                seen, front = {x}, [x]
-                for _ in range(depth):
-                    nxt = []
-                    for c in front:
-                        for t in up.get(c, []):
-                            if t == target:
-                                return True
-                            if t not in seen:
-                                seen.add(t); nxt.append(t)
-                    front = nxt
-                return False
-
-            for fc in FINDING_CLASSES:
-                cls_scope = [x[0] for x in fc.get("scoped_to", [])]
-                for msid in list(fc.get("measurements", [])) + list(fc.get("elements", [])):
-                    tgt = ms_scope.get(msid)
-                    if not tgt or not cls_scope:
-                        continue
-                    if not any(c == tgt or below(c, tgt) for c in cls_scope):
-                        out.append(("element-scope-agrees", fc["cls"],
-                                    f"attaches {msid}, scoped to {tgt}, but is scoped to "
-                                    f"{cls_scope}, which is not at or below it"))
+    # Scope-congruence traversal is intentionally not guessed here. Native RadLex
+    # predicates remain distinct, and a concept's relationship path is usable only
+    # when an authored rule explicitly selects the predicate(s) and traversal behavior.
+    # Identity-only checks need no traversal and are handled by consumers directly.
 
     par = {f["cls"]: f.get("parent") for f in FINDING_CLASSES}
     def ancestors(c):
@@ -2291,7 +1896,7 @@ def lint():
         # A class may narrow an element it inherits from its parent, so the check
         # walks the ancestor chain rather than only this class's own expansion.
         by_cls = {f["cls"]: f for f in FINDING_CLASSES}
-        eff_el, _, _, _ = expand(fc)
+        eff_el, _, _ = expand(fc)
         eff_el = list(eff_el)
         anc = fc.get("parent")
         seen_anc = set()
@@ -2314,5 +1919,5 @@ def lint():
             d[0].startswith("scopedTo") for d in fc.get("differentia", []))
         if not anchored and not fc.get("component") and not fc.get("parent"):
             out.append(("location-anchored", fc["cls"],
-                        "has no anatomic anchor, so it is a pattern that escaped into the graph"))
+                        "has no anatomic anchor, so it does not meet the current FindingClass boundary"))
     return out

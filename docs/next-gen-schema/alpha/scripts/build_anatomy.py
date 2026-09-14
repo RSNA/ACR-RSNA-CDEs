@@ -1,273 +1,249 @@
 # -*- coding: utf-8 -*-
+"""Build a read-only native RadLex index used by the alpha.
+
+This file intentionally does not create a CDE anatomy ontology. RadLex class
+IRIs and RadLex object-property IRIs are preserved exactly. Equivalent direct
+RDF assertions and OWL restriction expressions are represented once, with the
+source expression forms retained as provenance.
 """
-Builds the imported anatomy module, and the imported-fact layer generally,
-from RadLex.owl.
+from __future__ import annotations
+import json, re
+from collections import OrderedDict
+from pathlib import Path
+from lxml import etree
+from radlex_config import RADLEX_OWL, RADLEX_VERSION, RADLEX_NS, RADLEX_ONTOLOGY_IRI
 
-The OWL file replaces the CSV export as the source of truth. The two carry
-identical content (verified field by field: 24 of 24 matching value counts),
-but the OWL carries the partonomy as real axioms rather than as pipe-delimited
-strings, so relations are extracted rather than reconstructed.
+ROOT = Path(__file__).resolve().parent.parent
 
-Three fields the CSV-based build never used are now imported:
+RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+RDFS = "http://www.w3.org/2000/01/rdf-schema#"
+OWL = "http://www.w3.org/2002/07/owl#"
+XML = "http://www.w3.org/XML/1998/namespace"
 
-  Unsanctioned_Term  terms RadLex explicitly discourages for a concept. These
-                     are NOT synonyms and must never be emitted as skos:altLabel
-                     or matched by duplicate detection.
-  Anatomical_Site    RadLex's own finding-to-anatomy assertion. Where present,
-                     scope is imported rather than authored.
-  Replaced_by /      retirement pointers. The Obsolete flag is FALSE for every
-  Preferred_Name_    concept in 4.3 while 437 carry Replaced_by, so retirement
-  for_Obsolete       is tracked by the pointer, not by the flag.
+Q_ABOUT = f"{{{RDF}}}about"
+Q_RESOURCE = f"{{{RDF}}}resource"
+Q_TYPE = f"{{{RDF}}}type"
+Q_CLASS = f"{{{OWL}}}Class"
+Q_OBJPROP = f"{{{OWL}}}ObjectProperty"
+Q_DESC = f"{{{RDF}}}Description"
+Q_LABEL = f"{{{RDFS}}}label"
+Q_SUBCLASS = f"{{{RDFS}}}subClassOf"
+Q_SUBPROP = f"{{{RDFS}}}subPropertyOf"
+Q_INVERSE = f"{{{OWL}}}inverseOf"
+Q_DOMAIN = f"{{{RDFS}}}domain"
+Q_RANGE = f"{{{RDFS}}}range"
+Q_EQUIVCLASS = f"{{{OWL}}}equivalentClass"
+Q_RESTRICTION = f"{{{OWL}}}Restriction"
+Q_ONPROP = f"{{{OWL}}}onProperty"
+PROPERTY_CHARACTERISTICS = {
+    OWL + "TransitiveProperty": "transitive",
+    OWL + "FunctionalProperty": "functional",
+    OWL + "InverseFunctionalProperty": "inverseFunctional",
+    OWL + "SymmetricProperty": "symmetric",
+    OWL + "AsymmetricProperty": "asymmetric",
+    OWL + "ReflexiveProperty": "reflexive",
+    OWL + "IrreflexiveProperty": "irreflexive",
+}
 
-Real Definition and Source values are carried too, in place of the
-"Imported from RadLex" placeholder the CSV build fell back to.
-"""
-import re, json, os, time
-from collections import OrderedDict, defaultdict
-import rdflib
-from rdflib import Graph, URIRef
-from rdflib.namespace import RDFS, OWL
-import spec
+FILLERS = {
+    f"{{{OWL}}}someValuesFrom": "someValuesFrom",
+    f"{{{OWL}}}allValuesFrom": "allValuesFrom",
+    f"{{{OWL}}}hasValue": "hasValue",
+    f"{{{OWL}}}onClass": "onClass",
+}
 
-OWL_SRC = "/home/claude/work/rlowl/RadLex.owl"
-NT_CACHE = "/home/claude/work/radlex.nt"
-RID = "http://www.radlex.org/RID/"
+RID_RE = re.compile(re.escape(RADLEX_NS) + r"(RID\d+)$")
 
-PART_SENSES = OrderedDict([
-    ("Part_Of", "generalPartOf"),
-    ("Regional_Part_Of", "regionalPartOf"),
-    ("Constitutional_Part_Of", "constitutionalPartOf"),
-])
-
-# Contained_In is imported but kept OUT of the partOf family on purpose. A kidney
-# is not part of the abdomen, it is located in it. Folding the two together would
-# let scope congruence chase location links.
-#
-# It is imported because the body-region facet needs it: kidney reaches abdomen
-# only through Contained_In, so without it the facet cannot be derived and a
-# separate authored IN_REGION edge becomes necessary. Traversed only for the
-# facet, never for scope congruence. See DECISIONS.md D-22.
-LOCATION_SENSES = OrderedDict([("Contained_In", "containedIn")])
-
-EXCLUDED_SENSES = ["Member_Of", "Segment_Of", "Branch_Part_of"]
-
-# Unsanctioned_Term, Acronym and Misspelling_of_term are all rdfs:subPropertyOf
-# Synonym in RadLex. They must be read separately: a discouraged term is not a
-# synonym, and a misspelling is not either.
-ANN = ["Definition", "Source", "Synonym", "Acronym", "Unsanctioned_Term",
-       "Misspelling_of_term", "Replaced_by", "Preferred_Name_for_Obsolete",
-       "Comment", "Anatomical_Site", "Related_modality",
-       "Radlex_version_of_class_change"]
-
-ALL_SENSES = OrderedDict(list(PART_SENSES.items()) + list(LOCATION_SENSES.items()))
-
-
-def rid_of(term):
-    if not isinstance(term, URIRef):
+def rid_from_iri(iri):
+    if not iri:
         return None
-    m = re.fullmatch(re.escape(RID) + r"(RID\d+)", str(term))
+    m = RID_RE.match(str(iri))
     return m.group(1) if m else None
 
 
-def load():
-    g = Graph()
-    t = time.time()
-    if os.path.exists(NT_CACHE) and os.path.getmtime(NT_CACHE) > os.path.getmtime(OWL_SRC):
-        g.parse(NT_CACHE, format="nt"); src = "cache"
-    else:
-        g.parse(OWL_SRC, format="xml"); g.serialize(NT_CACHE, format="nt"); src = "RadLex.owl"
-    print(f"loaded {len(g):,} triples from {src} in {time.time()-t:.0f}s")
-    return g
+def local_name(iri):
+    return str(iri).rsplit("/", 1)[-1].rsplit("#", 1)[-1]
 
 
-def index(g):
-    # The vocabulary is not multilingual. RadLex carries German labels and German
-    # synonyms; both are dropped on import. Latin synonyms are kept, because Latin
-    # anatomical nomenclature is an alternate term for the structure rather than a
-    # translation for display.
-    label_en = {}
-    ann = defaultdict(lambda: defaultdict(list))
-    for s, _, o in g.triples((None, RDFS.label, None)):
-        r = rid_of(s)
-        if r and getattr(o, "language", None) in ("en", None):
-            label_en[r] = str(o)
-    # Synonym is language-tagged in the OWL (en 17,402 / la 4,117 / de 2,244).
-    # The CSV export flattens all three into one untagged column, so a term-match
-    # check built on it silently compares English against Latin and German.
-    for a in ANN:
-        for s, _, o in g.triples((None, URIRef(RID + a), None)):
-            r = rid_of(s)
-            if not r:
-                continue
-            lang = getattr(o, "language", None)
-            if a in ("Synonym", "Acronym", "Unsanctioned_Term", "Misspelling_of_term") \
-                    and lang not in ("en", None):
-                if lang == "la":
-                    ann[r][a + "_la"].append(str(o))
-                continue
-            v = rid_of(o) or str(o)
-            if v not in ann[r][a]:
-                ann[r][a].append(v)
+def english_text(el):
+    lang = el.get(f"{{{XML}}}lang")
+    return (el.text or "").strip() if lang in (None, "en") else None
 
-    parents, parts = defaultdict(list), defaultdict(list)
-    for s, _, o in g.triples((None, RDFS.subClassOf, None)):
-        r = rid_of(s)
-        if not r:
+
+def _subject_kind(el):
+    if el.tag == Q_CLASS:
+        return "class"
+    if el.tag == Q_OBJPROP:
+        return "object_property"
+    if el.tag == Q_DESC:
+        for c in el:
+            if c.tag == Q_TYPE:
+                r = c.get(Q_RESOURCE)
+                if r == OWL + "Class": return "class"
+                if r == OWL + "ObjectProperty": return "object_property"
+    return None
+
+
+def build(src=RADLEX_OWL):
+    src = Path(src)
+    classes = OrderedDict()
+    object_properties = OrderedDict()
+    taxonomy = []
+    rel_acc = OrderedDict()
+    unindexed = []
+    unresolved = set()
+
+    # First pass: collect declared class/property identities and metadata from all
+    # top-level serializations. lxml lets us safely clear only completed subjects.
+    context = etree.iterparse(str(src), events=("end",), huge_tree=True)
+    for _, el in context:
+        parent = el.getparent()
+        if parent is None or parent.getparent() is not None:
             continue
-        t = rid_of(o)
-        if t:
-            if t not in parents[r]:
-                parents[r].append(t)
+        about = el.get(Q_ABOUT)
+        if not about:
+            el.clear(); continue
+        kind = _subject_kind(el)
+        rid = rid_from_iri(about)
+        # RadLex serializes much class metadata in later rdf:Description blocks
+        # without repeating rdf:type owl:Class. A RID subject is still the same
+        # native class identity and its metadata must be merged.
+        if rid and el.tag == Q_DESC and kind is None:
+            kind = "class"
+        if kind == "class" and rid:
+            nd = classes.setdefault(rid, {
+                "iri": about, "label": None, "definition": None,
+                "synonyms": [], "acronyms": [], "unsanctioned": [],
+                "source": [], "radlex_version": RADLEX_VERSION,
+            })
+            for c in el:
+                if c.tag == Q_LABEL:
+                    t = english_text(c)
+                    if t: nd["label"] = t
+                elif c.tag.startswith("{" + RADLEX_NS + "}"):
+                    name = etree.QName(c).localname
+                    t = english_text(c)
+                    if not t: continue
+                    if name == "Definition" and not nd["definition"]: nd["definition"] = t
+                    elif name == "Synonym" and t not in nd["synonyms"]: nd["synonyms"].append(t)
+                    elif name == "Acronym" and t not in nd["acronyms"]: nd["acronyms"].append(t)
+                    elif name == "Unsanctioned_Term" and t not in nd["unsanctioned"]: nd["unsanctioned"].append(t)
+                    elif name == "Source" and t not in nd["source"]: nd["source"].append(t)
+        elif kind == "object_property" and about.startswith(RADLEX_NS):
+            pd = object_properties.setdefault(about, {
+                "iri": about, "name": local_name(about), "label": None,
+                "subPropertyOf": [], "inverseOf": [], "domain": [], "range": [],
+                "characteristics": []
+            })
+            for c in el:
+                if c.tag == Q_LABEL:
+                    t = english_text(c)
+                    if t: pd["label"] = t
+                elif c.tag == Q_SUBPROP and c.get(Q_RESOURCE):
+                    x = c.get(Q_RESOURCE)
+                    if x not in pd["subPropertyOf"]: pd["subPropertyOf"].append(x)
+                elif c.tag == Q_INVERSE and c.get(Q_RESOURCE):
+                    x = c.get(Q_RESOURCE)
+                    if x not in pd["inverseOf"]: pd["inverseOf"].append(x)
+                elif c.tag == Q_DOMAIN and c.get(Q_RESOURCE):
+                    x = c.get(Q_RESOURCE)
+                    if x not in pd["domain"]: pd["domain"].append(x)
+                elif c.tag == Q_RANGE and c.get(Q_RESOURCE):
+                    x = c.get(Q_RESOURCE)
+                    if x not in pd["range"]: pd["range"].append(x)
+                elif c.tag == Q_TYPE and c.get(Q_RESOURCE) in PROPERTY_CHARACTERISTICS:
+                    x = PROPERTY_CHARACTERISTICS[c.get(Q_RESOURCE)]
+                    if x not in pd["characteristics"]: pd["characteristics"].append(x)
+        el.clear()
+        while el.getprevious() is not None:
+            del el.getparent()[0]
+
+    prop_iris = set(object_properties)
+
+    # Second pass: native taxonomy and native RID-to-RID object-property assertions.
+    context = etree.iterparse(str(src), events=("end",), huge_tree=True)
+    for _, el in context:
+        parent = el.getparent()
+        if parent is None or parent.getparent() is not None:
             continue
-        if not isinstance(o, rdflib.BNode):
-            continue
-        prop, fill = g.value(o, OWL.onProperty), g.value(o, OWL.someValuesFrom)
-        if prop is None or fill is None:
-            continue
-        pn, tf = str(prop).rsplit("/", 1)[-1], rid_of(fill)
-        if pn in ALL_SENSES and tf:
-            parts[r].append((ALL_SENSES[pn], tf))
-    return label_en, dict(ann), parents, parts
+        about = el.get(Q_ABOUT)
+        rid = rid_from_iri(about)
+        if not rid:
+            el.clear(); continue
+        if rid not in classes:
+            unresolved.add(rid)
+        for c in el:
+            if c.tag in (Q_SUBCLASS, Q_EQUIVCLASS):
+                direct = rid_from_iri(c.get(Q_RESOURCE))
+                if direct:
+                    if c.tag == Q_SUBCLASS:
+                        taxonomy.append({"from": rid, "to": direct,
+                                         "predicate": RDFS + "subClassOf",
+                                         "source_form": "subClassOf"})
+                    continue
+                for r in c.iter(Q_RESTRICTION):
+                    on = r.find(Q_ONPROP)
+                    if on is None or not on.get(Q_RESOURCE):
+                        unindexed.append({"subject": rid, "reason": "restriction missing onProperty"}); continue
+                    pred = on.get(Q_RESOURCE)
+                    filler = None; form = None
+                    for ch in r:
+                        if ch.tag in FILLERS and ch.get(Q_RESOURCE):
+                            filler = rid_from_iri(ch.get(Q_RESOURCE)); form = FILLERS[ch.tag]; break
+                    if filler and pred in prop_iris:
+                        key = (rid, pred, filler)
+                        rec = rel_acc.setdefault(key, {"from": rid, "predicate": pred, "to": filler, "forms": []})
+                        srcform = "restriction:" + form
+                        if srcform not in rec["forms"]: rec["forms"].append(srcform)
+                    else:
+                        unindexed.append({"subject": rid, "predicate": pred,
+                                          "reason": "unsupported or non-RID restriction filler"})
+            else:
+                pred = etree.QName(c).namespace + etree.QName(c).localname if isinstance(c.tag, str) and c.tag.startswith("{") else None
+                # etree namespace reconstruction above omits separator only because namespace includes trailing '/'.
+                target = rid_from_iri(c.get(Q_RESOURCE))
+                if pred in prop_iris and target:
+                    key = (rid, pred, target)
+                    rec = rel_acc.setdefault(key, {"from": rid, "predicate": pred, "to": target, "forms": []})
+                    if "direct" not in rec["forms"]: rec["forms"].append("direct")
+        el.clear()
+        while el.getprevious() is not None:
+            del el.getparent()[0]
 
+    # Merge duplicate taxonomy serializations, while retaining only semantic assertions.
+    t_seen = set(); tax2 = []
+    for e in taxonomy:
+        k=(e["from"],e["to"])
+        if k not in t_seen:
+            t_seen.add(k); tax2.append(e)
 
-def build(max_depth=12):
-    g = load()
-    label_en, ann, parents, parts = index(g)
-    print(f"indexed: {len(label_en):,} English labels, {len(ann):,} annotated concepts, "
-          f"{sum(len(v) for v in parents.values()):,} subClassOf, "
-          f"{sum(len(v) for v in parts.values()):,} part-of axioms")
+    for rid, nd in classes.items():
+        if not nd["label"]: nd["label"] = rid
 
-    seeds = list(dict.fromkeys(spec.ANATOMY_SEEDS))
-    keep, frontier, depth = set(seeds), list(seeds), 0
-    while frontier and depth < max_depth:
-        nxt = []
-        for r in frontier:
-            for t in parents.get(r, []) + [t for _, t in parts.get(r, [])]:
-                if t not in keep:
-                    keep.add(t); nxt.append(t)
-        frontier, depth = nxt, depth + 1
-
-    nodes, n, retired = OrderedDict(), 0, []
-    for r in sorted(keep, key=lambda x: int(x[3:])):
-        if r not in label_en:
-            continue
-        n += 1
-        a = ann.get(r, {})
-        defn = a.get("Definition", [None])[0]
-        nd = dict(al_id=f"AL-{n:06d}", rid=r, name=label_en[r], source_label=label_en[r],
-                  definition=defn or f"Imported from RadLex {spec.RADLEX_VERSION}: {label_en[r]}.",
-                  has_real_definition=bool(defn),
-                  concept_source=a.get("Source", [None])[0],
-                  source="imported", seed=(r in seeds),
-                  synonyms=a.get("Synonym", [])[:6],
-                  synonyms_la=a.get("Synonym_la", [])[:3],
-                  acronyms=a.get("Acronym", []),
-                  misspellings=a.get("Misspelling_of_term", []),
-                  unsanctioned=a.get("Unsanctioned_Term", []),
-                  change_log=a.get("Radlex_version_of_class_change", []))
-        if a.get("Replaced_by") or a.get("Preferred_Name_for_Obsolete"):
-            nd["replaced_by"] = a.get("Replaced_by", [])
-            nd["obsolete_name"] = a.get("Preferred_Name_for_Obsolete", [])
-            retired.append(r)
-        nodes[r] = nd
-
-    is_a, part_of, dup = [], [], 0
-    for r in nodes:
-        for p in parents.get(r, []):
-            if p in nodes:
-                is_a.append(dict(frm=r, to=p, source="imported", system="RADLEX",
-                                 source_version=spec.RADLEX_VERSION))
-        by_target = defaultdict(list)
-        for sense, t in parts.get(r, []):
-            if t in nodes:
-                by_target[t].append(sense)
-        for t, senses in by_target.items():
-            if senses == ["containedIn"]:
-                part_of.append(dict(frm=r, to=t, prop="containedIn", family="location",
-                                    source="imported", system="RADLEX",
-                                    source_version=spec.RADLEX_VERSION))
-                continue
-            mereo = [x for x in senses if x != "containedIn"]
-            specific = [x for x in mereo if x != "generalPartOf"]
-            if specific and "generalPartOf" in mereo:
-                dup += 1
-            part_of.append(dict(frm=r, to=t,
-                                prop=(specific[0] if specific else "generalPartOf"),
-                                family="mereology",
-                                source="imported", system="RADLEX",
-                                source_version=spec.RADLEX_VERSION))
-            if "containedIn" in senses:
-                part_of.append(dict(frm=r, to=t, prop="containedIn", family="location",
-                                    source="imported", system="RADLEX",
-                                    source_version=spec.RADLEX_VERSION))
-
-    local_nodes, local_edges = OrderedDict(), []
-    for la in spec.LOCAL_ANATOMY:
-        local_nodes[la["local"]] = dict(
-            al_id=la["local"], rid=None, name=la["name"], definition=la["definition"],
-            source="local", source_status=la["source_status"], request=la.get("request"),
-            note=la.get("note"), synonyms=[], unsanctioned=[])
-        local_edges.append(dict(frm=la["local"], to=la["part_of"], prop="generalPartOf",
-                                family="mereology",
-                                source="local", source_status=la["source_status"],
-                                request=la.get("request")))
-    for ge in getattr(spec, "LOCAL_ANATOMY_EDGES", []):
-        if ge["frm"] in nodes and ge["to"] in nodes:
-            local_edges.append(dict(frm=ge["frm"], to=ge["to"], prop=ge["prop"],
-                                    family=ge["family"], source="local",
-                                    source_status=ge["source_status"],
-                                    request=ge.get("request"), note=ge.get("note"),
-                                    gap_fill=True))
-
-    imported_facts = {}
-    bound = ([f.get("radlex") for f in spec.FINDING_CLASSES] +
-             [d.get("radlex") for d in spec.DIAGNOSES] +
-             [a.get("radlex") for a in spec.ASSESSMENT_SCHEMES] +
-             [d.get("radlex") for d in spec.DATA_ELEMENTS] +
-             [v[2] for d in spec.DATA_ELEMENTS for v in d["values"]] +
-             [m[3] for m in spec.MODALITIES])
-    for r in [x for x in dict.fromkeys(bound) if x]:
-        a, f = ann.get(r, {}), {}
-        if a.get("Anatomical_Site"):
-            f["anatomical_site"] = a["Anatomical_Site"]
-        if a.get("Unsanctioned_Term"):
-            f["unsanctioned"] = a["Unsanctioned_Term"]
-        if a.get("Related_modality"):
-            f["related_modality"] = a["Related_modality"]
-        if a.get("Definition"):
-            f["source_definition"] = a["Definition"][0]
-        if a.get("Source"):
-            f["concept_source"] = a["Source"][0]
-        if a.get("Replaced_by") or a.get("Preferred_Name_for_Obsolete"):
-            f["retired"] = True
-            f["replaced_by"] = a.get("Replaced_by", [])
-        if a.get("Synonym"):
-            f["source_synonyms"] = a["Synonym"]
-        if f:
-            f["label"] = label_en.get(r)
-            imported_facts[r] = f
-
-    stats = dict(source="RadLex.owl", seeds=len(seeds), imported_nodes=len(nodes),
-                 local_nodes=len(local_nodes), is_a_edges=len(is_a),
-                 part_of_edges=len(part_of), local_edges=len(local_edges),
-                 duplicate_part_assertions_dropped=dup, excluded_senses=EXCLUDED_SENSES,
-                 anatomy_with_real_definition=sum(1 for v in nodes.values() if v["has_real_definition"]),
-                 anatomy_with_unsanctioned_terms=sum(1 for v in nodes.values() if v["unsanctioned"]),
-                 anatomy_retired=len(retired),
-                 bound_concepts_with_imported_facts=len(imported_facts))
-    return nodes, local_nodes, is_a, part_of, local_edges, imported_facts, stats
-
+    try:
+        source_path = str(src.relative_to(ROOT))
+    except ValueError:
+        source_path = str(src)
+    out = {
+        "source": {"path": source_path, "ontology_iri": RADLEX_ONTOLOGY_IRI, "version": RADLEX_VERSION},
+        "classes": classes,
+        "object_properties": object_properties,
+        "taxonomy": tax2,
+        "relationships": list(rel_acc.values()),
+        "unindexed_restrictions": unindexed,
+        "unresolved_rids": sorted(unresolved),
+    }
+    out["stats"] = {
+        "classes": len(classes), "object_properties": len(object_properties),
+        "taxonomy_assertions": len(tax2), "relationships": len(out["relationships"]),
+        "relationship_source_expressions": sum(len(r["forms"]) for r in out["relationships"]),
+        "unindexed_restrictions": len(unindexed), "unresolved_rids": len(unresolved),
+    }
+    return out
 
 if __name__ == "__main__":
-    nodes, local_nodes, is_a, part_of, local_edges, facts, stats = build()
-    json.dump(dict(nodes=nodes, local_nodes=local_nodes, is_a=is_a, part_of=part_of,
-                   local_edges=local_edges, imported_facts=facts, stats=stats),
-              open("anatomy.json", "w"), indent=1)
-    print(json.dumps(stats, indent=2))
-    by = defaultdict(int)
-    for e in part_of:
-        by[e["prop"]] += 1
-    print("part-of by sense:", dict(by))
-    print("\nimported facts on bound concepts:")
-    for r, f in facts.items():
-        print(f"  {r:9s} {f.get('label','?'):46s} {[k for k in f if k!='label']}")
+    out = build()
+    dest = Path(__file__).with_name("anatomy.json")
+    dest.write_text(json.dumps(out, indent=1), encoding="utf-8")
+    print(json.dumps(out["stats"], indent=2))
+    print("wrote", dest)

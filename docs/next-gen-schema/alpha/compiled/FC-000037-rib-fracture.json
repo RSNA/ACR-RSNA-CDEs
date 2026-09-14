@@ -8,13 +8,13 @@
  "synonyms": [],
  "anatomic_scope": [
   {
-   "location": "AL-000059",
+   "location": "RID2471",
    "kind": "class",
    "strength": "required",
-   "source": "local",
    "name": "rib"
   }
  ],
+ "anatomic_refinement_rules": [],
  "seen_on": [
   "CT",
   "MR",
@@ -49,9 +49,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -78,9 +78,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -107,9 +107,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -136,9 +136,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -236,9 +236,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -278,133 +278,6 @@
    ]
   },
   {
-   "element_id": "DE-000031",
-   "name": "laterality",
-   "definition": "Which side of a paired structure the finding involves.",
-   "select_cardinality": "single",
-   "narrowed": false,
-   "modality_restricted_to": null,
-   "inherited_from": null,
-   "permitted_values": [
-    {
-     "value_id": "V-000300",
-     "name": "left",
-     "definition": "The patient's left.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5824",
-       "source_label": "left",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    },
-    {
-     "value_id": "V-000301",
-     "name": "right",
-     "definition": "The patient's right.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5825",
-       "source_label": "right",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    },
-    {
-     "value_id": "V-000302",
-     "name": "bilateral",
-     "definition": "Both sides.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5771",
-       "source_label": "bilateral",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    },
-    {
-     "value_id": "V-000303",
-     "name": "midline",
-     "definition": "Neither side; on the midline.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5826",
-       "source_label": "midline",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    }
-   ]
-  },
-  {
    "element_id": "DE-000034",
    "name": "acuity",
    "definition": "How old the finding is, judged from its appearance rather than from a comparison. A healed fracture on a first study has no prior to compare against and is still recognisably old.",
@@ -428,9 +301,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -457,9 +330,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -486,9 +359,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -509,15 +382,15 @@
       {
        "system": "RADLEX",
        "code": "RID39110",
-       "source_label": "indeterminate age",
+       "source_label": "indeterminate",
        "match": "exactMatch",
        "source_version": "4.3",
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -555,28 +428,14 @@
  "component_of": null,
  "component": false,
  "fixed_values": [],
- "anchor_verdict": "post_coordinated",
- "anchor_base": {
-  "system": "RADLEX",
-  "code": "RID4650",
-  "label": "fracture"
- },
- "anchor_modifiers": [
-  {
-   "system": "RADLEX",
-   "code": "RID2471",
-   "label": "rib"
-  }
- ],
- "change_request": null,
  "source_definition": null,
  "concept_source": null,
  "version": {
   "number": 1,
   "status": "proposed",
-  "created": "2026-09-10",
+  "created": "2026-09-14",
   "published": null,
-  "last_modified": "2026-09-10",
+  "last_modified": "2026-09-14",
   "contributors": [
    {
     "id": "PERSON-000001",
@@ -585,6 +444,16 @@
    }
   ]
  },
- "source": "local",
- "source_status": "unrequested"
+ "radlex_composition": {
+  "base": {
+   "code": "RID4650",
+   "label": "fracture"
+  },
+  "modifiers": [
+   {
+    "code": "RID2471",
+    "label": "rib"
+   }
+  ]
+ }
 }

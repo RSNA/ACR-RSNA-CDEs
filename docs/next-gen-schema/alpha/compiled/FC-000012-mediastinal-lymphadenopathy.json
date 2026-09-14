@@ -8,15 +8,15 @@
   {
    "system": "RADLEX",
    "code": "RID3798",
-   "source_label": "mediastinal lymphadenopathy",
+   "source_label": "lymphadenopathy",
    "match": "broadMatch",
    "source_version": "4.3",
    "version": {
     "number": 1,
     "status": "published",
-    "created": "2026-09-10",
+    "created": "2026-09-14",
     "published": null,
-    "last_modified": "2026-09-10",
+    "last_modified": "2026-09-14",
     "contributors": [
      {
       "id": "PERSON-000001",
@@ -24,8 +24,7 @@
       "via": "alpha-generator"
      }
     ]
-   },
-   "primary": true
+   }
   },
   {
    "system": "SNOMEDCT",
@@ -36,9 +35,9 @@
    "version": {
     "number": 1,
     "status": "published",
-    "created": "2026-09-10",
+    "created": "2026-09-14",
     "published": null,
-    "last_modified": "2026-09-10",
+    "last_modified": "2026-09-14",
     "contributors": [
      {
       "id": "PERSON-000001",
@@ -58,13 +57,13 @@
  ],
  "anatomic_scope": [
   {
-   "location": "AL-000152",
+   "location": "RID28891",
    "kind": "class",
    "strength": "required",
-   "source": "imported",
    "name": "mediastinal lymph node"
   }
  ],
+ "anatomic_refinement_rules": [],
  "seen_on": [
   "CT",
   "MR",
@@ -100,9 +99,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -129,9 +128,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -158,9 +157,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -187,9 +186,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -384,33 +383,31 @@
  "component_of": null,
  "component": false,
  "fixed_values": [],
- "anchor_verdict": "post_coordinated",
- "anchor_base": {
-  "system": "RADLEX",
-  "code": "RID3798",
-  "label": "lymphadenopathy"
- },
- "anchor_modifiers": [
-  {
-   "system": "RADLEX",
-   "code": "RID1384",
-   "label": "mediastinum"
-  }
- ],
- "change_request": null,
- "source_definition": "Diseases of lymph or lymph vessels. [MeSH]\nPathology.\u2014By common usage, the term lymphadenopathy is usually restricted to enlargement, due to any cause, of the lymph nodes. Synonyms include lymph node enlargement (preferred) and adenopathy.\nCT scans.\u2014There is a wide range in the size of normal lymph ",
- "concept_source": "Fleischner Society, BI-RADS 4",
+ "source_definition": null,
+ "concept_source": null,
  "version": {
   "number": 1,
   "status": "proposed",
-  "created": "2026-09-10",
+  "created": "2026-09-14",
   "published": null,
-  "last_modified": "2026-09-10",
+  "last_modified": "2026-09-14",
   "contributors": [
    {
     "id": "PERSON-000001",
     "role": "author",
     "via": "alpha-generator"
+   }
+  ]
+ },
+ "radlex_composition": {
+  "base": {
+   "code": "RID3798",
+   "label": "lymphadenopathy"
+  },
+  "modifiers": [
+   {
+    "code": "RID1384",
+    "label": "mediastinum"
    }
   ]
  }

@@ -14,9 +14,9 @@
    "version": {
     "number": 1,
     "status": "published",
-    "created": "2026-09-10",
+    "created": "2026-09-14",
     "published": null,
-    "last_modified": "2026-09-10",
+    "last_modified": "2026-09-14",
     "contributors": [
      {
       "id": "PERSON-000001",
@@ -24,8 +24,7 @@
       "via": "alpha-generator"
      }
     ]
-   },
-   "primary": true
+   }
   },
   {
    "system": "SNOMEDCT",
@@ -36,9 +35,9 @@
    "version": {
     "number": 1,
     "status": "published",
-    "created": "2026-09-10",
+    "created": "2026-09-14",
     "published": null,
-    "last_modified": "2026-09-10",
+    "last_modified": "2026-09-14",
     "contributors": [
      {
       "id": "PERSON-000001",
@@ -58,13 +57,13 @@
  ],
  "anatomic_scope": [
   {
-   "location": "AL-000202",
+   "location": "RID35739",
    "kind": "specific",
    "strength": "required",
-   "source": "local",
    "name": "lung parenchyma"
   }
  ],
+ "anatomic_refinement_rules": [],
  "seen_on": [
   "CT",
   "MR",
@@ -99,9 +98,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -128,9 +127,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -157,9 +156,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -186,9 +185,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -272,9 +271,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -301,9 +300,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -330,9 +329,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -366,9 +365,9 @@
        "version": {
         "number": 1,
         "status": "published",
-        "created": "2026-09-10",
+        "created": "2026-09-14",
         "published": null,
-        "last_modified": "2026-09-10",
+        "last_modified": "2026-09-14",
         "contributors": [
          {
           "id": "PERSON-000001",
@@ -441,133 +440,6 @@
      "bindings": []
     }
    ]
-  },
-  {
-   "element_id": "DE-000031",
-   "name": "laterality",
-   "definition": "Which side of a paired structure the finding involves.",
-   "select_cardinality": "single",
-   "narrowed": false,
-   "modality_restricted_to": null,
-   "inherited_from": null,
-   "permitted_values": [
-    {
-     "value_id": "V-000300",
-     "name": "left",
-     "definition": "The patient's left.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5824",
-       "source_label": "left",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    },
-    {
-     "value_id": "V-000301",
-     "name": "right",
-     "definition": "The patient's right.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5825",
-       "source_label": "right",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    },
-    {
-     "value_id": "V-000302",
-     "name": "bilateral",
-     "definition": "Both sides.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5771",
-       "source_label": "bilateral",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    },
-    {
-     "value_id": "V-000303",
-     "name": "midline",
-     "definition": "Neither side; on the midline.",
-     "rank": null,
-     "bindings": [
-      {
-       "system": "RADLEX",
-       "code": "RID5826",
-       "source_label": "midline",
-       "match": "exactMatch",
-       "source_version": "4.3",
-       "version": {
-        "number": 1,
-        "status": "published",
-        "created": "2026-09-10",
-        "published": null,
-        "last_modified": "2026-09-10",
-        "contributors": [
-         {
-          "id": "PERSON-000001",
-          "role": "author",
-          "via": "alpha-generator"
-         }
-        ]
-       }
-      }
-     ]
-    }
-   ]
   }
  ],
  "measurements": [],
@@ -584,18 +456,14 @@
  "component_of": null,
  "component": false,
  "fixed_values": [],
- "anchor_verdict": "anchored",
- "anchor_base": null,
- "anchor_modifiers": [],
- "change_request": null,
- "source_definition": "Consolidation refers to an exudate or other product of disease that replaces alveolar air, rendering the lung solid (as in infective pneumonia). Radiographs and CT scans.\u2014[Fleischner Society]",
- "concept_source": "Fleischner Society",
+ "source_definition": null,
+ "concept_source": null,
  "version": {
   "number": 1,
   "status": "proposed",
-  "created": "2026-09-10",
+  "created": "2026-09-14",
   "published": null,
-  "last_modified": "2026-09-10",
+  "last_modified": "2026-09-14",
   "contributors": [
    {
     "id": "PERSON-000001",
