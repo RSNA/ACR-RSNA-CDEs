@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="CDE structural discussion agenda, revised 15 September 2026: anatomy scope families and hierarchy connections, apparent conflicts, improvement proposals, and deferred implementation work.">
+<meta name="dcterms.modified" content="2026-09-15">
+<meta name="author" content="CDE schema working discussion">
+<title>CDE structure · Discussion agenda · 14 September 2026</title>
+<style>
+:root{--ink:#1f2937;--muted:#475569;--rule:#cbd5e1;--soft:#f1f5f9;--blue:#1d4ed8;--blue-soft:#eff6ff;--green:#14532d;--green-soft:#f0fdf4;--amber:#78350f;--amber-soft:#fffbeb}
+*{box-sizing:border-box}html{scroll-padding-top:24px}body{margin:0;background:#fff;color:var(--ink);font:17px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--blue);text-underline-offset:4px}a:hover{text-decoration-thickness:2px}a:focus-visible{outline:3px solid var(--blue);outline-offset:5px}::selection{background:#bfdbfe;color:#172554}.skip{position:absolute;left:16px;top:-80px;background:#fff;padding:10px}.skip:focus{top:12px;z-index:2}.shell{display:grid;grid-template-columns:210px minmax(0,790px);gap:64px;max-width:1190px;margin:auto;padding:52px 36px 80px}aside{align-self:start;position:sticky;top:32px;font-size:14px}aside p{margin:0 0 20px;font-weight:650}nav ol{padding:0;list-style:none}nav li{margin:0 0 18px}nav a{display:grid;grid-template-columns:26px 1fr;text-decoration:none;color:var(--muted)}nav a:hover{color:var(--blue)}nav span{font-variant-numeric:tabular-nums;color:var(--blue)}.print-note{border-top:1px solid var(--rule);padding-top:20px;font-size:13px;color:var(--muted)}h1,h2,h3{line-height:1.2;text-wrap:balance}h1{font-size:clamp(2.1rem,4.5vw,3.4rem);font-weight:700;letter-spacing:-.035em;margin:0 0 20px}h2{font-size:1.85rem;letter-spacing:-.025em;margin:0 0 14px}h3{font-size:1.12rem;margin:30px 0 9px}p{margin:10px 0 16px}.date{color:var(--muted);font-size:15px;margin:0 0 22px}.lead{font-size:1.2rem;line-height:1.5;max-width:60ch}.scope{background:var(--soft);padding:20px 24px;margin:26px 0 0;font-size:15px}.scope p:last-child{margin-bottom:0}section{margin-top:60px;padding-top:28px;border-top:1px solid var(--rule)}.section-title{display:flex;gap:18px;align-items:baseline}.number{color:var(--blue);font-size:1.5rem;font-variant-numeric:tabular-nums}.section-intro{color:var(--muted)}ul,ol{padding-left:24px}li{padding-left:3px;margin:8px 0}.outcome{background:var(--blue-soft);padding:15px 20px;margin-top:25px;font-size:15px}.evidence{font-size:14px;color:var(--amber);background:var(--amber-soft);padding:15px 20px}.label{font-size:13px;font-weight:650;display:inline-block;color:var(--green);margin-bottom:5px}.topic{margin:28px 0}.topic h3{margin:3px 0 10px}.compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:12px 0;font-size:15px}.compare p{margin:0}.compare strong{display:block;margin-bottom:5px}.prompt{font-weight:550}.diagram{margin:28px 0;background:var(--soft);padding:22px}.diagram svg{display:block;width:100%;height:auto;overflow:visible}.diagram text{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink)}figcaption{font-size:14px;line-height:1.5;color:var(--muted);margin-top:14px}.flow{display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr;gap:8px;align-items:center;font-size:14px}.flow div{padding:15px;background:#fff;border:1px solid var(--rule)}.flow strong{display:block;font-size:16px;margin-bottom:5px}.flow .connector{padding:0;border:0;background:none;text-align:center;color:var(--blue);font-size:24px}.compact li{margin:12px 0}.close{background:var(--soft);padding:24px;margin-top:32px}.close h3{margin-top:0}footer{border-top:1px solid var(--rule);margin-top:45px;padding-top:20px;color:var(--muted);font-size:13px}code{font-size:.9em;overflow-wrap:anywhere}.diagram .node{fill:#fff;stroke:#94a3b8;stroke-width:1.5}.diagram .accent{fill:#eff6ff;stroke:#1d4ed8;stroke-width:1.5}.diagram .proposal{fill:#f0fdf4;stroke:#15803d;stroke-width:1.5;stroke-dasharray:6 4}.diagram .edge{fill:none;stroke:#475569;stroke-width:2}.diagram .proposed-edge{fill:none;stroke:#15803d;stroke-width:2;stroke-dasharray:6 4}.diagram .small{font-size:14px}.diagram .node-label{font-size:17px;font-weight:600}.diagram .edge-label{font-size:14px;fill:#334155}
+@media(max-width:900px){.shell{display:block;max-width:820px;padding:28px 24px 60px}aside{position:static;margin-bottom:32px}aside p,.print-note{display:none}nav ol{display:flex;flex-wrap:wrap;gap:12px 22px;margin:0}nav li{margin:0}nav a{display:flex;gap:7px}h1{font-size:2.5rem}}
+@media(max-width:540px){body{font-size:16px}.shell{padding:22px 18px 40px}h1{font-size:2.1rem}h2{font-size:1.55rem}.compare{grid-template-columns:1fr;gap:13px}.diagram{padding:14px;margin-left:-4px;margin-right:-4px}.flow{grid-template-columns:1fr}.flow .connector{transform:rotate(90deg);line-height:1}.scope{padding:16px}.section-title{gap:12px}section{margin-top:42px}.diagram-svg{overflow-x:auto}.diagram-svg svg{min-width:590px}.diagram-svg:focus-visible{outline:3px solid var(--blue);outline-offset:3px}}
+@media print{@page{margin:16mm}body{font-size:10pt;line-height:1.45}.shell{display:block;max-width:none;padding:0}aside,.skip{display:none}h1{font-size:27pt}h2{font-size:19pt}h3{font-size:12pt}section{margin-top:24px;padding-top:18px}h2,h3,.section-title{break-after:avoid}.topic,.diagram,.outcome,.close{break-inside:avoid}.scope,.outcome,.diagram,.close{-webkit-print-color-adjust:exact;print-color-adjust:exact}.diagram-svg{overflow:visible}.diagram-svg svg{min-width:0}.flow{grid-template-columns:1fr 24px 1fr 24px 1fr}.compare{grid-template-columns:1fr 1fr}a{color:inherit}footer{font-size:9pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#agenda">Skip to agenda</a>
+<div class="shell">
+<aside aria-label="Agenda navigation">
+<p>CDE next-generation schema</p>
+<nav aria-label="Discussion order"><ol>
+<li><a href="#anatomy"><span>1</span> Anatomy axis</a></li>
+<li><a href="#conflicts"><span>2</span> Apparent conflicts</a></li>
+<li><a href="#proposals"><span>3</span> Improvement proposals</a></li>
+<li><a href="#questions"><span>4</span> Open work &amp; deferrals</a></li>
+</ol></nav>
+<div class="print-note">One continuous briefing.<br>Use your browser’s Print command for a paper or PDF copy. On a small screen, wide diagrams scroll horizontally.</div>
+</aside>
+<main id="agenda">
+<header>
+<h1>Structural discussion agenda</h1>
+<p class="date">14 September meeting agenda · Revised 15 September 2026</p>
+<p class="lead">Build on the alpha implementation. Start with anatomy, work through incompatible meanings, then consider useful extensions and unresolved questions.</p>
+<div class="scope"><strong>Purpose of the meeting</strong><p>Identify where our ideas fit the foundation, where we need to reconcile approaches, and which examples would help us decide. The positions below are proposals for discussion, not a settled model that the alpha must conform to.</p><p>Clinical-content cleanup and mat-based presentation work remain separate. Versioning is deferred. The diagrams here illustrate discussion points; they do not change the implemented schema.</p></div>
+</header>
+
+<section id="anatomy" aria-labelledby="anatomy-title">
+<div class="section-title"><span class="number">1</span><h2 id="anatomy-title">The anatomy axis</h2></div>
+<p class="section-intro">Establish the shared substrate, develop tissue-type and structure-type scope specifiers, and connect them to the anatomic location hierarchy.</p>
+<h3>Start from the overlay, together with RadLex</h3>
+<p>The working direction is the anatomic-locations data as an overlay on RadLex and the basis of the evolving anatomy axis—not a replacement ontology or the sole source. Reference the pinned data rather than reproduce it. A location’s identity is its RadLex ID; compound sided IDs are temporary exceptions to resolve through the anatomy track.</p>
+<figure class="diagram">
+<div class="flow" role="img" aria-label="RadLex supplies concepts and predicates. The Anatomic Locations overlay adds working location relationships and variants. CDE definitions reference this combined anatomy substrate.">
+<div><strong>RadLex</strong>Concept identity<br>Source predicates and taxonomy</div>
+<div class="connector" aria-hidden="true">→</div>
+<div><strong>Anatomic Locations</strong>Working overlay<br>Locations, relations, sided variants</div>
+<div class="connector" aria-hidden="true">→</div>
+<div><strong>CDE definitions</strong>Reference anatomy<br>Place, tissue &amp; structure scope</div>
+</div>
+<figcaption>Dependency sketch, not a copying pipeline. The overlay’s missing is-a / structure-type layer is the first gap to address.</figcaption>
+</figure>
+<h3>Develop two families of anatomy scope specifiers</h3>
+<div class="compare"><p><strong>Tissue types</strong>Pulmonary parenchyma, hepatic parenchyma, subcutaneous fat.</p><p><strong>Structure types</strong>Solid organs; vessels with artery/vein subtypes; muscles, tendons, ligaments.</p></div>
+<p><strong>The open structural task:</strong> figure out how these scope specifiers connect to the anatomic location hierarchy. These are initial families to develop, not a decision to introduce separate graph node types or make the families mutually exclusive.</p>
+<p><strong>Exploratory connection ideas—not adopted:</strong> compare explicit tissue/location nodes with tissue scope specifiers linked to locations. Explore is-a classification for structure kinds, with separately identified part-of/location links for tissue setting. Keep an organ distinct from its parenchyma. A named artery, hepatic parenchyma, and subcutaneous fat in a region could make useful comparison cases; no connection model has been selected.</p>
+<ol class="compact">
+<li><strong>Bring the refactor into view.</strong> Which revision should we examine next, and how does it connect to the overlay? Retire questions already answered by that work; the earlier snapshot is not evidence of the refactor’s behavior.</li>
+<li><strong>Fill the principal gap: is-a and structure types.</strong> The pinned dataset has locations and spatial relationships but lacks an is-a relation and the structure-type nodes needed for “applies to tendons” or “muscle, NOS.” Discuss a first layer derived from RadLex, reviewed for questionable source classifications and handed back to the anatomy track.</li>
+<li><strong>Keep the relationships distinct.</strong> Agree names and meanings for is-a, part-of, spatial containment, and sided/unsided links. For each scope check, identify allowed paths and direction. A part is not automatically a subtype of its whole; containment is not automatically partonomy.</li>
+<li><strong>Exercise anatomy use directly.</strong> Walk through a sided location satisfying an unsided scope, tissue-type and structure-type scopes, and a normal-anatomy measurement. Our preference is to bind DataElements and Measurements directly to AnatomicLocations, without manufacturing a finding. The Observation already specifies a sided location; the new work concerns how the scope specifiers connect to that hierarchy, not a redesign of Observation laterality.</li>
+<li><strong>Keep two actionable lists.</strong> Maintain the gap log separately from specific node requests. Current requests include lung parenchyma, perirenal space and sided forms, pericardial space, subarachnoid space, and permanent IDs for compound sided variants. Pleural space is already present and should not remain an “absent node” request.</li>
+</ol>
+<p class="outcome"><strong>Leave this section with:</strong> the revision to review, a starting set of tissue/structure scope specifiers, examples to compare their hierarchy connections, and a route for the type layer and verified node requests. Newly named candidates are not automatically confirmed missing nodes.</p>
+</section>
+
+<section id="conflicts" aria-labelledby="conflicts-title">
+<div class="section-title"><span class="number">2</span><h2 id="conflicts-title">Apparent active conflicts</h2></div>
+<p class="section-intro">Places where two expressed approaches appear to give different answers—not merely features an alpha has not implemented yet.</p>
+<p class="evidence"><strong>Evidence boundary:</strong> implementation observations below come from the previously reviewed snapshot <code>ae08188534fd</code>. Confirm whether each still applies to the refactor before treating it as a current conflict. Our alternative positions remain negotiable.</p>
+<article class="topic"><h3>2.1 Does taxonomy supply definition bindings?</h3>
+<div class="compare"><p><strong>Reviewed alpha</strong>Compiled subtype views acquire ancestor elements, measurements, and other relationships.</p><p><strong>Our initial proposal</strong>Classification and directly authored definition bindings are separate; an is-a edge does not automatically supply those bindings.</p></div>
+<p class="prompt">What is inheritance intended to accomplish? Which consequences do we want, and which should require explicit authorship?</p>
+<figure class="diagram"><div class="diagram-svg" tabindex="0" role="region" aria-label="Taxonomy and bindings diagram; horizontally scrollable on small screens">
+<svg viewBox="0 0 700 205" role="img" aria-labelledby="taxonomy-svg-title taxonomy-svg-desc">
+<title id="taxonomy-svg-title">Classification is distinct from the binding-propagation decision</title><desc id="taxonomy-svg-desc">Subtype B is a type of A. A has a directly authored descriptor D. Whether B also acquires D is the open question; no edge from B to D is asserted in this sketch.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#475569"/></marker></defs>
+<rect class="node" x="12" y="22" width="190" height="62" rx="5"/><text class="node-label" x="107" y="59" text-anchor="middle">Subtype B</text>
+<rect class="node" x="255" y="22" width="190" height="62" rx="5"/><text class="node-label" x="350" y="59" text-anchor="middle">Parent A</text>
+<rect class="accent" x="498" y="22" width="190" height="62" rx="5"/><text class="node-label" x="593" y="59" text-anchor="middle">Descriptor D</text>
+<path class="edge" d="M202 53H253" marker-end="url(#arrow)"/><path class="edge" d="M445 53H496" marker-end="url(#arrow)"/>
+<text class="edge-label" x="226" y="111" text-anchor="middle">is-a</text><text class="edge-label" x="489" y="111" text-anchor="middle">direct binding</text>
+<text class="node-label" x="350" y="156" text-anchor="middle">Does B also acquire D?</text><text class="small" x="350" y="184" text-anchor="middle">Open discussion. Our first proposal: no automatic propagation.</text>
+</svg></div><figcaption>Use this distinction in revised diagrams: show the taxonomy, authored bindings, and any agreed derived view separately.</figcaption></figure>
+</article>
+<article class="topic"><h3>2.2 Finding and Diagnosis: types, roles, or disjoint classes?</h3>
+<div class="compare"><p><strong>Reviewed alpha</strong>FindingClass and Diagnosis are disjoint in OWL, and generated taxonomy is limited to findings.</p><p><strong>Our proposal</strong>A clinically useful taxonomy can cross finding/diagnosis labels, while retaining useful distinctions between definitions.</p></div>
+<p class="prompt">What do the labels classify? Can we preserve the useful type distinctions without excluding cross-label taxonomy or associations?</p>
+</article>
+<article class="topic"><h3>2.3 A categorizing element or named subtypes?</h3>
+<div class="compare"><p><strong>Reviewed alpha</strong>Some named classes are defined through necessary-and-sufficient descriptor conditions.</p><p><strong>Our position to discuss</strong>For the same categorization in the same model, choose either an element’s values or named subtypes. In the taxonomy version, omit that categorizing element.</p></div>
+<p class="prompt">Where are both currently representing the same distinction? Can different contexts choose different representations without requiring duplicate categorization within one definition?</p>
+</article>
+<article class="topic"><h3>2.4 An assessment scheme is not one category list</h3>
+<div class="compare"><p><strong>Reviewed alpha</strong>AssessmentScheme has embedded categories; scheme and component structure are not separated as we envisage.</p><p><strong>Our proposal</strong>Keep AssessmentScheme as a separate type, linked to multiple ordinary DataElements, each with its own values.</p></div>
+<p class="prompt">Can the existing scheme type accommodate multiple dimensions, as in Lung-RADS or a staging system, without conflating the scheme with one component or its selected value?</p>
+</article>
+<article class="topic"><h3>2.5 Do per-use restrictions keep their meaning across exports?</h3>
+<div class="compare"><p><strong>Reviewed alpha</strong>JSON filters a binding’s allowed values; OWL records narrowing as an annotation. Per-use modality is annotated on a shared property.</p><p><strong>Our position to discuss</strong>A value subset or modality limit belongs to that use. It should remain identifiable and should not silently change every use of the shared descriptor.</p></div>
+<p class="prompt">Can each consumer recover the same binding-local restriction? An annotation may be appropriate, but what must the consuming application do with it?</p>
+</article>
+<p class="outcome"><strong>For each apparent conflict:</strong> confirm current behavior, explain the intended benefit, record agreement or disagreement, and choose one example that distinguishes the alternatives.</p>
+</section>
+
+<section id="proposals" aria-labelledby="proposals-title">
+<div class="section-title"><span class="number">3</span><h2 id="proposals-title">Ideas for improving the foundation</h2></div>
+<p class="section-intro">Potential additions or modifications. These are not claims that the current foundation is wrong.</p>
+<h3>Component counts and component-of scope</h3>
+<p>Explore one component relationship carrying minimum/maximum counts, plus an optional <strong>component-of scope</strong>: the family of findings a component can belong inside. In this proposal, a scoped component cannot stand alone; an unscoped class can. Keep the allowed container family distinct from the actual container in a report.</p>
+<figure class="diagram"><div class="diagram-svg" tabindex="0" role="region" aria-label="Proposed component scope diagram; horizontally scrollable on small screens">
+<svg viewBox="0 0 700 260" role="img" aria-labelledby="component-svg-title component-svg-desc">
+<title id="component-svg-title">Proposed component-of scope</title><desc id="component-svg-desc">Component class C is scoped to container family F. Container subtype B is a subtype of F. An actual C observation is a component of an actual B observation. Check the container's classification upward to F; the scope is not a copied edge on B.</desc>
+<defs><marker id="green-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#15803d"/></marker></defs>
+<rect class="proposal" x="12" y="25" width="210" height="58" rx="5"/><text class="node-label" x="117" y="60" text-anchor="middle">Component class C</text>
+<rect class="node" x="478" y="25" width="210" height="58" rx="5"/><text class="node-label" x="583" y="60" text-anchor="middle">Container family F</text>
+<path class="proposed-edge" d="M222 54H476" marker-end="url(#green-arrow)"/><text class="edge-label" x="350" y="40" text-anchor="middle">component-of scope</text>
+<rect class="node" x="478" y="122" width="210" height="54" rx="5"/><text class="node-label" x="583" y="155" text-anchor="middle">Container subtype B</text>
+<path class="edge" d="M583 122V85" marker-end="url(#arrow)"/><text class="edge-label" x="624" y="108">is-a</text>
+<text class="small" x="12" y="126">In a report:</text>
+<rect class="accent" x="12" y="150" width="210" height="54" rx="5"/><text class="node-label" x="117" y="183" text-anchor="middle">Observation of C</text>
+<rect class="accent" x="478" y="202" width="210" height="44" rx="5"/><text class="node-label" x="583" y="230" text-anchor="middle">Observation of B</text>
+<path class="edge" d="M222 177H338V224H476" marker-end="url(#arrow)"/><text class="edge-label" x="350" y="249" text-anchor="middle">actual component-of link</text>
+</svg></div><figcaption>Proposal only. Check the actual container’s classification against family F. Minimum/maximum component counts would be stated separately on the container definition’s component binding.</figcaption></figure>
+<p class="prompt">Does this fit the alpha’s component structure? Test optional, exactly-one, and multiple independently describable components without turning their counts into required report fields.</p>
+<h3>Reusable descriptors with precise local use</h3>
+<ul class="compact">
+<li><strong>Value subsets:</strong> reuse one DataElement while allowing a binding to select only some of its values. Discuss the cross-export issue above.</li>
+<li><strong>Selection cardinality:</strong> propose a default on DataElement, with possible adjustment on a binding. Whether an adjustment can broaden the default remains open.</li>
+<li><strong>Ordering and methods:</strong> retain distinct DataElement and Measurement types; distinguish ordered from unordered value sets. Our preference is that measurement method is optional and unspecified by default.</li>
+<li><strong>Three levels of modality:</strong> distinguish finding visibility, descriptor applicability in one finding’s binding, and intrinsic descriptor capability. Our position is that a missing constraint means no information, not “all modalities”; an intrinsic limit cannot be overridden by a use.</li>
+<li><strong>Multi-component measurements:</strong> explore the idea, without advancing it as an adopted model or a rejection of derivation links. Clarify grouping versus calculation.</li>
+</ul>
+<h3>Incremental export improvements · later implementation</h3>
+<p>Keep these suggestions as a downstream implementation backlog, not additional structural questions that must be resolved in this meeting.</p>
+<ol class="compact">
+<li>Preserve authored relationship IDs and properties in a full representation; let compact views refer back to them.</li>
+<li>Make referenced diagnoses, descriptors, schemes, and anatomy resolvable without forcing every type into a finding-shaped export.</li>
+<li>Document each export’s purpose, intentional omissions, and treatment of missing information.</li>
+<li>Use a few shared examples to compare JSON and OWL answers, adding proposed fields only when their meanings are agreed.</li>
+<li>Expose enough relationship detail for a later mat-based view. Plan the presentation adaptation separately from structural decisions.</li>
+</ol>
+<p class="outcome"><strong>Leave this section with:</strong> which structural proposals are useful, which need an example, and which to defer. Export implementation can follow once the relevant meanings are agreed.</p>
+</section>
+
+<section id="questions" aria-labelledby="questions-title">
+<div class="section-title"><span class="number">4</span><h2 id="questions-title">Open work and deferred implementation</h2></div>
+<p class="section-intro">The original seven broad questions mixed existing working-model answers with downstream implementation details. They are withdrawn as framed.</p>
+<h3>Carry forward the actual open anatomy work</h3>
+<p>Develop the tissue-type and structure-type scope families and work out their connections to the anatomic location hierarchy. Compare the exploratory alternatives from section 1 without assuming one has been adopted. Carry unresolved specific conflicts and proposals forward from sections 2 and 3; do not manufacture another general question list.</p>
+<h3>Existing working-model answers</h3>
+<ul class="compact">
+<li><strong>Measurements:</strong> represented by Measurement nodes. This does not change the separate proposal for AssessmentScheme with ordinary DataElements.</li>
+<li><strong>Side:</strong> the Observation specifies a sided anatomic location.</li>
+<li><strong>Absence:</strong> an Observation can point to a FindingClass with a component value referencing the presence DataElement and value “absent.”</li>
+<li><strong>Scope combinations:</strong> our working position is any-match (OR) for a plain list, with explicit all-match (AND) combinations also supported. The remaining encoding work is not a new choice of intended meaning.</li>
+</ul>
+<h3>Keep these in the implementation backlog</h3>
+<p>Check that OWL mappings preserve the definition/Observation distinction; refine export metadata and terminology mappings; and develop verification checks. The earlier reference to “incomplete anatomy” meant missing taxonomy coverage, which belongs in the anatomy gap work. None of these broad questions establishes an additional structural conflict.</p>
+<div class="close"><h3>Close with a short decision record</h3><p>For each item reached, record: <strong>agreed / still open / deferred</strong>, the intended meaning, a distinguishing example, and who takes the next action. Preserve the reasons for unresolved differences.</p><p><strong>Separate follow-up:</strong> clinical-content corrections and adaptation of the presentation toward mat views. <strong>Deferred:</strong> versioning.</p></div>
+</section>
+<footer>
+<p>Prepared from the anatomy-axis summary and gap log, the structural comparison of alpha snapshot <code>ae08188534fd</code>, and working discussions through 15 September 2026. This revision adds the tissue/structure scope families and corrects the question list. Anatomy observations refer to the pinned data at <code>854d1f55d3ed</code>; newly named scope candidates have not been audited for coverage. No implementation change or jointly adopted model is implied by this agenda.</p>
+<p><a href="#agenda">Back to the start</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

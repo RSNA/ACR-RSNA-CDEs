@@ -4,8 +4,14 @@ title: Next Steps and Open Threads
 description: Handoff for whoever picks this up with a clean context - where to start, what exists, what is waiting on the owner, the queue in order, what is half-baked, and which decisions belong to the committee, RadLex, or IHE.
 tags: [next-gen-schema, handoff, next-steps]
 status: draft
-generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1"], at: 2026-09-04 }
+generated: { by: ["human:talkasab", "claude-code/claude-fable-5.1", "codex/gpt-6"], at: 2026-09-15 }
 sources:
+  - id: live-agenda
+    resource: /docs/plans/2026-09-14-structural-decision-agenda.md
+    title: Scope families, corrected question status, and communication preference, 15 September 2026
+  - id: alpha-analysis
+    resource: /docs/next-gen-schema/12-alpha-structural-comparison.md
+    title: Structural comparison using the reviewer's implementation as the foundation
   - id: baseline
     resource: /docs/next-gen-schema/00-current-understanding.md
     title: Current understanding
@@ -25,9 +31,17 @@ Rewritten 2026-09-04 as a current-state handoff. History is in [`log.md`](log.md
 
 ## 1. Start here
 
-Read in this order, then build the site and click around it.
+**Current update, 15 September (S50–S51):** develop tissue-type and structure-type anatomy scope specifiers and their connections to the location hierarchy; [11 §5](11-anatomy-axis.md#5-anatomy-scope-specifiers-two-families-s50) separates the owner's direction from exploratory connection ideas. The original seven broad agenda questions are withdrawn as framed: Measurement nodes, sided Observation locations, and presence=absent already have working-model answers. Keep OWL mappings, export metadata, and verification in later implementation work. The [live agenda](../plans/2026-09-14-structural-decision-agenda.md) records the corrections; the earlier queue below does not reopen those questions.
 
-1. [00](./00-current-understanding.md) for what is settled and the open issues list (§8).
+**Communication preference:** ask the owner questions directly in ordinary chat. Do not use queued/async question widgets; the owner reported a persistent panel whose answer shortcut did not work. Keep this workflow preference out of the public meeting agenda and domain glossary.
+
+**Active direction, 14 September (S38):** the reviewer's implementation is the foundation. Start with [the structural comparison](12-alpha-structural-comparison.md) and its [analysis plan](../plans/2026-09-14-alpha-structural-analysis.md). Resolve substantial structural differences, including Anatomic Locations, before adapting implementation semantics. Presentation will move toward the mat view in a separate workstream; clinical-content corrections belong in a separate thread. The earlier queue below is background and does not override this priority.
+
+Supporting discussion documents:
+
+**Proposal status (S49):** the earlier prototype and owner–assistant discussion do not settle the model for the reviewer's foundation. Inheritance, finding/diagnosis type organization, and component structure remain proposals to discuss. The [live agenda](../plans/2026-09-14-structural-decision-agenda.md) distinguishes that discussion from historical decisions; [ST12](12-alpha-structural-comparison.md#st12-establish-what-is-canonical-and-what-each-deliverable-promises) offers incremental export suggestions, not implementation instructions.
+
+1. [00](./00-current-understanding.md) for prior working positions and the open issues list (§8), read with S49's integration clarification.
 2. [10](./10-decision-record-2026-09-02.md) for every decision since, marked as the owner's or Claude's. Do not treat a CLAUDE DEFAULT as settled.
 3. [09](./09-mat-and-tree.md) for how the pictures work, [08](./08-worked-examples.md) for the examples and which of their facts are unverified.
 4. [`graph/README.md`](graph/README.md) for the canonical form, [`tools/README.md`](tools/README.md) for the scripts and how to look at the pictures.
@@ -57,30 +71,31 @@ Only the owner can do these, and they gate the rest.
 - **Report-plane follow-ups** from the 2026-09-03 example: a certainty vocabulary for `confidence` (S26 carries the phrase verbatim for now); the observation-space relationship type list, including the provisional `SUPPORTS` and `ASSOCIATED_WITH` (S24, S25); how compound severity phrases such as "mild-to-moderate" map to the ordered values (S23).
 - **[07 §7](./07-relationship-family.md) questions 1, 3, 4, and 5**: association strength on `OCCURS_WITH`; `typicality: excluded` on a `MAY_MANIFEST_AS` edge; the conditionality fork; whether relation types carry mappings to their prior-art counterparts.
 - **The ten-exemplar-sets request** and the workflow push from the [20 August call](../../notes/working-group-call-2026-08-20-extract.md) remain outstanding.
+- **Harmonization with the reviewer's viewer** ([review of 2026-09-08](../../notes/viewer-review-2026-09-08.md) §5): which of its twelve proposals to accept, above all the anatomy edge names (`PART_OF`, `IS_A`), the four SKOS match kinds with a source version on mappings, the `SCOPED_TO` domain widened to DataElement as already answered on 25 August, and whether Assessment and Measurement become node types.
 
 ## 4. Queue, in order
 
 Each item says what it breaks or proves. Take them in order unless the owner reorders.
 
-1. **Part-solid pulmonary nodule with a solid component.** The `solid component` class (`RDE2_000130`) is referenced but not defined; define it, bind its size, and write the two-Observation report end to end. It exercises `MAY_HAVE_COMPONENT`, the sub-finding report pattern of [03 §5](./03-draft-structures.md), and the subtype-versus-condition question of the [25 August exchange](../../notes/review-exchange-2026-08-25-extract.md), the most contested structural issue still open. Third mat, and the first where the report picture matters as much as the class picture.
+1. **Part-solid pulmonary nodule with a solid component.** The `solid component` class (`RDE2_000130`) is referenced but not defined; define it, bind its size, and write the two-Observation report end to end. It exercises `MAY_HAVE_COMPONENT`, the sub-finding report pattern of [03 §5](./03-draft-structures.md), and the subtype-versus-condition question of the [25 August exchange](../../notes/review-exchange-2026-08-25-extract.md), the most contested structural issue still open. Third mat, and the first where the report picture matters as much as the class picture. Plan: [`docs/plans/2026-09-08-part-solid-nodule.md`](../plans/2026-09-08-part-solid-nodule.md); it lists what the [viewer review](../../notes/viewer-review-2026-09-08.md) changed for this item.
 2. **Patterns as an authoring guide and a lint rule** (10 S5 to S7). A page saying what a lesion, mass, process, and abnormality class looks like at a location, which elements it binds, and which relationship shape it carries; and a checker rule that flags a class named `<organ> lesion` departing from it. Nothing in the graph.
 3. **Migrate the six interim specs into `graph/`**, make `render_neighborhood.py` read the graph, delete `spec_to_graph.py`. The dossier pictures then come from the same source as everything else.
 4. **Upper abdominal abnormality**: negation propagation over `SUBTYPE_OF`; the test case for [00 Issue A](./00-current-understanding.md) and the closed-world assumption, now that grouping nodes bind presence (S29).
 5. **Lung cancer staging**: the stage as an assessment with T, N, and M as component assessments, each `INTERPRETED_FROM` specific finding bindings and never restating their values. Nested assessments and reified binding targets at scale.
 6. **Artery as a structure-type binding** (`artery HAS_ELEMENT diameter`). **Blocked** on the is-a relation landing in AnatomicLocations.org ([04](./04-anatomy-gaps.md)).
 7. **The review form** of [03 §6.1](./03-draft-structures.md) does not exist. Kimi's annotated outline ([explorations](explorations/2026-09-02-diagram-alternatives/review.md)) is the nearest seed: an indented taxonomy with relationships as margin notes, generated from the graph, for committee redlining.
-8. **Publish `site/`** through a GitHub Pages workflow once the owner wants it public; the checker does not build the site. Decide first whether `astro-docs/` is retired or becomes its home.
+8. **The site is published** at https://oidm-public.t3.tigrisbucket.io/cde-schema/next-gen-schema/index.html from commit fa2fb7e (2026-09-09), by the process in [`tools/README.md`](tools/README.md); republish after each commit the owner approves. Still to decide: whether `astro-docs/` is retired, and whether the reviewer's `alpha/` directory appears in the site once merged.
 9. **The prose pass.** Em-dashes across the prose documents; the owner objects to them. Real rewrites, not substitutions, file by file, checker after each.
 10. **Context metadata upstream.** The modality, region, and subspecialty concepts now carry RadLex ids; the DICOM and SNOMED mappings on those nodes are still to be proposed to RadLex rather than kept here, and the provisional etiology, sex, age, and time-course codes need official versions.
 
-Sources to draft examples from: the corresponding OIFM models, treated as drafts ([00 §5.1](./00-current-understanding.md)); the verified nodule content in [`notes/source-review-2026-08-20.md`](../../notes/source-review-2026-08-20.md); the Hood taxonomies as test material ([profile](../../notes/hood-taxonomies-profile-2026-09-01.md)); and the [ontology background research note](../../notes/ontology-background-research-2026-09-04.md) of 2026-09-04, which records source facts and follow-up questions without changing the model.
+Sources to draft examples from: the corresponding OIFM models, treated as drafts ([00 §5.1](./00-current-understanding.md)); the verified nodule content in [`notes/source-review-2026-08-20.md`](../../notes/source-review-2026-08-20.md); the Hood taxonomies as test material ([profile](../../notes/hood-taxonomies-profile-2026-09-01.md)); the [ontology background research note](../../notes/ontology-background-research-2026-09-04.md) of 2026-09-04, which records source facts and follow-up questions without changing the model; and the reviewer's viewer as read in the [viewer review](../../notes/viewer-review-2026-09-08.md), whose solid component, Lung-RADS, Fleischner, and TI-RADS content is draft material and whose codes are unverified until looked up.
 
 ## 5. Half-baked in the model
 
 - **Identifiers are made up.** Every `RDE2_` id was invented on the spot with no registry; the validator's uniqueness check across `graph/` is the interim registry. The canonical samples in [03 §6.2](./03-draft-structures.md) still show `FC-`/`DE-` placeholders and a `required` property; regenerate them from `graph.py dump`.
 - **Canonical form syntax.** JSON Lines is implemented; the choice among JSONL, Turtle, and OWL functional syntax ([00 Issue D](./00-current-understanding.md)) remains open, but there is now something to convert from.
 - **The `expected` property** on causal edges is loose text keyed by element name (S15). If it stays, decide whether it becomes structured.
-- **Propagation of scope and context** is a render-time rule (S13); if the owner prefers explicit assertion on every subtype, the renderer rule goes and the graph gains edges.
+- **Subtype propagation** remains open for the foundation (S49). Our initial proposal uses direct definition assertions without automatic propagation; S3/S13 record the earlier prototype instructions, not a final rejection of inheritance in the integration discussion. See ST01 in [the structural comparison](12-alpha-structural-comparison.md).
 - **`SUBTYPE_OF` reused as the anatomy is-a edge** (S27) is a convenience that should be confirmed or replaced with the upstream relation when AnatomicLocations.org ships one.
 - **Illustrative binders** on the `severity` and `size (mean diameter)` dossiers name classes that do not exist (lymph node, liver lesion, spinal canal stenosis, pulmonary edema). Replace them as real classes appear.
 - **Value definitions are paraphrases** in the thyroid and pulmonary specs, not committee-grade wording.
@@ -98,7 +113,8 @@ Sources to draft examples from: the corresponding OIFM models, treated as drafts
 - Whether two node types, Finding and Diagnosis, are still warranted now that only relationship sourcing separates them ([07](./07-relationship-family.md) framing; a Claude observation).
 
 **RadLex / AnatomicLocations.org**:
-- The is-a relation and the structure-type nodes (tendon, muscle, artery) in progress upstream ([04](./04-anatomy-gaps.md)); the missing potential spaces (pleural, pericardial, subarachnoid).
+- The anatomy substrate is the anatomic locations file behind the `anatomic-locations` package, an overlay on RadLex and the basis of the RadLex anatomy axis going forward (10 S37; [11](./11-anatomy-axis.md)). The is-a relation and structure-type nodes are the major shortcoming, with a derived interim layer as to-do item 11; the node request list in [04](./04-anatomy-gaps.md) goes to the RadLex track regardless.
+- A working session with the reviewer on planned changes to RadLex anatomic locations is owed ([13 September exchange](../../notes/review-exchange-2026-09-13-extract.md)).
 - DICOM and SNOMED mappings on modality and other concept nodes (§4 item 10).
 - Still unverified against the OWL: the imaging-observation branch ([00 §2.4](./00-current-understanding.md)); the relation axioms were verified 2026-09-01 ([07 §6](./07-relationship-family.md)).
 

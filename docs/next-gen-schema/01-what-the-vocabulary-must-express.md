@@ -4,8 +4,11 @@ title: What the Vocabulary Must Express
 description: What the finding vocabulary has to be able to express — what a FindingClass is, anatomic scope guidance, the breadth of what is reported on, measurement versus interpretation, and what entity_type is recording.
 tags: [next-gen-schema, cde, ontology, analysis]
 status: draft
-generated: { by: ["human:talkasab", "claude-code/claude-fable-5", "codex/gpt-5"], at: 2026-09-09 }
+generated: { by: ["human:talkasab", "claude-code/claude-fable-5", "codex/gpt-5", "codex/gpt-6"], at: 2026-09-15 }
 sources:
+  - id: structural-decisions
+    resource: /docs/plans/2026-09-14-structural-decision-agenda.md
+    title: Owner working positions through S51, including tissue/structure scope families and corrected question status
   - id: companion
     resource: /docs/next-gen-schema/00-current-understanding.md
     title: Current understanding (companion document)
@@ -40,6 +43,8 @@ sources:
 ---
 # What the Vocabulary Must Express
 
+**Integration status (S49):** the modeling directions below express our working positions for discussion within the reviewer's alpha foundation, not a jointly settled model. Historical requirements retain their original context; see the [live agenda](../plans/2026-09-14-structural-decision-agenda.md) for proposal status.
+
 **Status:** Working document — reasoning in progress
 **Date:** 2026-08-19
 **Companion to:** [00-current-understanding.md](./00-current-understanding.md)
@@ -63,6 +68,8 @@ Three consequences for the vocabulary:
 ---
 
 ## 2. Anatomic scope guidance
+
+**Scope families to develop (S50, 15 September):** tissue types (pulmonary parenchyma, hepatic parenchyma, subcutaneous fat) and structure types (solid organs, vessels with artery/vein subtypes, muscles, tendons, ligaments). Their connections to the anatomic location hierarchy remain open; [11 §5](11-anatomy-axis.md#5-anatomy-scope-specifiers-two-families-s50) distinguishes the owner's direction from exploratory connection ideas. This does not select separate graph node types. The existing Observation uses a sided location; that behavior is not a new structural question (S51).
 
 The vocabulary owes each FindingClass a statement of which anatomic locations are congruent with it ([00 §1.4](./00-current-understanding.md)). The [initial proposal](../../notes/schema-recommendations-part2.md) says what that statement ranges over: "as broad as a body region (e.g., the abdomen), a **structure type** (e.g., arteries), or as specific as a named body structure (e.g., anterior cruciate ligament)."
 
@@ -96,6 +103,8 @@ A vocabulary in which location means "a pointer to an anatomic structure" cannot
 ### 2.2 Guidance must be machine-resolvable
 
 Scope guidance does two jobs: it **suggests** — offering an author or a tool the locations that make sense for this kind of finding — and at the strong end it **constrains**, making some pairings detectable as errors. Enforcement is a grammar concern ([00 §1.1](./00-current-understanding.md)); what the vocabulary owes is guidance a downstream check *can* act on — a resolvable value, a declared kind, and a declared strength.
+
+**Scope combinations (owner S48):** a plain list of scope targets matches any one by default (OR). Explicit must-match-multiple-conditions combinations are also supported (AND), such as a structure-type condition together with a location condition. Named anatomy concepts remain valid targets. Exact syntax and traversal rules are separate questions; this defines required meaning, not an implemented expression language.
 
 Two of the three kinds resolve today by plain traversal. Run against AnatomicLocations.org on 2026-07-28:
 
@@ -147,13 +156,13 @@ So the vocabulary must supply terms for at least:
 
 The last row is unsettled.
 
-### 3.1 Normal structures: no FindingClass at all — proposal
+### 3.1 Normal structures: direct descriptor bindings — accepted S43
 
-Since DataElements have life independent of FindingClasses, and the anatomy vocabulary already names almost every normal structure, **a normal structure needs no FindingClass**. The descriptors of a structure — caliber, wall thickness, length, volume, echogenicity, patency — are DataElements **bound directly to the AnatomicLocation node**: `common bile duct (RID199) HAS_ELEMENT caliber`. An Observation describing the structure then points at the *location* as its subject, rather than at a FindingClass, and carries the relevant element values. Worked through in [03 §9](./03-draft-structures.md).
+**Owner decision S43:** AnatomicLocation can bind directly to DataElements and Measurements. Describing normal anatomy does not require a FindingClass: categorical descriptors bind as DataElements and quantitative descriptors as Measurements (S39). The exact Measurement binding name is not decided. The existing report-consumption proposal points an Observation at the location as its subject and records the descriptor values; S43 settles the definition bindings, not the report grammar. Earlier examples in [03 §9](./03-draft-structures.md) predate the Measurement type split.
 
 What this buys:
 
-- The structure-vs-property question (`common bile duct` with a `caliber` element, or `bile duct caliber` as a class?) dissolves — there is no class, and the paired-structure test passes trivially: renal length is `kidney (RID205) HAS_ELEMENT length`, observed on `left kidney (RID29663)`.
+- A structure and its descriptor retain separate identities: a kidney can bind to a length Measurement, without a separate FindingClass for renal length. Its observation can identify the particular sided location.
 - **Bindings can apply through an anatomy subtype without being copied.** Bind `length` to the unsided `kidney`; an observation on a left or right kidney satisfies that binding because the sided structure is a kidney. Likewise, a future binding on the structure type `artery` can apply when the observation's subject is an artery ([04](./04-anatomy-gaps.md)). `SUBTYPE_OF` does not create `HAS_ELEMENT` edges on those more specific nodes.
 - The abnormality stays a FindingClass: `bile duct dilation` is a `diagnosis`, `INTERPRETED_FROM` the caliber binding — the measurement/interpretation split of §4 made concrete.
 
@@ -161,7 +170,7 @@ What it requires, to be taken to the committee and to IHE:
 
 - ~~The grammar's Observation subject must be a FindingClass or an AnatomicLocation.~~ **Already so**: IDR encodes observations on anatomic entities with no morphology and a property code — its own examples include "pancreatic duct diameter is 2 mm" ([`notes/ihe-idr-extract.md` §2](../../notes/ihe-idr-extract.md)). No grammar change needed.
 - We attach `HAS_ELEMENT` edges to nodes we do not own. That is already true of `SCOPED_TO`; the bindings are ours, the nodes are RadLex's, and their lifecycle propagates.
-- `entity_type: measurement` shrinks to composite indices that are not one structure's property (cardiothoracic ratio); most former "measurement classes" become location bindings (§5).
+- **Updated by S39/S43:** Measurement is a separate definition type for quantitative descriptors, and AnatomicLocation can bind to it directly. Binding names and delivery mappings remain open; the ability to make the binding is settled.
 
 **Normal variants are not affected**: a cervical rib or azygos fissure remains a FindingClass with `entity_type: normal_variant` (§5). The location treatment is for the *descriptors of normal anatomy*, not for variant anatomy.
 
@@ -185,17 +194,17 @@ For a corpus intended to support longitudinal analytics across decades, this is 
 - **Measurements must stand alone.** §3 establishes that measurements frequently carry no interpretation at all. So the measurement assertion has to be independently well-formed — which argues for interpretation being a *separate linked assertion* rather than a field on the measurement.
 - **This principle is already written down, in a narrower form.** The OIFM guidance separates a pulmonary nodule model from a Lung-RADS model "because different radiologists might describe the same nodule but assign different risk categories." Finding-vs-assessment is one instance of observation-vs-interpretation.
 
-### 4.3 Method belongs in the definition
+### 4.3 Measurement method is optional and unspecified by default
 
 A measurement reference entry separates three things:
 
 1. **the measurand** — what is measured, on what structure
-2. **the method** — plane, landmarks, phase, angle correction, caliper placement
+2. **the method, when specified** — plane, landmarks, phase, angle correction, caliper placement
 3. **the threshold** — what the value means
 
-We had (1) and (3). **Method is constitutive, not contextual.** A common bile duct measured in the wrong plane is not the same measurement. Renal artery PSV depends on angle correction. Two "sizes" obtained by different techniques are not comparable, and treating them as one number is how longitudinal analytics quietly go wrong.
+**Owner decision S39 (14 September):** Measurement is a distinct definition type from DataElement. Method is optional; by default it is not specified. A valid measurement does not require a named technique, and an absent method must not be filled with an assumed default.
 
-The [SIIM minutes](../../notes/siim-meeting-extract.md) treat this as optional — "the schema will allow for optional specification of measurement context, such as plane or axis." On the evidence of the measurement literature, that understates it: for many measurements the method is part of what the measurement *is*, and belongs in the class definition.
+Where a method is specified, preserve it separately from the measured quantity and its interpretation. Whether particular method differences require distinct measurement identities remains a separate structural question. This supersedes the earlier blanket claim that method is constitutive and must belong in every definition.
 
 ---
 
@@ -207,7 +216,7 @@ The [SIIM minutes](../../notes/siim-meeting-extract.md) treat this as optional �
 |---|---|---|
 | `finding` | what you SEE — requires further characterization to reach a diagnosis | value sets for its DataElements |
 | `diagnosis` | what you CONCLUDE — a nameable pathologic entity | ~~confidence; the criteria applied~~ — struck 2026-09-02: confidence belongs to the report-plane assertion, for findings just as much as diagnoses ([10 S4](./10-decision-record-2026-09-02.md)); Diagnosis is now its own node type rather than an `entity_type` value ([exchange §1](../../notes/review-exchange-2026-08-25-extract.md)) |
-| `measurement` | a quantified index not belonging to one structure (cardiothoracic ratio) — single-structure measurements are location bindings (§3.1) | quantity type, permitted units, method (§4.3) |
+| `measurement` | superseded by the separate Measurement definition type (S39), rather than a finding classification limited to composite indices | quantitative descriptor; method optional and unspecified by default (§4.3) |
 | `assessment` | a standardized score or category applied to findings | the scale, and what it is computed from |
 | `normal_variant` | present and unusual, typically not pathological | — |
 | `device` | a device, its position or integrity | — |
@@ -226,6 +235,6 @@ The finding/diagnosis definitions are OIFM's, unchanged: a finding is what you s
 
 - **Issue H** — location is a grammar-level pointer; what the vocabulary owes is anatomic scope guidance over three kinds of value, with a declared kind and strength (§2).
 - **New requirement** — the anatomy substrate must be able to name structure *types*; being added upstream ([04](./04-anatomy-gaps.md)).
-- **New requirement** — measurement method as a first-class part of quantitative definitions (§4.3).
+- **Owner decision S39** — Measurement is distinct from DataElement; method is optional and unspecified by default (§4.3). DataElement value sets may be ordered or unordered, with that distinction made explicit.
 - **`entity_type`** — allowed values fixed; `grouping` and `recommendation` dropped (§5).
 - **Modelling guidance** — presumption toward general FindingClasses with location carried separately (§2.4).

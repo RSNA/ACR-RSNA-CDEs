@@ -4,8 +4,11 @@ title: Draft Structures for Worked Examples
 description: The vocabulary as a graph — node types, the edge catalog, a standard neighborhood visualization, and the two flat serializations (review form and canonical form) — written to make worked examples possible.
 tags: [next-gen-schema, cde, draft, examples, graph]
 status: draft
-generated: { by: ["human:talkasab", "claude-code/claude-fable-5", "codex/gpt-5"], at: 2026-09-09 }
+generated: { by: ["human:talkasab", "claude-code/claude-fable-5", "codex/gpt-5", "codex/gpt-6"], at: 2026-09-15 }
 sources:
+  - id: structural-decisions
+    resource: /docs/plans/2026-09-14-structural-decision-agenda.md
+    title: Owner working positions through S51, including scope families, provisional integration status, and existing Observation answers
   - id: baseline
     resource: /docs/next-gen-schema/00-current-understanding.md
     title: Current understanding — scope, decisions, open issues
@@ -42,28 +45,58 @@ sources:
 
 **Status:** Strawman — a shape concrete enough to write examples against, so modelling arguments happen over real cases instead of in the abstract.
 
+**Current clarification (S50–S51, 15 September):** develop tissue-type and structure-type anatomy scope families and their connections to the location hierarchy; exact node/edge representation remains open ([11 §5](11-anatomy-axis.md#5-anatomy-scope-specifiers-two-families-s50)). Measurements are represented by Measurement nodes. Observations specify sided locations and may point to a FindingClass with a component value referencing the presence DataElement and value "absent." These existing model answers are not new structural questions; no example artifacts are migrated by this documentation update.
+
+**Integration status (S49):** these structures capture our working ideas and prototype choices, not a settled model to impose on the reviewer's alpha. Inheritance, finding/diagnosis type organization, and components remain proposals for discussion; the [live agenda](../plans/2026-09-14-structural-decision-agenda.md) records the current framing.
+
 **The model is a graph** ([00 §2.2](./00-current-understanding.md)): nodes carry only scalars; everything shared is a node, and everything that points at something shared is an edge. The flat text forms in §6 are *serializations of the graph*, not the model. Open choices are marked **⟨?⟩**.
 
 ---
 
 ## 1. Nodes
 
+**Categorization choice (S30/S46):** represent a particular distinction either as a categorizing DataElement on a class or as a taxonomy of named classes. With parent A and subtypes B, C, D representing the distinction, do not also bind the categorizing element E. Other descriptors remain available as explicit bindings. Different contexts may choose different models; neither choice introduces inheritance.
+
+**Decision update, 14 September (S39):** Measurement is distinct from DataElement. A DataElement explicitly distinguishes an ordered from an unordered value set; display order alone does not establish semantic ordering. Measurement method is optional and unspecified by default. The tables below reflect this distinction; older quantitative-element examples and their rendered artifacts remain unmigrated. Measurement binding names and serialization details are not decided here.
+
 | Node type | Carries (scalars only) | Owned by |
 |---|---|---|
 | **FindingClass** | id, name, definition, typed synonyms, `entity_type`, version, status | us — ids from the shared `RDE2_NNNNNN` namespace ([00 Issue E](./00-current-understanding.md)); samples here still show the older `FC-`/`DE-` placeholders |
 | **Diagnosis** | as FindingClass, without `entity_type` | us — separate node type agreed 2026-08-25 ([exchange §1](../../notes/review-exchange-2026-08-25-extract.md)). With the taxonomy unrestricted (10 S1) and no obligations on node types (10 S4), what still distinguishes Diagnosis from FindingClass is only which relationship types it can source, `MAY_MANIFEST_AS` above all ([07](./07-relationship-family.md)); a Claude observation, not a decision. Shares one taxonomy with FindingClass ([10 S1](./10-decision-record-2026-09-02.md)) |
 | **Grouping** | id, name, definition | us — the negative-only nodes (`renal abnormality`) that sit above findings and diagnoses alike; added 2026-09-02 ([10 S8](./10-decision-record-2026-09-02.md)) |
-| **DataElement** | id, name, definition, typed synonyms, kind (categorical/quantitative), cardinality, ordinality, quantity type + permitted units + method, version, status | us |
+| **DataElement** | id, name, definition, typed synonyms, cardinality, explicit ordered/unordered value-set distinction, version, status | us |
+| **Measurement** | id, name, definition, quantity type, permitted units, optional method (unspecified by default), version, status | us — separate definition type accepted in S39 |
+| **AssessmentScheme** | its own identity and descriptive metadata; descriptive dimensions are linked ordinary DataElements, not scalar fields or one flattened category list | separate definition type accepted in S40; ordinary DataElements settled by S41; binding names remain open |
 | **Value domain** | whether ordered | the element's own enumerated domain (ISO 11179 *value domain*; `owl:oneOf` of its Values) — owned by the element, not separately identified |
 | **Value** | id = `{element id}.{n}`, name, machine value = slug of the name, definition | us — first-class: an ISO 11179 *permissible value*; own index codes (LOINC LA codes fit here). Ids derive from the element (`RDE2_000001.0`, `.1`, …), so a value belongs to exactly one element; scale reuse is element reuse |
 | **RelationshipType** | name, inverse or symmetric, whether transitive | us |
-| **AnatomicLocation** | RID, name, laterality triad | RadLex via AnatomicLocations.org — and the binding subject for a normal structure's descriptor elements (§9) |
+| **AnatomicLocation** | RID, name, laterality triad | the pinned anatomic-locations overlay on RadLex (S37); direct binding subject for DataElements and Measurements (S43) |
 | **Concept nodes** | Etiology, BodyRegion, Subspecialty, Modality, AgeStage, TimeCourse — the OIFM metadata vocabularies, each value one shared node | us, seeded from OIFM |
 | **Observation** | a claim in one report | **the grammar (IHE IDR)** — drawn here only to show consumption |
 
 Identity metadata every owned node also carries: index codes, contributors, references, exemplar images with rights (all from the current schema). Status *history* lives in the separate event log, not on nodes ([00 §4](./00-current-understanding.md), topic 6).
 
+**AssessmentScheme update (S40–S41):** a scheme has edges to multiple ordinary DataElements, analogous to FindingClass's organization; no assessment-specific descriptor type is needed. The scheme, its dimensions, and their permissible values are different objects. Binding names and any use of Measurements for quantitative components remain separate questions. Older examples that represent assessment schemes as finding definitions are not the current direction; their artifacts remain unchanged.
+
 ## 2. Edges — the actual content of the model
+
+**Scope combinations (S48):** a plain list of anatomic scope targets matches any one by default (OR). Explicit combinations must also support matching multiple conditions together (AND). Named anatomy targets remain available; no particular grouping syntax or unlimited Boolean language is selected. Combining conditions is separate from choosing which taxonomy or containment paths satisfy each condition, and does not propagate bindings.
+
+**Direct anatomy bindings (S43):** AnatomicLocation can link directly to DataElements and Measurements. A normal anatomical descriptor does not require a FindingClass. This adds an explicit requirement for anatomy-to-Measurement bindings; their relationship name and serialization remain open. It does not create inherited edges or settle new scope traversal rules.
+
+**Binding restriction (S42):** a FindingClass's edge to a DataElement may specify that only a subset of the element's permissible values applies to this use. The shared element retains its full domain, and other bindings remain unchanged. This is part of the definition's meaning, not merely a presentation filter; it does not propagate to subtypes. The property name and serialization are not chosen here.
+
+**Cardinality proposal (S44, not finalized):** DataElement carries default selection cardinality, with possible adjustment on an individual binding edge. Whether an adjustment may broaden as well as narrow the default remains open. Selection cardinality is distinct from value ordering, component counts, and required report fields; no serialization or validation behavior is chosen here.
+
+**Modality distinctions (S45):** preserve three different statements:
+
+| Subject of the statement | Meaning |
+|---|---|
+| FindingClass | The modalities on which the finding can be seen. |
+| FindingClass–descriptor binding | The modalities on which this DataElement or Measurement applies to this finding. |
+| DataElement or Measurement | The modalities on which the descriptor can ever be evaluated. |
+
+An intrinsic descriptor limitation is a hard limit, not an adjustable default. A binding-specific statement must not change the descriptor's meaning in other bindings. **S47 settles omission:** no modality constraint means no information, not applicability on all modalities. Omission alone is not a negative applicability assertion either, and does not erase other explicit constraints. Exact relationships, conflict handling, and encoding remain open; no reporting obligations or inherited definition relationships are introduced.
 
 | Edge | From → To | Properties on the edge | Why |
 |---|---|---|---|
@@ -75,7 +108,7 @@ Identity metadata every owned node also carries: index codes, contributors, refe
 | `MAY_HAVE_COMPONENT` · `MAY_CAUSE` · `MAY_REPRESENT` · `INTERPRETED_FROM` · `ASSESSED_BY` · `OCCURS_WITH` · `ADJACENT_TO` · `MAY_BE_RELATED_TO` | FindingClass ↔ FindingClass | **own id** (`RDE2_…`), provenance, approval status, strength ⟨?⟩ | typed relationships, [00 §4](./00-current-understanding.md) topic 5; identified so a report-level relationship can cite the potential it expresses (§5) |
 | `HAS_ETIOLOGY` · `IN_REGION` · `IN_SUBSPECIALTY` · `SEEN_ON` · `AGE_*` · `TIME_COURSE` | FindingClass → concept node | — | discoverability: "every malignant finding" is a traversal |
 
-Edge properties are why the formalism question ([00 Issue D](./00-current-understanding.md)) lands on named graphs / annotated axioms: `required` lives on `HAS_ELEMENT`, not on either node.
+Binding-local properties motivate the formalism question ([00 Issue D](./00-current-understanding.md)): the permitted-value subset belongs to the binding, not to either endpoint alone. The older `required` example is invalid under S9. The formal representation remains a separate decision.
 
 **Since 2026-09-02** ([08](./08-worked-examples.md)): `INTERPRETED_FROM` runs from any FindingClass or Diagnosis that interprets a measurement, not only from assessments; `HAS_ELEMENT` edges that must be cited carry `RDE2_` ids (the binding-identity question of [06 §4](./06-next-steps.md), resolved); the causal pair carries `typicality` and a proposed `expected` property of value hints; and the canonical form of §6.2 exists as [`graph/`](graph/README.md), read by the validator, the constellation renderer, and the site builder.
 
@@ -124,7 +157,7 @@ The same object-dossier treatment for a DataElement, with the sections an elemen
 
 ![severity DataElement dossier](diagrams/de-severity.svg)
 
-`size (mean diameter)` — quantitative: quantity type, UCUM units, range, and the method that makes the measurement what it is ([01 §4.3](./01-what-the-vocabulary-must-express.md)):
+`size (mean diameter)` — an older quantitative-element example, to become a Measurement under S39: quantity type, UCUM units, range, and an optional method ([01 §4.3](./01-what-the-vocabulary-must-express.md)). The existing diagram below has not been regenerated:
 
 ![size (mean diameter) DataElement dossier](diagrams/de-size-mean-diameter.svg)
 

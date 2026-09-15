@@ -189,6 +189,8 @@ The paths diverge immediately, so a FindingClass scoped to `lung` rejects a toe 
 
 **Laterality is carried by the location, not by a DataElement.** Left, right, and unsided variants are distinct nodes with explicit triad links. Accordingly **there will be no laterality DataElements.** Location itself is not a DataElement at all — it is the Observation's AnatomicLocation pointer (§1.3). Elements that express *more precise* location than the codes permit — position within a structure, relation to a landmark — may exist, defined where needed, but they are not canonical and never restate what the code already says. This supersedes *Laterality* on the [committee's draft reusable-element list](../../notes/committee-notes-extract.md).
 
+**Superseded on 2026-09-13.** The substrate is now the anatomic locations data behind the published `anatomic-locations` Python package (2,926 nodes, RadLex ids with compound ids for sided variants RadLex lacks, containment, part-of, laterality, region, codes), pinned to its commit and pointed to rather than copied. It is an overlay on RadLex and the basis of the RadLex anatomy axis going forward; the figures above describe the earlier `body_parts.json` release. The current state is summarised in [11](./11-anatomy-axis.md) and the gaps in [04](./04-anatomy-gaps.md).
+
 **Known gaps are tracked separately.** The resource is being actively extended — notably with is-a relationships over locations and explicit incorporation of the RadLex nodes for structure types such as tendon, muscle, and artery. Specific gaps found in analysis are recorded in [`04-anatomy-gaps.md`](./04-anatomy-gaps.md) rather than here, so that this document does not go stale as they close.
 
 ### 2.7 Consequences

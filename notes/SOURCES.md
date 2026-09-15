@@ -26,6 +26,7 @@ All three were circulated together as the starting material for the schema revie
 
 | File | Source | What it is |
 |---|---|---|
+| (pointer, not copied) | https://raw.githubusercontent.com/openimagingdata/findingmodel/854d1f55d3ed039c455fe8eaa9a2a2983dcefc32/notebooks/data/anatomic_locations_noembed.json (pinned to the commit of 2026-03-02; `main` may move) | The anatomic locations data the published `anatomic-locations` Python package is built from: 2,926 locations keyed by RadLex id with containment, part-of, laterality variants, region, and codes. Decided 2026-09-13 to point rather than copy; tools fetch and cache it |
 | `hood-taxonomies-profile-2026-09-01.md` | https://github.com/openimagingdata/findingmodels/tree/main/lists, exported 2026-08-15, local checkout at `../findingmodels/lists` | A measured profile of Michael Hood's six per-modality finding taxonomies, used as test material for the vocabulary; the lists themselves are not copied here |
 
 ## Sanitized extracts of committee material
@@ -38,6 +39,9 @@ The raw committee material — a slide deck, meeting minutes, meeting notes, and
 | `siim-meeting-extract.md` | `siim_meeting_minutes.txt` | Minutes of that meeting, with action items |
 | `committee-notes-extract.md` | `committee_meeting_notes.txt` | Later committee notes; source of the Finding Class / Data Element / Value terminology and the draft reusable-element list |
 | `schema-recommendations-part2.md` | `first_ideas.txt` | "CDE schema recommendations — Part II"; the initial written proposal |
+| `review-exchange-2026-09-08-extract.md` | an email thread of 8 September 2026 (file in `raw_sources/`, not named here) | Email thread of 8 September 2026 between the owner and the external reviewer: the mural-nodule component case, the FindingClass and DataElement boundary, consumption of the definitions, RadLex anatomy gaps |
+| `review-exchange-2026-09-13-extract.md` | an email thread of 13 September 2026 (pasted by the owner into the working session; not stored as a file) | The reviewer's anatomy refactor and the owner's ruling that the anatomic locations file is an overlay on RadLex and the basis of the anatomy axis |
+| `viewer-review-2026-09-08.md` | `cde-knowledge-graph-view-v5.html` | A self-contained HTML mock of a browsing and authoring surface over a small finding graph, received 8 September 2026; the note is a review, not an extract, and copies nothing but interface labels |
 
 ## Working-group material, August 2026
 
