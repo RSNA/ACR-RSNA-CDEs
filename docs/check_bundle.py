@@ -183,7 +183,9 @@ email = re.compile(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}')
 deny_path = os.path.join(ROOT, "raw_sources", "denylist.txt")     # gitignored; one term per line
 deny = [l.strip() for l in open(deny_path)] if os.path.exists(deny_path) else []
 deny = [d for d in deny if d and not d.startswith("#")]
-for f in md_files:
+plan_files = sorted(os.path.relpath(x, ROOT) for x in glob.glob(os.path.join(ROOT, "docs/plans", "*.md")) + glob.glob(os.path.join(ROOT, "docs/plans", "*.html")))
+if os.path.exists(os.path.join(ROOT, "CONTEXT.md")): plan_files.append("CONTEXT.md")
+for f in md_files + plan_files:   # plans and the root glossary are not bundle documents, but they are swept for leaks
     text = read(f)
     for m in email.finditer(text): err(f"{f}: email address present: {m.group(0)}")
     low = text.lower()

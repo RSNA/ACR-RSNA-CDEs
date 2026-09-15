@@ -50,10 +50,11 @@ def concept_index():
         _CONCEPTS = {}
         cp = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "graph", "concepts.jsonl")
         if os.path.exists(cp):
-            for line in open(cp, encoding="utf-8"):
-                c = json.loads(line)
-                for key in [c["name"]] + c.get("aliases", []):
-                    _CONCEPTS[(c["scheme"], norm(key))] = c["id"]
+            with open(cp, encoding="utf-8") as f:
+                for line in f:
+                    c = json.loads(line)
+                    for key in [c["name"]] + c.get("aliases", []):
+                        _CONCEPTS[(c["scheme"], norm(key))] = c["id"]
     return _CONCEPTS
 
 
@@ -221,7 +222,8 @@ def convert_location(spec, origin):
 
 def convert_all(examples_dir):
     for path in sorted(p for p in glob.glob(os.path.join(examples_dir, "*.json")) if p.endswith((".neighborhood.json", ".element.json", ".location.json"))):
-        spec = json.load(open(path, encoding="utf-8"))
+        with open(path, encoding="utf-8") as f:
+            spec = json.load(f)
         origin = "examples/" + os.path.basename(path)
         kind = spec.get("node")
         conv = convert_element if kind == "DataElement" else convert_location if kind == "AnatomicLocation" else convert_class

@@ -81,6 +81,17 @@ Save it as a `.cjs` file and run it with `node`. The hover reveal is CSS `:has()
 python3 -m http.server 8765 --bind <tailnet-ip> --directory site
 ```
 
+## Publishing the site
+
+The generated site is public at https://oidm-public.t3.tigrisbucket.io/cde-schema/next-gen-schema/index.html (Tigris does not redirect a directory to its index, so keep the filename in shared links). The repository itself is public, so anything derived only from committed content may be published; nothing else may.
+
+1. Build from the committed tree, never the working tree, so uncommitted files cannot leak: export `HEAD` with `git archive` into a temporary directory and run `build_site.py` there.
+2. Sweep the built site with the denylist (`grep -r -i -l -f raw_sources/denylist.txt <site>` must print nothing) and record the file count and the commit hash.
+3. Upload only the contents of that `site/` directory, recursively, to `t3://oidm-public/cde-schema/next-gen-schema/` with the Tigris CLI. Do not upload anything from `raw_sources/`, `.preview/`, or scratch directories, and do not write a landing page of your own.
+4. Open the entry page, one node page, and one SVG on the public URL and report what you saw.
+
+The collaborator's viewer at `cde-schema/cde-knowledge-graph-view-v5.html` was placed there by the owner on 4 September 2026; leave it untouched. The owner says "go" before any upload.
+
 ## Dispatching a picture task to another agent
 
 What the two rounds of 2 September 2026 taught, recorded in full in [the exploration review](../explorations/2026-09-02-diagram-alternatives/review.md): give the agent the decision record and the specification, not a prose brief; state density rules in numbers, because "no overlaps" as the success criterion produces inflated frames and shrunken type; require both examples from one design; require the agent to rasterize and look at its own output; and have it write only into its own directory under the gitignored `.preview/`, never into `docs/`.

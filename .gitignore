@@ -8,3 +8,4 @@ raw_sources/
 .preview/
 site/
 __pycache__/
+.firecrawl/
