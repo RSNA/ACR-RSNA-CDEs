@@ -4,6 +4,8 @@ Change history for the next-gen schema bundle, newest first. Decisions are recor
 
 ## 2026-09-15
 
+**Merge** of `origin/next-gen-2026`, the reviewer's six "next-gen alpha first pass" commits (10 to 14 September), all under `alpha/`; no file was touched on both sides. The checker treats `alpha/` as an external subtree from this point (10 S52): denylist and link checks apply, OKF frontmatter and index-coverage rules do not. Her evaluation index links to a missing `2026-09-13.md`, reported as a warning for her attention.
+
 **Housekeeping** (Claude): publishing process written into the tools playbook and the handoff's site item updated; the checker's denylist sweep extended to `docs/plans/` and the root glossary after two plan files were found carrying a participant's name (renamed and sanitized); the agreed terms added to `CONTEXT.md`; the commit-and-merge path written as `docs/plans/2026-09-15-commit-and-merge-path.md`.
 
 - Added tissue-type and structure-type anatomy scope families; their connections to the location hierarchy remain open (S50).

@@ -36,7 +36,9 @@ except ImportError:
 # ---------------------------------------------------------------- collect files
 RESERVED = {"index.md", "log.md"}          # OKF §3: reserved filenames, not concept documents
 md_files = ["index.md"] + sorted(f for d in BUNDLE_DIRS for f in glob.glob(os.path.join(d, "**", "*.md"), recursive=True))
-concepts = [f for f in md_files if os.path.basename(f) not in RESERVED]
+EXTERNAL_DIRS = ["docs/next-gen-schema/alpha/"]   # the reviewer's subtree (10 S52): leak and link checks only, no OKF rules
+external = {f for f in md_files if any(f.startswith(x) for x in EXTERNAL_DIRS)}
+concepts = [f for f in md_files if os.path.basename(f) not in RESERVED and f not in external]
 indexes  = [f for f in md_files if os.path.basename(f) == "index.md"]
 logs     = [f for f in md_files if os.path.basename(f) == "log.md"]
 headings = {}   # file -> set of numbered headings like "2.6.3"
@@ -44,6 +46,7 @@ descs    = {}   # file -> frontmatter description
 
 # ---------------------------------------------------------------- 1. frontmatter
 for f in md_files:
+    if f in external: continue
     text = read(f); fm = frontmatter(text); is_index = f in indexes
     if f in logs:
         if fm is not None: err(f"{f}: log.md must not carry frontmatter (OKF §9)")
@@ -101,7 +104,8 @@ for f in md_files:
         if not path: continue
         resolved = os.path.normpath(os.path.join(ROOT, path.lstrip("/"))) if path.startswith("/") \
                    else os.path.normpath(os.path.join(ROOT, os.path.dirname(f), path))
-        if not os.path.exists(resolved): err(f"{f}: broken link -> {tgt}")
+        if not os.path.exists(resolved): (warn if f in external else err)(f"{f}: broken link -> {tgt}")
+    if f in external: continue   # our section-ref conventions do not apply in the external subtree
     # cross-doc section refs like [00 §2.6.3] or [01 §3.1, §4]
     for m in re.finditer(r'\[(0[0-9]|10)[ ,]+§([\d.]+)', body):
         target = doc_alias[m.group(1)]
