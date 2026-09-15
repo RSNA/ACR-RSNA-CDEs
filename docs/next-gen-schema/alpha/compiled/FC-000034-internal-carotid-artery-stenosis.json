@@ -1,0 +1,400 @@
+{
+ "finding_id": "FC-000034",
+ "name": "internal carotid artery stenosis",
+ "definition": "Narrowing of the internal carotid artery lumen.",
+ "subtype_of": null,
+ "defined_concept": false,
+ "bindings": [],
+ "synonyms": [],
+ "anatomic_scope": [
+  {
+   "location": "RID585",
+   "kind": "specific",
+   "strength": "required",
+   "name": "internal carotid artery"
+  }
+ ],
+ "anatomic_refinement_rules": [],
+ "seen_on": [
+  "CT",
+  "MR",
+  "US"
+ ],
+ "subspecialty": [
+  "NR"
+ ],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000015",
+   "name": "interval change",
+   "definition": "The relationship of the finding to the same finding on a prior comparable examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000140",
+     "name": "new",
+     "definition": "Not present on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000141",
+     "name": "unchanged",
+     "definition": "Without appreciable difference from the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000142",
+     "name": "increased",
+     "definition": "Larger or more numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000143",
+     "name": "decreased",
+     "definition": "Smaller or less numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000144",
+     "name": "no prior available",
+     "definition": "No comparable prior examination was available.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000023",
+   "name": "degree of narrowing",
+   "definition": "How much a lumen is reduced, on the ordinal scale reports use.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000220",
+     "name": "mild",
+     "definition": "Under 50 percent. NASCET bands, which are the convention these words carry in carotid reporting; another convention means something else by the same word.",
+     "rank": 1,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5671",
+       "source_label": "mild",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000221",
+     "name": "moderate",
+     "definition": "50 to 69 percent, NASCET.",
+     "rank": 2,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5672",
+       "source_label": "moderate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000222",
+     "name": "severe",
+     "definition": "70 to 99 percent, NASCET, and not near-occlusion.",
+     "rank": 3,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5673",
+       "source_label": "severe",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000224",
+     "name": "near-occlusion",
+     "definition": "The distal lumen is collapsed rather than merely narrowed, so a percentage understates it. Read from the string sign rather than from a ratio, which is why it is a band and never a number.",
+     "rank": 4,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000223",
+     "name": "occluded",
+     "definition": "No flow through the segment.",
+     "rank": 5,
+     "bindings": []
+    }
+   ]
+  }
+ ],
+ "measurements": [
+  {
+   "measurement_id": "MS-000013",
+   "name": "involved length",
+   "definition": "The length of a tubular structure affected by a process.",
+   "quantity_kind": "length",
+   "permitted_units": [
+    "mm",
+    "cm"
+   ],
+   "method": "Along the long axis of the structure.",
+   "inherited_from": null,
+   "components": []
+  },
+  {
+   "measurement_id": "MS-000016",
+   "name": "residual lumen diameter",
+   "definition": "The narrowest internal diameter remaining at a stenosis.",
+   "quantity_kind": "length",
+   "permitted_units": [
+    "mm"
+   ],
+   "method": "Narrowest inner-to-inner diameter on the plane of maximal narrowing.",
+   "inherited_from": null,
+   "components": []
+  },
+  {
+   "measurement_id": "MS-000014",
+   "name": "NASCET percent stenosis",
+   "definition": "Percentage reduction of the internal carotid lumen, by the NASCET method.",
+   "quantity_kind": "fraction",
+   "permitted_units": [
+    "%"
+   ],
+   "method": "Residual lumen at the stenosis divided by the diameter of the normal distal internal carotid artery, beyond the bulb. The denominator is the landmark that makes this method carotid-specific.",
+   "inherited_from": null,
+   "components": []
+  },
+  {
+   "measurement_id": "MS-000015",
+   "name": "ECST percent stenosis",
+   "definition": "Percentage reduction of the internal carotid lumen, by the ECST method.",
+   "quantity_kind": "fraction",
+   "permitted_units": [
+    "%"
+   ],
+   "method": "Residual lumen at the stenosis divided by the estimated original lumen at the same level.",
+   "inherited_from": null,
+   "components": []
+  }
+ ],
+ "assessment_schemes": [],
+ "components": [],
+ "may_represent": [],
+ "may_be_caused_by": [],
+ "occurs_with": [],
+ "component_of": null,
+ "component": false,
+ "fixed_values": [],
+ "source_definition": null,
+ "concept_source": null,
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-14",
+  "published": null,
+  "last_modified": "2026-09-14",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ },
+ "radlex_composition": {
+  "base": {
+   "code": "RID5016",
+   "label": "stenosis"
+  },
+  "modifiers": [
+   {
+    "code": "RID585",
+    "label": "internal carotid artery"
+   }
+  ]
+ }
+}

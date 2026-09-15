@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="radlex" name="http://radlex.org/RID/RadLex.owl" uri="references/PunRadLex_Owl4.3/RadLex.owl"/>
+    <uri id="radcde-alpha" name="https://radelement.org/ng/radcde-alpha" uri="radcde-alpha.ttl"/>
+</catalog>

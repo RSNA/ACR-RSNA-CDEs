@@ -1,0 +1,280 @@
+{
+ "finding_id": "FC-000014",
+ "name": "mural nodule",
+ "definition": "A solid nodular projection from the wall of a fluid-filled structure.",
+ "subtype_of": null,
+ "defined_concept": false,
+ "bindings": [],
+ "synonyms": [],
+ "anatomic_scope": [],
+ "anatomic_refinement_rules": [],
+ "seen_on": [],
+ "subspecialty": [],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000007",
+   "name": "enhancement pattern",
+   "definition": "The distribution of contrast uptake within the lesion.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000060",
+     "name": "none",
+     "definition": "No appreciable contrast uptake.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000061",
+     "name": "homogeneous",
+     "definition": "Uniform uptake throughout.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000062",
+     "name": "heterogeneous",
+     "definition": "Non-uniform uptake.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000063",
+     "name": "peripheral nodular discontinuous",
+     "definition": "Discontinuous nodular uptake at the margin.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000064",
+     "name": "arterial hyperenhancement with washout",
+     "definition": "Uptake exceeding parenchyma in the arterial phase with subsequent relative hypoenhancement.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000015",
+   "name": "interval change",
+   "definition": "The relationship of the finding to the same finding on a prior comparable examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000140",
+     "name": "new",
+     "definition": "Not present on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000141",
+     "name": "unchanged",
+     "definition": "Without appreciable difference from the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000142",
+     "name": "increased",
+     "definition": "Larger or more numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000143",
+     "name": "decreased",
+     "definition": "Smaller or less numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000144",
+     "name": "no prior available",
+     "definition": "No comparable prior examination was available.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  }
+ ],
+ "measurements": [
+  {
+   "measurement_id": "MS-000001",
+   "name": "long-axis diameter",
+   "definition": "The greatest diameter of the lesion on the plane showing its maximal dimension.",
+   "quantity_kind": "length",
+   "permitted_units": [
+    "mm",
+    "cm"
+   ],
+   "method": "Greatest diameter on a single plane, measured on the sequence or window in which the lesion is best seen.",
+   "inherited_from": null,
+   "components": []
+  }
+ ],
+ "assessment_schemes": [],
+ "components": [],
+ "may_represent": [],
+ "may_be_caused_by": [],
+ "occurs_with": [],
+ "component_of": "FC-000015",
+ "component": true,
+ "fixed_values": [],
+ "source_definition": null,
+ "concept_source": null,
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-14",
+  "published": null,
+  "last_modified": "2026-09-14",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ },
+ "radlex_composition": {
+  "base": {
+   "code": "RID3875",
+   "label": "nodule"
+  },
+  "modifiers": []
+ }
+}

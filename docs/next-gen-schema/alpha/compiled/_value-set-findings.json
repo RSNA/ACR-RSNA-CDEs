@@ -1,0 +1,193 @@
+{
+ "value_set": "finding-classes",
+ "description": "Every FindingClass is anatomically anchored and may be emitted as an answer, except components, which are reached only through HAS_COMPONENT.",
+ "source_version": "4.3",
+ "standalone": [
+  {
+   "finding_id": "FC-000005",
+   "name": "pulmonary nodule"
+  },
+  {
+   "finding_id": "FC-000006",
+   "name": "solid pulmonary nodule"
+  },
+  {
+   "finding_id": "FC-000007",
+   "name": "part-solid pulmonary nodule"
+  },
+  {
+   "finding_id": "FC-000008",
+   "name": "non-solid pulmonary nodule"
+  },
+  {
+   "finding_id": "FC-000010",
+   "name": "thyroid nodule"
+  },
+  {
+   "finding_id": "FC-000011",
+   "name": "adrenal nodule"
+  },
+  {
+   "finding_id": "FC-000017",
+   "name": "pulmonary mass"
+  },
+  {
+   "finding_id": "FC-000018",
+   "name": "hepatic mass"
+  },
+  {
+   "finding_id": "FC-000019",
+   "name": "renal mass"
+  },
+  {
+   "finding_id": "FC-000020",
+   "name": "renal lesion"
+  },
+  {
+   "finding_id": "FC-000004",
+   "name": "renal cyst"
+  },
+  {
+   "finding_id": "FC-000016",
+   "name": "simple renal cyst"
+  },
+  {
+   "finding_id": "FC-000015",
+   "name": "complex renal cyst"
+  },
+  {
+   "finding_id": "FC-000021",
+   "name": "pleural effusion"
+  },
+  {
+   "finding_id": "FC-000022",
+   "name": "pneumothorax"
+  },
+  {
+   "finding_id": "FC-000023",
+   "name": "intracranial hemorrhage"
+  },
+  {
+   "finding_id": "FC-000043",
+   "name": "epidural hematoma"
+  },
+  {
+   "finding_id": "FC-000044",
+   "name": "subdural hematoma"
+  },
+  {
+   "finding_id": "FC-000045",
+   "name": "subarachnoid hemorrhage"
+  },
+  {
+   "finding_id": "FC-000046",
+   "name": "intraventricular hemorrhage"
+  },
+  {
+   "finding_id": "FC-000047",
+   "name": "intraparenchymal hemorrhage"
+  },
+  {
+   "finding_id": "FC-000024",
+   "name": "consolidation"
+  },
+  {
+   "finding_id": "FC-000025",
+   "name": "ground-glass opacity"
+  },
+  {
+   "finding_id": "FC-000026",
+   "name": "striated nephrogram"
+  },
+  {
+   "finding_id": "FC-000027",
+   "name": "perinephric fat stranding"
+  },
+  {
+   "finding_id": "FC-000028",
+   "name": "white matter hyperintensity"
+  },
+  {
+   "finding_id": "FC-000029",
+   "name": "acute infarct"
+  },
+  {
+   "finding_id": "FC-000006B",
+   "name": "atelectasis"
+  },
+  {
+   "finding_id": "FC-000030",
+   "name": "cerebral atrophy"
+  },
+  {
+   "finding_id": "FC-000031",
+   "name": "encephalomalacia"
+  },
+  {
+   "finding_id": "FC-000032",
+   "name": "renal enlargement"
+  },
+  {
+   "finding_id": "FC-000033",
+   "name": "renal cortical scarring"
+  },
+  {
+   "finding_id": "FC-000012",
+   "name": "mediastinal lymphadenopathy"
+  },
+  {
+   "finding_id": "FC-000053",
+   "name": "external carotid artery stenosis"
+  },
+  {
+   "finding_id": "FC-000034",
+   "name": "internal carotid artery stenosis"
+  },
+  {
+   "finding_id": "FC-000035",
+   "name": "hydronephrosis"
+  },
+  {
+   "finding_id": "FC-000036",
+   "name": "pulmonary artery filling defect"
+  },
+  {
+   "finding_id": "FC-000037",
+   "name": "rib fracture"
+  },
+  {
+   "finding_id": "FC-000038",
+   "name": "midline shift"
+  },
+  {
+   "finding_id": "FC-000039",
+   "name": "mediastinal shift"
+  },
+  {
+   "finding_id": "FC-000040",
+   "name": "ventricular shunt catheter"
+  },
+  {
+   "finding_id": "FC-000041",
+   "name": "azygos fissure"
+  },
+  {
+   "finding_id": "FC-000013",
+   "name": "tendon lesion"
+  }
+ ],
+ "component_only": [
+  {
+   "finding_id": "FC-000009",
+   "name": "solid component of part-solid pulmonary nodule"
+  },
+  {
+   "finding_id": "FC-000014",
+   "name": "mural nodule"
+  }
+ ],
+ "counts": {
+  "standalone": 43,
+  "component_only": 2
+ }
+}

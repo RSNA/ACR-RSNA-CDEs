@@ -1,0 +1,497 @@
+{
+ "finding_id": "FC-000021",
+ "name": "pleural effusion",
+ "definition": "Fluid within the pleural space beyond the physiologic few millilitres.",
+ "subtype_of": null,
+ "defined_concept": false,
+ "bindings": [
+  {
+   "system": "RADLEX",
+   "code": "RID34539",
+   "source_label": "pleural effusion",
+   "match": "exactMatch",
+   "source_version": "4.3",
+   "version": {
+    "number": 1,
+    "status": "published",
+    "created": "2026-09-14",
+    "published": null,
+    "last_modified": "2026-09-14",
+    "contributors": [
+     {
+      "id": "PERSON-000001",
+      "role": "author",
+      "via": "alpha-generator"
+     }
+    ]
+   }
+  },
+  {
+   "system": "SNOMEDCT",
+   "code": "60046008",
+   "source_label": "Pleural effusion",
+   "match": "exactMatch",
+   "source_version": "supplied",
+   "version": {
+    "number": 1,
+    "status": "published",
+    "created": "2026-09-14",
+    "published": null,
+    "last_modified": "2026-09-14",
+    "contributors": [
+     {
+      "id": "PERSON-000001",
+      "role": "author",
+      "via": "alpha-generator"
+     }
+    ]
+   }
+  }
+ ],
+ "synonyms": [
+  {
+   "term": "pleural fluid",
+   "type": "synonym",
+   "scope": "exact"
+  },
+  {
+   "term": "effusion",
+   "type": "synonym",
+   "scope": "exact"
+  }
+ ],
+ "anatomic_scope": [
+  {
+   "location": "RID1363",
+   "kind": "specific",
+   "strength": "required",
+   "name": "pleural space"
+  }
+ ],
+ "anatomic_refinement_rules": [],
+ "seen_on": [
+  "CT",
+  "US",
+  "XR"
+ ],
+ "subspecialty": [
+  "CH"
+ ],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000015",
+   "name": "interval change",
+   "definition": "The relationship of the finding to the same finding on a prior comparable examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000140",
+     "name": "new",
+     "definition": "Not present on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000141",
+     "name": "unchanged",
+     "definition": "Without appreciable difference from the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000142",
+     "name": "increased",
+     "definition": "Larger or more numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000143",
+     "name": "decreased",
+     "definition": "Smaller or less numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000144",
+     "name": "no prior available",
+     "definition": "No comparable prior examination was available.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000016",
+   "name": "amount",
+   "definition": "How much material is present, on a coarse ordinal scale.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000150",
+     "name": "trace",
+     "definition": "Barely detectable.",
+     "rank": 1,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000151",
+     "name": "small",
+     "definition": "Present but of little consequence.",
+     "rank": 2,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5774",
+       "source_label": "small",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000152",
+     "name": "moderate",
+     "definition": "Substantial without dominating the space.",
+     "rank": 3,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000153",
+     "name": "large",
+     "definition": "Filling much of the available space.",
+     "rank": 4,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5778",
+       "source_label": "large",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000017",
+   "name": "internal complexity",
+   "definition": "Features within a collection beyond uniform homogeneous content.",
+   "select_cardinality": "multi",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000160",
+     "name": "septations",
+     "definition": "Linear strands crossing the collection.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000161",
+     "name": "loculation",
+     "definition": "Fixed in a non-dependent or lenticular configuration.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000162",
+     "name": "gas",
+     "definition": "Gas within the collection without prior instrumentation.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39157",
+       "source_label": "portion of gaseous body substance",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000163",
+     "name": "dependent debris",
+     "definition": "Layering higher-attenuation material.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000164",
+     "name": "fluid-fluid level",
+     "definition": "Two layers of differing attenuation.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID35228",
+       "source_label": "fluid-fluid level",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "measurements": [
+  {
+   "measurement_id": "MS-000009",
+   "name": "volume",
+   "definition": "The three-dimensional extent of a lesion or collection.",
+   "quantity_kind": "volume",
+   "permitted_units": [
+    "mL",
+    "cm3"
+   ],
+   "method": "Segmented volume, or the ellipsoid approximation where stated.",
+   "inherited_from": null,
+   "components": []
+  },
+  {
+   "measurement_id": "MS-000005",
+   "name": "attenuation (Hounsfield units)",
+   "definition": "The mean CT attenuation of the lesion measured within a region of interest.",
+   "quantity_kind": "ct-attenuation",
+   "permitted_units": [
+    "[hnsf'U]"
+   ],
+   "method": "Mean value within a region of interest covering at least two thirds of the lesion, on unenhanced images.",
+   "inherited_from": null,
+   "components": []
+  }
+ ],
+ "assessment_schemes": [],
+ "components": [],
+ "may_represent": [
+  "DX-000011",
+  "DX-000012",
+  "DX-000013",
+  "DX-000014",
+  "DX-000026"
+ ],
+ "may_be_caused_by": [
+  "DX-000004",
+  "DX-000015",
+  "DX-000016",
+  "DX-000017",
+  "DX-000019",
+  "DX-000020"
+ ],
+ "occurs_with": [
+  "FC-000006B",
+  "FC-000012",
+  "FC-000024",
+  "FC-000025"
+ ],
+ "component_of": null,
+ "component": false,
+ "fixed_values": [],
+ "source_definition": null,
+ "concept_source": null,
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-14",
+  "published": null,
+  "last_modified": "2026-09-14",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ }
+}

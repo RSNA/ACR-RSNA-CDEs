@@ -1,0 +1,208 @@
+@prefix cde: <https://radelement.org/ng/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix probe: <https://radelement.org/ng/probe/> .
+@prefix radlex: <http://www.radlex.org/RID/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+probe:A3_PartSolidByAttenuation a owl:Class ;
+    rdfs:label "PROBE A3 [EXPECT EQUIVALENT to an existing class - yellow row in Equivalent To, does NOT move in the tree]: a pulmonary nodule whose attenuation is part-solid" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The condition-versus-subtype case. The subtype is defined, so nobody authors it twice and the component requirement attaches to it automatically. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:PulmonaryNodule [ a owl:Restriction ;
+                        owl:onProperty cde:hasAttenuation ;
+                        owl:someValuesFrom cde:V_000011_PartSolid ] ) ] ;
+    cde:designNote "[Group A] expect: subsumed by PartSolidPulmonaryNodule. The condition-versus-subtype case. The subtype is defined, so nobody authors it twice and the component requirement attaches to it automatically." .
+
+probe:A6_CystWithMuralNodule a owl:Class ;
+    rdfs:label "PROBE A6 [EXPECT SUBCLASS of an existing class - yellow row in SubClass Of, moves in the tree when the dropdown is set to Inferred]: a cyst with a mural nodule component" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The second conditional-relationship case, and it fires in the opposite direction from the part-solid one. Nothing here asserts a composition value. The chain is: a mural nodule is necessarily componentOf some ComplexCyst, componentOf is functional, so the cyst holding it IS that complex cyst. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:RenalCyst [ a owl:Restriction ;
+                        owl:onProperty cde:hasComponent ;
+                        owl:someValuesFrom cde:MuralNodule ] ) ] ;
+    cde:designNote "[Group A] expect: subsumed by ComplexRenalCyst. The second conditional-relationship case, and it fires in the opposite direction from the part-solid one. Nothing here asserts a composition value. The chain is: a mural nodule is necessarily componentOf some ComplexCyst, componentOf is functional, so the cyst holding it IS that complex cyst." .
+
+probe:B1_SolidAndPartSolid a owl:Class ;
+    rdfs:label "PROBE B1 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a nodule that is both solid and part-solid" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. Value disjointness. Without it, a single-select element is single-select only by convention. Note this bites through someValuesFrom because the value classes are disjoint, not because of any cardinality axiom. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:PulmonaryNodule [ a owl:Restriction ;
+                        owl:onProperty cde:hasAttenuation ;
+                        owl:someValuesFrom cde:V_000010_Solid ] [ a owl:Restriction ;
+                        owl:onProperty cde:hasAttenuation ;
+                        owl:someValuesFrom cde:V_000011_PartSolid ] ) ] ;
+    cde:designNote "[Group B] expect: unsatisfiable. Value disjointness. Without it, a single-select element is single-select only by convention. Note this bites through someValuesFrom because the value classes are disjoint, not because of any cardinality axiom." .
+
+probe:B2_NoduleThatIsAMass a owl:Class ;
+    rdfs:label "PROBE B2 [EXPECT INCONSISTENT - turns red under owl:Nothing]: something that is both a nodule and a mass" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The current definition model declares PulmonaryNodule and PulmonaryMass disjoint. This probe verifies that the class distinction remains reasoner-enforced rather than only a naming convention. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:PulmonaryNodule cde:PulmonaryMass ) ] ;
+    cde:designNote "[Group B] expect: unsatisfiable. The current definition model declares PulmonaryNodule and PulmonaryMass disjoint. This probe verifies that the class distinction remains reasoner-enforced rather than only a naming convention." .
+
+probe:B3_RibFractureWithChronicAcuity a owl:Class ;
+    rdfs:label "PROBE B3 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a rib fracture reported as chronic" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. RibFracture narrows Acuity to acute, healing, healed, or indeterminate age. Chronic remains a value of the reusable Acuity DataElement but is excluded at this point of use with an allValuesFrom restriction. This probe verifies that the class-specific narrowing is reasoner-enforced. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:RibFracture [ a owl:Restriction ;
+                        owl:allValuesFrom [ a owl:Class ;
+                                owl:unionOf ( cde:V_000330_Acute cde:V_000332_Healing cde:V_000333_Healed cde:V_000335_IndeterminateAge ) ] ;
+                        owl:onProperty cde:hasAcuity ] [ a owl:Restriction ;
+                        owl:onProperty cde:hasAcuity ;
+                        owl:someValuesFrom cde:V_000334_Chronic ] ) ] ;
+    cde:designNote "[Group B] expect: unsatisfiable. RibFracture narrows Acuity to acute, healing, healed, or indeterminate age. Chronic remains a value of the reusable Acuity DataElement but is excluded at this point of use with an allValuesFrom restriction. This probe verifies that the class-specific narrowing is reasoner-enforced." .
+
+probe:B4_FindingThatIsAlsoADiagnosis a owl:Class ;
+    rdfs:label "PROBE B4 [EXPECT INCONSISTENT - turns red under owl:Nothing]: something that is both a FindingClass and a Diagnosis" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. FindingClass and Diagnosis are intentionally disjoint node types. This probe verifies that a concept cannot simultaneously occupy both semantic roles. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:FindingClass cde:Diagnosis ) ] ;
+    cde:designNote "[Group B] expect: unsatisfiable. FindingClass and Diagnosis are intentionally disjoint node types. This probe verifies that a concept cannot simultaneously occupy both semantic roles." .
+
+probe:B5_ThyroidNoduleInLung a owl:Class ;
+    rdfs:label "PROBE B5 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: a thyroid nodule located in the lung" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. Deliberate negative control. scopedToRegion is not functional and lung and thyroid are not declared disjoint, so nothing rules this out. It shows what the model does NOT check, which matters for the strength property: strength declares how binding a scope claim is, and no OWL axiom currently carries it. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:ThyroidNodule [ a owl:Restriction ;
+                        owl:onProperty cde:scopedToRegion ;
+                        owl:someValuesFrom radlex:RID1301 ] ) ] ;
+    cde:designNote "[Group B] expect: SATISFIABLE - this one is expected to stay white. Deliberate negative control. scopedToRegion is not functional and lung and thyroid are not declared disjoint, so nothing rules this out. It shows what the model does NOT check, which matters for the strength property: strength declares how binding a scope claim is, and no OWL axiom currently carries it." .
+
+probe:B6_SimpleCystWithMuralNodule a owl:Class ;
+    rdfs:label "PROBE B6 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a simple cyst with a mural nodule" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The conditional actually bites. SimpleCyst fixes composition to cystic; the mural nodule forces the same cyst to be a ComplexCyst, whose composition is mixed cystic and solid. hasComposition is functional (D-02) and the two values are disjoint, so the contradiction surfaces. Note this needed three separate decisions to work: functional componentOf, functional hasComposition, and disjoint values. Remove any one and this probe goes white. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:SimpleRenalCyst [ a owl:Restriction ;
+                        owl:onProperty cde:hasComponent ;
+                        owl:someValuesFrom cde:MuralNodule ] ) ] ;
+    cde:designNote "[Group B] expect: unsatisfiable. The conditional actually bites. SimpleCyst fixes composition to cystic; the mural nodule forces the same cyst to be a ComplexCyst, whose composition is mixed cystic and solid. hasComposition is functional (D-02) and the two values are disjoint, so the contradiction surfaces. Note this needed three separate decisions to work: functional componentOf, functional hasComposition, and disjoint values. Remove any one and this probe goes white." .
+
+probe:C1_ParapneumonicEffusionProgressesToEmpyema a owl:Class ;
+    rdfs:label "PROBE C1 [EXPECT EQUIVALENT to an existing class - yellow row in Equivalent To, does NOT move in the tree]: parapneumonic effusion may progress to empyema" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. ParapneumonicEffusion currently authors MAY_PROGRESS_TO Empyema. Because that restriction is already part of the class definition, intersecting the class with the same progression restriction should not narrow it further. This probe verifies that the authored progression axiom remains present. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:ParapneumonicEffusion [ a owl:Restriction ;
+                        owl:onProperty cde:mayProgressTo ;
+                        owl:someValuesFrom cde:Empyema ] ) ] ;
+    cde:designNote "[Group C] expect: equivalent to ParapneumonicEffusion. ParapneumonicEffusion currently authors MAY_PROGRESS_TO Empyema. Because that restriction is already part of the class definition, intersecting the class with the same progression restriction should not narrow it further. This probe verifies that the authored progression axiom remains present." .
+
+probe:D1_FindingClassWithNoAnatomicAnchor a owl:Class ;
+    rdfs:label "PROBE D1 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: a finding class with no anatomic anchor" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The requirement that a top-level FindingClass have an anatomic scope is an authoring lint rule, not an OWL axiom. A reasoner therefore should not make this primitive test class inconsistent merely because it lacks a location. This probe keeps the boundary between authoring validation and ontology semantics explicit. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( cde:FindingClass ) ] ;
+    cde:designNote "[Group D] expect: SATISFIABLE - expected to stay white. The requirement that a top-level FindingClass have an anatomic scope is an authoring lint rule, not an OWL axiom. A reasoner therefore should not make this primitive test class inconsistent merely because it lacks a location. This probe keeps the boundary between authoring validation and ontology semantics explicit." .
+
+probe:E10_NoCalcificationPlusAPattern a owl:Class ;
+    rdfs:label "PROBE E10 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a nodule with no calcification and popcorn calcification" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. Calcification is multi-select, so value disjointness alone does not stop none being asserted alongside a pattern: two different fillers are permitted. The none value carries its own allValuesFrom restriction to close that, and this probe is what proves it. Read against E5, which asserts two real patterns together and must stay satisfiable. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:PulmonaryNodule [ a owl:Restriction ;
+                        owl:onProperty cde:hasCalcification ;
+                        owl:someValuesFrom cde:V_000030_None ] [ a owl:Restriction ;
+                        owl:onProperty cde:hasCalcification ;
+                        owl:someValuesFrom cde:V_000032_Popcorn ] ) ] ;
+    cde:designNote "[Group E] expect: unsatisfiable. Calcification is multi-select, so value disjointness alone does not stop none being asserted alongside a pattern: two different fillers are permitted. The none value carries its own allValuesFrom restriction to close that, and this probe is what proves it. Read against E5, which asserts two real patterns together and must stay satisfiable." .
+
+probe:E11_EpiduralCannotBeCrescentic a owl:Class ;
+    rdfs:label "PROBE E11 [EXPECT INCONSISTENT - turns red under owl:Nothing]: an epidural hematoma with crescentic collection shape" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The current alpha provisionally models epidural hematoma with a fixed biconvex collection-shape constraint. Collection shape is single-select, so asserting crescentic tests whether the fixed-value mechanism makes the modeled combination inconsistent. This is a mechanism test, not a radiologist-validated clinical rule. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:EpiduralHematoma [ a owl:Restriction ;
+                        owl:onProperty cde:hasCollectionShape ;
+                        owl:someValuesFrom cde:V_000371_Crescentic ] ) ] ;
+    cde:designNote "[Group E] expect: unsatisfiable. The current alpha provisionally models epidural hematoma with a fixed biconvex collection-shape constraint. Collection shape is single-select, so asserting crescentic tests whether the fixed-value mechanism makes the modeled combination inconsistent. This is a mechanism test, not a radiologist-validated clinical rule." .
+
+probe:E12_SubduralCannotBeBiconvex a owl:Class ;
+    rdfs:label "PROBE E12 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a subdural hematoma with biconvex collection shape" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The current alpha provisionally models subdural hematoma with a fixed crescentic collection-shape constraint. Collection shape is single-select, so asserting biconvex tests whether the fixed-value mechanism makes the modeled combination inconsistent. This is a mechanism test, not a radiologist-validated clinical rule. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:SubduralHematoma [ a owl:Restriction ;
+                        owl:onProperty cde:hasCollectionShape ;
+                        owl:someValuesFrom cde:V_000370_Biconvex ] ) ] ;
+    cde:designNote "[Group E] expect: unsatisfiable. The current alpha provisionally models subdural hematoma with a fixed crescentic collection-shape constraint. Collection shape is single-select, so asserting biconvex tests whether the fixed-value mechanism makes the modeled combination inconsistent. This is a mechanism test, not a radiologist-validated clinical rule." .
+
+probe:E1_KidneyPartOfUrinaryTract a owl:Class ;
+    rdfs:label "PROBE E1 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: native kidney Part_Of urinary tract relationship" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. Preserves the exact native Part_Of predicate. This probe does not authorize any application traversal or substitution with another RadLex property. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( radlex:RID205 [ a owl:Restriction ;
+                        owl:onProperty radlex:Part_Of ;
+                        owl:someValuesFrom radlex:RID204 ] ) ] ;
+    cde:designNote "[Group E] expect: SATISFIABLE. Preserves the exact native Part_Of predicate. This probe does not authorize any application traversal or substitution with another RadLex property." .
+
+probe:E2_KidneyContainedInRetroperitoneum a owl:Class ;
+    rdfs:label "PROBE E2 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: native kidney Contained_In retroperitoneum relationship" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. Preserves the distinct native Contained_In fact alongside Part_Of. The CDE layer does not rewrite either predicate or use one as a proxy for the other. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( radlex:RID205 [ a owl:Restriction ;
+                        owl:onProperty radlex:Contained_In ;
+                        owl:someValuesFrom radlex:RID431 ] ) ] ;
+    cde:designNote "[Group E] expect: SATISFIABLE. Preserves the distinct native Contained_In fact alongside Part_Of. The CDE layer does not rewrite either predicate or use one as a proxy for the other." .
+
+probe:E5_MultiSelectAllowsTwoValues a owl:Class ;
+    rdfs:label "PROBE E5 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: a pulmonary nodule with popcorn and punctate calcification" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The counterpart to B1. Calcification is deliberately multi-select, so two patterns co-occurring must remain satisfiable. If this goes red, something has declared the element functional and a lesion can no longer carry two calcification patterns. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:PulmonaryNodule [ a owl:Restriction ;
+                        owl:onProperty cde:hasCalcification ;
+                        owl:someValuesFrom cde:V_000032_Popcorn ] [ a owl:Restriction ;
+                        owl:onProperty cde:hasCalcification ;
+                        owl:someValuesFrom cde:V_000033_Punctate ] ) ] ;
+    cde:designNote "[Group E] expect: SATISFIABLE. The counterpart to B1. Calcification is deliberately multi-select, so two patterns co-occurring must remain satisfiable. If this goes red, something has declared the element functional and a lesion can no longer carry two calcification patterns." .
+
+probe:E6_SingleSelectOnAcuity a owl:Class ;
+    rdfs:label "PROBE E6 [EXPECT INCONSISTENT - turns red under owl:Nothing]: a rib fracture that is both acute and healed" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. Acuity is single-select. Disjoint values alone would not catch this, because two different fillers are possible; it is caught because the property is declared functional. Removing either the disjointness or the functional declaration turns this white. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:RibFracture [ a owl:Restriction ;
+                        owl:onProperty cde:hasAcuity ;
+                        owl:someValuesFrom cde:V_000330_Acute ] [ a owl:Restriction ;
+                        owl:onProperty cde:hasAcuity ;
+                        owl:someValuesFrom cde:V_000333_Healed ] ) ] ;
+    cde:designNote "[Group E] expect: unsatisfiable. Acuity is single-select. Disjoint values alone would not catch this, because two different fillers are possible; it is caught because the property is declared functional. Removing either the disjointness or the functional declaration turns this white." .
+
+probe:E7_AtelectasisAxesAreIndependent a owl:Class ;
+    rdfs:label "PROBE E7 [EXPECT CONSISTENT and nothing further - stays where it is, no yellow rows]: compressive atelectasis with a rounded morphology" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The restructure that replaced five atelectasis subtypes with two elements rests on the axes being independent: a rounded atelectasis is characteristically compressive. If this ever goes red the two have been made to partition one another, and the subtype question reopens. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:Atelectasis [ a owl:Restriction ;
+                        owl:onProperty cde:hasAtelectasisMechanism ;
+                        owl:someValuesFrom cde:V_000410_Compressive ] [ a owl:Restriction ;
+                        owl:onProperty cde:hasAtelectasisMorphology ;
+                        owl:someValuesFrom cde:V_000420_Rounded ] ) ] ;
+    cde:designNote "[Group E] expect: SATISFIABLE. The restructure that replaced five atelectasis subtypes with two elements rests on the axes being independent: a rounded atelectasis is characteristically compressive. If this ever goes red the two have been made to partition one another, and the subtype question reopens." .
+
+probe:E8_PartSolidWithItsSolidComponent a owl:Class ;
+    rdfs:label "PROBE E8 [EXPECT EQUIVALENT to an existing class - yellow row in Equivalent To, does NOT move in the tree]: a part-solid nodule whose component is solid" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The resolution B1 rules out on one entity. A report saying 'part-solid nodule with a 4 mm solid component' states both values, and they are consistent because they sit on two entities: the nodule is part-solid, its component is solid. Attenuation is functional and its values are disjoint, so this only works because hasComponent supplies the second entity. Read together with B1: one entity cannot hold both, two can, and the component edge is what makes them two. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:PartSolidPulmonaryNodule [ a owl:Restriction ;
+                        owl:onProperty cde:hasComponent ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( cde:SolidComponentOfPartSolidNodule [ a owl:Restriction ;
+                                            owl:onProperty cde:hasAttenuation ;
+                                            owl:someValuesFrom cde:V_000010_Solid ] ) ] ] ) ] ;
+    cde:designNote "[Group E] expect: SATISFIABLE. The resolution B1 rules out on one entity. A report saying 'part-solid nodule with a 4 mm solid component' states both values, and they are consistent because they sit on two entities: the nodule is part-solid, its component is solid. Attenuation is functional and its values are disjoint, so this only works because hasComponent supplies the second entity. Read together with B1: one entity cannot hold both, two can, and the component edge is what makes them two." .
+
+probe:E9_BothValuesStatedResolveToTheSubtype a owl:Class ;
+    rdfs:label "PROBE E9 [EXPECT EQUIVALENT to an existing class - yellow row in Equivalent To, does NOT move in the tree]: a pulmonary nodule with part-solid attenuation and a solid component" ;
+    rdfs:comment "Deliberate test case, not part of the vocabulary. The full path. Asserted at the parent class with both attenuation values present, one on the nodule and one on its component. It must stay satisfiable AND classify into the part-solid subtype. E8 shows the two values coexist; this shows the coexistence does not block the classification that A3 performs. If this probe does not do what its label says, a constraint has been lost or added. Only inconsistency shows as colour, so a probe expecting EQUIVALENT or SUBCLASS fails silently: check the Description panel, where the reasoner's conclusions appear as yellow rows, rather than looking for a colour in the tree." ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( cde:PulmonaryNodule [ a owl:Restriction ;
+                        owl:onProperty cde:hasAttenuation ;
+                        owl:someValuesFrom cde:V_000011_PartSolid ] [ a owl:Restriction ;
+                        owl:onProperty cde:hasComponent ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( cde:SolidComponentOfPartSolidNodule [ a owl:Restriction ;
+                                            owl:onProperty cde:hasAttenuation ;
+                                            owl:someValuesFrom cde:V_000010_Solid ] ) ] ] ) ] ;
+    cde:designNote "[Group E] expect: subsumed by PartSolidPulmonaryNodule. The full path. Asserted at the parent class with both attenuation values present, one on the nodule and one on its component. It must stay satisfiable AND classify into the part-solid subtype. E8 shows the two values coexist; this shows the coexistence does not block the classification that A3 performs." .
+
+cde:radcde-probes a owl:Ontology ;
+    dcterms:title "RadElement next-gen alpha: probes" ;
+    rdfs:comment "Deliberate test cases. Run a reasoner over this module. Group A probes should classify under something informative. Group B probes should go red. A Group B probe that stays white means the constraint it tests is not being enforced." ;
+    owl:imports cde:radcde-alpha .
+

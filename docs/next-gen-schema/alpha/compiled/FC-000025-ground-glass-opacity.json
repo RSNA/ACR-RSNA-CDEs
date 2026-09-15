@@ -1,0 +1,469 @@
+{
+ "finding_id": "FC-000025",
+ "name": "ground-glass opacity",
+ "definition": "Hazy increased lung attenuation that does not obscure the vessels.",
+ "subtype_of": null,
+ "defined_concept": false,
+ "bindings": [
+  {
+   "system": "RADLEX",
+   "code": "RID28531",
+   "source_label": "ground-glass opacity",
+   "match": "exactMatch",
+   "source_version": "4.3",
+   "version": {
+    "number": 1,
+    "status": "published",
+    "created": "2026-09-14",
+    "published": null,
+    "last_modified": "2026-09-14",
+    "contributors": [
+     {
+      "id": "PERSON-000001",
+      "role": "author",
+      "via": "alpha-generator"
+     }
+    ]
+   }
+  },
+  {
+   "system": "SNOMEDCT",
+   "code": "1217294009",
+   "source_label": "Ground glass opacity",
+   "match": "exactMatch",
+   "source_version": "supplied",
+   "version": {
+    "number": 1,
+    "status": "published",
+    "created": "2026-09-14",
+    "published": null,
+    "last_modified": "2026-09-14",
+    "contributors": [
+     {
+      "id": "PERSON-000001",
+      "role": "author",
+      "via": "alpha-generator"
+     }
+    ]
+   }
+  }
+ ],
+ "synonyms": [],
+ "anatomic_scope": [
+  {
+   "location": "RID35739",
+   "kind": "specific",
+   "strength": "required",
+   "name": "lung parenchyma"
+  }
+ ],
+ "anatomic_refinement_rules": [],
+ "seen_on": [
+  "CT",
+  "MR",
+  "US",
+  "XR"
+ ],
+ "subspecialty": [
+  "CH"
+ ],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000015",
+   "name": "interval change",
+   "definition": "The relationship of the finding to the same finding on a prior comparable examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000140",
+     "name": "new",
+     "definition": "Not present on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000141",
+     "name": "unchanged",
+     "definition": "Without appreciable difference from the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000142",
+     "name": "increased",
+     "definition": "Larger or more numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000143",
+     "name": "decreased",
+     "definition": "Smaller or less numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000144",
+     "name": "no prior available",
+     "definition": "No comparable prior examination was available.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000019",
+   "name": "extent",
+   "definition": "How much of the containing structure a non-discrete process involves.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000180",
+     "name": "focal",
+     "definition": "One limited area.",
+     "rank": 1,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5702",
+       "source_label": "focal",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000181",
+     "name": "multifocal",
+     "definition": "Several discrete areas.",
+     "rank": 2,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5703",
+       "source_label": "multifocal",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000182",
+     "name": "segmental",
+     "definition": "Conforming to a named anatomic segment.",
+     "rank": 3,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5694",
+       "source_label": "segmental",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000183",
+     "name": "lobar",
+     "definition": "Involving a whole lobe.",
+     "rank": 4,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000184",
+     "name": "diffuse",
+     "definition": "Throughout the structure.",
+     "rank": 5,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5701",
+       "source_label": "diffuse",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000013",
+   "name": "distribution",
+   "definition": "The spatial pattern of a multifocal finding across the organ or region.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000120",
+     "name": "solitary",
+     "definition": "A single lesion.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000121",
+     "name": "scattered",
+     "definition": "Several lesions without a discernible pattern.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000122",
+     "name": "clustered",
+     "definition": "Lesions grouped in one part of the organ.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000123",
+     "name": "random",
+     "definition": "Lesions distributed without respect to secondary lobular anatomy.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000124",
+     "name": "centrilobular",
+     "definition": "Lesions centred on the secondary pulmonary lobule.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000125",
+     "name": "perilymphatic",
+     "definition": "Lesions along lymphatic pathways.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000126",
+     "name": "miliary",
+     "definition": "Innumerable uniform tiny lesions throughout.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  }
+ ],
+ "measurements": [],
+ "assessment_schemes": [],
+ "components": [],
+ "may_represent": [
+  "DX-000016",
+  "DX-000017"
+ ],
+ "may_be_caused_by": [],
+ "occurs_with": [
+  "FC-000021"
+ ],
+ "component_of": null,
+ "component": false,
+ "fixed_values": [],
+ "source_definition": null,
+ "concept_source": null,
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-14",
+  "published": null,
+  "last_modified": "2026-09-14",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ }
+}

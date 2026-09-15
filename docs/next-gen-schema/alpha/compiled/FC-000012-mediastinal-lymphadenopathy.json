@@ -1,0 +1,414 @@
+{
+ "finding_id": "FC-000012",
+ "name": "mediastinal lymphadenopathy",
+ "definition": "Enlargement of one or more mediastinal lymph nodes.",
+ "subtype_of": null,
+ "defined_concept": false,
+ "bindings": [
+  {
+   "system": "RADLEX",
+   "code": "RID3798",
+   "source_label": "lymphadenopathy",
+   "match": "broadMatch",
+   "source_version": "4.3",
+   "version": {
+    "number": 1,
+    "status": "published",
+    "created": "2026-09-14",
+    "published": null,
+    "last_modified": "2026-09-14",
+    "contributors": [
+     {
+      "id": "PERSON-000001",
+      "role": "author",
+      "via": "alpha-generator"
+     }
+    ]
+   }
+  },
+  {
+   "system": "SNOMEDCT",
+   "code": "52324001",
+   "source_label": "Mediastinal lymphadenopathy",
+   "match": "exactMatch",
+   "source_version": "supplied",
+   "version": {
+    "number": 1,
+    "status": "published",
+    "created": "2026-09-14",
+    "published": null,
+    "last_modified": "2026-09-14",
+    "contributors": [
+     {
+      "id": "PERSON-000001",
+      "role": "author",
+      "via": "alpha-generator"
+     }
+    ]
+   }
+  }
+ ],
+ "synonyms": [
+  {
+   "term": "adenopathy",
+   "type": "synonym",
+   "scope": "exact"
+  }
+ ],
+ "anatomic_scope": [
+  {
+   "location": "RID28891",
+   "kind": "class",
+   "strength": "required",
+   "name": "mediastinal lymph node"
+  }
+ ],
+ "anatomic_refinement_rules": [],
+ "seen_on": [
+  "CT",
+  "MR",
+  "PET",
+  "US",
+  "XR"
+ ],
+ "subspecialty": [
+  "CH"
+ ],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000015",
+   "name": "interval change",
+   "definition": "The relationship of the finding to the same finding on a prior comparable examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000140",
+     "name": "new",
+     "definition": "Not present on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000141",
+     "name": "unchanged",
+     "definition": "Without appreciable difference from the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000142",
+     "name": "increased",
+     "definition": "Larger or more numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000143",
+     "name": "decreased",
+     "definition": "Smaller or less numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000144",
+     "name": "no prior available",
+     "definition": "No comparable prior examination was available.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000011",
+   "name": "nodal architecture",
+   "definition": "The internal organisation of a lymph node as seen on imaging.",
+   "select_cardinality": "multi",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000100",
+     "name": "preserved fatty hilum",
+     "definition": "A central fatty hilum is retained.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000101",
+     "name": "effaced fatty hilum",
+     "definition": "The central fatty hilum is lost.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000102",
+     "name": "cortical thickening",
+     "definition": "The cortex is thickened relative to the hilum.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000103",
+     "name": "central necrosis",
+     "definition": "A non-enhancing centre within the node.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000012",
+   "name": "nodal shape",
+   "definition": "The gross outline of a lymph node.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000110",
+     "name": "elongated",
+     "definition": "Long axis substantially exceeds short axis.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000111",
+     "name": "rounded",
+     "definition": "Long and short axes approach one another.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000014",
+   "name": "FDG avidity",
+   "definition": "The degree of fluorodeoxyglucose uptake relative to background.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": [
+    "PET"
+   ],
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000130",
+     "name": "none",
+     "definition": "Uptake not exceeding background.",
+     "rank": 1,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000131",
+     "name": "mild",
+     "definition": "Uptake mildly exceeding background.",
+     "rank": 2,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000132",
+     "name": "moderate",
+     "definition": "Uptake moderately exceeding background.",
+     "rank": 3,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000133",
+     "name": "intense",
+     "definition": "Uptake markedly exceeding background.",
+     "rank": 4,
+     "bindings": []
+    }
+   ]
+  }
+ ],
+ "measurements": [
+  {
+   "measurement_id": "MS-000002",
+   "name": "short-axis diameter",
+   "definition": "The greatest diameter perpendicular to the long axis, on the same plane.",
+   "quantity_kind": "length",
+   "permitted_units": [
+    "mm",
+    "cm"
+   ],
+   "method": "Perpendicular to the long axis on the plane of maximal dimension.",
+   "inherited_from": null,
+   "components": []
+  }
+ ],
+ "assessment_schemes": [],
+ "components": [],
+ "may_represent": [
+  "DX-000004",
+  "DX-000009",
+  "DX-000010"
+ ],
+ "may_be_caused_by": [],
+ "occurs_with": [
+  "FC-000021"
+ ],
+ "component_of": null,
+ "component": false,
+ "fixed_values": [],
+ "source_definition": null,
+ "concept_source": null,
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-14",
+  "published": null,
+  "last_modified": "2026-09-14",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ },
+ "radlex_composition": {
+  "base": {
+   "code": "RID3798",
+   "label": "lymphadenopathy"
+  },
+  "modifiers": [
+   {
+    "code": "RID1384",
+    "label": "mediastinum"
+   }
+  ]
+ }
+}

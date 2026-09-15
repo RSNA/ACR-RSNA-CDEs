@@ -1,0 +1,506 @@
+{
+ "finding_id": "FC-000023",
+ "name": "intracranial hemorrhage",
+ "definition": "Blood within the cranial cavity. The compartment it occupies is the clinically decisive fact and is carried by the subtypes.",
+ "subtype_of": null,
+ "defined_concept": false,
+ "bindings": [],
+ "synonyms": [],
+ "anatomic_scope": [
+  {
+   "location": "RID9080",
+   "kind": "region",
+   "strength": "required",
+   "name": "head"
+  }
+ ],
+ "anatomic_refinement_rules": [],
+ "seen_on": [
+  "CT",
+  "MR",
+  "US",
+  "XR"
+ ],
+ "subspecialty": [
+  "NR"
+ ],
+ "elements": [
+  {
+   "element_id": "DE-000001",
+   "name": "presence",
+   "definition": "Whether the observation is judged to be present on this examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000001",
+     "name": "present",
+     "definition": "Observation can be confidently categorized as present based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28472",
+       "source_label": "present",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000002",
+     "name": "absent",
+     "definition": "Observation can be confidently categorized as absent based on the data presented to the interpreter.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID28473",
+       "source_label": "absent",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000003",
+     "name": "indeterminate",
+     "definition": "The data presented do not permit categorization as present or absent.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000004",
+     "name": "unknown",
+     "definition": "No determination was made, or the examination did not address it.",
+     "rank": null,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5655",
+       "source_label": "unknown",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000015",
+   "name": "interval change",
+   "definition": "The relationship of the finding to the same finding on a prior comparable examination.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000140",
+     "name": "new",
+     "definition": "Not present on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000141",
+     "name": "unchanged",
+     "definition": "Without appreciable difference from the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000142",
+     "name": "increased",
+     "definition": "Larger or more numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000143",
+     "name": "decreased",
+     "definition": "Smaller or less numerous than on the prior examination.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000144",
+     "name": "no prior available",
+     "definition": "No comparable prior examination was available.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000016",
+   "name": "amount",
+   "definition": "How much material is present, on a coarse ordinal scale.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000150",
+     "name": "trace",
+     "definition": "Barely detectable.",
+     "rank": 1,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000151",
+     "name": "small",
+     "definition": "Present but of little consequence.",
+     "rank": 2,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5774",
+       "source_label": "small",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000152",
+     "name": "moderate",
+     "definition": "Substantial without dominating the space.",
+     "rank": 3,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000153",
+     "name": "large",
+     "definition": "Filling much of the available space.",
+     "rank": 4,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5778",
+       "source_label": "large",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000046",
+   "name": "hemorrhage age",
+   "definition": "How old intracranial blood is, read from its density or signal on a single study.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000450",
+     "name": "hyperacute",
+     "definition": "Within hours. Still largely oxygenated.",
+     "rank": 1,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000451",
+     "name": "acute",
+     "definition": "Roughly the first three days. Deoxyhaemoglobin.",
+     "rank": 2,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5718",
+       "source_label": "acute",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000452",
+     "name": "early subacute",
+     "definition": "Roughly days three to seven. Intracellular methaemoglobin.",
+     "rank": 3,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000453",
+     "name": "late subacute",
+     "definition": "Roughly one to four weeks. Extracellular methaemoglobin.",
+     "rank": 4,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000454",
+     "name": "chronic",
+     "definition": "Beyond a month. Haemosiderin and ferritin.",
+     "rank": 5,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID5719",
+       "source_label": "chronic",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "value_id": "V-000455",
+     "name": "indeterminate age",
+     "definition": "The appearance does not permit dating.",
+     "rank": 6,
+     "bindings": [
+      {
+       "system": "RADLEX",
+       "code": "RID39110",
+       "source_label": "indeterminate",
+       "match": "exactMatch",
+       "source_version": "4.3",
+       "version": {
+        "number": 1,
+        "status": "published",
+        "created": "2026-09-14",
+        "published": null,
+        "last_modified": "2026-09-14",
+        "contributors": [
+         {
+          "id": "PERSON-000001",
+          "role": "author",
+          "via": "alpha-generator"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "element_id": "DE-000038",
+   "name": "collection shape",
+   "definition": "The outline a collection takes, which reflects the space containing it.",
+   "select_cardinality": "single",
+   "narrowed": false,
+   "modality_restricted_to": null,
+   "inherited_from": null,
+   "permitted_values": [
+    {
+     "value_id": "V-000370",
+     "name": "biconvex",
+     "definition": "Lentiform. Bounded by sutures, where the dura is anchored.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000371",
+     "name": "crescentic",
+     "definition": "Concave toward the brain. Crosses sutures but not dural reflections.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000372",
+     "name": "conforming",
+     "definition": "Filling and taking the shape of the space, such as sulci and cisterns.",
+     "rank": null,
+     "bindings": []
+    },
+    {
+     "value_id": "V-000373",
+     "name": "rounded",
+     "definition": "Roughly spherical, as within parenchyma.",
+     "rank": null,
+     "bindings": []
+    }
+   ]
+  }
+ ],
+ "measurements": [
+  {
+   "measurement_id": "MS-000009",
+   "name": "volume",
+   "definition": "The three-dimensional extent of a lesion or collection.",
+   "quantity_kind": "volume",
+   "permitted_units": [
+    "mL",
+    "cm3"
+   ],
+   "method": "Segmented volume, or the ellipsoid approximation where stated.",
+   "inherited_from": null,
+   "components": []
+  },
+  {
+   "measurement_id": "MS-000005",
+   "name": "attenuation (Hounsfield units)",
+   "definition": "The mean CT attenuation of the lesion measured within a region of interest.",
+   "quantity_kind": "ct-attenuation",
+   "permitted_units": [
+    "[hnsf'U]"
+   ],
+   "method": "Mean value within a region of interest covering at least two thirds of the lesion, on unenhanced images.",
+   "inherited_from": null,
+   "components": []
+  }
+ ],
+ "assessment_schemes": [],
+ "components": [],
+ "may_represent": [],
+ "may_be_caused_by": [],
+ "occurs_with": [],
+ "component_of": null,
+ "component": false,
+ "fixed_values": [],
+ "source_definition": null,
+ "concept_source": null,
+ "version": {
+  "number": 1,
+  "status": "proposed",
+  "created": "2026-09-14",
+  "published": null,
+  "last_modified": "2026-09-14",
+  "contributors": [
+   {
+    "id": "PERSON-000001",
+    "role": "author",
+    "via": "alpha-generator"
+   }
+  ]
+ },
+ "radlex_composition": {
+  "base": {
+   "code": "RID4700",
+   "label": "hemorrhage"
+  },
+  "modifiers": [
+   {
+    "code": "RID6383",
+    "label": "intracranial"
+   }
+  ]
+ }
+}
